@@ -1,6 +1,6 @@
 # Experiment 5: Extreme Asymptotic Scaling Stress Suite
 
-## 🔬 Executive Summary
+## Executive Summary
 
 In modern single-cell genomics, hyperspectral remote sensing, and internet-scale machine learning, clustering algorithms must scale to $N \ge 10^6$ instances and $D \ge 10^5$ dimensions. Classical consensus clustering frameworks rely on dense $N \times N$ co-association matrices, requiring $\mathcal{O}(N^2)$ time and $\mathcal{O}(N^2)$ space (e.g., $10^{12}$ floats $\approx 8\text{ TB}$ of RAM at $N=10^6$), rendering them strictly intractable beyond $N \approx 5,000$.
 
@@ -18,7 +18,7 @@ In modern single-cell genomics, hyperspectral remote sensing, and internet-scale
 
 ---
 
-## 📂 Directory Structure
+## Directory Structure
 
 ```
 experiments/exp5_extreme_scale/
@@ -36,7 +36,7 @@ experiments/exp5_extreme_scale/
 
 ---
 
-## 📊 Empirical Findings
+## Empirical Findings
 
 ### 1. Test A: Massive Sample Scaling ($N \in [10\text{k}, 1\text{M}]$, $D=100, K=5$)
 
@@ -69,7 +69,7 @@ experiments/exp5_extreme_scale/
 
 ---
 
-## 🔄 Reproduction
+## Reproduction
 
 ```powershell
 # Execute standard extreme scaling benchmark (trials=2) and generate plots:

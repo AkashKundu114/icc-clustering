@@ -1,6 +1,6 @@
 # Sub-Experiment 3.5: Missing Data Robustness & Imputation Resilience Suite
 
-## 🔬 Executive Summary
+## Executive Summary
 
 In practical biomedical diagnostics, single-cell microarrays, and clinical molecular profiling, assays regularly suffer from missing values due to sensor dropout, hybridization failures, and low transcript abundance. Standard clustering algorithms require complete feature matrices, necessitating data imputation. However, imperfect imputation introduces artificial variance and spurious correlations that distort cluster boundaries.
 
@@ -20,7 +20,7 @@ In practical biomedical diagnostics, single-cell microarrays, and clinical molec
 
 ---
 
-## 📂 Directory Structure
+## Directory Structure
 
 ```
 experiments/exp3_real_world_benchmarks/exp3_5_missing_data/
@@ -38,7 +38,7 @@ experiments/exp3_real_world_benchmarks/exp3_5_missing_data/
 
 ---
 
-## 📊 Empirical Findings
+## Empirical Findings
 
 ### 1. Clustering Recovery Across Missingness Rates (Mean ARI across Imputation Strategies)
 
@@ -67,7 +67,7 @@ experiments/exp3_real_world_benchmarks/exp3_5_missing_data/
 
 ---
 
-## 🔄 Reproduction
+## Reproduction
 
 ```powershell
 # Execute full multi-trial benchmark (10 trials per condition) and render plots:

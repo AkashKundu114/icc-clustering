@@ -1,6 +1,6 @@
 # Sub-Experiment 4.3: Anchor Approximation Fidelity Suite
 
-## 🔬 Executive Summary
+## Executive Summary
 
 A central theoretical claim of **Invariant Core Consensus (ICC-v2)** is that replacing the classical dense $N \times N$ pairwise co-association matrix $S$ (Fred & Jain 2005, Strehl & Ghosh 2002) with a reduced bipartite anchor graph $B \in \mathbb{R}^{N \times L}$ ($L \ll N$, default $L=40$) cuts memory complexity from $\mathcal{O}(N^2)$ to $\mathcal{O}(NL)$ and spectral consensus graph partitioning runtime from $\mathcal{O}(N^3)$ to $\mathcal{O}(NLk)$.
 
@@ -17,7 +17,7 @@ across sample sizes $N \in \{200, 500, 1000, 2000, 5000, 10000\}$ with $D=200, K
 
 ---
 
-## 📂 Directory Structure
+## Directory Structure
 
 ```
 experiments/exp4_scalability_and_sensitivity/exp4_3_anchor_fidelity/
@@ -35,7 +35,7 @@ experiments/exp4_scalability_and_sensitivity/
 
 ---
 
-## 📊 Empirical Findings
+## Empirical Findings
 
 ### 1. Head-to-Head Performance Tradeoff Matrix ($D=200, K=3$)
 
@@ -60,7 +60,7 @@ experiments/exp4_scalability_and_sensitivity/
 
 ---
 
-## 🔄 Reproduction
+## Reproduction
 
 ```powershell
 # Run the complete 30-trial exact vs. reduced empirical comparison:

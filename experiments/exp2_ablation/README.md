@@ -1,6 +1,6 @@
 # Experiment 2: Architectural Component Ablation Suite
 
-## 🔬 Executive Summary
+## Executive Summary
 
 Experiment 2 evaluates the individual and synergistic contributions of the core components proposed in **Invariant Core Consensus (ICC-v1 and ICC-v2)**:
 1. **Feature Subspacing ($\mathcal{F}$)**: Projecting base clusterers into random feature subspaces.
@@ -18,7 +18,7 @@ We rigorously compare 6 architectural variants across varying noise dimensionali
 
 ---
 
-## 📂 Directory Structure
+## Directory Structure
 
 ```
 experiments/exp2_ablation/
@@ -49,7 +49,7 @@ experiments/exp2_ablation/
 
 ---
 
-## 📊 Empirical Findings
+## Empirical Findings
 
 ### Architectural Component Recovery Across Noise Regimes (Mean ARI, 10 Trials)
 
@@ -72,7 +72,7 @@ experiments/exp2_ablation/
 
 ---
 
-## 🚀 Reproduction Commands
+## Reproduction Commands
 
 ```bash
 # 1. Regenerate all publication figures (Figs 11, 12, 13, 22):

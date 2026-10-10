@@ -1,6 +1,6 @@
 # Experiment 4: Scalability, Sensitivity, and Robustness Suite
 
-## 🔬 Executive Summary
+## Executive Summary
 
 Experiment 4 provides a comprehensive computational, topological, and sensitivity evaluation of **Invariant Core Consensus (ICC-v1 and ICC-v2)**, directly addressing critical theoretical and empirical requirements for an IEEE Transactions on Knowledge and Data Engineering (TKDE) publication:
 
@@ -24,7 +24,7 @@ Experiment 4 provides a comprehensive computational, topological, and sensitivit
 
 ---
 
-## 📂 Directory Structure
+## Directory Structure
 
 ```
 experiments/exp4_scalability_and_sensitivity/
@@ -61,7 +61,7 @@ experiments/exp4_scalability_and_sensitivity/
 
 ---
 
-## 📊 Empirical Findings
+## Empirical Findings
 
 ### 1. Sample Complexity Scaling ($N \in [200, 8000]$, $D=200, K=3$)
 
@@ -128,7 +128,7 @@ Across 30 empirical trials comparing ICC-v2-Exact ($N \times N$) against ICC-v2-
 
 ---
 
-## 🔄 Reproduction
+## Reproduction
 
 ```powershell
 # Reproduce all publication figures from existing CSV datasets:

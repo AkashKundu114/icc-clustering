@@ -1,6 +1,6 @@
 # Experiment 0: Falsification & Characterization of the "Hallucinated Stability Trap"
 
-## 🔬 Executive Summary
+## Executive Summary
 
 This suite resolves the central theoretical bottleneck of the **Invariant Core Consensus (ICC)** proposal by answering the falsification question:
 
@@ -19,7 +19,7 @@ This suite resolves the central theoretical bottleneck of the **Invariant Core C
 
 ---
 
-## 📂 Directory Structure
+## Directory Structure
 
 ```
 experiments/exp0_falsification/
@@ -52,7 +52,7 @@ experiments/exp0_falsification/
 
 ---
 
-## 📊 Empirical Findings
+## Empirical Findings
 
 ### 1. Hallucinated Stability Phase Transition Breakdown
 - Under low noise ($D_{\text{noise}} \le 100$), all algorithms correctly recover cluster structure with high accuracy ($\text{ARI} > 0.95$) and stability ($\text{Stability} > 0.95$).
@@ -83,7 +83,7 @@ To ensure that the "Hallucinated Stability Trap" is not an artifact of pairwise 
 
 ---
 
-## 🔄 Reproduction
+## Reproduction
 
 ### 1. Regenerate All Publication Figures from Cached Data
 ```powershell

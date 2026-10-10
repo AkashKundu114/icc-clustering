@@ -1,6 +1,6 @@
 # Sub-Experiment 2.1: Variance-Stabilized Subspace Gating (VSSG) Interpretability & Feature Discovery Audit
 
-## 🔬 Executive Summary
+## Executive Summary
 
 In high-dimensional clustering regimes ($D \gg N$), unguided random feature subspacing exhibits a catastrophic failure mode ("the curse of blind subspacing"): when only a tiny fraction of features contain cluster signal, drawing uniform random subsets causes over $50\%$ of base learners to train purely on Gaussian noise distractors.
 
@@ -13,7 +13,7 @@ In high-dimensional clustering regimes ($D \gg N$), unguided random feature subs
 
 ---
 
-## 📂 Directory Structure
+## Directory Structure
 
 ```
 experiments/exp2_ablation/exp2_1_vssg_interpretability/
@@ -31,7 +31,7 @@ experiments/exp2_ablation/exp2_1_vssg_interpretability/
 
 ---
 
-## 📊 Empirical Findings
+## Empirical Findings
 
 ### 1. Madelon Benchmark ($N=500, D=500$, 20 Informative XOR Features + 480 Distractors)
 - **Precision@20:** **$0.850$** (17 of top 20 ranked features are true XOR signal features).
@@ -52,7 +52,7 @@ experiments/exp2_ablation/exp2_1_vssg_interpretability/
 
 ---
 
-## 🚀 Reproduction Commands
+## Reproduction Commands
 
 ```bash
 # Execute VSSG feature discovery benchmark (10 trials):

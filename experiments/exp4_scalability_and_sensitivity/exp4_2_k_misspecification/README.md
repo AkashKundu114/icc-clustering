@@ -1,6 +1,6 @@
 # Sub-Experiment 4.2: $K$-Misspecification Robustness Suite
 
-## 🔬 Executive Summary
+## Executive Summary
 
 In exploratory data analysis, single-cell transcriptomics, and real-world unsupervised clustering, the true cluster count $K_{\text{true}}$ is almost never known a priori. Practitioners must rely on heuristic cluster count selection methods (e.g., elbow method, silhouette analysis, gap statistics), which regularly misestimate the true number of underlying latent partitions. Standard clustering algorithms exhibit catastrophic vulnerability to misspecified cluster counts:
 - **Over-Specification ($K_{\text{input}} > K_{\text{true}}$):** Splits genuine clusters into arbitrary, fractured micro-clusters, destroying semantic coherence.
@@ -16,7 +16,7 @@ In exploratory data analysis, single-cell transcriptomics, and real-world unsupe
 
 ---
 
-## 📂 Directory Structure
+## Directory Structure
 
 ```
 experiments/exp4_scalability_and_sensitivity/exp4_2_k_misspecification/
@@ -35,7 +35,7 @@ experiments/exp4_scalability_and_sensitivity/
 
 ---
 
-## 📊 Empirical Findings
+## Empirical Findings
 
 ### 1. Robustness Curves on High-Dimensional Cancer Array (SRBCT, $K_{\text{true}} = 4, D = 2,308$)
 
@@ -61,7 +61,7 @@ The table below reports the empirical mean Adjusted Rand Index (ARI) as $K_{\tex
 
 ---
 
-## 🔄 Reproduction
+## Reproduction
 
 ```powershell
 # Run the complete 1,680-fit K-misspecification parameter sweep:

@@ -1,6 +1,6 @@
 # Experiment 1 Suite: Inductive Generalization & Multi-Classifier Core-Filtering Audit
 
-## 🔬 Executive Summary
+## Executive Summary
 
 This experiment suite rigorously investigates the **Inductive Generalization Capability** of Invariant Core Consensus (ICC):
 
@@ -22,7 +22,7 @@ This experiment suite rigorously investigates the **Inductive Generalization Cap
 
 ---
 
-## 📂 Directory Structure
+## Directory Structure
 
 ```
 experiments/exp1_generalization/
@@ -48,7 +48,7 @@ experiments/exp1_generalization/
 
 ---
 
-## 📊 Empirical Findings & Multi-Classifier Audit
+## Empirical Findings and Multi-Classifier Audit
 
 ### Multi-Classifier Generalization Results (5 Trials per Condition)
 
@@ -69,7 +69,7 @@ experiments/exp1_generalization/
 
 ---
 
-## 🚀 Reproduction Commands
+## Reproduction Commands
 
 ```bash
 # 1. Run multi-classifier pseudo-label sweep (SVM, RF, MLP, KNN) across D_noise:

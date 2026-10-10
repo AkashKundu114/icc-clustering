@@ -1,6 +1,6 @@
 # Experiment 3: Real-World High-Dimensional Benchmarks Suite
 
-## 🔬 Executive Summary
+## Executive Summary
 
 Experiment 3 benchmarks **Invariant Core Consensus (ICC-v1 and ICC-v2)** against four single-model baselines, two classical consensus clustering algorithms, deep clustering (DEC), and scalable anchor-guided baselines (FCAG, FastMVC) across a comprehensive suite of **13 multi-domain high-dimensional benchmark datasets**. The evaluated domains span acoustic sonar returns, distractor manifolds, cancer transcriptomics, text document embeddings, spoken phoneme recognition, airborne hyperspectral imagery, facial illumination manifolds, and single-cell RNA sequencing, with dimensionality up to $D = 15,154$ and dimension-to-sample ratios $D/N$ up to $123.5$.
 
@@ -19,7 +19,7 @@ Experiment 3 benchmarks **Invariant Core Consensus (ICC-v1 and ICC-v2)** against
 
 ---
 
-## 📂 Directory Structure
+## Directory Structure
 
 ```
 experiments/exp3_real_world_benchmarks/
@@ -63,7 +63,7 @@ experiments/exp3_real_world_benchmarks/
 
 ---
 
-## 📊 Empirical Findings
+## Empirical Findings
 
 ### 1. Benchmark Suite Composition (13 Multi-Domain Datasets)
 
@@ -142,7 +142,7 @@ The expanded benchmark suite spans **1,430 individual model fits** across 11 mod
 
 ---
 
-## 🔄 Reproduction
+## Reproduction
 
 ### 1. Execute Full Benchmark Suite
 To execute the complete 13-dataset $\times$ 11-method benchmark suite (or resume an existing run):
