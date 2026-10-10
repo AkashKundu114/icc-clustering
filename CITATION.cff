@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this software or benchmark suite in your research, please cite our manuscript as follows."
+title: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"
+authors:
+  - family-names: "Kundu"
+    given-names: "Akash"
+    email: "akash231001001449@technoindiaeducation.com"
+    affiliation: "Department of Computer Science and Engineering, Techno India University"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Kundu"
+      given-names: "Akash"
+  title: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"
+  journal: "Manuscript Submitted for Peer Review"
+  year: 2026
+  status: "under-review"
+repository-code: "https://github.com/AkashKundu114/icc-clustering"
+license: "MIT"
+keywords:
+  - "cluster ensemble"
+  - "consensus clustering"
+  - "inductive learning"
+  - "out-of-sample extension"
+  - "high-dimensional data"
+  - "anchor certification"
+  - "noise robustness"

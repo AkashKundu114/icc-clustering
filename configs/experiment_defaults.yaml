@@ -1,0 +1,68 @@
+# ==============================================================================
+# ICC Experiment Defaults — Shared Hyperparameters & Configuration
+# ==============================================================================
+
+# Top-level shared hyperparameters
+n_trials: 10
+n_base_models: 25
+n_anchors: 40
+core_quantile: 0.50
+beta: 2.0
+subspace_rate: 0.25
+random_seed: 42
+
+# Evaluation metrics
+metrics:
+  - ari
+  - nmi
+  - ami
+  - v_measure
+
+# Figure and visualization settings
+figure_dpi: 300
+figure_format: "png"
+
+# ==============================================================================
+# Structured Hierarchy (for domain-specific loader modules)
+# ==============================================================================
+icc:
+  n_clusters: 3
+  n_base_models: 25
+  n_anchors: 40
+  subspace_rate: 0.25
+  core_quantile: 0.50
+  beta: 2.0
+  random_seed: 42
+
+evaluation:
+  n_trials: 10
+  metrics:
+    - ari
+    - nmi
+    - ami
+    - v_measure
+  confidence_level: 0.95
+
+figures:
+  dpi: 300
+  format: "png"
+  style: "seaborn-v0_8-whitegrid"
+  figsize_single: [6, 4]
+  figsize_double: [12, 4]
+  figsize_quad: [12, 8]
+  font_size: 11
+  legend_font_size: 9
+
+data:
+  cache_dir: "data/cache"
+  raw_dir: "data/raw"
+
+synthetic:
+  n_per_cluster: 100
+  signal_dim: 2
+  noise_kinds:
+    - gaussian
+    - student_t
+    - correlated
+    - scaled
+    - sparse

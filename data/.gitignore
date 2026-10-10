@@ -1,0 +1,8 @@
+# Ignore cached and binary dataset artifacts
+*.npz
+*.h5ad
+*.pkl
+*.mat
+
+# Retain directory structure in git
+!.gitkeep
