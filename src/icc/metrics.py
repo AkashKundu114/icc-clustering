@@ -15,6 +15,12 @@ from typing import Dict, Any, Union
 import numpy as np
 
 # Dual-backend detection: prefer scikit-learn for high-performance C/Cython execution
+_sk_ari = None
+_sk_nmi = None
+_sk_ami = None
+_sk_v_measure = None
+_sk_fm = None
+
 _SKLEARN_AVAILABLE = False
 try:
     from sklearn.metrics import adjusted_rand_score as _sk_ari
@@ -37,20 +43,20 @@ except (ImportError, Exception):
 def adjusted_rand_score(labels_true: np.ndarray, labels_pred: np.ndarray) -> float:
     """
     Computes Adjusted Rand Index (ARI) between ground-truth and predicted labels.
-    
+
     Mathematical Definition:
         Let U = {u_1, ..., u_R} and V = {v_1, ..., v_C} be two clusterings of N points.
         Let n_{ij} = |u_i ∩ v_j|, a_i = ∑_j n_{ij}, b_j = ∑_i n_{ij}.
-        
+
         ARI = [ ∑_{ij} C(n_{ij}, 2) - E[Index] ] / [ 1/2 (∑_i C(a_i, 2) + ∑_j C(b_j, 2)) - E[Index] ]
         where E[Index] = [ ∑_i C(a_i, 2) ∑_j C(b_j, 2) ] / C(N, 2)
         and C(n, 2) = n(n - 1) / 2.
-    
+
     Range:
         [-0.5, 1.0]. 1.0 represents identical clusterings up to permutation;
         0.0 corresponds to chance assignment according to the generalized hypergeometric model.
     """
-    if _SKLEARN_AVAILABLE:
+    if _SKLEARN_AVAILABLE and _sk_ari is not None:
         return float(_sk_ari(labels_true, labels_pred))
 
     labels_true = np.asarray(labels_true)
@@ -90,7 +96,7 @@ def normalized_mutual_info_score(y_true: np.ndarray, y_pred: np.ndarray) -> floa
     Range:
         [0.0, 1.0]. 1.0 denotes perfect information concordance; 0.0 indicates statistical independence.
     """
-    if _SKLEARN_AVAILABLE:
+    if _SKLEARN_AVAILABLE and _sk_nmi is not None:
         return float(_sk_nmi(y_true, y_pred))
 
     y_true = np.asarray(y_true)
@@ -117,7 +123,10 @@ def normalized_mutual_info_score(y_true: np.ndarray, y_pred: np.ndarray) -> floa
 
     if h_u + h_v == 0:
         return 1.0
-    return float(2.0 * mi / (h_u + h_v))
+    val = float(2.0 * mi / (h_u + h_v))
+    if abs(val) < 1e-10:
+        return 0.0
+    return float(np.clip(val, 0.0, 1.0))
 
 
 def adjusted_mutual_info_score(y_true: np.ndarray, y_pred: np.ndarray) -> float:
@@ -135,7 +144,7 @@ def adjusted_mutual_info_score(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     Range:
         [-0.5, 1.0]. 1.0 indicates perfect agreement; 0.0 corresponds to expected chance overlap.
     """
-    if _SKLEARN_AVAILABLE:
+    if _SKLEARN_AVAILABLE and _sk_ami is not None:
         return float(_sk_ami(y_true, y_pred))
 
     y_true = np.asarray(y_true)
@@ -184,7 +193,10 @@ def adjusted_mutual_info_score(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     denom_adj = mean_h - emi
     if denom_adj <= 0:
         return 1.0
-    return float((mi - emi) / denom_adj)
+    val = float((mi - emi) / denom_adj)
+    if abs(val) < 1e-10:
+        return 0.0
+    return val
 
 
 def v_measure_score(y_true: np.ndarray, y_pred: np.ndarray, beta: float = 1.0) -> float:
@@ -201,7 +213,7 @@ def v_measure_score(y_true: np.ndarray, y_pred: np.ndarray, beta: float = 1.0) -
     Range:
         [0.0, 1.0]. 1.0 represents clusters that are both fully homogeneous and complete.
     """
-    if _SKLEARN_AVAILABLE:
+    if _SKLEARN_AVAILABLE and _sk_v_measure is not None:
         return float(_sk_v_measure(y_true, y_pred, beta=beta))
 
     y_true = np.asarray(y_true)
@@ -231,7 +243,10 @@ def v_measure_score(y_true: np.ndarray, y_pred: np.ndarray, beta: float = 1.0) -
 
     if homogeneity + completeness == 0.0:
         return 0.0
-    return float((1.0 + beta) * homogeneity * completeness / (beta * homogeneity + completeness))
+    val = float((1.0 + beta) * homogeneity * completeness / (beta * homogeneity + completeness))
+    if abs(val) < 1e-10:
+        return 0.0
+    return float(np.clip(val, 0.0, 1.0))
 
 
 def fowlkes_mallows_score(y_true: np.ndarray, y_pred: np.ndarray) -> float:
@@ -246,7 +261,7 @@ def fowlkes_mallows_score(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     Range:
         [0.0, 1.0]. 1.0 indicates identical clusterings; 0.0 indicates no pairwise overlap.
     """
-    if _SKLEARN_AVAILABLE:
+    if _SKLEARN_AVAILABLE and _sk_fm is not None:
         return float(_sk_fm(y_true, y_pred))
 
     labels_true = np.asarray(y_true)

@@ -39,20 +39,23 @@ def test_random_independence():
 
 
 def test_dual_backend_fallback_parity():
+    if not (metrics_mod._SKLEARN_AVAILABLE and metrics_mod._sk_ari is not None):
+        pytest.skip("scikit-learn backend not available on this platform")
+
     rng = np.random.default_rng(42)
     y_true = rng.integers(0, 4, size=60)
     y_pred = rng.integers(0, 4, size=60)
 
     # Sklearn results
-    metrics_mod._SKLEARN_AVAILABLE = True
     sk_results = evaluate_all(y_true, y_pred)
 
     # Pure NumPy/SciPy fallback results
-    metrics_mod._SKLEARN_AVAILABLE = False
-    fb_results = evaluate_all(y_true, y_pred)
-
-    # Restore sklearn
-    metrics_mod._SKLEARN_AVAILABLE = True
+    original_state = metrics_mod._SKLEARN_AVAILABLE
+    try:
+        metrics_mod._SKLEARN_AVAILABLE = False
+        fb_results = evaluate_all(y_true, y_pred)
+    finally:
+        metrics_mod._SKLEARN_AVAILABLE = original_state
 
     assert pytest.approx(sk_results["ari"], 1e-5) == fb_results["ari"]
     assert pytest.approx(sk_results["nmi"], 1e-5) == fb_results["nmi"]
