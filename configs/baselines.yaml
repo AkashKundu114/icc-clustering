@@ -1,0 +1,231 @@
+# ==============================================================================
+# ICC Baseline Method Registry
+# Contains algorithm definitions, execution entry points, hardware requirements,
+# and academic citations for empirical benchmarking.
+# ==============================================================================
+
+defaults:
+  n_base_models: 25
+  n_anchors: 40
+  n_trials: 10
+  random_seed: 42
+
+methods:
+  # ============================================================================
+  # EXISTING CLASSICAL & CONSENSUS METHODS (Enabled: true)
+  # ============================================================================
+  kmeans:
+    name: "kmeans"
+    display_name: "K-Means"
+    category: "single"
+    enabled: true
+    module_path: "src.icc.baselines.classical"
+    function_name: "run_kmeans"
+    module: "src.icc.baselines.classical"
+    function: "run_kmeans"
+    requires_gpu: false
+    citation:
+      first_author: "Lloyd"
+      year: 1982
+      venue: "IEEE Transactions on Information Theory"
+
+  ward:
+    name: "ward"
+    display_name: "Ward"
+    category: "single"
+    enabled: true
+    module_path: "src.icc.baselines.classical"
+    function_name: "run_ward"
+    module: "src.icc.baselines.classical"
+    function: "run_ward"
+    requires_gpu: false
+    citation:
+      first_author: "Ward"
+      year: 1963
+      venue: "Journal of the American Statistical Association"
+
+  spectral:
+    name: "spectral"
+    display_name: "Spectral"
+    category: "single"
+    enabled: true
+    module_path: "src.icc.baselines.classical"
+    function_name: "run_spectral"
+    module: "src.icc.baselines.classical"
+    function: "run_spectral"
+    requires_gpu: false
+    citation:
+      first_author: "Von Luxburg"
+      year: 2007
+      venue: "Statistics and Computing"
+
+  fcm:
+    name: "fcm"
+    display_name: "FCM"
+    category: "single"
+    enabled: true
+    module_path: "src.icc.baselines.classical"
+    function_name: "run_fcm"
+    module: "src.icc.baselines.classical"
+    function: "run_fcm"
+    requires_gpu: false
+    citation:
+      first_author: "Bezdek"
+      year: 1981
+      venue: "Pattern Recognition with Fuzzy Objective Function Algorithms (Plenum Press)"
+
+  standard_consensus:
+    name: "standard_consensus"
+    display_name: "Standard_Consensus"
+    category: "consensus"
+    enabled: true
+    module_path: "src.icc.baselines.consensus"
+    function_name: "run_standard_consensus"
+    module: "src.icc.baselines.consensus"
+    function: "run_standard_consensus"
+    requires_gpu: false
+    citation:
+      first_author: "Fred & Jain"
+      year: 2005
+      venue: "IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)"
+
+  li_et_al_2019:
+    name: "li_et_al_2019"
+    display_name: "Li_et_al_2019"
+    category: "consensus"
+    enabled: true
+    module_path: "src.icc.baselines.consensus"
+    function_name: "run_li_et_al_2019"
+    module: "src.icc.baselines.consensus"
+    function: "run_li_et_al_2019"
+    requires_gpu: false
+    citation:
+      first_author: "Li et al."
+      year: 2019
+      venue: "Artificial Intelligence"
+
+  icc_v1:
+    name: "icc_v1"
+    display_name: "ICC_v1"
+    category: "consensus"
+    enabled: true
+    module_path: "src.icc.baselines.consensus"
+    function_name: "run_icc_v1"
+    module: "src.icc.baselines.consensus"
+    function: "run_icc_v1"
+    requires_gpu: false
+    citation:
+      first_author: "Ours"
+      year: 2026
+      venue: "IEEE TKDE Under Review"
+
+  icc_v2:
+    name: "icc_v2"
+    display_name: "ICC_v2"
+    category: "consensus"
+    enabled: true
+    module_path: "src.icc.baselines.consensus"
+    function_name: "run_icc_v2"
+    module: "src.icc.baselines.consensus"
+    function: "run_icc_v2"
+    requires_gpu: false
+    citation:
+      first_author: "Ours"
+      year: 2026
+      venue: "IEEE TKDE Under Review"
+
+  # ============================================================================
+  # NEW DEEP CLUSTERING BASELINES (Phase 4 — Enabled: false)
+  # ============================================================================
+  dec:
+    name: "dec"
+    display_name: "DEC"
+    category: "deep"
+    enabled: true
+    module_path: "src.icc.baselines.deep"
+    function_name: "run_dec"
+    module: "src.icc.baselines.deep"
+    function: "run_dec"
+    requires_gpu: true
+    citation:
+      first_author: "Xie et al."
+      year: 2016
+      venue: "International Conference on Machine Learning (ICML)"
+
+  idec:
+    name: "idec"
+    display_name: "IDEC"
+    category: "deep"
+    enabled: false
+    module_path: "src.icc.baselines.deep"
+    function_name: "run_idec"
+    module: "src.icc.baselines.deep"
+    function: "run_idec"
+    requires_gpu: true
+    citation:
+      first_author: "Guo et al."
+      year: 2017
+      venue: "International Joint Conference on Artificial Intelligence (IJCAI)"
+
+  cc_contrastive:
+    name: "cc_contrastive"
+    display_name: "CC"
+    category: "deep"
+    enabled: false
+    module_path: "src.icc.baselines.deep"
+    function_name: "run_contrastive_clustering"
+    module: "src.icc.baselines.deep"
+    function: "run_contrastive_clustering"
+    requires_gpu: true
+    citation:
+      first_author: "Li et al."
+      year: 2021
+      venue: "AAAI Conference on Artificial Intelligence"
+
+  scan:
+    name: "scan"
+    display_name: "SCAN"
+    category: "deep"
+    enabled: false
+    module_path: "src.icc.baselines.deep"
+    function_name: "run_scan"
+    module: "src.icc.baselines.deep"
+    function: "run_scan"
+    requires_gpu: true
+    citation:
+      first_author: "Van Gansbeke et al."
+      year: 2020
+      venue: "European Conference on Computer Vision (ECCV)"
+
+  # ============================================================================
+  # NEW SCALABLE ANCHOR-BASED BASELINES (Phase 4 — Enabled: false)
+  # ============================================================================
+  fcag:
+    name: "fcag"
+    display_name: "FCAG"
+    category: "anchor"
+    enabled: true
+    module_path: "src.icc.baselines.anchor"
+    function_name: "run_fcag"
+    module: "src.icc.baselines.anchor"
+    function: "run_fcag"
+    requires_gpu: false
+    citation:
+      first_author: "Nie et al."
+      year: 2024
+      venue: "IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)"
+
+  fastmvc:
+    name: "fastmvc"
+    display_name: "FastMVC"
+    category: "anchor"
+    enabled: true
+    module_path: "src.icc.baselines.anchor"
+    function_name: "run_fastmvc"
+    module: "src.icc.baselines.anchor"
+    function: "run_fastmvc"
+    requires_gpu: false
+    citation:
+      first_author: "Huang et al."
+      year: 2023
+      venue: "IEEE Transactions on Knowledge and Data Engineering (TKDE)"

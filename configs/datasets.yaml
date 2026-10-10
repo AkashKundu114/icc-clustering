@@ -1,0 +1,281 @@
+# ==============================================================================
+# ICC Benchmark Dataset Registry
+# Contains loading configurations, dimensionality metadata, and preprocessing flags.
+# ==============================================================================
+
+defaults:
+  cache_dir: "data/cache"
+  raw_dir: "data/raw"
+  preprocessing:
+    standardize: true
+    impute_nan: true
+    log_transform: false
+    hvg_filter: false
+
+datasets:
+  # ============================================================================
+  # EXISTING BENCHMARK DATASETS (Enabled)
+  # ============================================================================
+  sonar:
+    name: "sonar"
+    domain: "acoustic"
+    source: "openml"
+    openml_id: 40
+    openml_name: "sonar"
+    openml_version: 1
+    expected_N: 208
+    expected_D: 60
+    expected_K: 2
+    d_over_n_ratio: 0.29
+    preprocessing:
+      standardize: true
+      impute_nan: true
+      log_transform: false
+      hvg_filter: false
+    priority: "medium"
+    enabled: true
+    description: "Sonar acoustic returns (mines vs rocks)"
+
+  madelon:
+    name: "madelon"
+    domain: "synthetic"
+    source: "openml"
+    openml_id: 1485
+    openml_name: "madelon"
+    openml_version: 1
+    expected_N: 500
+    expected_D: 500
+    expected_K: 2
+    d_over_n_ratio: 1.00
+    subsample_n: 500
+    preprocessing:
+      standardize: true
+      impute_nan: true
+      log_transform: false
+      hvg_filter: false
+    priority: "high"
+    enabled: true
+    description: "Madelon synthetic benchmark: 20 XOR informative features + 480 distractor noise features"
+
+  colon:
+    name: "colon"
+    domain: "genomics"
+    source: "openml"
+    openml_id: 1111
+    openml_name: "colon"
+    openml_version: 1
+    expected_N: 62
+    expected_D: 2000
+    expected_K: 2
+    d_over_n_ratio: 32.26
+    preprocessing:
+      standardize: true
+      impute_nan: true
+      log_transform: false
+      hvg_filter: false
+    priority: "critical"
+    enabled: true
+    description: "Colon cancer gene expression microarray (tumor vs normal)"
+
+  srbct:
+    name: "srbct"
+    domain: "genomics"
+    source: "openml"
+    openml_id: 1158
+    openml_name: "srbct"
+    openml_version: 1
+    expected_N: 83
+    expected_D: 2308
+    expected_K: 4
+    d_over_n_ratio: 27.81
+    preprocessing:
+      standardize: true
+      impute_nan: true
+      log_transform: false
+      hvg_filter: false
+    priority: "high"
+    enabled: true
+    description: "Small Round Blue Cell Tumors microarray (4 childhood cancer subtypes)"
+
+  cns:
+    name: "cns"
+    domain: "genomics"
+    source: "openml"
+    openml_id: 1128
+    openml_name: "cns"
+    openml_version: 1
+    expected_N: 60
+    expected_D: 7129
+    expected_K: 2
+    d_over_n_ratio: 118.82
+    preprocessing:
+      standardize: true
+      impute_nan: true
+      log_transform: false
+      hvg_filter: false
+    priority: "critical"
+    enabled: true
+    description: "Central Nervous System embryonal tumors (survivors vs fatalities)"
+
+  leukemia:
+    name: "leukemia"
+    domain: "genomics"
+    source: "openml"
+    openml_id: 1104
+    openml_name: "leukemia"
+    openml_version: 1
+    expected_N: 72
+    expected_D: 7129
+    expected_K: 2
+    d_over_n_ratio: 99.01
+    preprocessing:
+      standardize: true
+      impute_nan: true
+      log_transform: false
+      hvg_filter: false
+    priority: "critical"
+    enabled: true
+    description: "Golub et al. acute leukemia microarray (ALL vs AML)"
+
+  prostate:
+    name: "prostate"
+    domain: "genomics"
+    source: "openml"
+    openml_id: 1159
+    openml_name: "prostate"
+    openml_version: 1
+    expected_N: 102
+    expected_D: 12600
+    expected_K: 2
+    d_over_n_ratio: 123.53
+    preprocessing:
+      standardize: true
+      impute_nan: true
+      log_transform: false
+      hvg_filter: false
+    priority: "critical"
+    enabled: true
+    description: "Prostate cancer gene expression microarray (tumor vs normal)"
+
+  ovarian:
+    name: "ovarian"
+    domain: "genomics"
+    source: "openml"
+    openml_id: 1142
+    openml_name: "ovarian"
+    openml_version: 1
+    expected_N: 253
+    expected_D: 15154
+    expected_K: 2
+    d_over_n_ratio: 59.90
+    preprocessing:
+      standardize: true
+      impute_nan: true
+      log_transform: false
+      hvg_filter: false
+    priority: "critical"
+    enabled: true
+    description: "Ovarian cancer surface-enhanced laser desorption ionization mass spectrometry"
+
+  # ============================================================================
+  # NEW BENCHMARK DATASETS (Phase 4 Expansion — Enabled: false)
+  # ============================================================================
+  newsgroups20:
+    name: "newsgroups20"
+    domain: "text"
+    source: "sklearn"
+    openml_id: null
+    loader: "text.load_20newsgroups"
+    expected_N: 18846
+    expected_D: 10000
+    expected_K: 20
+    d_over_n_ratio: 0.53
+    preprocessing:
+      standardize: false
+      impute_nan: false
+      log_transform: false
+      hvg_filter: false
+    priority: "high"
+    enabled: true
+    description: "20 Newsgroups document collection with TF-IDF vectorization (D=10000, K=20)"
+
+  isolet:
+    name: "isolet"
+    domain: "audio"
+    source: "openml"
+    openml_id: 300
+    openml_name: "isolet"
+    openml_version: 1
+    uci_id: "isolet"
+    expected_N: 7797
+    expected_D: 617
+    expected_K: 26
+    d_over_n_ratio: 0.08
+    preprocessing:
+      standardize: true
+      impute_nan: true
+      log_transform: false
+      hvg_filter: false
+    priority: "high"
+    enabled: true
+    description: "Isolet spoken letter recognition dataset from UCI/OpenML (N=7797, D=617, K=26)"
+
+  indian_pines:
+    name: "indian_pines"
+    domain: "hyperspectral"
+    source: "url"
+    openml_id: null
+    loader: "spectral.load_indian_pines"
+    url: "https://www.ehu.eus/ccwintco/uploads/6/67/Indian_pines_corrected.mat"
+    expected_N: 10249
+    expected_D: 200
+    expected_K: 16
+    d_over_n_ratio: 0.02
+    preprocessing:
+      standardize: true
+      impute_nan: false
+      log_transform: false
+      hvg_filter: false
+    priority: "high"
+    enabled: true
+    description: "Indian Pines hyperspectral imaging flight line over NW Indiana (N=10249, D=200, K=16)"
+
+  yale_b:
+    name: "yale_b"
+    domain: "image"
+    source: "url"
+    openml_id: null
+    loader: "image.load_yale_b"
+    url: "http://vision.ucsd.edu/extyaleb/CroppedYaleB.zip"
+    expected_N: 2414
+    expected_D: 1024
+    expected_K: 38
+    d_over_n_ratio: 0.42
+    preprocessing:
+      standardize: true
+      impute_nan: false
+      log_transform: false
+      hvg_filter: false
+    priority: "high"
+    enabled: true
+    description: "Extended Yale B cropped face images with varying illumination angles (N=2414, D=1024, K=38)"
+
+  zheng68k:
+    name: "zheng68k"
+    domain: "scrnaseq"
+    source: "scanpy"
+    openml_id: null
+    loader: "scrnaseq.load_zheng68k"
+    expected_N: 700
+    expected_D: 765
+    expected_K: 10
+    d_over_n_ratio: 1.09
+    preprocessing:
+      standardize: true
+      impute_nan: false
+      log_transform: true
+      hvg_filter: true
+    priority: "critical"
+    enabled: true
+    description: "Zheng et al. 2017 PBMC scRNA-seq profiling (reduced subset: N=700, D=765, K=10, extreme sparsity)"
+

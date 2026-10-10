@@ -1,0 +1,36 @@
+# ==============================================================================
+# NOTE: pyproject.toml is the primary specification for this project.
+#
+# To install the package in editable mode with core dependencies:
+#     pip install -e .
+#
+# To install with optional dependency groups:
+#     pip install -e ".[deep]"   # DEC/IDEC/SCAN deep clustering baselines
+#     pip install -e ".[bio]"    # Single-cell RNA-seq (scanpy, anndata)
+#     pip install -e ".[dev]"    # Testing and development tools
+#     pip install -e ".[all]"    # All dependencies
+# ==============================================================================
+
+# Core Numerical and Scientific Computing Stack
+numpy>=1.23.0
+scipy>=1.10.0
+pandas>=2.0.0
+matplotlib>=3.7.0
+scikit-learn>=1.3.0
+seaborn>=0.12.0
+pyyaml>=6.0
+tqdm>=4.60.0
+tabulate>=0.9.0
+
+# Document & PDF Generation
+reportlab>=4.0.0
+Pillow>=9.5.0
+
+# Machine Learning & Deep Learning (Optional: pip install -e ".[deep]")
+torch>=2.0.0
+tensorflow>=2.12.0
+keras>=3.0.0
+
+# Single-cell Genomics (Optional: pip install -e ".[bio]")
+scanpy>=1.9.0
+anndata>=0.9.0
