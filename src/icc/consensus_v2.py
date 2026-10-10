@@ -138,9 +138,19 @@ class InvariantCoreConsensusV2:
         # ---------------------------------------------------------------------
         # 1. Feature Saliency Scoring (Bimodality & Dispersion Prior)
         # ---------------------------------------------------------------------
-        kurt = kurtosis(X, axis=0)
-        sk = skew(X, axis=0)
-        bimodal = (sk**2 + 1.0) / (kurt + 3.0 + 1e-5)
+        bimodal = np.zeros(D, dtype=np.float64)
+        var = np.var(X, axis=0)
+        valid_mask = var > 1e-12
+        if np.any(valid_mask):
+            X_valid = X[:, valid_mask]
+            kurt = kurtosis(X_valid, axis=0, bias=False) if N >= 4 else kurtosis(X_valid, axis=0)
+            sk = skew(X_valid, axis=0, bias=False) if N >= 3 else skew(X_valid, axis=0)
+            # Finite-sample Sarle Bimodality Coefficient:
+            # Fisher excess kurtosis converted to Pearson kurtosis with finite-sample null correction
+            finite_corr = 3.0 * ((N - 1) ** 2) / ((N - 2) * (N - 3)) if N >= 4 else 3.0
+            denom = kurt + finite_corr + 1e-5
+            denom = np.fmax(denom, 1e-5)
+            bimodal[valid_mask] = (sk**2 + 1.0) / denom
         self.feature_scores_ = bimodal
 
         # ---------------------------------------------------------------------
