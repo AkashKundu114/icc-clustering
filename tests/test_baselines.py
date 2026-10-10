@@ -115,9 +115,15 @@ def test_models_dict_execution():
     K = 2
 
     for name, model_fn in MODELS.items():
-        if name == "dec" and not HAS_DEEP:
+        if name.lower() == "dec" and not HAS_DEEP:
             continue
-        pred, elapsed, lc = model_fn(X, K, seed=42)
+        try:
+            pred, elapsed, lc = model_fn(X, K, seed=42)
+        except (ImportError, ModuleNotFoundError) as err:
+            if not HAS_DEEP and ("tensorflow" in str(err).lower() or "keras" in str(err).lower()):
+                continue
+            raise
+
         assert pred.shape == (30,)
         assert elapsed >= 0.0
         assert isinstance(lc, int)
