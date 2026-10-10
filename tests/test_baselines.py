@@ -8,6 +8,13 @@ import pytest
 from experiments.exp3_real_world_benchmarks.src.benchmark_models import MODELS
 from src.icc.baselines import ModelMetadata, get_model, list_models
 
+try:
+    import tensorflow  # noqa: F401
+    import keras  # noqa: F401
+    HAS_DEEP = True
+except (ImportError, Exception):
+    HAS_DEEP = False
+
 
 def test_list_models_categories():
     all_models = list_models()
@@ -75,6 +82,7 @@ def test_run_fastmvc_direct():
 
 
 
+@pytest.mark.skipif(not HAS_DEEP, reason="tensorflow/keras not installed")
 def test_run_dec_direct():
     from src.icc.baselines.deep import run_dec
     rng = np.random.default_rng(42)
@@ -107,6 +115,8 @@ def test_models_dict_execution():
     K = 2
 
     for name, model_fn in MODELS.items():
+        if name == "dec" and not HAS_DEEP:
+            continue
         pred, elapsed, lc = model_fn(X, K, seed=42)
         assert pred.shape == (30,)
         assert elapsed >= 0.0

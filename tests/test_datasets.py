@@ -17,6 +17,17 @@ from src.icc.datasets.spectral import load_indian_pines
 from src.icc.datasets.audio import load_isolet
 from src.icc.datasets.scrnaseq import load_zheng68k, load_tabula_muris
 
+try:
+    import scanpy  # noqa: F401
+    HAS_SCANPY = True
+except (ImportError, Exception):
+    HAS_SCANPY = False
+
+
+def _is_zheng68k_cached():
+    from src.icc.datasets.scrnaseq import _DEFAULT_CACHE
+    return (_DEFAULT_CACHE / "zheng68k.npz").exists()
+
 
 def test_list_datasets():
     enabled = list_datasets(enabled_only=True)
@@ -144,6 +155,10 @@ def test_load_yale_b():
     assert meta["d_over_n"] == 0.42
 
 
+@pytest.mark.skipif(
+    not HAS_SCANPY and not _is_zheng68k_cached(),
+    reason="scanpy not installed and zheng68k not cached",
+)
 def test_load_zheng68k():
     # Load zheng68k via unified registry loader
     X, y, meta = load_dataset("zheng68k")
