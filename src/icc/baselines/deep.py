@@ -15,9 +15,15 @@ References:
 import os
 import time
 from typing import Any, List, Tuple
-
 import numpy as np
-from sklearn.cluster import KMeans
+
+_SKLEARN_AVAILABLE = False
+try:
+    from sklearn.cluster import KMeans as _SkKMeans
+    _test = _SkKMeans(n_clusters=2, n_init=1).fit_predict(np.zeros((4, 2)))
+    _SKLEARN_AVAILABLE = True
+except (ImportError, Exception):
+    _SKLEARN_AVAILABLE = False
 
 from src.icc.baselines.classical import ModelMetadata
 
@@ -373,14 +379,25 @@ def run_dec(
 
     # 6. Initialize cluster centers via KMeans on latent representations
     z = np.asarray(encoder.predict(X_arr, batch_size=batch_size, verbose=0))
-    kmeans = KMeans(n_clusters=k, n_init=20, random_state=seed)
-    y_pred = kmeans.fit_predict(z)
+    if _SKLEARN_AVAILABLE:
+        try:
+            kmeans = _SkKMeans(n_clusters=k, n_init=20, random_state=seed)
+            y_pred = kmeans.fit_predict(z)
+            centers = kmeans.cluster_centers_
+        except Exception:
+            from src.icc.core import run_clusterer
+            y_pred = run_clusterer("kmeans", z, k, seed=seed)
+            centers = np.array([z[y_pred == c].mean(axis=0) if np.any(y_pred == c) else z[c] for c in range(k)])
+    else:
+        from src.icc.core import run_clusterer
+        y_pred = run_clusterer("kmeans", z, k, seed=seed)
+        centers = np.array([z[y_pred == c].mean(axis=0) if np.any(y_pred == c) else z[c] for c in range(k)])
 
     # 7. Build DEC Model
     ClusteringLayer = _build_clustering_layer_cls(layers_mod)
     clustering_layer = ClusteringLayer(
         n_clusters=k,
-        initial_weights=[kmeans.cluster_centers_],
+        initial_weights=[centers],
         name="clustering",
     )
     dec_outputs = clustering_layer(encoder.output)

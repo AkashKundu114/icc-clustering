@@ -92,7 +92,10 @@ class InvariantCoreConsensusV2:
         beta: float = 2.0,
         base_clusterer: str = "auto",
         random_state: int = 42,
+        random_seed: Optional[int] = None,
     ):
+        if random_seed is not None:
+            random_state = random_seed
         self.n_clusters = n_clusters
         self.k = n_clusters  # Backward compatibility alias
         self.n_base_models = n_base_models

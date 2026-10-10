@@ -16,7 +16,43 @@ from typing import Tuple
 import numpy as np
 import scipy.linalg as sla
 from scipy.spatial.distance import cdist
-from sklearn.cluster import KMeans, kmeans_plusplus
+
+_SKLEARN_AVAILABLE = False
+try:
+    from sklearn.cluster import KMeans as _SkKMeans, kmeans_plusplus as _sk_kmeans_plusplus
+    _test = _SkKMeans(n_clusters=2, n_init=1).fit_predict(np.zeros((4, 2)))
+    _SKLEARN_AVAILABLE = True
+except (ImportError, Exception):
+    _SKLEARN_AVAILABLE = False
+
+
+def _kmeans_plusplus_fallback(X: np.ndarray, n_clusters: int, random_state: int = 42) -> Tuple[np.ndarray, np.ndarray]:
+    rng = np.random.default_rng(random_state)
+    n = X.shape[0]
+    first_idx = int(rng.integers(0, n))
+    indices = [first_idx]
+    centers = [X[first_idx]]
+    for _ in range(1, n_clusters):
+        dists = np.min(cdist(X, np.array(centers), metric="sqeuclidean"), axis=1)
+        dists_sum = float(dists.sum())
+        if dists_sum < 1e-12:
+            probs = np.ones(n) / n
+        else:
+            probs = dists / dists_sum
+        next_idx = int(rng.choice(n, p=probs))
+        indices.append(next_idx)
+        centers.append(X[next_idx])
+    return np.array(centers), np.array(indices, dtype=int)
+
+
+def _kmeans_cluster(X: np.ndarray, k: int, random_state: int = 42, n_init: int = 10) -> np.ndarray:
+    if _SKLEARN_AVAILABLE:
+        try:
+            return _SkKMeans(n_clusters=k, n_init=n_init, random_state=random_state).fit_predict(X).astype(np.int64)
+        except Exception:
+            pass
+    from src.icc.core import run_clusterer
+    return run_clusterer("kmeans", X, k, seed=random_state).astype(np.int64)
 
 from src.icc.baselines.classical import ModelMetadata
 
@@ -156,7 +192,13 @@ def run_fcag(
     if m >= N:
         anchors = np.copy(X_arr)
     else:
-        anchors, _ = kmeans_plusplus(X_arr, n_clusters=m, random_state=seed)
+        if _SKLEARN_AVAILABLE:
+            try:
+                anchors, _ = _sk_kmeans_plusplus(X_arr, n_clusters=m, random_state=seed)
+            except Exception:
+                anchors, _ = _kmeans_plusplus_fallback(X_arr, n_clusters=m, random_state=seed)
+        else:
+            anchors, _ = _kmeans_plusplus_fallback(X_arr, n_clusters=m, random_state=seed)
 
     # Step b: Construct anchor-to-sample bipartite graph Z
     Z = construct_anchor_bipartite_graph(X_arr, anchors, s=s)
@@ -183,8 +225,7 @@ def run_fcag(
 
     # Step d: Discretize eigenvectors for final assignment
     F_norm = F / (np.linalg.norm(F, axis=1, keepdims=True) + 1e-12)
-    km = KMeans(n_clusters=k, n_init=n_init, random_state=seed)
-    labels = km.fit_predict(F_norm).astype(np.int64)
+    labels = _kmeans_cluster(F_norm, k=k, random_state=seed, n_init=n_init)
 
     runtime_seconds = time.perf_counter() - t0
     metadata = ModelMetadata(
@@ -277,7 +318,13 @@ def run_fastmvc(
     if m >= N:
         anchor_indices = np.arange(N)
     else:
-        _, anchor_indices = kmeans_plusplus(X_arr, n_clusters=m, random_state=seed)
+        if _SKLEARN_AVAILABLE:
+            try:
+                _, anchor_indices = _sk_kmeans_plusplus(X_arr, n_clusters=m, random_state=seed)
+            except Exception:
+                _, anchor_indices = _kmeans_plusplus_fallback(X_arr, n_clusters=m, random_state=seed)
+        else:
+            _, anchor_indices = _kmeans_plusplus_fallback(X_arr, n_clusters=m, random_state=seed)
 
     # Step 2 & 3: Construct view-specific bipartite graphs and fuse across views
     sub_d = max(2, int(D * subspace_rate))
@@ -320,8 +367,7 @@ def run_fastmvc(
 
     # Step 6: Discretize eigenvectors for final assignment
     F_norm = F / (np.linalg.norm(F, axis=1, keepdims=True) + 1e-12)
-    km = KMeans(n_clusters=k, n_init=n_init, random_state=seed)
-    labels = km.fit_predict(F_norm).astype(np.int64)
+    labels = _kmeans_cluster(F_norm, k=k, random_state=seed, n_init=n_init)
 
     runtime_seconds = time.perf_counter() - t0
     metadata = ModelMetadata(
