@@ -117,6 +117,7 @@ def main():
             tex_table = generate_metric_table(df, metric, caption, label)
             out_chunks.append(tex_table)
 
+    DEST_TEX.parent.mkdir(parents=True, exist_ok=True)
     DEST_TEX.write_text("\n".join(out_chunks), encoding="utf-8")
     print(f"[SUCCESS] Wrote complete supplementary tables to: {DEST_TEX}")
 
