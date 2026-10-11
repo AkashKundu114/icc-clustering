@@ -18,7 +18,7 @@ from src.icc.metrics import evaluate_all
 
 HAS_IMPUTE = False
 try:
-    from experiments.exp3_real_world_benchmarks.exp3_5_missing_data.src.missing_data_experiment import (
+    from experiments.exp3_real_world_benchmarks.src.missing_data_experiment import (
         inject_mcar_noise,
         impute_data,
     )
