@@ -1,9 +1,11 @@
 """
-Master CLI Runner for Experiment 2 Suite: Component-Wise Ablation Study.
+Master CLI Runner for Experiment 2 Suite: Component-Wise Ablation Study & VSSG Interpretability.
 
 Usage:
-  python run_exp2.py --reproduce-plots   (re-renders Figures 11, 12, 13 from cached CSV)
+  python run_exp2.py --reproduce-plots   (re-renders Figures 11, 12, 13, 22 from cached CSVs)
   python run_exp2.py --run-full          (executes full ablation sweep across 10 trials)
+  python run_exp2.py --ablation-only     (runs component ablation sweep only)
+  python run_exp2.py --vssg-only         (runs VSSG interpretability audit only)
 """
 
 import argparse
@@ -18,9 +20,7 @@ src_dir = Path(__file__).resolve().parent / "src"
 if str(src_dir) not in sys.path:
     sys.path.insert(0, str(src_dir))
 
-from run_ablation_sweep import run_ablation_experiment
 from plot_exp2_figures import plot_exp2_figures
-from vssg_interpretability import run_all as run_vssg_interpretability
 from plot_vssg_figures import generate_all_plots as plot_vssg_figures
 
 
@@ -34,12 +34,14 @@ def main():
     args = parser.parse_args()
 
     if args.ablation_only:
+        from run_ablation_sweep import run_ablation_experiment
         print("\n[*] Running Component-Wise Ablation Sweep...")
         run_ablation_experiment(n_trials=args.trials)
         plot_exp2_figures()
         return
 
     if args.vssg_only:
+        from vssg_interpretability import run_all as run_vssg_interpretability
         print("\n[*] Running VSSG Interpretability Audit...")
         run_vssg_interpretability(n_trials=args.trials)
         plot_vssg_figures()
@@ -52,6 +54,9 @@ def main():
         return
 
     if args.run_full:
+        from run_ablation_sweep import run_ablation_experiment
+        from vssg_interpretability import run_all as run_vssg_interpretability
+
         print("=================================================================")
         print(" EXECUTING FULL EXPERIMENT 2 ABLATION & INTERPRETABILITY SUITE")
         print("=================================================================")

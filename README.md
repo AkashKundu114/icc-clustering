@@ -74,13 +74,9 @@ icc-clustering/
 ├── experiments/                               # Empirical verification and benchmark suites
 │   ├── exp0_falsification/                    # Experiment 0: Consensus stability falsification
 │   ├── exp1_generalization/                   # Experiment 1: Downstream inductive classification
-│   ├── exp2_ablation/                         # Experiment 2: Architectural component ablations
-│   │   └── exp2_1_vssg_interpretability/      # Sub-experiment 2.1: VSSG feature discovery analysis
-│   ├── exp3_real_world_benchmarks/            # Experiment 3: 13-dataset multi-domain benchmarks
-│   │   └── exp3_5_missing_data/               # Sub-experiment 3.5: Missing data robustness audit
+│   ├── exp2_ablation/                         # Experiment 2: Architectural component ablations & VSSG suite
+│   ├── exp3_real_world_benchmarks/            # Experiment 3: 13-dataset multi-domain benchmarks & missing data
 │   ├── exp4_scalability_and_sensitivity/      # Experiment 4: Scalability, sensitivity, and anchor fidelity
-│   │   ├── exp4_2_k_misspecification/         # Sub-experiment 4.2: Cluster count misspecification
-│   │   └── exp4_3_anchor_fidelity/            # Sub-experiment 4.3: Anchor approximation fidelity audit
 │   └── exp5_extreme_scale/                    # Experiment 5: Asymptotic scaling stress testing
 ├── tests/                                     # Automated test suite (62/62 tests passing)
 │   ├── test_consensus_v2.py                   # Core ICC-v2 algorithm tests
@@ -225,9 +221,8 @@ python experiments/exp1_generalization/run_exp1.py --run-full
 # Experiment 2: Ablation and VSSG Interpretability Audit (Figures 11-13, 22a-c)
 python experiments/exp2_ablation/run_exp2.py --reproduce-plots
 
-# Experiment 3: 13-Dataset Benchmarks and Missing Data Audit (Figures 14-17, 18a-b)
-python experiments/exp3_real_world_benchmarks/src/plot_exp3_figures.py
-python experiments/exp3_real_world_benchmarks/exp3_5_missing_data/run_exp3_5.py --reproduce-plots
+# Experiment 3: 13-Dataset Benchmarks and Missing Data Audit (Figures 14-17, 25a-b)
+python experiments/exp3_real_world_benchmarks/run_exp3.py --reproduce-plots
 
 # Experiment 4: Scalability, Sensitivity, and Anchor Fidelity (Figures 18-21, 23, 24)
 python experiments/exp4_scalability_and_sensitivity/run_exp4.py --reproduce-plots

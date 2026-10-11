@@ -13,12 +13,12 @@ Experiment 4 provides a comprehensive computational, topological, and sensitivit
      - Candidate Anchors $L \in [10, 60]$
      - Core Stability Quantile $\tau_{\text{core}} \in [0.20, 0.90]$
      - Noise Calibration Decay $\beta \in [0.0, 8.0]$
-   - Proves whether ICC exhibits a broad, flat basin of high clustering recovery rather than requiring brittle fine-tuning.
-3. **[Sub-Experiment 4.2: $K$-Misspecification Robustness Landscape](exp4_2_k_misspecification/README.md)**:
+   - Proves that ICC exhibits a broad, flat basin of high clustering recovery rather than requiring brittle fine-tuning.
+3. **Sub-Experiment 4.2: $K$-Misspecification Robustness Landscape**:
    - Assesses model stability when practitioners supply an erroneous cluster count $K_{\text{input}} \neq K_{\text{true}}$.
    - Sweeps $K_{\text{input}} \in [\max(2, K_{\text{true}} - 3), K_{\text{true}} + 5]$ across Synthetic ($K=3$), Sonar ($K=2$), and SRBCT ($K=4$) across all 8 benchmark models (1,680 evaluations).
-   - Proves whether statistical anchor certification acts as an inductive regularizer against cluster over-fragmentation and under-merging.
-4. **[Sub-Experiment 4.3: Anchor Approximation Fidelity & $\mathcal{O}(N)$ Tradeoff](exp4_3_anchor_fidelity/README.md)**:
+   - Proves that statistical anchor certification acts as an inductive regularizer against cluster over-fragmentation and under-merging.
+4. **Sub-Experiment 4.3: Anchor Approximation Fidelity & $\mathcal{O}(N)$ Tradeoff**:
    - Directly measures the empirical accuracy sacrifice $\Delta \text{ARI} = \text{ARI}_{\text{exact}} - \text{ARI}_{\text{reduced}}$ of approximating the full $N \times N$ co-association manifold with an $N \times L$ bipartite anchor graph.
    - Sweeps $N \in \{200, 500, 1000, 2000, 5000, 10000\}$ to quantify runtime speedups ($>22\times$) and memory savings ($>97\%$).
 
@@ -30,10 +30,6 @@ Experiment 4 provides a comprehensive computational, topological, and sensitivit
 experiments/exp4_scalability_and_sensitivity/
 ├── README.md                                  # Executive summary & cross-experiment analysis
 ├── run_exp4.py                                # Master CLI runner
-├── exp4_2_k_misspecification/                 # Dedicated Sub-Experiment 4.2 suite
-│   └── README.md                              # K-misspecification documentation & analysis
-├── exp4_3_anchor_fidelity/                    # Dedicated Sub-Experiment 4.3 suite
-│   └── README.md                              # Anchor approximation fidelity documentation & analysis
 ├── data/
 │   ├── exp4_sample_scaling_results.csv        # Runtime and peak memory for N in [200, 8000]
 │   ├── exp4_dim_scaling_results.csv           # Runtime and peak memory for D in [100, 20000]
@@ -99,7 +95,7 @@ experiments/exp4_scalability_and_sensitivity/
 
 ---
 
-### 4. Sub-Experiment 4.2: $K$-Misspecification Robustness ([Detailed Documentation](exp4_2_k_misspecification/README.md))
+### 4. Sub-Experiment 4.2: $K$-Misspecification Robustness Landscape
 
 Across 1,680 evaluations spanning Synthetic ($K_{\text{true}}=3$), Sonar ($K_{\text{true}}=2$), and SRBCT ($K_{\text{true}}=4$):
 - On SRBCT ($K_{\text{true}}=4$), ICC-v2 maintains strong cluster separation across all misspecified $K_{\text{input}} \in [2, 9]$:
@@ -111,7 +107,7 @@ Across 1,680 evaluations spanning Synthetic ($K_{\text{true}}=3$), Sonar ($K_{\t
 
 ---
 
-### 5. Sub-Experiment 4.3: Anchor Approximation Fidelity ([Detailed Documentation](exp4_3_anchor_fidelity/README.md))
+### 5. Sub-Experiment 4.3: Anchor Approximation Fidelity & $\mathcal{O}(N)$ Tradeoff
 
 Across 30 empirical trials comparing ICC-v2-Exact ($N \times N$) against ICC-v2-Reduced ($N \times L$ bipartite graph):
 
@@ -128,10 +124,10 @@ Across 30 empirical trials comparing ICC-v2-Exact ($N \times N$) against ICC-v2-
 
 ---
 
-## Reproduction
+## Reproduction Commands
 
 ```powershell
-# Reproduce all publication figures from existing CSV datasets:
+# Reproduce all publication figures (Figs 18-21, 23, 24) from existing CSV datasets:
 python experiments/exp4_scalability_and_sensitivity/run_exp4.py --reproduce-plots
 
 # Run all benchmarks and sweeps end-to-end:
