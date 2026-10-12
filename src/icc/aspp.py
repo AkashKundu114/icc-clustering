@@ -276,7 +276,7 @@ class AnchorSpacePerturbationProfiler:
                     # 2. Candidate features surviving in perturbed view
                     surviving_pool = np.intersect1d(candidate_pool, obs_cols)
                     if len(surviving_pool) < 2:
-                        surviving_pool = np.arange(len(obs_cols))
+                        surviving_pool = obs_cols
                     sub_size = max(2, int(len(surviving_pool) * cfg.subspace_rate))
 
                     # 3. Build rectangular bipartite matrix B^(p, r) in R^(N_obs x L_obs)
@@ -384,11 +384,14 @@ class AnchorSpacePerturbationProfiler:
                 rets = np.array([r[k] for r in family_cluster_retention[fam]])
                 coas = np.array([c[k] for c in family_cluster_anchor_coassoc[fam]])
 
-                mean_ret = float(np.nanmean(rets)) if len(rets) > 0 else 0.5
-                mean_coa = float(np.nanmean(coas)) if len(coas) > 0 else mean_ret
+                valid_rets = rets[~np.isnan(rets)]
+                valid_coas = coas[~np.isnan(coas)]
+
+                mean_ret = float(np.mean(valid_rets)) if len(valid_rets) > 0 else 0.5
+                mean_coa = float(np.mean(valid_coas)) if len(valid_coas) > 0 else mean_ret
                 # Composite stability for family fam
-                s_kp = float(np.nanmean([mean_ret, mean_coa]))
-                sd_kp = float(np.nanstd(rets)) if len(rets) > 1 else 0.0
+                s_kp = float(np.mean([mean_ret, mean_coa])) if not (np.isnan(mean_ret) or np.isnan(mean_coa)) else 0.5
+                sd_kp = float(np.std(valid_rets)) if len(valid_rets) > 1 else 0.0
 
                 row[fam] = s_kp
                 row[f"{fam}_retention"] = mean_ret
@@ -400,7 +403,9 @@ class AnchorSpacePerturbationProfiler:
 
             max_sd = float(np.max(response_sds)) if len(response_sds) > 0 else 0.0
             stab_arr = np.array(stability_scores, dtype=np.float64)
-            psi = float(np.mean(1.0 - stab_arr))
+            psi = float(np.mean(1.0 - stab_arr)) if len(stab_arr) > 0 else 0.5
+            if np.isnan(psi):
+                psi = 0.5
 
             row["max_response_sd"] = max_sd
             row["PSI"] = np.clip(psi, 0.0, 1.0)

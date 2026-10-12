@@ -154,8 +154,22 @@ def _fcm_like(X, k, seed, m=2.0, n_iter=100, tol=1e-5):
 def _kmeans_numpy(X, k, seed=0, max_iter=100):
     rng = np.random.default_rng(seed)
     n = X.shape[0]
-    idx = rng.choice(n, size=k, replace=False)
-    centers = X[idx].copy()
+    if n <= k:
+        return np.arange(n, dtype=int)
+
+    # k-means++ initialization to prevent duplicate or collapsed initial centers
+    centers = np.empty((k, X.shape[1]), dtype=X.dtype)
+    centers[0] = X[rng.choice(n)]
+    for c in range(1, k):
+        dists = cdist(X, centers[:c], metric='sqeuclidean')
+        min_dists = np.min(dists, axis=1)
+        sum_dists = np.sum(min_dists)
+        if sum_dists > 1e-12:
+            probs = min_dists / sum_dists
+            centers[c] = X[rng.choice(n, p=probs)]
+        else:
+            centers[c] = X[rng.choice(n)]
+
     labels = np.zeros(n, dtype=int)
     for _ in range(max_iter):
         dists = cdist(X, centers, metric='sqeuclidean')
