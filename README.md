@@ -156,8 +156,9 @@ ICC-v2 is evaluated against 10 representative baselines:
 - **VSSG Subspace Gating:** Isolating informative dimensions via Sarle's Bimodality Coefficient prevents noise dimension contamination, maintaining cluster recovery in extreme noise regimes ($D_{\text{noise}} \ge 5,000$) where unguided consensus collapses.
 
 ### 4. Multi-Domain Benchmarking and Missing-Data Resilience (Experiment 3)
-- **Rank Dominance:** Across 13 benchmark datasets and 1,430 model executions, ICC-v2 achieves the highest mean Adjusted Rand Index (ARI = 0.1718, Rank #1), statistically significantly outperforming classical and ensemble baselines under Wilcoxon signed-rank tests ($p < 0.05$).
-- **Missing-Data Stability:** Under Missing Completely At Random (MCAR) rates up to $40\%$, ICC-v2 combined with mean or median imputation maintains over $80\%$ of its nominal cluster recovery accuracy.
+- **High-Dimensional Domain Specialization:** Across 13 benchmark datasets and 1,430 model executions, ICC-v2 achieves a Grand Mean ARI of **0.1599** (mean rank 5.46 across diverse domains). It demonstrates commanding Rank #1 performance on ultra-high-dimensional continuous biomedical cancer assays ($D/N > 20$, e.g., Leukemia ARI = 0.680 vs. DEC 0.148, SRBCT ARI = 0.538 vs. Std Cons 0.040, Ovarian ARI = 0.052), maintaining cluster recovery where deep models collapse due to sample sparsity ($N \le 100$).
+- **Operating Envelope & Trade-offs:** On large-sample sparse text and single-cell count matrices (20 Newsgroups, Zheng68k), hierarchical Ward and DEC outperform ICC-v2, as zero-inflation violates the continuous unimodal distractor noise assumption.
+- **Missing-Data Stability:** Under Missing Completely At Random (MCAR) rates up to $40\%$, ICC-v2 combined with mean or median imputation maintains over $80\%$ of its nominal cluster recovery accuracy on continuous datasets.
 
 ### 5. Computational Scalability and Asymptotic Behavior (Experiments 4 and 5)
 - **Linear Sample Scaling:** Empirical execution times scale strictly as $\mathcal{O}(N)$, completing clustering on $N = 1,000,000$ synthetic observations in under 3.5 minutes on standard workstation hardware.

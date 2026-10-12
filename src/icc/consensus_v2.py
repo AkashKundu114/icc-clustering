@@ -172,11 +172,24 @@ class InvariantCoreConsensusV2:
         self.feature_scores_ = bimodal
 
         # ---------------------------------------------------------------------
-        # 2. Adaptive Candidate Pool
+        # 2. Principled Null-Calibrated Candidate Pool (VSSG Gating)
         # ---------------------------------------------------------------------
-        top_frac = min(1.0, max(0.15, 100.0 / D))
-        pool_size = max(k, int(top_frac * D))
-        candidate_pool = np.argsort(bimodal)[-pool_size:]
+        # Unimodal distributions (Gaussian, Laplace, Logistic) satisfy BC <= 5/9 (~0.5556).
+        # We identify features with multimodal / clustered structure (BC >= 5/9).
+        bimodal_threshold = 5.0 / 9.0
+        passing_indices = np.where(bimodal >= bimodal_threshold)[0]
+        min_features = min(2, D)
+        max_pool = min(D, max(100, int(0.15 * D)))
+
+        if len(passing_indices) >= min_features:
+            if len(passing_indices) <= max_pool:
+                candidate_pool = passing_indices
+            else:
+                top_pass = np.argsort(bimodal[passing_indices])[-max_pool:]
+                candidate_pool = passing_indices[top_pass]
+        else:
+            # If fewer than min_features exceed 5/9, select top min(D, max(2, k))
+            candidate_pool = np.argsort(bimodal)[-min(D, max(2, k)):]
         self.selected_features_ = candidate_pool
 
         # Subspace drawing size
@@ -200,64 +213,47 @@ class InvariantCoreConsensusV2:
             partitions.append(p)
 
         # ---------------------------------------------------------------------
-        # 4. Certified Core Anchors & Bipartite Graph Construction
+        # 4. Certified Core Anchors & Exact O(NL) Bipartite Consensus
         # ---------------------------------------------------------------------
-        if N <= 2000:
-            S = pairwise_coassoc(partitions)
-            np.fill_diagonal(S, 0.0)
-            sample_stability = np.sum(S**2, axis=1) / max(1, N - 1)
-            np.fill_diagonal(S, 1.0)
-            self.stability_ = sample_stability
+        P_stack = np.array(partitions)  # shape (M, N)
 
-            tau_stab = np.quantile(sample_stability, self.core_quantile)
-            core_idx = np.where(sample_stability >= tau_stab)[0]
-            if len(core_idx) < k:
-                core_idx = np.argsort(sample_stability)[-k:]
+        # Exact linear-memory determinacy calculation via joint contingency counts:
+        # sum_{j=1}^N S_{ij}^2 = 1/M^2 sum_{m1, m2} C_{m1, m2}(pi_{m1}(i), pi_{m2}(i))
+        # strictly avoiding O(N^2) dense co-association allocation for all N.
+        lin_sum_sq = np.zeros(N, dtype=np.float64)
+        for m1 in range(self.n_base_models):
+            for m2 in range(self.n_base_models):
+                joint = P_stack[m1] * k + P_stack[m2]
+                counts = np.bincount(joint, minlength=k * k)
+                lin_sum_sq += counts[joint]
 
-            self.core_indices_ = core_idx
-            self.core_mask_ = np.zeros(N, dtype=bool)
-            self.core_mask_[core_idx] = True
+        # sigma_i = 1/(N-1) sum_{j != i} S_{ij}^2 = (sum_{j=1}^N S_{ij}^2 - 1.0) / max(1, N - 1)
+        sample_stability = np.maximum(0.0, (lin_sum_sq / (self.n_base_models ** 2) - 1.0) / max(1, N - 1))
+        self.stability_ = sample_stability
 
-            L = min(self.n_anchors, len(core_idx))
-            anchor_idx = rng.choice(core_idx, size=L, replace=False)
-            self.anchor_indices_ = anchor_idx
-            B = S[:, anchor_idx]
-        else:
-            # Scalable O(N L) direct bipartite co-association for massive scale (N > 2000)
-            P_stack = np.array(partitions)  # shape (M, N)
-            sub_n = min(N, 1000)
-            cand_idx = rng.choice(N, size=sub_n, replace=False)
-            P_cand = P_stack[:, cand_idx]   # shape (M, sub_n)
+        tau_stab = np.quantile(sample_stability, self.core_quantile)
+        core_idx = np.where(sample_stability >= tau_stab)[0]
+        if len(core_idx) < k:
+            core_idx = np.argsort(sample_stability)[-k:]
 
-            cand_S = np.zeros((sub_n, sub_n), dtype=np.float32)
-            for m in range(self.n_base_models):
-                cand_S += (P_cand[m, :, None] == P_cand[m, None, :]).astype(np.float32)
-            cand_S /= self.n_base_models
-            np.fill_diagonal(cand_S, 0.0)
-            cand_stability = np.sum(cand_S**2, axis=1) / max(1, sub_n - 1)
+        self.core_indices_ = core_idx
+        self.core_mask_ = np.zeros(N, dtype=bool)
+        self.core_mask_[core_idx] = True
 
-            tau_stab = np.quantile(cand_stability, self.core_quantile)
-            core_cand = np.where(cand_stability >= tau_stab)[0]
-            if len(core_cand) < k:
-                core_cand = np.argsort(cand_stability)[-k:]
+        # Certified anchor selection from determinacy core
+        L = min(self.n_anchors, len(core_idx))
+        anchor_idx = rng.choice(core_idx, size=L, replace=False)
+        self.anchor_indices_ = anchor_idx
 
-            L = min(self.n_anchors, len(core_cand))
-            anchor_local = rng.choice(core_cand, size=L, replace=False)
-            anchor_idx = cand_idx[anchor_local]
-            self.anchor_indices_ = anchor_idx
-            self.core_indices_ = anchor_idx
-            self.core_mask_ = np.zeros(N, dtype=bool)
-            self.core_mask_[anchor_idx] = True
-
-            P_anchors = P_stack[:, anchor_idx]  # shape (M, L)
-            B = np.zeros((N, L), dtype=np.float32)
-            for m in range(self.n_base_models):
-                B += (P_stack[m, :, None] == P_anchors[m, None, :]).astype(np.float32)
-            sample_stability = np.mean(B**2, axis=1)
-            self.stability_ = sample_stability
+        # Direct rectangular bipartite co-association matrix B in O(N L) memory
+        P_anchors = P_stack[:, anchor_idx]  # shape (M, L)
+        B = np.zeros((N, L), dtype=np.float64)
+        for m in range(self.n_base_models):
+            B += (P_stack[m, :, None] == P_anchors[m, None, :]).astype(np.float64)
+        B /= self.n_base_models
 
         # ---------------------------------------------------------------------
-        # 5. Bipartite Spectral Decomposition
+        # 5. Bipartite Spectral Decomposition (Transfer-Cut)
         # ---------------------------------------------------------------------
         row_sums = B.sum(axis=1, keepdims=True)
         row_sums[row_sums < 1e-12] = 1.0
@@ -271,7 +267,9 @@ class InvariantCoreConsensusV2:
         evals, evecs = sla.eigh(L_norm)
         V_core = evecs[:, :k]
 
-        U_emb = B_norm @ V_core
+        # Transfer-Cut bipartite projection: scale anchor eigenvectors by inverse root degrees
+        V_scaled = deg_inv_sqrt[:, None] * V_core
+        U_emb = B_norm @ V_scaled
         emb_norm = np.linalg.norm(U_emb, axis=1, keepdims=True)
         emb_norm[emb_norm < 1e-12] = 1.0
         U_emb /= emb_norm
@@ -471,8 +469,8 @@ class InvariantCoreConsensusV2:
             margin = np.ones(len(preds), dtype=np.float64)
 
         if self.psi_ is not None:
-            psi_assigned = self.psi_[preds]
-            confidence = np.clip(margin * (1.0 - psi_assigned), 0.0, 1.0)
+            psi_assigned = np.nan_to_num(self.psi_[preds], nan=0.5)
+            confidence = np.nan_to_num(np.clip(margin * (1.0 - psi_assigned), 0.0, 1.0), nan=0.0)
             reliability = (
                 [self.reliability_categories_[p] for p in preds]
                 if self.reliability_categories_ is not None
