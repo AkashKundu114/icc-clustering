@@ -273,11 +273,12 @@ def run_pseudolabel_generalization(
     df.to_csv(output_csv, index=False)
     print(f"\n[+] Saved multi-classifier results to {output_csv} ({len(df)} evaluations)")
 
-    # Save backward-compatible SVM summary CSV
-    df_svm = pd.DataFrame(summary_svm)
-    svm_csv = data_dir / "exp1_pseudolabel_results.csv"
-    df_svm.to_csv(svm_csv, index=False)
-    print(f"[+] Saved SVM pseudo-label summary to {svm_csv}")
+    # Save backward-compatible SVM summary CSV only if running default sweep
+    if Path(output_csv).resolve() == (data_dir / "exp1_multiclassifier_results.csv").resolve():
+        df_svm = pd.DataFrame(summary_svm)
+        svm_csv = data_dir / "exp1_pseudolabel_results.csv"
+        df_svm.to_csv(svm_csv, index=False)
+        print(f"[+] Saved SVM pseudo-label summary to {svm_csv}")
 
     return df
 

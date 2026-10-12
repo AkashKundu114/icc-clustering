@@ -1,0 +1,3 @@
+# Verification log
+Clone: git clone --depth 50 (c38a4c9). Branch audit/remediation-a1-a2 (commit 45e157b). Commands: demo.py; pytest tests -o addopts="" (58 pass/6 skip/5 net-fail); scripts a2_controls.py {syn,real}, a2_random_control.py, a2_filter_controls.py. Pandas recomputation of exp3/exp1/missing-data/exp2 tables. Web searches: U-SENC, BC feature selection, FCAG/FastMICE. NOT done: ASPP audit, exp0/exp4/exp5 reruns, exp3 rerun, manuscript review, TKDE policy check, 5 download datasets.
+Artifacts: research_audit/results/*.csv, scripts/*.py. Original files unmodified except on branch: README.md, demo.py, src/icc/consensus_v2.py (pool_mode opt-in, default 'legacy' preserves behaviour).

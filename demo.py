@@ -154,9 +154,8 @@ def main():
     print("=" * 75)
 
     advantage = scores_train_icc["ari"] - max(scores_km["ari"], scores_sp["ari"])
-    print(f"\n[+] Key Finding: ICC-v2 achieves a +{advantage:.4f} ARI margin over classical models")
-    print("    by actively gating out 99.9% distractor noise dimensions and certifying invariant anchors.")
-    print("[+] State-of-the-art scalable consensus + interpretable ASPP diagnostics verified successfully!\n")
+    print(f"\n[+] ICC-v2 train ARI minus best of K-Means/Spectral: {advantage:+.4f}")
+    print("[+] (Interpret only if the margin is large relative to seed-to-seed variation; see research_audit.)\n")
 
 
 if __name__ == "__main__":
