@@ -6,6 +6,7 @@ __version__ = "2.0.0"
 
 from .consensus import InvariantCoreConsensus
 from .consensus_v2 import InvariantCoreConsensusV2
+from .aspp import ASPPConfig, AnchorSpacePerturbationProfiler, ASPP_FAMILIES
 from .core import build_dataset, run_clusterer, pairwise_coassoc
 from .metrics import (
     adjusted_rand_score,
@@ -22,6 +23,9 @@ __all__ = [
     "__version__",
     "InvariantCoreConsensus",
     "InvariantCoreConsensusV2",
+    "ASPPConfig",
+    "AnchorSpacePerturbationProfiler",
+    "ASPP_FAMILIES",
     "build_dataset",
     "run_clusterer",
     "pairwise_coassoc",
