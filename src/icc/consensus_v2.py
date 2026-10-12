@@ -57,7 +57,7 @@ class InvariantCoreConsensusV2:
     subspace_rate : float, default=0.30
         Fraction of active candidate pool features drawn per subspace.
     beta : float, default=2.0
-        Noise penalization decay parameter.
+        Legacy parameter retained for backward API compatibility with v1 configurations.
     base_clusterer : str, default="auto"
         Base clustering algorithm family ('auto', 'kmeans', 'spectral', 'ward', 'fcm').
         If 'auto', chooses 'spectral' for N <= 100 and 'kmeans' for N > 100.
