@@ -6,13 +6,15 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Tests: Passing](https://img.shields.io/badge/pytest-69%2F69%20passed-brightgreen.svg)]()
+[![Tests: Passing](https://img.shields.io/badge/pytest-76%2F76%20passed-brightgreen.svg)]()
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![IEEE Compliance](https://img.shields.io/badge/IEEE%20TKDE-Compliant%20(Grade%20A%2B)-success.svg)]()
+[![ORCID](https://img.shields.io/badge/ORCID-0009--0003--8246--7316-A6CE39?logo=orcid&logoColor=white)](https://orcid.org/0009-0003-8246-7316)
 
-**Author:** Akash Kundu  
+**Author:** Akash Kundu [![ORCID](https://img.shields.io/badge/ORCID-0009--0003--8246--7316-A6CE39?logo=orcid&logoColor=white)](https://orcid.org/0009-0003-8246-7316)  
 **Affiliation:** Department of Computer Science and Engineering, Techno India University  
 **Contact:** `akash231001001449@technoindiaeducation.com` | `akashkundu11522@gmail.com`
+**ORCID:** [0009-0003-8246-7316](https://orcid.org/0009-0003-8246-7316)
 
 [**Paper Status**](#citation-and-academic-context) | [**Quickstart**](#environment-setup-and-installation) | [**Reproducibility Guide**](#reproduction-cli-guide) | [**Citation**](#citation-and-academic-context)
 
@@ -74,21 +76,26 @@ icc-clustering/
 │           ├── deep.py                        # Deep clustering: DEC (Deep Embedded Clustering)
 │           └── anchor.py                      # Scalable anchor baselines: FCAG (TPAMI 2024), FastMVC (TKDE 2023)
 ├── experiments/                               # Empirical verification and benchmark suites
+│   ├── audit_controls/                        # Statistical audit controls: A2 subspace pool rules, A3 Transfer-Cut, E1 21-dataset benchmarks, E3 pool-size sensitivity
+│   │   ├── src/                               # Reproduction scripts (a2_controls, a3_embedding, e1_extended, e3_pool_curve, etc.)
+│   │   └── data/                              # Empirical audit matrices & summaries
 │   ├── exp0_falsification/                    # Experiment 0: Consensus stability falsification
 │   ├── exp1_generalization/                   # Experiment 1: Downstream inductive classification
 │   ├── exp2_ablation/                         # Experiment 2: Architectural component ablations & VSSG suite
 │   ├── exp3_real_world_benchmarks/            # Experiment 3: 13-dataset multi-domain benchmarks & missing data
 │   ├── exp4_scalability_and_sensitivity/      # Experiment 4: Scalability, sensitivity, and anchor fidelity
 │   └── exp5_extreme_scale/                    # Experiment 5: Asymptotic scaling stress testing
-├── tests/                                     # Automated test suite (69/69 tests passing)
+├── tests/                                     # Automated test suite (76/76 tests passing)
 │   ├── test_consensus_v2.py                   # Core ICC-v2 algorithm tests
 │   ├── test_aspp.py                           # Anchor-Space Perturbation Profiling tests
 │   ├── test_datasets.py                       # Dataset loader validation tests
 │   ├── test_baselines.py                      # Baseline wrapper compatibility tests
 │   ├── test_metrics.py                        # Metric mathematical verification tests
 │   ├── test_exp1_multiclassifier.py           # Multi-classifier pipeline tests
-│   └── test_anchor_fidelity.py                # Bipartite approximation fidelity tests
-├── docs/                                      # Theoretical proofs, literature surveys, and notes
+│   ├── test_anchor_fidelity.py                # Bipartite approximation fidelity tests
+│   └── test_audit_a3.py                       # Transfer-Cut embedding and gating audit tests
+├── docs/                                      # Theoretical proofs, literature surveys, and reports
+│   ├── audit_reports/                         # Methodological & statistical audit reports (Reports 00-11, Remediation 01-12)
 │   └── THEORETICAL_FOUNDATIONS.md             # Formal theorems, propositions, and mathematical proofs
 ├── CONTRIBUTING.md                            # Contributor guidelines and environment setup
 ├── CODE_OF_CONDUCT.md                         # Contributor Covenant standard
@@ -209,7 +216,7 @@ Run the automated test suite to verify the installation:
 python -m pytest tests/ -v
 ```
 
-All 69 unit and integration tests should pass without errors.
+All 76 unit and integration tests should pass without errors.
 
 ---
 
@@ -292,7 +299,8 @@ If you use this codebase, benchmark results, or methodology in your research, pl
   journal      = {Manuscript Submitted for Peer Review},
   year         = {2026},
   institution  = {Techno India University},
-  url          = {https://github.com/AkashKundu114/icc-clustering}
+  url          = {https://github.com/AkashKundu114/icc-clustering},
+  note         = {ORCID: 0009-0003-8246-7316}
 }
 ```
 

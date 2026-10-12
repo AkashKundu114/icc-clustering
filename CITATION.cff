@@ -4,6 +4,7 @@ title: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillatio
 authors:
   - family-names: "Kundu"
     given-names: "Akash"
+    orcid: "https://orcid.org/0009-0003-8246-7316"
     email: "akash231001001449@technoindiaeducation.com"
     affiliation: "Department of Computer Science and Engineering, Techno India University"
 preferred-citation:
@@ -11,6 +12,7 @@ preferred-citation:
   authors:
     - family-names: "Kundu"
       given-names: "Akash"
+      orcid: "https://orcid.org/0009-0003-8246-7316"
   title: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"
   journal: "Manuscript Submitted for Peer Review"
   year: 2026

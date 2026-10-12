@@ -12,5 +12,7 @@ for name in ['leukemia','srbct','colon','cns']:
     for s in range(10):
         km=lambda cols: ari(y,KMeans(k,n_init=10,random_state=s).fit_predict(X[:,cols]))
         rows.append(dict(data=name,seed=s,pool=pool_n,KM_all=km(slice(None)),KM_topBC=km(top_bc),KM_topVar=km(top_var)))
-df=pd.DataFrame(rows); df.to_csv('research_audit/results/a2_filter_controls.csv',index=False)
+import os
+os.makedirs('experiments/audit_controls/data', exist_ok=True)
+df=pd.DataFrame(rows); df.to_csv('experiments/audit_controls/data/a2_filter_controls.csv',index=False)
 print(df.groupby('data')[['pool','KM_all','KM_topBC','KM_topVar']].mean().round(3).to_string())

@@ -32,7 +32,8 @@ else:
         d=np.load(f); X,y=d['X'].astype(float),d['y']; k=len(np.unique(y))
         for s in range(5):
             r=run(X,y,k,s); r.update(data=os.path.basename(f)[:-4],seed=s); rows.append(r)
-df=pd.DataFrame(rows); df.to_csv(f'research_audit/results/a2_{sys.argv[1]}.csv',index=False)
+os.makedirs('experiments/audit_controls/data', exist_ok=True)
+df=pd.DataFrame(rows); df.to_csv(f'experiments/audit_controls/data/a2_{sys.argv[1]}.csv',index=False)
 pd.set_option('display.width',250)
 cols=[c for c in df.columns if c not in('seed','data') and not c.startswith('pred')]
 print(df.groupby('data')[cols].mean().round(3).to_string())

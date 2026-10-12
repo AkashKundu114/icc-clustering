@@ -11,5 +11,6 @@ for name in ['leukemia','srbct','colon','cns']:
         for mode in ['legacy','random']:
             r[f'ICC_{mode}']=ari(y,ICC(n_clusters=k,n_base_models=25,n_anchors=30,random_state=s,pool_mode=mode).fit_predict(X))
         rows.append(r)
-df=pd.DataFrame(rows); df.to_csv('research_audit/results/a2_random_control.csv',index=False)
+os.makedirs('experiments/audit_controls/data', exist_ok=True)
+df=pd.DataFrame(rows); df.to_csv('experiments/audit_controls/data/a2_random_control.csv',index=False)
 g=df.groupby('data')[['KM_all','ICC_legacy','ICC_random']].agg(['mean','std']).round(3); print(g.to_string())

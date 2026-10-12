@@ -11,6 +11,6 @@ for f in sorted(glob.glob('experiments/exp3_real_world_benchmarks/data/cache/*.n
             for s in range(5):
                 m=ICC(n_clusters=k,n_anchors=30,random_state=s,pool_mode=mode,pool_frac=fq)
                 rows.append(dict(data=name,frac=fq,mode=mode,seed=s,ari=ari(y,m.fit_predict(X))))
-df=pd.DataFrame(rows); df.to_csv('research_audit/results/e3_pool_curve.csv',index=False)
+df=pd.DataFrame(rows); df.to_csv('experiments/audit_controls/data/e3_pool_curve.csv',index=False)
 t=df.pivot_table(index=['data','mode'],columns='frac',values='ari').round(3); pd.set_option('display.width',200); print(t.to_string())
 print("\nmean over datasets:"); print(df.pivot_table(index='mode',columns='frac',values='ari').round(3).to_string())

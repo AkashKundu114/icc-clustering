@@ -157,7 +157,7 @@ def main():
             })
             
     df = pd.DataFrame(results)
-    out_csv = "research_audit/results/e3_label_free_selector_eval.csv"
+    out_csv = "experiments/audit_controls/data/e3_label_free_selector_eval.csv"
     os.makedirs(os.path.dirname(out_csv), exist_ok=True)
     df.to_csv(out_csv, index=False)
     print(f"\nSaved results to {out_csv}")
@@ -217,7 +217,7 @@ def main():
         mean_ari = df_eval[f"{col}_ari"].mean()
         print(f"Selected by {crit_names[col]:<35}: {mean_ari:.4f}")
         
-    summary_path = "research_audit/results/e3_label_free_selector_summary.csv"
+    summary_path = "experiments/audit_controls/data/e3_label_free_selector_summary.csv"
     df_eval.to_csv(summary_path, index=False)
     print(f"\nSaved evaluation summary to {summary_path}")
 

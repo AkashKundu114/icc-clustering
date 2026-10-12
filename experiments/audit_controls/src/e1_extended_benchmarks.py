@@ -18,8 +18,8 @@ Features:
   8. ICC-v1 (Feature-Reliability Anchor Consensus)
   9. ICC-v2 (Legacy 15% Floor)
   10. ICC-v2 (Label-Free Adaptive Subspace Pool)
-- Outputs full trial-level CSV to research_audit/results/e1_extended_benchmarks.csv
-  and summary matrix to research_audit/results/e1_extended_summary.csv.
+- Outputs full trial-level CSV to experiments/audit_controls/data/e1_extended_benchmarks.csv
+  and summary matrix to experiments/audit_controls/data/e1_extended_summary.csv.
 """
 
 import os
@@ -52,7 +52,7 @@ from src.icc.core import run_clusterer
 
 CACHE_DIR = _ROOT / "experiments" / "exp3_real_world_benchmarks" / "data" / "cache"
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
-RESULTS_DIR = _ROOT / "research_audit" / "results"
+RESULTS_DIR = _ROOT / "experiments" / "audit_controls" / "data"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # Specification for 22 real-world benchmarks

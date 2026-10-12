@@ -5,6 +5,6 @@ E3 pool-size sensitivity curve (5%-50%) on Leukemia/SRBCT/Colon/CNS with random-
 E4 anchor vs dense spectral equivalence on N<=2000 (ARI/embedding distance).
 E5 rerun Exp1 and missing-data on 13 datasets with fixed protocol.
 E6 scalability re-run with measured memory per component.
-Command pattern: PYTHONPATH=. python research_audit/scripts/<script>.py
+Command pattern: PYTHONPATH=. python experiments/audit_controls/src/<script>.py
 
-## Status: E3 DONE (see 06). Next: E1 on >=20 datasets (needs network for 5 uncached datasets plus new ones, run locally), with a label-free pool-size selector evaluated in a nested protocol (e.g. consensus stability or silhouette on the pool) so no labels enter selection.
+## Status: E3 (pool-size sensitivity curve) and E3-B (unsupervised pool-size selector) and E1 (extended 21-dataset multi-domain benchmark) ALL COMPLETED. Results cached in `experiments/audit_controls/data/`.
