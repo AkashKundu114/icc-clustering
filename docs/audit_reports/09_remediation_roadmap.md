@@ -8,3 +8,6 @@ A1 done; A2 partial (opt-in pool rules + controls; default unchanged); A3 partia
 
 ## Progress (E3)
 Pool-size curve done: effect real but window-limited and unselectable without labels today. Plan B item added: label-free pool-size selection + dataset-level test across >=20 datasets. Defensible narrowed claim candidate: "BC-ranked wide subspace pools help when informative genes are enriched in the top ~5-15% by bimodality; sensitive outside that band."
+
+## Progress (E3b)
+Label-free pool selection: two pre-specified criteria failed. Plan B now frames pool sensitivity as an explicit limitation unless a selector validated on held-out datasets is found. Plan A claim wording: results at the default 15% pool are reported with the pool-size curve alongside.
