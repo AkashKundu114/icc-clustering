@@ -99,6 +99,9 @@ class InvariantCoreConsensusV2:
         aspp_config: Optional[ASPPConfig] = None,
         random_state: int = 42,
         random_seed: Optional[int] = None,
+        pool_mode: str = "null_calibrated",
+        pool_mad_c: float = 3.5,
+        pool_alpha: float = 0.05,
     ):
         if random_seed is not None:
             random_state = random_seed
@@ -115,6 +118,9 @@ class InvariantCoreConsensusV2:
         self.enable_aspp = enable_aspp
         self.aspp_config = aspp_config
         self.random_state = random_state
+        self.pool_mode = pool_mode      # 'legacy' (>=15% floor) | 'robust' (median+c*MAD) | 'gauss' (Bonferroni Gaussian-null) | 'random' (control) | 'null_calibrated' (BC >= 5/9)
+        self.pool_mad_c = pool_mad_c
+        self.pool_alpha = pool_alpha
 
         # Fitted attributes
         self.labels_: Optional[np.ndarray] = None
@@ -172,24 +178,54 @@ class InvariantCoreConsensusV2:
         self.feature_scores_ = bimodal
 
         # ---------------------------------------------------------------------
-        # 2. Principled Null-Calibrated Candidate Pool (VSSG Gating)
+        # 2. Adaptive Candidate Pool (VSSG Gating)
         # ---------------------------------------------------------------------
-        # Unimodal distributions (Gaussian, Laplace, Logistic) satisfy BC <= 5/9 (~0.5556).
-        # We identify features with multimodal / clustered structure (BC >= 5/9).
-        bimodal_threshold = 5.0 / 9.0
-        passing_indices = np.where(bimodal >= bimodal_threshold)[0]
-        min_features = min(2, D)
-        max_pool = min(D, max(100, int(0.15 * D)))
-
-        if len(passing_indices) >= min_features:
-            if len(passing_indices) <= max_pool:
-                candidate_pool = passing_indices
+        if self.pool_mode == "legacy":
+            top_frac = min(1.0, max(0.15, 100.0 / D))
+            pool_size = max(k, int(top_frac * D))
+            candidate_pool = np.argsort(bimodal)[-pool_size:]
+        elif self.pool_mode == "random":   # control: same pool size as legacy, BC ranking ignored
+            top_frac = min(1.0, max(0.15, 100.0 / D))
+            pool_size = max(k, int(top_frac * D))
+            candidate_pool = np.random.default_rng(self.random_state + 12345).choice(D, size=pool_size, replace=False)
+        elif self.pool_mode == "robust":
+            b = bimodal[valid_mask]
+            med = np.median(b)
+            mad = max(1.4826 * np.median(np.abs(b - med)), 1e-8)
+            thr = med + self.pool_mad_c * mad
+            cand = np.where(valid_mask & (bimodal > thr))[0]
+            if len(cand) < max(k, 2):
+                cand = np.argsort(bimodal)[-max(k, 2):]
+            candidate_pool = cand
+        elif self.pool_mode == "gauss":
+            from scipy.stats import norm
+            rn = np.random.default_rng(0)
+            Z = rn.normal(size=(N, 2000))
+            kz = kurtosis(Z, axis=0, bias=False) if N >= 4 else kurtosis(Z, axis=0)
+            sz = skew(Z, axis=0, bias=False) if N >= 3 else skew(Z, axis=0)
+            fc = 3.0 * ((N - 1) ** 2) / ((N - 2) * (N - 3)) if N >= 4 else 3.0
+            nb = (sz ** 2 + 1.0) / np.fmax(kz + fc + 1e-5, 1e-5)
+            thr = nb.mean() + norm.ppf(1 - self.pool_alpha / max(D, 1)) * nb.std()
+            cand = np.where(valid_mask & (bimodal > thr))[0]
+            if len(cand) < max(k, 2):
+                cand = np.argsort(bimodal)[-max(k, 2):]
+            candidate_pool = cand
+        elif self.pool_mode == "null_calibrated":
+            # Unimodal distributions (Gaussian, Laplace, Logistic) satisfy BC <= 5/9 (~0.5556).
+            bimodal_threshold = 5.0 / 9.0
+            passing_indices = np.where(bimodal >= bimodal_threshold)[0]
+            min_features = min(2, D)
+            max_pool = min(D, max(100, int(0.15 * D)))
+            if len(passing_indices) >= min_features:
+                if len(passing_indices) <= max_pool:
+                    candidate_pool = passing_indices
+                else:
+                    top_pass = np.argsort(bimodal[passing_indices])[-max_pool:]
+                    candidate_pool = passing_indices[top_pass]
             else:
-                top_pass = np.argsort(bimodal[passing_indices])[-max_pool:]
-                candidate_pool = passing_indices[top_pass]
+                candidate_pool = np.argsort(bimodal)[-min(D, max(2, k)):]
         else:
-            # If fewer than min_features exceed 5/9, select top min(D, max(2, k))
-            candidate_pool = np.argsort(bimodal)[-min(D, max(2, k)):]
+            raise ValueError(f"Unknown pool_mode: {self.pool_mode}")
         self.selected_features_ = candidate_pool
 
         # Subspace drawing size
