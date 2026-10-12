@@ -31,3 +31,13 @@ def test_invalid_options_raise():
         ICC(n_clusters=3, embedding="nope").fit_predict(X)
     with pytest.raises(ValueError):
         ICC(n_clusters=3, pool_mode="nope").fit_predict(X)
+
+@pytest.mark.parametrize("mode", ["bc_frac", "random_frac"])
+def test_pool_mode_frac_options(mode):
+    X, _ = _data()
+    m = ICC(n_clusters=3, pool_mode=mode, pool_frac=0.10, random_state=0)
+    lab = m.fit_predict(X)
+    assert len(lab) == len(X)
+    assert set(lab) <= {0, 1, 2}
+    assert m.selected_features_ is not None
+    assert len(m.selected_features_) >= 2
