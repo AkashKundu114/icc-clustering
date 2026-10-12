@@ -6,6 +6,7 @@ data/raw/
 
 # Experiment caches
 experiments/**/data/*.npz
+experiments/**/data/cache/*.npz
 experiments/**/data/*.h5ad
 experiments/**/data/*.mat
 !experiments/**/data/.gitkeep
