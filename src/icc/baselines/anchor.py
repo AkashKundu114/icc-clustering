@@ -2,14 +2,12 @@
 Anchor-based scalable clustering baselines for the ICC benchmark suite.
 
 Methods:
-- FCAG: Fast Clustering with Anchor Guidance (Nie, Xue, Yu, Li, IEEE TPAMI 2024)
-- FastMVC: Fast Multi-View/Subspace Anchor Clustering (Huang, Wang, Lai, IEEE TKDE 2023)
+- FCAG: Fast Clustering with Anchor Guidance (Nie, Xue, Yu, Li; IEEE TPAMI 2024, doi:10.1109/TPAMI.2023.3318603). NOTE: this is a k-means++-anchor spectral re-implementation, not the paper's PGD/IRW/CD solvers.
+- FastMVC: [STUB] random-subspace anchor-graph SURROGATE. It is NOT a faithful implementation of FastMICE (Huang, Wang, Lai; IEEE TKDE 2023, doi:10.1109/TKDE.2023.3236698), the closest published method. Do not report it as that method.
 
 References:
     Nie, Xue, Yu, Li. "Fast Clustering With Anchor Guidance."
     IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 2024.
-    Huang, Wang, Lai. "Fast Multi-View Clustering via Ensembles: Towards
-    Scalability, Superiority, and Simplicity." IEEE TKDE, 2023.
 """
 
 import time
