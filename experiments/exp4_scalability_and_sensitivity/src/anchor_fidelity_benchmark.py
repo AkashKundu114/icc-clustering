@@ -45,19 +45,9 @@ def run_icc_v2_exact(X, k, n_base_models=25, seed=42):
     kurt = kurtosis(X, axis=0)
     sk = skew(X, axis=0)
     bimodal = (sk**2 + 1.0) / (kurt + 3.0 + 1e-5)
-    bimodal_threshold = 5.0 / 9.0
-    passing_indices = np.where(bimodal >= bimodal_threshold)[0]
-    min_features = min(2, D)
-    max_pool = min(D, max(100, int(0.15 * D)))
-
-    if len(passing_indices) >= min_features:
-        if len(passing_indices) <= max_pool:
-            candidate_pool = passing_indices
-        else:
-            top_pass = np.argsort(bimodal[passing_indices])[-max_pool:]
-            candidate_pool = passing_indices[top_pass]
-    else:
-        candidate_pool = np.argsort(bimodal)[-min(D, max(2, k)):]
+    top_frac = min(1.0, max(0.15, 100.0 / D))
+    pool_size = max(k, int(top_frac * D))
+    candidate_pool = np.argsort(bimodal)[-pool_size:]
     sub_size = max(2, int(len(candidate_pool) * 0.30))
 
     # Base models

@@ -15,3 +15,6 @@
 | R12 | MED | Repro | demo.py | hard-coded 'Key Finding' (fixed on branch) |
 | R13 | MED | Stats | exp3_4 | uncorrected raw-p reporting; n=6 subgroup cannot pass Holm |
 | R14 | LOW | Docs | docstring | BC formula text differs from code |
+
+## Status after A3/A4 (branch)
+R4 PARTIAL: branches parameterized and shown to differ; not unified. R5 PARTIAL: opt-in transfer-cut embedding; equivalence at clustering level not established. R7 PARTIAL: docstrings/citations fixed, `stub: true` in configs; no faithful FastMICE/FCAG yet. R10 FIXED (deprecation + tests). Excluding the stub, Exp3 conclusions unchanged: ICC-v2 mean rank 5.15/10 (DEC 4.15), min raw p 0.244, Friedman p 0.448.

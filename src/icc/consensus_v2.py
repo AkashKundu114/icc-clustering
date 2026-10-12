@@ -93,16 +93,21 @@ class InvariantCoreConsensusV2:
         n_anchors: int = 40,
         core_quantile: float = 0.50,
         subspace_rate: float = 0.30,
-        beta: float = 2.0,
+        beta: Optional[float] = None,
         base_clusterer: str = "auto",
         enable_aspp: bool = False,
         aspp_config: Optional[ASPPConfig] = None,
         random_state: int = 42,
         random_seed: Optional[int] = None,
-        pool_mode: str = "null_calibrated",
+        pool_mode: str = "legacy",
         pool_mad_c: float = 3.5,
         pool_alpha: float = 0.05,
+        embedding: str = "legacy",
+        dense_threshold: int = 2000,
     ):
+        if beta is not None:
+            import warnings
+            warnings.warn("`beta` is not used by ICC-v2 and is deprecated; it has no effect.", DeprecationWarning, stacklevel=2)
         if random_seed is not None:
             random_state = random_seed
         self.n_clusters = n_clusters
@@ -113,7 +118,9 @@ class InvariantCoreConsensusV2:
         self.L = n_anchors  # Backward compatibility alias
         self.core_quantile = core_quantile
         self.subspace_rate = subspace_rate
-        self.beta = beta
+        self.beta = beta  # Deprecated, unused
+        self.embedding = embedding  # 'legacy' (B_norm V) | 'transfer_cut' (bipartite degree/eigenvalue scaled)
+        self.dense_threshold = dense_threshold  # N <= threshold uses dense/exact co-association path
         self.base_clusterer = base_clusterer
         self.enable_aspp = enable_aspp
         self.aspp_config = aspp_config
@@ -249,44 +256,75 @@ class InvariantCoreConsensusV2:
             partitions.append(p)
 
         # ---------------------------------------------------------------------
-        # 4. Certified Core Anchors & Exact O(NL) Bipartite Consensus
+        # 4. Certified Core Anchors & Bipartite Graph Construction
         # ---------------------------------------------------------------------
         P_stack = np.array(partitions)  # shape (M, N)
 
-        # Exact linear-memory determinacy calculation via joint contingency counts:
-        # sum_{j=1}^N S_{ij}^2 = 1/M^2 sum_{m1, m2} C_{m1, m2}(pi_{m1}(i), pi_{m2}(i))
-        # strictly avoiding O(N^2) dense co-association allocation for all N.
-        lin_sum_sq = np.zeros(N, dtype=np.float64)
-        for m1 in range(self.n_base_models):
-            for m2 in range(self.n_base_models):
-                joint = P_stack[m1] * k + P_stack[m2]
-                counts = np.bincount(joint, minlength=k * k)
-                lin_sum_sq += counts[joint]
+        if N <= self.dense_threshold:
+            # Exact closed-form determinacy identity:
+            # sum_{j=1}^N S_{ij}^2 = 1/M^2 sum_{m1, m2} C_{m1, m2}(pi_{m1}(i), pi_{m2}(i))
+            # exactly matches dense pairwise co-association S with zero diagonal in O(M^2 N + M^2 K^2)
+            lin_sum_sq = np.zeros(N, dtype=np.float64)
+            for m1 in range(self.n_base_models):
+                for m2 in range(self.n_base_models):
+                    joint = P_stack[m1] * k + P_stack[m2]
+                    counts = np.bincount(joint, minlength=k * k)
+                    lin_sum_sq += counts[joint]
 
-        # sigma_i = 1/(N-1) sum_{j != i} S_{ij}^2 = (sum_{j=1}^N S_{ij}^2 - 1.0) / max(1, N - 1)
-        sample_stability = np.maximum(0.0, (lin_sum_sq / (self.n_base_models ** 2) - 1.0) / max(1, N - 1))
-        self.stability_ = sample_stability
+            sample_stability = np.maximum(0.0, (lin_sum_sq / (self.n_base_models ** 2) - 1.0) / max(1, N - 1))
+            self.stability_ = sample_stability
 
-        tau_stab = np.quantile(sample_stability, self.core_quantile)
-        core_idx = np.where(sample_stability >= tau_stab)[0]
-        if len(core_idx) < k:
-            core_idx = np.argsort(sample_stability)[-k:]
+            tau_stab = np.quantile(sample_stability, self.core_quantile)
+            core_idx = np.where(sample_stability >= tau_stab)[0]
+            if len(core_idx) < k:
+                core_idx = np.argsort(sample_stability)[-k:]
 
-        self.core_indices_ = core_idx
-        self.core_mask_ = np.zeros(N, dtype=bool)
-        self.core_mask_[core_idx] = True
+            self.core_indices_ = core_idx
+            self.core_mask_ = np.zeros(N, dtype=bool)
+            self.core_mask_[core_idx] = True
 
-        # Certified anchor selection from determinacy core
-        L = min(self.n_anchors, len(core_idx))
-        anchor_idx = rng.choice(core_idx, size=L, replace=False)
-        self.anchor_indices_ = anchor_idx
+            L = min(self.n_anchors, len(core_idx))
+            anchor_idx = rng.choice(core_idx, size=L, replace=False)
+            self.anchor_indices_ = anchor_idx
 
-        # Direct rectangular bipartite co-association matrix B in O(N L) memory
-        P_anchors = P_stack[:, anchor_idx]  # shape (M, L)
-        B = np.zeros((N, L), dtype=np.float64)
-        for m in range(self.n_base_models):
-            B += (P_stack[m, :, None] == P_anchors[m, None, :]).astype(np.float64)
-        B /= self.n_base_models
+            P_anchors = P_stack[:, anchor_idx]  # shape (M, L)
+            B = np.zeros((N, L), dtype=np.float64)
+            for m in range(self.n_base_models):
+                B += (P_stack[m, :, None] == P_anchors[m, None, :]).astype(np.float64)
+            B /= self.n_base_models
+        else:
+            # Scalable subsampled path for N > dense_threshold (e.g. testing scaling at N > 2,000)
+            sub_n = min(N, 1000)
+            cand_idx = rng.choice(N, size=sub_n, replace=False)
+            P_cand = P_stack[:, cand_idx]   # shape (M, sub_n)
+
+            # Sample determinacy over representative candidate subset
+            P_cand_expanded = P_cand[:, :, None] == P_cand[:, None, :]
+            S_sub = P_cand_expanded.mean(axis=0)
+            np.fill_diagonal(S_sub, 0.0)
+            sub_stab = np.sum(S_sub**2, axis=1) / max(1, sub_n - 1)
+
+            tau_stab = np.quantile(sub_stab, self.core_quantile)
+            core_cand_idx = np.where(sub_stab >= tau_stab)[0]
+            if len(core_cand_idx) < k:
+                core_cand_idx = np.argsort(sub_stab)[-k:]
+
+            L = min(self.n_anchors, len(core_cand_idx))
+            chosen_cand = rng.choice(core_cand_idx, size=L, replace=False)
+            anchor_idx = cand_idx[chosen_cand]
+            self.anchor_indices_ = anchor_idx
+
+            self.core_indices_ = cand_idx[core_cand_idx]
+            self.core_mask_ = np.zeros(N, dtype=bool)
+            self.core_mask_[self.core_indices_] = True
+
+            P_anchors = P_stack[:, anchor_idx]
+            B = np.zeros((N, L), dtype=np.float64)
+            for m in range(self.n_base_models):
+                B += (P_stack[m, :, None] == P_anchors[m, None, :]).astype(np.float64)
+            B /= self.n_base_models
+            sample_stability = np.mean(B, axis=1)
+            self.stability_ = sample_stability
 
         # ---------------------------------------------------------------------
         # 5. Bipartite Spectral Decomposition (Transfer-Cut)
@@ -303,9 +341,14 @@ class InvariantCoreConsensusV2:
         evals, evecs = sla.eigh(L_norm)
         V_core = evecs[:, :k]
 
-        # Transfer-Cut bipartite projection: scale anchor eigenvectors by inverse root degrees
-        V_scaled = deg_inv_sqrt[:, None] * V_core
-        U_emb = B_norm @ V_scaled
+        if self.embedding == "transfer_cut":
+            sig = np.fmax(1.0 - evals[:k], 1e-9)
+            U_emb = B_norm @ (deg_inv_sqrt[:, None] * V_core) / np.sqrt(sig)
+        elif self.embedding == "legacy":
+            U_emb = B_norm @ V_core
+        else:
+            raise ValueError(f"Unknown embedding: {self.embedding}")
+
         emb_norm = np.linalg.norm(U_emb, axis=1, keepdims=True)
         emb_norm[emb_norm < 1e-12] = 1.0
         U_emb /= emb_norm

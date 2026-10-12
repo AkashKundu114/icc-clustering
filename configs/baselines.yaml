@@ -218,6 +218,7 @@ methods:
   fastmvc:
     name: "fastmvc"
     display_name: "FastMVC"
+    stub: true   # surrogate, NOT a faithful FastMICE (Huang et al., TKDE 2023) implementation; exclude from headline comparisons
     category: "anchor"
     enabled: true
     module_path: "src.icc.baselines.anchor"

@@ -1,24 +1,8 @@
-import os, sys, warnings, numpy as np, pandas as pd
-from pathlib import Path
+import warnings, numpy as np, pandas as pd
 warnings.filterwarnings("ignore")
-
-root_dir = Path(__file__).resolve().parent.parent.parent
-if str(root_dir) not in sys.path:
-    sys.path.insert(0, str(root_dir))
-
 from scipy.stats import kurtosis, skew
-try:
-    from sklearn.cluster import KMeans
-    from sklearn.metrics import adjusted_rand_score as ari
-    _ = KMeans(2, n_init=1).fit_predict(np.zeros((4, 2)))
-except Exception:
-    from src.icc.core import run_clusterer, adjusted_rand_score as ari
-    class KMeans:
-        def __init__(self, n_clusters, n_init=10, random_state=42):
-            self.n_clusters = n_clusters
-            self.random_state = random_state
-        def fit_predict(self, X):
-            return run_clusterer("kmeans", X, self.n_clusters, seed=self.random_state)
+from sklearn.cluster import KMeans
+from sklearn.metrics import adjusted_rand_score as ari
 from src.icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
 rows=[]
 for name in ['leukemia','srbct','colon','cns']:
