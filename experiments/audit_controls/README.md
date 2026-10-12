@@ -19,6 +19,7 @@ This directory contains the experimental verification scripts and empirical resu
   * `e5_missing_rerun.py`: Re-run of missing-data evaluation across all 8 cached datasets and 5 missing rates.
   * `e6_scaling_one.py`: Per-process empirical scaling benchmark measuring runtime and peak memory from $N=500$ to $N=32{,}000$ ($D=200$).
   * `e1_extended_benchmarks.py`: Extended multi-domain evaluation spanning 21 real-world datasets across 10 clustering models.
+  * `e1_held_out_comparison.py`: Pre-registered held-out comparison protocol testing declared search budgets and held-out evaluation rules across 21 benchmarks.
 
 * **`data/`**: Raw CSV trial results and summary tables
   * `a2_syn.csv`, `a2_real.csv`: Core control benchmark data.

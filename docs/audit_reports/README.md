@@ -35,6 +35,7 @@ All executable scripts and numerical CSVs produced during the audit are located 
   * `e5_exp1_rerun.py`, `e5_missing_rerun.py` (Re-runs of Exp1 multi-classifier sweep and missing-data benchmarks)
   * `e6_scaling_one.py` (Per-process scaling benchmark testing linear runtime and RSS memory growth)
   * `e1_extended_benchmarks.py` (Extended 21-dataset multi-domain benchmark suite)
+  * `e1_held_out_comparison.py` (Pre-registered held-out comparison protocol testing fixed search budgets and held-out evaluation rules)
 * **Results Data:** [`experiments/audit_controls/data/`](../../experiments/audit_controls/data/)
   * `a2_syn.csv`, `a2_real.csv`, `a2_filter_controls.csv`, `a2_random_control.csv`
   * `e3_pool_curve.csv`, `e3_label_free_selector_eval.csv`, `e3_label_free_selector_summary.csv`, `e3b_selector.csv`
