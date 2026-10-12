@@ -18,8 +18,9 @@ This directory archives the complete, unvarnished documentation from the indepen
 | [`07_red_flag_register.md`](./07_red_flag_register.md) | Defect Register | Systematic tracking and verification log of all identified empirical anomalies and resolution steps. |
 | [`08_experiment_plan.md`](./08_experiment_plan.md) | Remediation Plan | Formal specification of verification experiments: controls (A2), embedding checks (A3), baselines (A4), and pool curve (E3). |
 | [`09_remediation_roadmap.md`](./09_remediation_roadmap.md) | Remediation Roadmap | Chronological execution timeline, parameterization updates, and calibration of scientific claims. |
-| [`10_final_reviewer_report.md`](./10_final_reviewer_report.md) | Reviewer Report | Final adversarial review assessment, evaluating defensibility and publication readiness for IEEE TKDE. |
+| [`10_final_reviewer_report.md`](./10_final_reviewer_report.md) | Reviewer Report | Provisional adversarial review assessment evaluating initial defensibility and red flags. |
 | [`11_verification_log.md`](./11_verification_log.md) | Verification Log | Hash-verified execution records of test sweeps, patch integrations, and numerical replications. |
+| [`12_adversarial_rereview.md`](./12_adversarial_rereview.md) | Phase 12 Re-Review | Comprehensive final adversarial re-review synthesis, before-and-after tables, and strategic publication decision roadmap. |
 | [`remediation_reports/`](./remediation_reports/) | Technical Defense Reports | Author's mathematical defense notes, closed-form derivations, and reproducibility proofs. |
 
 ---
