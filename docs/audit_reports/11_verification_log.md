@@ -10,3 +10,6 @@ consensus_v2.py: opt-in pool_mode 'bc_frac'/'random_frac' + pool_frac (default 0
 
 ## E3b additions
 Script e3b_label_free_selector.py (no src changes). 8 datasets x 5 seeds x 6 pool sizes. Flat results in experiments/audit_controls/data/e3b_selector.csv.
+
+## E5 additions
+e5_exp1_rerun.py (4 noise dims x 10 trials x 4 classifiers = 320 evaluations), e5_missing_rerun.py (8 datasets x 5 rho x 5 seeds). Restored tracked exp1_pseudolabel_results.csv after runner overwrote it.

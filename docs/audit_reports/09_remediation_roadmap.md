@@ -11,3 +11,6 @@ Pool-size curve done: effect real but window-limited and unselectable without la
 
 ## Progress (E3b)
 Label-free pool selection: two pre-specified criteria failed. Plan B now frames pool sensitivity as an explicit limitation unless a selector validated on held-out datasets is found. Plan A claim wording: results at the default 15% pool are reported with the pool-size curve alongside.
+
+## Progress (E5)
+Exp1 and missing-data claims must be rewritten to the rerun numbers (README patch not yet updated for E5 numbers beyond A1 wording). Open: A5 on 13 datasets (local), E1, E4, scalability (E6), manuscript audit.
