@@ -5,3 +5,6 @@ Plan C: speculative (learned/adaptive pool sizing; supervised-free stability bou
 
 ## Progress
 A1 done; A2 partial (opt-in pool rules + controls; default unchanged); A3 partial (options, tests, measurements; branches not unified); A4 partial (docs/citations/stub flag). Open: faithful FCAG/FastMICE or removal, A5 reruns, pool-size curve (E3), more datasets + FS baselines (E1).
+
+## Progress (E3)
+Pool-size curve done: effect real but window-limited and unselectable without labels today. Plan B item added: label-free pool-size selection + dataset-level test across >=20 datasets. Defensible narrowed claim candidate: "BC-ranked wide subspace pools help when informative genes are enriched in the top ~5-15% by bimodality; sensitive outside that band."

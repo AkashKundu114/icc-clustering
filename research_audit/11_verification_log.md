@@ -4,3 +4,6 @@ Artifacts: research_audit/results/*.csv, scripts/*.py. Original files unmodified
 
 ## A3/A4 additions
 Scripts a3_embedding.py, a3_paths.py. tests/test_audit_a3.py (new, 4+ cases). Regression subset (test_audit_a3, consensus_v2, inductive_projection, aspp, edge_cases): 28 passed, 4 skipped. Exp3 stats recomputed excluding FastMVC from the committed CSV.
+
+## E3 additions
+consensus_v2.py: opt-in pool_mode 'bc_frac'/'random_frac' + pool_frac (default 0.15; default behaviour unchanged). Script e3_pool_curve.py; 8 datasets x 7 sizes x 2 modes x 5 seeds (flat results in results/e3_pool_curve.csv).

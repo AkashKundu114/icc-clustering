@@ -1,15 +1,6 @@
-import warnings, numpy as np, pandas as pd, glob, os, sys
-from pathlib import Path
+import warnings, numpy as np, pandas as pd, glob, os
 warnings.filterwarnings("ignore")
-
-root_dir = Path(__file__).resolve().parent.parent.parent
-if str(root_dir) not in sys.path:
-    sys.path.insert(0, str(root_dir))
-
-try:
-    from sklearn.metrics import adjusted_rand_score as ari
-except Exception:
-    from src.icc.core import adjusted_rand_score as ari
+from sklearn.metrics import adjusted_rand_score as ari
 from src.icc.core import build_dataset
 from src.icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
 print("== path equivalence: dense vs scalable branch (N=900, D=500, 4 seeds) ==")

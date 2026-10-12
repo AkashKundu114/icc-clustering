@@ -104,6 +104,7 @@ class InvariantCoreConsensusV2:
         pool_alpha: float = 0.05,
         embedding: str = "legacy",
         dense_threshold: int = 2000,
+        pool_frac: float = 0.15,
     ):
         if beta is not None:
             import warnings
@@ -119,13 +120,14 @@ class InvariantCoreConsensusV2:
         self.core_quantile = core_quantile
         self.subspace_rate = subspace_rate
         self.beta = beta  # Deprecated, unused
+        self.pool_frac = pool_frac  # Used by pool_mode 'bc_frac' / 'random_frac'
         self.embedding = embedding  # 'legacy' (B_norm V) | 'transfer_cut' (bipartite degree/eigenvalue scaled)
         self.dense_threshold = dense_threshold  # N <= threshold uses dense/exact co-association path
         self.base_clusterer = base_clusterer
         self.enable_aspp = enable_aspp
         self.aspp_config = aspp_config
         self.random_state = random_state
-        self.pool_mode = pool_mode      # 'legacy' (>=15% floor) | 'robust' (median+c*MAD) | 'gauss' (Bonferroni Gaussian-null) | 'random' (control) | 'null_calibrated' (BC >= 5/9)
+        self.pool_mode = pool_mode      # 'legacy' (>=15% floor) | 'robust' (median+c*MAD) | 'gauss' (Bonferroni Gaussian-null) | 'random' (control) | 'null_calibrated' (BC >= 5/9) | 'bc_frac' | 'random_frac'
         self.pool_mad_c = pool_mad_c
         self.pool_alpha = pool_alpha
 
@@ -191,6 +193,12 @@ class InvariantCoreConsensusV2:
             top_frac = min(1.0, max(0.15, 100.0 / D))
             pool_size = max(k, int(top_frac * D))
             candidate_pool = np.argsort(bimodal)[-pool_size:]
+        elif self.pool_mode in ("bc_frac", "random_frac"):
+            pool_size = min(D, max(k, 2, int(self.pool_frac * D)))
+            if self.pool_mode == "bc_frac":
+                candidate_pool = np.argsort(bimodal)[-pool_size:]
+            else:
+                candidate_pool = np.random.default_rng(self.random_state + 12345).choice(D, size=pool_size, replace=False)
         elif self.pool_mode == "random":   # control: same pool size as legacy, BC ranking ignored
             top_frac = min(1.0, max(0.15, 100.0 / D))
             pool_size = max(k, int(top_frac * D))
