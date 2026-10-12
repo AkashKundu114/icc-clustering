@@ -150,7 +150,8 @@ ICC-v2 is evaluated against 10 representative baselines:
 - **Objective-Specific Vulnerability:** Graph-partitioning and density-based consensus methods (e.g., Ward and dense spectral consensus) converge toward spurious, highly confident partition artifacts under high dimensions, falsely reporting high stability despite zero true cluster recovery.
 
 ### 2. Downstream Inductive Generalization (Experiment 1)
-- Under $D_{\text{noise}} \ge 1,000$, training downstream classifiers using determinacy-filtered core pseudo-labels yields an average $+4.5\%$ test accuracy improvement over training on all pseudo-labels across Linear SVM, RBF SVM, Random Forests, Multi-Layer Perceptrons, and K-Nearest Neighbors.
+- **Sample Complexity Efficiency:** Downstream classifiers trained exclusively on the certified determinacy core (50% sample budget) attain parity with models trained on 100% of the dataset under low-to-moderate distractor noise ($D_{\text{noise}} \le 50$, achieving test accuracy of $1.000$).
+- **Ambient Distractor Regimes:** In high-dimensional ambient noise ($D_{\text{noise}} \ge 1,000$), downstream classifiers trained on unguided ambient features degrade toward chance accuracy ($\approx 33.3\%$ for $K=3$), demonstrating that statistical anchor filtering and VSSG feature screening are complementary requirements.
 
 ### 3. Component Architectural Ablations (Experiment 2)
 - **Core Certification:** Determinacy-based core selection provides a $+34\%$ Adjusted Rand Index (ARI) improvement in clean data regimes ($D_{\text{noise}} = 0$).
