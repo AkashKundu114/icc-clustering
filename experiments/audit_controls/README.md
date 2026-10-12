@@ -17,6 +17,7 @@ This directory contains the experimental verification scripts and empirical resu
   * `e3b_label_free_selector.py`: External reviewer's label-free pool-size selection protocol (silhouette & stability criteria).
   * `e5_exp1_rerun.py`: Re-run of Exp1 pseudo-label generalization test across 4 noise regimes $\times$ 4 downstream classifiers.
   * `e5_missing_rerun.py`: Re-run of missing-data evaluation across all 8 cached datasets and 5 missing rates.
+  * `e6_scaling_one.py`: Per-process empirical scaling benchmark measuring runtime and peak memory from $N=500$ to $N=32{,}000$ ($D=200$).
   * `e1_extended_benchmarks.py`: Extended multi-domain evaluation spanning 21 real-world datasets across 10 clustering models.
 
 * **`data/`**: Raw CSV trial results and summary tables
@@ -29,6 +30,7 @@ This directory contains the experimental verification scripts and empirical resu
   * `e3b_selector.csv`: Reviewer E3b selection trial records across 8 datasets $\times$ 5 seeds.
   * `e5_exp1_pseudolabel_rerun.csv`: E5 pseudo-label sweep trial evaluations ($320$ rows).
   * `e5_missing_rerun.csv`: E5 missing-data evaluation across 8 datasets $\times$ 5 rates $\times$ 5 seeds ($200$ rows).
+  * `e6_scaling.csv`: Empirical memory and execution time logs across dense and scalable paths for $N \in [500, 32{,}000]$.
   * `e1_extended_benchmarks.csv`: Complete trial-level records across 21 datasets $\times$ 10 models $\times$ 5 seeds ($1,050$ rows).
   * `e1_extended_summary.csv`: Grand mean ARI matrix across all 21 benchmarks.
 

@@ -14,3 +14,6 @@ Label-free pool selection: two pre-specified criteria failed. Plan B now frames 
 
 ## Progress (E5)
 Exp1 and missing-data claims must be rewritten to the rerun numbers (README patch not yet updated for E5 numbers beyond A1 wording). Open: A5 on 13 datasets (local), E1, E4, scalability (E6), manuscript audit.
+
+## Progress (E6)
+README Exp1/missing-data wording updated with rerun numbers. Scaling: linear behaviour supported to N=32k; remaining: branch parity (A3), extreme-scale reruns locally.

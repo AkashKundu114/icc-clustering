@@ -13,3 +13,6 @@ Script e3b_label_free_selector.py (no src changes). 8 datasets x 5 seeds x 6 poo
 
 ## E5 additions
 e5_exp1_rerun.py (4 noise dims x 10 trials x 4 classifiers = 320 evaluations), e5_missing_rerun.py (8 datasets x 5 rho x 5 seeds). Restored tracked exp1_pseudolabel_results.csv after runner overwrote it.
+
+## E6 additions
+e6_scaling_one.py run for N in {500,1000,2000,2001,4000,8000,16000,32000}, D=200 (ru_maxrss per process). README lines for Exp1 and missing-data updated.

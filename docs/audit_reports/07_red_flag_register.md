@@ -21,3 +21,6 @@ R4 PARTIAL: branches parameterized and shown to differ; not unified. R5 PARTIAL:
 
 ## E5 additions
 R8 (Exp1 +4.5%) now VERIFIED non-reproducible by rerun. R9 (missing-data) VERIFIED non-reproducible by rerun. New R15 MED: Exp1 runner overwrites a tracked CSV irrespective of output_csv (now fixed in repository). New R16 MED: ground-truth Exp1 shows ICC-v1 core selection below full-data training at every D_noise>0.
+
+## E6 additions
+R4 refined: dense O(N^2) path VERIFIED (61 MB at N=2000 vs 6 MB at N=2001); scalable path near-linear to N=32,000 (D=200). Open: quality parity between branches; 1e6 / D=1e5 claims.

@@ -33,9 +33,11 @@ All executable scripts and numerical CSVs produced during the audit are located 
   * `e3_pool_curve.py` (Pool-size sensitivity sweep: BC-ranked vs. random control)
   * `e3_label_free_selector.py`, `e3b_label_free_selector.py` (Unsupervised pool-size selection evaluation)
   * `e5_exp1_rerun.py`, `e5_missing_rerun.py` (Re-runs of Exp1 multi-classifier sweep and missing-data benchmarks)
+  * `e6_scaling_one.py` (Per-process scaling benchmark testing linear runtime and RSS memory growth)
   * `e1_extended_benchmarks.py` (Extended 21-dataset multi-domain benchmark suite)
 * **Results Data:** [`experiments/audit_controls/data/`](../../experiments/audit_controls/data/)
   * `a2_syn.csv`, `a2_real.csv`, `a2_filter_controls.csv`, `a2_random_control.csv`
   * `e3_pool_curve.csv`, `e3_label_free_selector_eval.csv`, `e3_label_free_selector_summary.csv`, `e3b_selector.csv`
   * `e5_exp1_pseudolabel_rerun.csv`, `e5_missing_rerun.csv`
+  * `e6_scaling.csv` (Empirical scaling measurements for $N \in [500, 32{,}000]$)
   * `e1_extended_benchmarks.csv`, `e1_extended_summary.csv`
