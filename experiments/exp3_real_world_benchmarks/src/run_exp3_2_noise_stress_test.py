@@ -166,7 +166,7 @@ def plot_fig15_noise_degradation(df):
         if ax_idx == 0:
             ax.legend(loc="upper right", framealpha=0.92, facecolor="white", edgecolor="#cccccc")
             
-    plt.suptitle("Figure 15: Empirical Degradation Under Additive Noise Corruption on Cancer Microarrays",
+    plt.suptitle("Empirical Degradation Under Additive Noise Corruption on Cancer Microarrays",
                  fontweight="bold", fontsize=12.0, y=1.00)
     plt.tight_layout()
     plt.savefig(FIG_PATH, dpi=300, bbox_inches="tight")

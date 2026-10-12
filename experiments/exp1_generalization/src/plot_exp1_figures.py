@@ -30,7 +30,7 @@ def plot_exp1_figures():
     set_academic_style()
 
     # -------------------------------------------------------------------------
-    # 1. Figure 9: Inductive Generalization under True Labels
+    # 1. Inductive Generalization under True Labels
     # -------------------------------------------------------------------------
     gen_csv = data_dir / "exp1_generalization_results.csv"
     if gen_csv.exists():
@@ -80,7 +80,7 @@ def plot_exp1_figures():
         ax2.set_ylim(-26, 4)
         clean_spines(ax2)
 
-        plt.suptitle("Figure 9: Downstream Classifier Generalization from Oracle True Labels",
+        plt.suptitle("Downstream Classifier Generalization from Oracle True Labels",
                      fontweight="bold", fontsize=14.0, y=0.995)
         plt.tight_layout()
         fig9_path = fig_dir / "fig9_inductive_generalization.png"
@@ -88,7 +88,7 @@ def plot_exp1_figures():
         plt.close()
         print(f"  [Saved] {fig9_path}")
 
-        # Supplementary Figure 9: NMI & AMI Inductive Generalization
+        # Supplementary NMI & AMI Inductive Generalization
         if "test_nmi" in df_gen.columns:
             fig_supp, (sax1, sax2) = plt.subplots(1, 2, figsize=(14.0, 5.0), dpi=300)
             if "full_test_nmi" in df_gen.columns:
@@ -126,7 +126,7 @@ def plot_exp1_figures():
             sax2.grid(True, linestyle=":", alpha=0.5)
             sax2.legend(loc="lower left", framealpha=0.92, facecolor="white", edgecolor="#cccccc")
 
-            plt.suptitle("Supplementary Figure 9: Information-Theoretic Inductive Generalization (NMI/AMI)",
+            plt.suptitle("Supplementary Information-Theoretic Inductive Generalization (NMI/AMI)",
                          fontweight="bold", fontsize=12.0, y=0.99)
             plt.tight_layout()
             fig9_supp_path = fig_dir / "fig9_supp_nmi_inductive_generalization.png"
@@ -135,7 +135,7 @@ def plot_exp1_figures():
             print(f"  [Saved] {fig9_supp_path}")
 
     # -------------------------------------------------------------------------
-    # 2. Figure 10: Pseudo-Label Inductive Generalization
+    # 2. Pseudo-Label Inductive Generalization
     # -------------------------------------------------------------------------
     pseudo_csv = data_dir / "exp1_pseudolabel_results.csv"
     if pseudo_csv.exists():
@@ -188,7 +188,7 @@ def plot_exp1_figures():
                      fontsize=9.5, fontweight="bold", color="#207420",
                      bbox=dict(boxstyle="round,pad=0.3", facecolor="#f0fff0", edgecolor="#2ca02c", alpha=0.9))
 
-        plt.suptitle("Figure 10: Downstream Generalization from Unsupervised Pseudo-Labels",
+        plt.suptitle("Downstream Generalization from Unsupervised Pseudo-Labels",
                      fontweight="bold", fontsize=14.0, y=0.995)
         plt.tight_layout()
         fig10_path = fig_dir / "fig10_pseudolabel_generalization.png"
@@ -262,7 +262,7 @@ def plot_exp1_figures():
             ax.grid(True, linestyle=":", alpha=0.5)
             ax.legend(loc="lower left", framealpha=0.92)
 
-        plt.suptitle("Figure 10b: Downstream Multi-Classifier Inductive Generalization", fontweight="bold", fontsize=13.0)
+        plt.suptitle("Downstream Multi-Classifier Inductive Generalization", fontweight="bold", fontsize=13.0)
         plt.tight_layout()
         fig10b_path = fig_dir / "fig10b_multiclassifier_generalization.png"
         plt.savefig(fig10b_path, dpi=300, bbox_inches="tight")
@@ -284,7 +284,7 @@ def plot_exp1_figures():
         ax.set_yticklabels([display_names.get(c, c) for c in classifiers], fontweight="bold")
         ax.set_xlabel(r"Nuisance Distractor Dimensions ($D_{\text{noise}}$)", fontweight="bold")
         ax.set_ylabel("Downstream Classifier", fontweight="bold")
-        ax.set_title("Figure 10c: Core Filtering Gain Across Classifiers (% Accuracy Delta)", fontweight="bold")
+        ax.set_title("Core Filtering Gain Across Classifiers (% Accuracy Delta)", fontweight="bold")
 
         for r in range(len(classifiers)):
             for c in range(len(d_noises)):

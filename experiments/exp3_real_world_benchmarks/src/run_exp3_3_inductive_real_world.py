@@ -195,7 +195,7 @@ def plot_fig16_inductive(df):
     )]
     ax.set_xticklabels(dataset_labels, fontweight="bold")
     ax.set_ylabel("Downstream Held-Out Test Recovery (ARI)", fontweight="bold")
-    ax.set_title("Figure 16: Inductive Generalization Under 70/30 Train-Test Splits", fontweight="bold")
+    ax.set_title("Inductive Generalization Under 70/30 Train-Test Splits", fontweight="bold")
     ax.grid(axis="y", linestyle=":", alpha=0.5)
     ax.legend(loc="upper right", framealpha=0.92, facecolor="white", edgecolor="#cccccc")
     ax.set_ylim(-0.20, 0.82)

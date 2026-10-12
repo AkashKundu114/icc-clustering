@@ -55,7 +55,7 @@ def plot_exp2_figures():
     set_academic_style()
 
     # -------------------------------------------------------------------------
-    # 1. Figure 11: ARI Recovery Curves across 6 Variants
+    # 1. ARI Recovery Curves across 6 Variants
     # -------------------------------------------------------------------------
     fig, ax = plt.subplots(figsize=(10.0, 5.2), dpi=300)
 
@@ -67,7 +67,7 @@ def plot_exp2_figures():
         ax.plot(sub["d_noise"], sub["mean_ari"], marker=marker, label=label,
                 color=VARIANT_COLORS.get(v_name, "#000"), linewidth=lw, linestyle=ls, markersize=7)
 
-    ax.set_title("Figure 11: Component-Wise Ablation: Dissecting Invariant Core Consensus (ICC)", fontsize=13.0, fontweight="bold")
+    ax.set_title("Component-Wise Ablation: Dissecting Invariant Core Consensus (ICC)", fontsize=13.0, fontweight="bold")
     ax.set_xlabel(r"Nuisance Distractor Dimensions ($D_{\text{noise}}$)", fontsize=12.0, fontweight="bold")
     ax.set_ylabel("Clustering Recovery (ARI)", fontsize=12.0, fontweight="bold")
     ax.tick_params(labelsize=11.0)
@@ -83,7 +83,7 @@ def plot_exp2_figures():
     print(f"  [Saved] {fig11_path}")
 
     # -------------------------------------------------------------------------
-    # 2. Figure 12: Stepwise Component Contribution (Dual Panel: D_noise=0 and D_noise=50)
+    # 2. Stepwise Component Contribution (Dual Panel: D_noise=0 and D_noise=50)
     # -------------------------------------------------------------------------
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.0, 4.8), dpi=300)
     v_keys = list(VARIANT_LABELS.keys())
@@ -132,7 +132,7 @@ def plot_exp2_figures():
                      xytext=(0, 4), textcoords="offset points",
                      ha="center", va="bottom", fontsize=10.5, fontweight="bold")
 
-    plt.suptitle("Figure 12: Stepwise Component Impact Under Low and Moderate Distractor Dimensions",
+    plt.suptitle("Stepwise Component Impact Under Low and Moderate Distractor Dimensions",
                  fontweight="bold", fontsize=14.0, y=0.995)
     plt.tight_layout()
     fig12_path = fig_dir / "fig12_ablation_waterfall.png"
@@ -141,7 +141,7 @@ def plot_exp2_figures():
     print(f"  [Saved] {fig12_path}")
 
     # -------------------------------------------------------------------------
-    # 3. Figure 13: NMI Recovery Curves
+    # 3. NMI Recovery Curves
     # -------------------------------------------------------------------------
     fig, ax = plt.subplots(figsize=(10.0, 5.2), dpi=300)
     for v_name, label in VARIANT_LABELS.items():
@@ -152,7 +152,7 @@ def plot_exp2_figures():
         ax.plot(sub["d_noise"], sub["mean_nmi"], marker=marker, label=label,
                 color=VARIANT_COLORS.get(v_name, "#000"), linewidth=lw, linestyle=ls, markersize=6)
 
-    ax.set_title("Figure 13: Normalized Mutual Information (NMI) Across Ablation Variants", fontweight="bold")
+    ax.set_title("Normalized Mutual Information (NMI) Across Ablation Variants", fontweight="bold")
     ax.set_xlabel(r"Nuisance Distractor Dimensions ($D_{\text{noise}}$)", fontweight="bold")
     ax.set_ylabel("Normalized Mutual Information (NMI)", fontweight="bold")
     ax.set_xscale("symlog", linthresh=10)
@@ -167,7 +167,7 @@ def plot_exp2_figures():
     print(f"  [Saved] {fig13_path}")
 
     # -------------------------------------------------------------------------
-    # 4. Supplementary Figure 13: AMI Recovery Curves
+    # 4. Supplementary AMI Recovery Curves
     # -------------------------------------------------------------------------
     if "mean_ami" in df.columns:
         fig, ax = plt.subplots(figsize=(10.0, 5.2), dpi=300)
@@ -179,7 +179,7 @@ def plot_exp2_figures():
             ax.plot(sub["d_noise"], sub["mean_ami"], marker=marker, label=label,
                     color=VARIANT_COLORS.get(v_name, "#000"), linewidth=lw, linestyle=ls, markersize=6)
 
-        ax.set_title("Supplementary Figure 13: Adjusted Mutual Information (AMI) Across Ablation Variants", fontweight="bold")
+        ax.set_title("Supplementary Adjusted Mutual Information (AMI) Across Ablation Variants", fontweight="bold")
         ax.set_xlabel(r"Nuisance Distractor Dimensions ($D_{\text{noise}}$)", fontweight="bold")
         ax.set_ylabel("Adjusted Mutual Information (AMI)", fontweight="bold")
         ax.set_xscale("symlog", linthresh=10)

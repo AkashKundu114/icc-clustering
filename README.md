@@ -6,7 +6,7 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Tests: Passing](https://img.shields.io/badge/pytest-62%2F62%20passed-brightgreen.svg)]()
+[![Tests: Passing](https://img.shields.io/badge/pytest-68%2F68%20passed-brightgreen.svg)]()
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![IEEE Compliance](https://img.shields.io/badge/IEEE%20TKDE-Compliant%20(Grade%20A%2B)-success.svg)]()
 
@@ -30,6 +30,7 @@ This repository provides the reference implementation of **Inductive Consensus C
 - **Multimodality Subspace Gating (VSSG):** A linear $\mathcal{O}(N \cdot D)$ unsupervised feature screening mechanism based on Sarle's Bimodality Coefficient that isolates informative multi-modal dimensions from unimodal background noise prior to base ensemble construction.
 - **Determinacy-Based Bipartite Anchor Consensus:** An $\mathcal{O}(N \cdot L)$ rectangular bipartite co-association formulation that reduces auxiliary memory from $\mathcal{O}(N^2)$ to $\mathcal{O}(NL)$ ($L \ll N$) while preserving exact spectral cluster extraction.
 - **Stability-Weighted Active Subspace Centroid Assignment:** A closed-form inductive out-of-sample projection rule requiring only $\mathcal{O}(K \cdot |\mathcal{F}_{\text{active}}|)$ operations per query point, eliminating the need to recompute the ensemble graph.
+- **Anchor-Space Perturbation Profiling (ASPP):** An interpretable multi-family stability diagnostic framework (sampling, feature, measurement, technical, algorithmic) evaluated in anchor space ($\mathcal{O}(NL)$ memory) that yields cluster fingerprints, Perturbation Sensitivity Index (PSI), and inductive query confidence bounds without $\mathcal{O}(N^2)$ tensor bottlenecks.
 - **Reproducible Multi-Domain Evaluation:** An extensive experimental suite spanning 13 real-world datasets, 11 baseline algorithms, 1,430 model executions, missing-data sensitivity analyses, and asymptotic scalability evaluations up to $N = 1,000,000$ and $D = 100,000$.
 
 ---
@@ -51,6 +52,7 @@ icc-clustering/
 ├── src/                                       # Core implementation package (`icc`)
 │   └── icc/
 │       ├── __init__.py                        # Top-level API exports
+│       ├── aspp.py                            # Anchor-Space Perturbation Profiler (ASPP)
 │       ├── consensus.py                       # InvariantCoreConsensus (ICC-v1 anchor-only baseline)
 │       ├── consensus_v2.py                    # InvariantCoreConsensusV2 (ICC-v2 production framework)
 │       ├── core.py                            # Synthetic generators, clusterer wrappers, co-association
@@ -78,8 +80,9 @@ icc-clustering/
 │   ├── exp3_real_world_benchmarks/            # Experiment 3: 13-dataset multi-domain benchmarks & missing data
 │   ├── exp4_scalability_and_sensitivity/      # Experiment 4: Scalability, sensitivity, and anchor fidelity
 │   └── exp5_extreme_scale/                    # Experiment 5: Asymptotic scaling stress testing
-├── tests/                                     # Automated test suite (62/62 tests passing)
+├── tests/                                     # Automated test suite (68/68 tests passing)
 │   ├── test_consensus_v2.py                   # Core ICC-v2 algorithm tests
+│   ├── test_aspp.py                           # Anchor-Space Perturbation Profiling tests
 │   ├── test_datasets.py                       # Dataset loader validation tests
 │   ├── test_baselines.py                      # Baseline wrapper compatibility tests
 │   ├── test_metrics.py                        # Metric mathematical verification tests

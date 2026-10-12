@@ -278,7 +278,7 @@ def plot_fig17_cd_diagram(
     ax_cd.set_title(rf"(b) Demšar Critical Difference Diagram ($\alpha=0.05$, $k={k_models}$)", fontweight="bold", fontsize=11.0, pad=10)
 
     plt.suptitle(
-        f"Figure 17: Non-Parametric Model Rankings & Statistical Separation Across {n_datasets} Real-World Benchmarks",
+        f"Non-Parametric Model Rankings & Statistical Separation Across {n_datasets} Real-World Benchmarks",
         fontweight="bold",
         fontsize=12.0,
         y=0.99,

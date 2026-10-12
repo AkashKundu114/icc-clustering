@@ -108,7 +108,7 @@ def plot_grouped_metric(df, metric_col, title, ylabel, filename):
 
 
 def plot_runtime_scalability(df):
-    """Figure 16: Consensus Runtime & Linear Scaling Verification."""
+    """Consensus Runtime & Linear Scaling Verification."""
     consensus_models = ["Standard_Consensus", "Li_et_al_2019", "ICC_v1", "ICC_v2"]
     
     datasets = ["colon", "leukemia", "sonar", "madelon"]
@@ -162,7 +162,7 @@ def plot_runtime_scalability(df):
 
 
 def plot_summary_ranking(df):
-    """Figure 17: Average Performance and Rank across All Real-World Benchmarks."""
+    """Average Performance and Rank across All Real-World Benchmarks."""
     models = list(MODEL_PALETTE.keys())
     
     summary = df.groupby(["dataset", "model"])[["ari", "nmi"]].mean().reset_index()
@@ -220,7 +220,7 @@ def generate_all_figures():
     plot_grouped_metric(
         df,
         metric_col="ari",
-        title="Figure 14: Clustering Recovery (ARI) Across Real-World High-Dimensional Benchmarks",
+        title="Clustering Recovery (ARI) Across Real-World High-Dimensional Benchmarks",
         ylabel="Adjusted Rand Index (ARI)",
         filename="fig14_benchmark_ari_comparison.png"
     )
@@ -228,7 +228,7 @@ def generate_all_figures():
     plot_grouped_metric(
         df,
         metric_col="nmi",
-        title="Figure 15: Information-Theoretic Recovery (NMI) Across High-Dimensional Benchmarks",
+        title="Information-Theoretic Recovery (NMI) Across High-Dimensional Benchmarks",
         ylabel="Normalized Mutual Information (NMI)",
         filename="fig15_benchmark_nmi_comparison.png"
     )

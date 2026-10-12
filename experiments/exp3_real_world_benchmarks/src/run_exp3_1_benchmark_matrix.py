@@ -341,7 +341,7 @@ def plot_fig14_13datasets(df: pd.DataFrame, metric: str = "ari", save_path: Opti
             ax.set_xlabel(f"Quality ({metric.upper()})", fontweight="bold")
 
     fig_title = (
-        f"Figure 14: Comprehensive Clustering Recovery ({metric.upper()}) "
+        f"Comprehensive Clustering Recovery ({metric.upper()}) "
         f"Across {n_datasets} Multi-Domain Real-World Benchmarks"
     )
     plt.suptitle(fig_title, fontweight="bold", y=0.995)

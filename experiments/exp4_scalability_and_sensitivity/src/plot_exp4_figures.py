@@ -41,7 +41,7 @@ MODEL_LABELS = {
 
 
 def plot_figure_18():
-    """Figure 18: Sample Complexity Scaling: Runtime and Memory Footprint vs N."""
+    """Sample Complexity Scaling: Runtime and Memory Footprint vs N."""
     csv_path = os.path.join(DATA_DIR, "exp4_sample_scaling_results.csv")
     if not os.path.exists(csv_path):
         print(f"[!] File not found: {csv_path}")
@@ -135,7 +135,7 @@ def plot_figure_18():
 
 
 def plot_figure_19():
-    """Figure 19: Dimension Scaling vs D in [100, 20000]."""
+    """Dimension Scaling vs D in [100, 20000]."""
     csv_path = os.path.join(DATA_DIR, "exp4_dim_scaling_results.csv")
     if not os.path.exists(csv_path):
         print(f"[!] File not found: {csv_path}")
@@ -173,7 +173,7 @@ def plot_figure_19():
     ax.tick_params(axis="y", labelsize=11.0)
     ax.set_xlabel("Feature Dimensionality (D, log scale)", fontsize=12.0, fontweight="bold")
     ax.set_ylabel("Execution Time (seconds)", fontsize=12.0, fontweight="bold")
-    ax.set_title("Figure 19: Execution Runtime vs Feature Dimension D (N=500)", fontsize=13.0, fontweight="bold")
+    ax.set_title("Execution Runtime vs Feature Dimension D (N=500)", fontsize=13.0, fontweight="bold")
     ax.grid(True, which="both", linestyle=":", alpha=0.5)
     ax.legend(loc="upper left", fontsize=10.5, framealpha=0.92, facecolor="white", edgecolor="#cccccc")
     
@@ -193,7 +193,7 @@ def plot_figure_19():
 
 
 def plot_figure_20():
-    """Figure 20: Ensemble Size Convergence Plateau."""
+    """Ensemble Size Convergence Plateau."""
     csv_path = os.path.join(DATA_DIR, "exp4_sensitivity_results.csv")
     if not os.path.exists(csv_path):
         print(f"[!] File not found: {csv_path}")
@@ -234,7 +234,7 @@ def plot_figure_20():
     ax.set_xlabel("Ensemble Size M (Number of Subspace Base Clusterings)", fontsize=12.0, fontweight="bold")
     ax.set_ylabel("Clustering Recovery Score", fontsize=12.0, fontweight="bold")
     ax.tick_params(labelsize=11.0)
-    ax.set_title("Figure 20: ICC-v2 Performance Plateau vs Ensemble Size M", fontsize=13.0, fontweight="bold")
+    ax.set_title("ICC-v2 Performance Plateau vs Ensemble Size M", fontsize=13.0, fontweight="bold")
     ax.grid(True, linestyle=":", alpha=0.5)
     ax.set_ylim(0.25, 1.05)
     ax.legend(loc="lower right", fontsize=10.5, framealpha=0.92, facecolor="white", edgecolor="#cccccc")
@@ -248,7 +248,7 @@ def plot_figure_20():
 
 
 def plot_figure_21():
-    """Figure 21: 2D Hyperparameter Sensitivity Landscape Heatmaps."""
+    """2D Hyperparameter Sensitivity Landscape Heatmaps."""
     csv_path = os.path.join(DATA_DIR, "exp4_sensitivity_results.csv")
     if not os.path.exists(csv_path):
         print(f"[!] File not found: {csv_path}")
@@ -323,7 +323,7 @@ def plot_figure_21():
     cbar2.set_label("Mean ARI", fontsize=11.0, fontweight="bold")
     cbar2.ax.tick_params(labelsize=10.0)
     
-    plt.suptitle("Figure 21: Hyperparameter Robustness Landscape Heatmaps (Red dashed = ARI 0.80/0.85 contour)",
+    plt.suptitle("Hyperparameter Robustness Landscape Heatmaps (Red dashed = ARI 0.80/0.85 contour)",
                  fontweight="bold", fontsize=13.5, y=0.995)
     plt.tight_layout()
     save_path = os.path.join(FIG_DIR, "fig21_hyperparameter_sensitivity_map.png")
@@ -333,7 +333,7 @@ def plot_figure_21():
 
 
 def plot_figure_21_supp_nmi():
-    """Supplementary Figure 21: 2D Hyperparameter Sensitivity Landscape Heatmaps for NMI."""
+    """Supplementary 2D Hyperparameter Sensitivity Landscape Heatmaps for NMI."""
     csv_path = os.path.join(DATA_DIR, "exp4_sensitivity_results.csv")
     if not os.path.exists(csv_path):
         print(f"[!] File not found: {csv_path}")
@@ -402,7 +402,7 @@ def plot_figure_21_supp_nmi():
             
     fig.colorbar(cax2, ax=ax2, label="Mean NMI")
     
-    plt.suptitle("Supplementary Figure 21: NMI Hyperparameter Robustness Landscape Heatmaps",
+    plt.suptitle("Supplementary NMI Hyperparameter Robustness Landscape Heatmaps",
                  fontweight="bold", fontsize=11.5, y=0.99)
     plt.tight_layout()
     save_path = os.path.join(FIG_DIR, "fig21_supp_nmi_sensitivity_heatmaps.png")

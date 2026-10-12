@@ -24,16 +24,20 @@ Mathematical Architecture:
    Normalized bipartite graph Laplacian L_norm in R^(L x L).
 4. Inductive Extension (Out-of-sample projection):
    Projects unseen query samples onto geometry-calibrated centroids in R^(K x D).
+5. Anchor-Space Perturbation Profiling (ASPP):
+   Evaluates multi-family cluster stability fingerprints and reliability certification
+   in anchor space with linear O(N * L) auxiliary memory.
 """
 
 import time
-from typing import Optional, Union, Dict, Any
+from typing import Optional, Union, Dict, Any, List, Tuple
 import numpy as np
 import scipy.linalg as sla
 from scipy.spatial.distance import cdist
 from scipy.stats import kurtosis, skew
 
 from .core import run_clusterer, pairwise_coassoc, canonical
+from .aspp import ASPPConfig, AnchorSpacePerturbationProfiler
 
 
 class InvariantCoreConsensusV2:
@@ -91,6 +95,8 @@ class InvariantCoreConsensusV2:
         subspace_rate: float = 0.30,
         beta: float = 2.0,
         base_clusterer: str = "auto",
+        enable_aspp: bool = False,
+        aspp_config: Optional[ASPPConfig] = None,
         random_state: int = 42,
         random_seed: Optional[int] = None,
     ):
@@ -106,6 +112,8 @@ class InvariantCoreConsensusV2:
         self.subspace_rate = subspace_rate
         self.beta = beta
         self.base_clusterer = base_clusterer
+        self.enable_aspp = enable_aspp
+        self.aspp_config = aspp_config
         self.random_state = random_state
 
         # Fitted attributes
@@ -119,7 +127,14 @@ class InvariantCoreConsensusV2:
         self.anchor_centroids_: Optional[np.ndarray] = None
         self.U_emb_: Optional[np.ndarray] = None
 
-    def fit_predict(self, X: np.ndarray) -> np.ndarray:
+        # ASPP attributes
+        self.fingerprints_: Optional[Any] = None
+        self.psi_: Optional[np.ndarray] = None
+        self.reliability_categories_: Optional[List[str]] = None
+        self.aspp_summary_: Optional[Dict[str, float]] = None
+        self.aspp_profiler_: Optional[Any] = None
+
+    def fit_predict(self, X: np.ndarray, batch_vector: Optional[np.ndarray] = None) -> np.ndarray:
         """
         Fit ICC-v2 on input matrix X and return cluster labels.
 
@@ -282,22 +297,73 @@ class InvariantCoreConsensusV2:
             else:
                 self.anchor_centroids_[c] = np.mean(X, axis=0)
 
+        # ---------------------------------------------------------------------
+        # 7. Optional Anchor-Space Perturbation Profiling (ASPP)
+        # ---------------------------------------------------------------------
+        if self.enable_aspp:
+            self.profile_perturbations(X, config=self.aspp_config, batch_vector=batch_vector)
+
         return self.labels_
 
-    def fit(self, X: np.ndarray) -> "InvariantCoreConsensusV2":
+    def fit(self, X: np.ndarray, batch_vector: Optional[np.ndarray] = None) -> "InvariantCoreConsensusV2":
         """
         Fit model on input matrix X.
 
         Parameters
         ----------
         X : np.ndarray of shape (N, D)
+        batch_vector : Optional[np.ndarray] of shape (N,)
+            Known categorical batch assignments, if available.
 
         Returns
         -------
         self : InvariantCoreConsensusV2
         """
-        self.fit_predict(X)
+        self.fit_predict(X, batch_vector=batch_vector)
         return self
+
+    def profile_perturbations(
+        self,
+        X: np.ndarray,
+        config: Optional[Any] = None,
+        batch_vector: Optional[np.ndarray] = None,
+        **kwargs: Any,
+    ) -> Any:
+        """
+        Execute Anchor-Space Perturbation Profiling (ASPP) on the fitted model.
+
+        Parameters
+        ----------
+        X : np.ndarray of shape (N, D)
+            Input feature matrix.
+        config : Optional[ASPPConfig]
+            ASPP configuration parameters.
+        batch_vector : Optional[np.ndarray] of shape (N,)
+            Known categorical batch assignments, if available.
+
+        Returns
+        -------
+        fingerprints : pd.DataFrame
+            Summary DataFrame indexed by cluster with multi-family stability fingerprints,
+            Perturbation Sensitivity Index (PSI), and categorical reliability labels.
+        """
+        if self.labels_ is None:
+            self.fit_predict(X, batch_vector=batch_vector)
+
+        cfg = config or self.aspp_config
+        if cfg is None and kwargs:
+            cfg = ASPPConfig(**kwargs)
+
+        profiler = AnchorSpacePerturbationProfiler(config=cfg)
+        df_fingerprints = profiler.profile(self, X, batch_vector=batch_vector)
+
+        self.fingerprints_ = df_fingerprints
+        self.psi_ = profiler.psi_
+        self.reliability_categories_ = profiler.reliability_categories_
+        self.aspp_summary_ = profiler.aspp_summary_
+        self.aspp_profiler_ = profiler
+
+        return df_fingerprints
 
     def predict(self, X_new: np.ndarray, subspace: bool = True) -> np.ndarray:
         """
@@ -357,3 +423,70 @@ class InvariantCoreConsensusV2:
         logits = -dists / max(1e-6, temperature)
         exp_logits = np.exp(logits - np.max(logits, axis=1, keepdims=True))
         return exp_logits / np.sum(exp_logits, axis=1, keepdims=True)
+
+    def predict_with_stability(
+        self,
+        X_new: np.ndarray,
+        subspace: bool = True,
+    ) -> Dict[str, Any]:
+        """
+        Inductive out-of-sample cluster assignment coupled with stability-calibrated confidence.
+
+        Projects query points onto geometry-calibrated centroids and scales distance margin
+        by the assigned cluster's Perturbation Sensitivity Index (PSI).
+
+        Parameters
+        ----------
+        X_new : np.ndarray of shape (N_new, D)
+            Unseen instances to partition.
+        subspace : bool, default=True
+            If True, uses active candidate pool features identified by VSSG.
+
+        Returns
+        -------
+        results : dict with keys:
+            - 'labels': np.ndarray of shape (N_new,) of int, assigned cluster labels.
+            - 'confidence': np.ndarray of shape (N_new,) of float in [0, 1], stability-calibrated confidence.
+            - 'margin': np.ndarray of shape (N_new,) of float in [0, 1], geometric distance margin.
+            - 'psi': Optional[np.ndarray] of shape (N_new,), assigned cluster PSI values.
+            - 'reliability': Optional[List[str]], categorical reliability labels for assigned clusters.
+        """
+        if self.anchor_centroids_ is None:
+            raise RuntimeError("Model has not been fitted yet. Call fit_predict() first.")
+        X_new = np.asarray(X_new, dtype=np.float64)
+
+        if subspace and self.selected_features_ is not None:
+            pool = self.selected_features_
+            dists = cdist(X_new[:, pool], self.anchor_centroids_[:, pool], metric="euclidean")
+        else:
+            dists = cdist(X_new, self.anchor_centroids_, metric="euclidean")
+
+        preds = np.argmin(dists, axis=1)
+
+        if dists.shape[1] > 1:
+            sorted_dists = np.sort(dists, axis=1)
+            margin = (sorted_dists[:, 1] - sorted_dists[:, 0]) / np.fmax(sorted_dists[:, 1], 1e-9)
+            margin = np.clip(margin, 0.0, 1.0)
+        else:
+            margin = np.ones(len(preds), dtype=np.float64)
+
+        if self.psi_ is not None:
+            psi_assigned = self.psi_[preds]
+            confidence = np.clip(margin * (1.0 - psi_assigned), 0.0, 1.0)
+            reliability = (
+                [self.reliability_categories_[p] for p in preds]
+                if self.reliability_categories_ is not None
+                else None
+            )
+        else:
+            psi_assigned = None
+            confidence = margin
+            reliability = None
+
+        return {
+            "labels": preds,
+            "confidence": confidence,
+            "margin": margin,
+            "psi": psi_assigned,
+            "reliability": reliability,
+        }
