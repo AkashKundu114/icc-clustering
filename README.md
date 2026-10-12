@@ -6,7 +6,7 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Tests: Passing](https://img.shields.io/badge/pytest-68%2F68%20passed-brightgreen.svg)]()
+[![Tests: Passing](https://img.shields.io/badge/pytest-69%2F69%20passed-brightgreen.svg)]()
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![IEEE Compliance](https://img.shields.io/badge/IEEE%20TKDE-Compliant%20(Grade%20A%2B)-success.svg)]()
 
@@ -80,7 +80,7 @@ icc-clustering/
 │   ├── exp3_real_world_benchmarks/            # Experiment 3: 13-dataset multi-domain benchmarks & missing data
 │   ├── exp4_scalability_and_sensitivity/      # Experiment 4: Scalability, sensitivity, and anchor fidelity
 │   └── exp5_extreme_scale/                    # Experiment 5: Asymptotic scaling stress testing
-├── tests/                                     # Automated test suite (68/68 tests passing)
+├── tests/                                     # Automated test suite (69/69 tests passing)
 │   ├── test_consensus_v2.py                   # Core ICC-v2 algorithm tests
 │   ├── test_aspp.py                           # Anchor-Space Perturbation Profiling tests
 │   ├── test_datasets.py                       # Dataset loader validation tests
@@ -89,6 +89,7 @@ icc-clustering/
 │   ├── test_exp1_multiclassifier.py           # Multi-classifier pipeline tests
 │   └── test_anchor_fidelity.py                # Bipartite approximation fidelity tests
 ├── docs/                                      # Theoretical proofs, literature surveys, and notes
+│   └── THEORETICAL_FOUNDATIONS.md             # Formal theorems, propositions, and mathematical proofs
 ├── CONTRIBUTING.md                            # Contributor guidelines and environment setup
 ├── CODE_OF_CONDUCT.md                         # Contributor Covenant standard
 ├── SECURITY.md                                # Security policy and vulnerability disclosure protocol
@@ -158,7 +159,7 @@ ICC-v2 is evaluated against 10 representative baselines:
 ### 4. Multi-Domain Benchmarking and Missing-Data Resilience (Experiment 3)
 - **High-Dimensional Domain Specialization:** Across 13 benchmark datasets and 1,430 model executions, ICC-v2 achieves a Grand Mean ARI of **0.1599** (mean rank 5.46 across diverse domains). It demonstrates commanding Rank #1 performance on ultra-high-dimensional continuous biomedical cancer assays ($D/N > 20$, e.g., Leukemia ARI = 0.680 vs. DEC 0.148, SRBCT ARI = 0.538 vs. Std Cons 0.040, Ovarian ARI = 0.052), maintaining cluster recovery where deep models collapse due to sample sparsity ($N \le 100$).
 - **Operating Envelope & Trade-offs:** On large-sample sparse text and single-cell count matrices (20 Newsgroups, Zheng68k), hierarchical Ward and DEC outperform ICC-v2, as zero-inflation violates the continuous unimodal distractor noise assumption.
-- **Missing-Data Stability:** Under Missing Completely At Random (MCAR) rates up to $40\%$, ICC-v2 combined with mean or median imputation maintains over $80\%$ of its nominal cluster recovery accuracy on continuous datasets.
+- **Missing-Data Stability:** Under Missing Completely At Random (MCAR) dropout rates $\rho \in [0.0, 0.50]$, ICC-v2 maintains substantial partition fidelity over classical baselines (e.g., retaining an ARI $> 0.40$ on SRBCT across all $\rho \le 0.50$ where standard consensus collapses below $0.10$, and preserving over $75\%$ nominal recovery up to $\rho=0.30$ under median imputation).
 
 ### 5. Computational Scalability and Asymptotic Behavior (Experiments 4 and 5)
 - **Linear Sample Scaling:** Empirical execution times scale strictly as $\mathcal{O}(N)$, completing clustering on $N = 1,000,000$ synthetic observations in under 3.5 minutes on standard workstation hardware.
@@ -207,7 +208,7 @@ Run the automated test suite to verify the installation:
 python -m pytest tests/ -v
 ```
 
-All 62 unit and integration tests should pass without errors.
+All 69 unit and integration tests should pass without errors.
 
 ---
 
@@ -257,8 +258,8 @@ model = InvariantCoreConsensusV2(
     n_anchors=40,
     subspace_rate=0.25,
     core_quantile=0.50,
-    beta=2.0,
-    random_seed=42,
+    enable_aspp=True,
+    random_state=42,
 )
 labels = model.fit_predict(X)
 
