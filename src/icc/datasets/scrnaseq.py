@@ -12,7 +12,8 @@ Requires:
 import os
 import tarfile
 from pathlib import Path
-from typing import Tuple, Dict, Any, Optional
+from typing import Any, Dict, Optional, Tuple
+
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
 
@@ -146,13 +147,13 @@ def load_zheng68k(
         if not os.path.exists(mtx_dir):
             tar_path = os.path.join(r_dir, "fresh_68k_pbmc_donor_a_filtered_gene_bc_matrices.tar.gz")
             if not os.path.exists(tar_path):
-                import urllib.request
                 import ssl
+                import urllib.request
                 url = (
                     "https://cf.10xgenomics.com/samples/cell-exp/1.1.0/fresh_68k_pbmc_donor_a/"
                     "fresh_68k_pbmc_donor_a_filtered_gene_bc_matrices.tar.gz"
                 )
-                print(f"[*] Downloading full 68k PBMC matrix from 10x Genomics...")
+                print("[*] Downloading full 68k PBMC matrix from 10x Genomics...")
                 ctx = ssl._create_unverified_context()
                 req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
                 with urllib.request.urlopen(req, timeout=120, context=ctx) as resp, open(tar_path, "wb") as f_out:
@@ -165,7 +166,7 @@ def load_zheng68k(
         print("[*] Reading 10x matrix...")
         adata = sc.read_10x_mtx(mtx_dir, var_names="gene_symbols", cache=True)
 
-        print(f"[*] Preprocessing 68k cells: filter_cells, filter_genes, normalize, log1p, HVG selection...")
+        print("[*] Preprocessing 68k cells: filter_cells, filter_genes, normalize, log1p, HVG selection...")
         sc.pp.filter_cells(adata, min_genes=200)
         sc.pp.filter_genes(adata, min_cells=3)
         sc.pp.normalize_total(adata, target_sum=1e4)

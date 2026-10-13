@@ -275,7 +275,7 @@ def run_icc_v2(
     )
     labels = model.fit_predict(X)
     runtime = time.perf_counter() - t0
-    n_core = len(model.core_indices_)
+    n_core = len(model.core_indices_) if model.core_indices_ is not None else 0
     meta = ModelMetadata(
         n_core,
         method="icc_v2",

@@ -7,10 +7,11 @@ Datasets:
 
 import os
 from pathlib import Path
-from typing import Tuple, Dict, Any, Optional
+from typing import Any, Dict, Optional, Tuple
+
 import numpy as np
 from sklearn.datasets import fetch_openml
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 _DEFAULT_CACHE = _PROJECT_ROOT / "data" / "cache"

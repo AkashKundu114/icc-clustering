@@ -9,10 +9,11 @@ standardized loading, metadata querying, and unified preprocessing:
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple, Any
-import yaml
+from typing import Any, Dict, List, Optional, Tuple
+
 import numpy as np
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+import yaml
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 
 # Resolve project root (3 levels up from src/icc/datasets/registry.py)
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
@@ -214,7 +215,7 @@ def load_dataset(
             return load_rcv1(cache_dir=c_dir, force_download=force_download)
 
     if info.domain == "image":
-        from .image import load_yale_b, load_coil20
+        from .image import load_coil20, load_yale_b
         if name == "yale_b":
             return load_yale_b(cache_dir=c_dir, force_download=force_download)
         elif name == "coil20":
@@ -231,7 +232,7 @@ def load_dataset(
             return load_isolet(cache_dir=c_dir, force_download=force_download)
 
     if info.domain == "scrnaseq":
-        from .scrnaseq import load_zheng68k, load_tabula_muris
+        from .scrnaseq import load_tabula_muris, load_zheng68k
         if name == "zheng68k":
             return load_zheng68k(cache_dir=c_dir, force_download=force_download)
         elif name == "tabula_muris":

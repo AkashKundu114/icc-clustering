@@ -15,7 +15,10 @@ References:
 import os
 import time
 from typing import Any, List, Tuple
+
 import numpy as np
+
+from .classical import ModelMetadata
 
 _SKLEARN_AVAILABLE = False
 try:
@@ -24,8 +27,6 @@ try:
     _SKLEARN_AVAILABLE = True
 except (ImportError, Exception):
     _SKLEARN_AVAILABLE = False
-
-from src.icc.baselines.classical import ModelMetadata
 
 
 def _check_tensorflow():

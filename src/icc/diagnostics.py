@@ -2,7 +2,6 @@
 Diagnostic utilities for partition tracking, entropy, and canonicalization.
 """
 
-from .core import canonical
 
 
 def partition_entropy(partitions):

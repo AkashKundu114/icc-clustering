@@ -6,7 +6,7 @@ Provides wrappers for K-Means, Ward, Spectral Clustering, and Fuzzy C-Means (FCM
 """
 
 import time
-from typing import Any, Tuple
+from typing import Any, Dict, Tuple
 
 import numpy as np
 
@@ -18,6 +18,8 @@ class ModelMetadata(int):
     Hybrid return container that behaves as an integer (for legacy scripts expecting `lc = N`)
     while also supporting full dictionary indexing (for scripts accessing `metadata["method"]`).
     """
+    _data: Dict[str, Any]
+
     def __new__(cls, val: int, **kwargs):
         obj = super().__new__(cls, int(val))
         obj._data = kwargs

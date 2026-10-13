@@ -29,15 +29,15 @@ Mathematical Architecture:
    in anchor space with linear O(N * L) auxiliary memory.
 """
 
-import time
-from typing import Optional, Union, Dict, Any, List, Tuple
+from typing import Any, Dict, List, Optional
+
 import numpy as np
 import scipy.linalg as sla
 from scipy.spatial.distance import cdist
 from scipy.stats import kurtosis, skew
 
-from .core import run_clusterer, pairwise_coassoc, canonical
-from .aspp import ASPPConfig, AnchorSpacePerturbationProfiler
+from .aspp import AnchorSpacePerturbationProfiler, ASPPConfig
+from .core import run_clusterer
 
 
 class InvariantCoreConsensusV2:

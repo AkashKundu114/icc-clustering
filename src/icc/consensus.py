@@ -6,12 +6,11 @@ Specifically designed for D >> N regimes where distance concentration and
 spurious passenger variance induce hallucinated consensus stability.
 """
 
-from pathlib import Path
 import numpy as np
 import scipy.linalg as sla
 from scipy.spatial.distance import cdist
 
-from .core import run_clusterer, canonical, adjusted_rand_score
+from .core import run_clusterer
 
 
 class InvariantCoreConsensus:
