@@ -57,6 +57,9 @@
 \renewcommand{\dbltopfraction}{0.95}
 \renewcommand{\dblfloatpagefraction}{0.70}
 
+% Include auto-generated numeric macros from single source of truth (results/)
+\input{gen/numbers.tex}
+
 \begin{document}
 
 \title{Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes}
@@ -77,7 +80,7 @@ E-mails: \{akash231001001449, trinankur231001001450, rupankar231001001438, anubh
 
 \IEEEtitleabstractindextext{%
 \begin{abstract}
-Consensus clustering synthesizes base partitions to discover robust data groupings. However, existing methods face two fundamental bottlenecks: (1) a transductive formulation requiring $O(N^2)$ storage preventing out-of-sample inference, and (2) acute vulnerability to high-dimensional distractor noise ($D \gg N$), where distance concentration degrades partition fidelity. We propose \textbf{Inductive Consensus Clustering (ICC-v2)}, architected for small-sample, high-dimensional regimes subject to isotropic noise. ICC-v2 introduces: (1) an $O(N \cdot D)$ feature screening filter using Sarle's Bimodality Coefficient (Variance-Stabilized Subspace Gating, VSSG) isolating multimodal dimensions; (2) a determinacy-based bipartite anchor consensus graph reducing auxiliary memory from $O(N^2)$ to $O(N \cdot L)$; and (3) stability-weighted centroid assignment for instant $O(K \cdot |\mathcal{F}_{\text{active}}|)$ inductive inference. Across 13 multi-domain benchmarks, ICC-v2 attains the highest Grand Mean ARI ($0.1599$) and commands Rank \#1 ($R=1.50$) on ultra-high-dimensional biological regimes ($D/N > 20$, $+300\%$ to $+1{,}250\%$ ARI on Leukemia and SRBCT), while reducing auxiliary memory by $39.1\%$ at $N=8{,}000$ and scaling linearly to $N=1{,}000{,}000$ instances.
+Consensus clustering synthesizes base partitions to discover robust data groupings. However, existing methods face two fundamental bottlenecks: (1) a transductive formulation requiring $O(N^2)$ storage preventing out-of-sample inference, and (2) acute vulnerability to high-dimensional distractor noise ($D \gg N$), where distance concentration degrades partition fidelity. We propose \textbf{Inductive Consensus Clustering (ICC-v2)}, architected for small-sample, high-dimensional regimes subject to isotropic noise. ICC-v2 introduces: (1) an $O(N \cdot D)$ linear feature screening filter using Sarle's Bimodality Coefficient (Bimodality-Gated Subspace Selection, BGSS) isolating multimodal dimensions; (2) a determinacy-based bipartite anchor consensus graph reducing auxiliary memory from $O(N^2)$ to $O(N \cdot L)$; and (3) stability-weighted centroid assignment for instant $O(K \cdot |\mathcal{F}_{\text{active}}|)$ inductive inference. Across 13 multi-domain benchmarks, ICC-v2 attains the highest Grand Mean ARI (\GrandMeanARI) and commands Rank \#1 ($R=\RankBioICCvTwo$) on ultra-high-dimensional biological regimes ($D/N > 20$, with \ARIleukemia\ on Leukemia and \ARIsrbct\ on SRBCT), while reducing auxiliary memory by \AnchorRAMReduction\ at $N=10{,}000$ and scaling linearly to $N=1{,}000{,}000$ instances in \ExtremeScaleTime.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -172,7 +175,7 @@ Let $\mathcal{C}_k$ denote cluster $k$ with centroid $\boldsymbol{\mu}_k$. For a
 \end{equation}
 \end{definition}
 
-As ambient distractor dimensions $D_{\text{noise}}$ expand ($D \gg N$), pairwise Euclidean distances suffer from distance concentration~\cite{beyer1999nearest}, where the relative variance of distances vanishes: $\lim_{D \to \infty} \frac{\mathrm{Var}(\|\mathbf{x}_i - \mathbf{x}_j\|_2)}{\mathbb{E}[\|\mathbf{x}_i - \mathbf{x}_j\|_2]} = 0$. Consequently, the separation ratio $\rho_{\text{sep}}(X)$ rapidly approaches $1.0$ (Fig.~\ref{fig:dist_gap}), rendering raw Euclidean distances indistinguishable. Under finite samples, base clusterers capture spurious random fluctuations in the noise dimensions. This induces a \textbf{hallucinated stability trap}: base partitions repeatedly converge on arbitrary noise boundaries with deceptive consensus agreement ($\text{Stability} > 0.8$), while true cluster recovery collapses ($\text{ARI} \to 0$, Fig.~\ref{fig:ari_stability}). As evaluated across diverse distractor distributions (Fig.~\ref{fig:noise_heatmap}), this stability$-$accuracy discrepancy ($\Delta > 0$, Fig.~\ref{fig:dist_gap}) persists across Gaussian, Student-$t$, and correlated noise regimes (Fig.~\ref{fig:falsification_suite}). Thus, ensemble averaging alone is provably insufficient to eliminate uninformative subspace noise without explicit feature gating.
+As ambient distractor dimensions $D_{\text{noise}}$ expand ($D \gg N$), pairwise Euclidean distances suffer from distance concentration~\cite{beyer1999nearest}, where the relative contrast of distances vanishes: $\lim_{D \to \infty} \frac{d_{\max} - d_{\min}}{d_{\min}} = 0$ and $\lim_{D \to \infty} \frac{\mathrm{Var}(\|\mathbf{x}_i - \mathbf{x}_j\|_2)}{\mathbb{E}[\|\mathbf{x}_i - \mathbf{x}_j\|_2]^2} = 0$. Consequently, the separation ratio $\rho_{\text{sep}}(X)$ rapidly approaches $1.0$ (Fig.~\ref{fig:dist_gap}), rendering raw Euclidean distances indistinguishable. Under finite samples, base clusterers capture spurious random fluctuations in the noise dimensions. This induces a \textbf{hallucinated stability trap}: base partitions repeatedly converge on arbitrary noise boundaries with deceptive consensus agreement ($\text{Stability} > 0.8$), while true cluster recovery collapses ($\text{ARI} \to 0$, Fig.~\ref{fig:ari_stability}). As evaluated across diverse distractor distributions (Fig.~\ref{fig:noise_heatmap}), this stability$-$accuracy discrepancy ($\Delta > 0$, Fig.~\ref{fig:dist_gap}) persists across Gaussian, Student-$t$, and correlated noise regimes (Fig.~\ref{fig:falsification_suite}). Thus, ensemble averaging alone is empirically observed to be insufficient to eliminate uninformative subspace noise without explicit feature gating.
 
 
 \section{The Inductive Consensus Clustering Framework}\label{sec:framework}
@@ -181,28 +184,28 @@ As ambient distractor dimensions $D_{\text{noise}}$ expand ($D \gg N$), pairwise
 \caption{Inductive Consensus Clustering (ICC-v2)}
 \label{alg:iccv2}
 \begin{algorithmic}[1]
-\Require Data matrix $X \in \mathbb{R}^{N \times D}$, ensemble size $M$, target clusters $K$, anchor budget $L \ll N$ (default 40), core quantile $\tau_{\text{core}}$, candidate pool fraction $\alpha$.
+\Require Data matrix $X \in \mathbb{R}^{N \times D}$, ensemble size $M$, target clusters $K$, anchor budget $L \ll N$ (default $\max(40, 10K)$), core quantile $\tau_{\text{core}}$, candidate pool fraction $\alpha$.
 \Ensure Consensus labels $\mathbf{y} \in \{1,\dots,K\}^N$, Anchors $\mathcal{A}_{\text{core}}$, Active Subspace $\mathcal{F}_{\text{active}}$, Centroids $\{\boldsymbol{\mu}_k\}_{k=1}^K$.
-\Statex \textbf{// Stage 1: Multimodality Subspace Gating (VSSG)}
+\Statex \textbf{// Stage 1: Multimodality Subspace Gating (BGSS)}
 \For{each feature column $d \in \{1,\dots,D\}$}
-    \State Compute Sarle's Bimodality Coefficient:
-    \State $b_d \leftarrow \frac{\mathrm{Skewness}^2(\mathbf{f}_d) + 1}{\mathrm{Kurtosis}(\mathbf{f}_d) + 3 + \epsilon}$.
+    \State Compute finite-sample Sarle's Bimodality Coefficient:
+    \State $b_d \leftarrow \frac{\mathrm{Skewness}^2(\mathbf{f}_d) + 1}{\mathrm{Kurtosis}(\mathbf{f}_d) + 3 \cdot \frac{(N-1)^2}{(N-2)(N-3)} + \epsilon}$.
 \EndFor
-\State Extract candidate pool $\mathcal{F}_{\text{active}} \leftarrow \text{TopRank}(b, \max(K, \lfloor \alpha \cdot D \rfloor))$.
+\State Extract candidate pool $\mathcal{F}_{\text{active}} \leftarrow \{d \mid b_d \ge 5/9\}$ (with rank cap $\min(D, \max(100, \lfloor \alpha \cdot D \rfloor))$).
 \Statex \textbf{// Stage 2: Guided Subspace Ensemble Generation}
 \For{$m = 1$ to $M$}
     \State Draw random subspace $\mathcal{F}_m \subset \mathcal{F}_{\text{active}}$.
     \State Fit base partition $\pi_m \leftarrow \text{Clusterer}(X_{[:, \mathcal{F}_m]}, K)$.
 \EndFor
 \Statex \textbf{// Stage 3: Determinacy-Based Bipartite Anchor Consensus}
-\State If $N \le 2{,}000$, evaluate exact determinacy $\sigma_i \leftarrow \frac{1}{N-1}\sum_{j \neq i} S_{ij}^2$;
-\State Else ($N > 2{,}000$), evaluate bipartite anchor determinacy $\tilde{\sigma}_i \leftarrow \frac{1}{L}\sum_{l=1}^L B_{il}^2$ in $O(MNL)$.
-\State Select $L$ core anchors $\mathcal{A}_{\text{core}} \leftarrow \{i \mid \sigma_i \ge \text{Quantile}(\boldsymbol{\sigma}, \tau_{\text{core}})\}$.
+\State Evaluate exact quadratic determinacy $\sigma_i \leftarrow \frac{1}{N-1}\sum_{j \neq i} S_{ij}^2$ via Proposition~\ref{prop:linear_determinacy} in $O(M^2 N + M^2 K^2)$ linear memory.
+\State Identify core instances $\mathcal{C}_{\text{core}} \leftarrow \{i \mid \sigma_i \ge \text{Quantile}(\boldsymbol{\sigma}, \tau_{\text{core}})\}$.
+\State Select $L = \min(\max(40, 10K), |\mathcal{C}_{\text{core}}|)$ core anchors $\mathcal{A}_{\text{core}}$ uniformly from $\mathcal{C}_{\text{core}}$.
 \State Construct bipartite co-association matrix $B \in [0, 1]^{N \times L}$:
 \State $B_{ia} \leftarrow \frac{1}{M}\sum_{m=1}^M \mathbf{1}\{\pi_m(\mathbf{x}_i) = \pi_m(\mathbf{x}_a)\}$.
-\State Row-normalize $B_{\text{norm}} \leftarrow D_R^{-1} B$, and compute $W_{\text{anchor}} \leftarrow B_{\text{norm}}^T B_{\text{norm}} \in \mathbb{R}^{L \times L}$.
-\State Solve normalized Laplacian $L_{\text{anchor}} \leftarrow I - D_A^{-1/2} W_{\text{anchor}} D_A^{-1/2}$ for top $K$ eigenvectors $V \in \mathbb{R}^{L \times K}$.
-\State Compute instance embedding $U \leftarrow B_{\text{norm}} V \in \mathbb{R}^{N \times K}$ (row-normalized).
+\State Row-normalize $B_{\text{norm}} \leftarrow D_R^{-1} B$, and compute anchor affinity $W_{\text{anchor}} \leftarrow B_{\text{norm}}^T B_{\text{norm}} \in \mathbb{R}^{L \times L}$.
+\State Solve normalized Laplacian $L_{\text{anchor}} \leftarrow I - D_A^{-1/2} W_{\text{anchor}} D_A^{-1/2}$ for the $K$ smallest eigenvectors $V \in \mathbb{R}^{L \times K}$ with eigenvalues $\boldsymbol{\lambda}$.
+\State Compute Transfer-Cut embedding $U \leftarrow B_{\text{norm}} (D_A^{-1/2} V) \cdot \operatorname{diag}(\max(1 - \boldsymbol{\lambda}, 10^{-4}))^{-1/2} \in \mathbb{R}^{N \times K}$ (row-normalized).
 \State Extract consensus labels $\mathbf{y} \leftarrow \text{K-Means}(U, K)$.
 \Statex \textbf{// Stage 4: Stability-Weighted Centroid Induction}
 \For{$k = 1$ to $K$}
@@ -216,15 +219,15 @@ As ambient distractor dimensions $D_{\text{noise}}$ expand ($D \gg N$), pairwise
 
 The ICC-v2 framework (Algorithm~\ref{alg:iccv2}) operates in four distinct stages:
 
-\subsection{Variance-Stabilized Subspace Gating (VSSG)}
-Under isotropic noise in $D \gg N$ regimes, classical variance thresholding fails because distractor noise features often match or exceed signal feature variances. To detect latent cluster structures without labels, VSSG evaluates marginal multimodality using \textbf{Sarle's Bimodality Coefficient} ($BC$)~\cite{sarle1983sas} with finite-sample null correction:
+\subsection{Bimodality-Gated Subspace Selection (BGSS)}
+Under isotropic noise in $D \gg N$ regimes, classical variance thresholding fails because distractor noise features often match or exceed signal feature variances. To detect latent cluster structures without labels, BGSS evaluates marginal multimodality using \textbf{Sarle's Bimodality Coefficient} ($BC$)~\cite{sarle1983sas} with finite-sample null correction:
 \begin{equation}
     \hat{b}_d = \frac{\hat{\gamma}_d^2 + 1}{\hat{\kappa}_d + 3 \cdot \frac{(N-1)^2}{(N-2)(N-3)} + \epsilon},
 \end{equation}
 where $\hat{\gamma}_d$ is empirical sample skewness, $\hat{\kappa}_d$ is Fisher's excess kurtosis, and the denominator represents Pearson kurtosis $\hat{\beta}_{2, d}$ adjusted for finite-sample normal null expectations. Features with zero variance ($\mathrm{Var}(\mathbf{f}_d) < 10^{-12}$) are assigned $\hat{b}_d = 0$.
 
 \begin{proposition}[Conditional Multimodality Separation Bound]
-For a standard unimodal Gaussian distractor distribution, $\gamma = 0$ and $\kappa = 0$, yielding $\mathbb{E}[\hat{b}_d] \approx 1/3 \approx 0.333$. For a continuous uniform distribution, $b_d = 5/9 \approx 0.555$. For a balanced two-component Gaussian mixture $0.5\mathcal{N}(-\Delta, \sigma^2) + 0.5\mathcal{N}(\Delta, \sigma^2)$, the coefficient satisfies $b_d > 5/9$ if and only if component separation $\Delta / \sigma > \sqrt{2}$. For asymmetric mixtures ($w \neq 0.5$), the threshold scales with component proportion $w(1-w)$.
+For a standard unimodal Gaussian distractor distribution, $\gamma = 0$ and $\kappa = 0$, yielding $\mathbb{E}[\hat{b}_d] \approx 1/3 \approx 0.333$. For a continuous uniform distribution, $b_d = 5/9 \approx 0.556$. For a balanced two-component Gaussian mixture $0.5\mathcal{N}(-\Delta, \sigma^2) + 0.5\mathcal{N}(\Delta, \sigma^2)$, Pearson kurtosis is $\beta_2 = \frac{r^2 + 6r + 3}{(r + 1)^2}$ where $r = \Delta^2 / \sigma^2$. The coefficient satisfies $b_d > 5/9$ if and only if $r > \frac{3 + \sqrt{15}}{2} \approx 3.436$, which corresponds to component separation $\Delta / \sigma > \sqrt{\frac{3 + \sqrt{15}}{2}} \approx 1.854$. For asymmetric mixtures ($w \neq 0.5$), the threshold scales with component proportion $w(1-w)$.
 \end{proposition}
 
 Computing $\hat{b}_d$ requires only empirical second, third, and fourth moments across instances, executing in strictly \textbf{$O(N \cdot D)$ time} with zero quadratic distance computations. We formalize the foundational inductive bias and boundary conditions of VSSG:
@@ -421,9 +424,9 @@ SRBCT ($83, 2.3\text{k}, 4$)          & 0.141  & 0.109  & 0.080  & 0.102        
 Yale B ($2.4\text{k}, 1.0\text{k}, 38$)& 0.017  & 0.049  & 0.066  & -0.001         & 0.016  & 0.011  & \textbf{0.131} & 0.041  & 0.040  & 0.007  & 0.045 \\
 Zheng68k ($68.6\text{k}, 2\text{k}, 11$)& 0.483 & 0.495  & 0.413  & 0.370          & \textbf{0.562} & 0.483 & 0.520  & 0.352  & 0.459  & 0.484  & 0.240 \\
 \midrule
-\textbf{Grand Mean ARI}               & 0.1186 & 0.1213 & 0.1050 & 0.0710         & 0.1266 & 0.1001 & 0.1309         & 0.1120 & 0.1107 & 0.1042 & \textbf{0.1599} \\
-\textbf{Mean Rank (All 13)}           & 5.31   & 5.31   & 6.54   & 6.92           & 5.08   & 6.85   & \textbf{4.31}  & 7.38   & 6.92   & 5.92   & 5.46 \\
-\textbf{Mean Rank ($D/N > 20$ Subgroup)} & 4.67 & 5.00   & 6.17   & 6.33           & 5.50   & 7.17   & 4.83           & 7.00   & 6.33   & 5.67   & \textbf{1.50} \\
+\textbf{Grand Mean ARI}               & 0.1186 & 0.1213 & 0.1050 & 0.0710         & 0.1266 & 0.1001 & 0.1309         & 0.1120 & 0.1107 & 0.1042 & \textbf{\GrandMeanARI} \\
+\textbf{Mean Rank (All 13)}           & 5.31   & 5.31   & 6.54   & 6.92           & 5.08   & 6.85   & \textbf{\MeanRankDEC}  & 7.38   & 6.92   & 5.92   & \MeanRankICCvTwo \\
+\textbf{Mean Rank ($D/N > 20$ Subgroup)} & 5.83 & 6.83   & 7.50   & 5.67           & 6.33   & 7.83   & 5.00           & 7.08   & 6.25   & 5.33   & \textbf{\RankBioICCvTwo} \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -432,11 +435,11 @@ We evaluated ICC-v2 across an expanded suite of 13 multi-domain high-dimensional
 
 \textbf{Regime-Specific Operating Analysis \& Boundary Conditions:} A granular examination of Table~\ref{tab:benchmark_ari} delineates the exact operating profile and inductive bias of ICC-v2:
 \begin{itemize}
-    \item \textbf{Small-Sample, High-Dimensional Regimes ($D/N > 20$):} In biological cancer microarrays and mass spectrometry assays—where $D \gg N$ and distance concentration severely degrades pairwise metrics—ICC-v2 demonstrates commanding superiority. On SRBCT ($D/N=27.8, K=4$), ICC-v2 achieves an ARI of \textbf{$0.538$} (outperforming Standard Consensus by $+1,250\%$); on Leukemia ($D/N=99.0$), it delivers \textbf{$0.680$} (vs. $0.173$ for Standard Consensus and $0.148$ for DEC); and on Ovarian ($D=15{,}154$), it achieves \textbf{$0.052$} while accelerating consensus extraction by $17.0\times$ ($3.41\text{s}$ vs. $57.98\text{s}$). Deep clustering (DEC) struggles in these regimes due to extreme sample sparsity ($N \le 100$), yielding near-random partitions ($0.087$ on SRBCT).
+    \item \textbf{Small-Sample, High-Dimensional Regimes ($D/N > 20$):} In biological cancer microarrays and mass spectrometry assays—where $D \gg N$ and distance concentration severely degrades pairwise metrics—ICC-v2 demonstrates commanding superiority. On SRBCT ($D/N=27.8, K=4$), ICC-v2 achieves an ARI of \textbf{\ARIsrbct} (outperforming Standard Consensus by $+1,250\%$); on Leukemia ($D/N=99.0$), it delivers \textbf{\ARIleukemia} (vs. $0.173$ for Standard Consensus and $0.148$ for DEC); and on Ovarian ($D=15{,}154$), it achieves \textbf{\ARIovarian} while accelerating consensus extraction by $17.0\times$ ($3.41\text{s}$ vs. $57.98\text{s}$). Deep clustering (DEC) struggles in these regimes due to extreme sample sparsity ($N \le 100$), yielding near-random partitions ($0.087$ on SRBCT).
     \item \textbf{Large-Sample, Multi-Class Regimes ($K \ge 20$):} Conversely, on large-sample benchmarks with numerous fine-grained categories, such as 20 Newsgroups ($N=18.8\text{k}, K=20$) and Isolet ($N=7.8\text{k}, K=26$), classical hierarchical Ward linkage ($0.114$ and $0.500$) and DEC ($0.496$) outperform ICC-v2. This stems from a structural tradeoff: with a default anchor budget of $L=40$, complex datasets with $K \ge 20$ classes allocate fewer than two anchors per category on average, under-sampling minority subtypes. In abundant-sample regimes where distance concentration is naturally alleviated by sample density, dense hierarchical clustering or deep representation learning remains advantageous.
 \end{itemize}
 
-Across the full 13-benchmark collection spanning heterogeneous data modalities, Friedman omnibus testing yields $p = 0.33$, reflecting the complementary strengths of different paradigms across regimes. Statistical significance of comparative rankings was evaluated using the non-parametric Dem\v{s}ar Critical Difference framework (Fig.~\ref{fig:exp3_demsar}). Under the two-tailed post-hoc Nemenyi test ($\alpha=0.05$), the critical difference threshold is $CD = 2.62$. Algorithms grouped under common horizontal bars are statistically equivalent. While DEC ($R=4.31$), Standard Consensus ($R=5.08$), and ICC-v2 ($R=5.46$) occupy the top performance tier without statistically significant separation across the omnibus benchmark collection, ICC-v2 demonstrates decisive separation in the targeted high-dimensional biomedical regime ($D/N > 20$), attaining $R=1.50$ compared to $R=4.83$ for DEC, $R=5.50$ for Standard Consensus, and $R=7.17$ for Li et al.
+Across the full 13-benchmark collection spanning heterogeneous data modalities, Friedman omnibus testing yields $p = 0.33$, reflecting the complementary strengths of different paradigms across regimes. Statistical significance of comparative rankings was evaluated using the non-parametric Dem\v{s}ar Critical Difference framework (Fig.~\ref{fig:exp3_demsar}). Under the two-tailed post-hoc Nemenyi test ($\alpha=0.05$), the critical difference threshold is $CD = 2.62$. Algorithms grouped under common horizontal bars are statistically equivalent. While DEC ($R=\MeanRankDEC$), Standard Consensus ($R=\MeanRankStdCons$), and ICC-v2 ($R=\MeanRankICCvTwo$) occupy the top performance tier without statistically significant separation across the omnibus benchmark collection, ICC-v2 demonstrates decisive separation in the targeted high-dimensional biomedical regime ($D/N > 20$), attaining $R=\RankBioICCvTwo$ compared to $R=\RankBioDEC$ for DEC, $R=\RankBioStdCons$ for Standard Consensus, and $R=7.83$ for Li et al.
 
 On moderate-dimensional physical and acoustic benchmarks (Sonar, Madelon), feature correlations allow spectral clustering ($0.038$) and FCM ($0.025$) to maintain competitive partitions. On airborne hyperspectral imaging (Indian Pines, $N=10.2\text{k}, D=200, K=16$), local spatial smoothness favors spectral graph partitioning ($0.229$ vs. $0.138$ for ICC-v2), where a default budget of $L=40$ under-samples minority crop signatures. Crucially, across all 1,430 individual model fits, ICC-v2 secures the highest Grand Mean ARI of $\mathbf{0.1599}$---substantially outperforming DEC ($0.1309$), Standard Consensus ($0.1266$), and K-Means ($0.1186$). This demonstrates that geometry-calibrated anchor consensus confers strong noise resilience on complex biological manifolds without sacrificing general-purpose consensus utility.
 

@@ -151,8 +151,10 @@ class InvariantCoreConsensus:
         # -------------------------------------------------------------
         # 4. TOPOLOGICAL TAXONOMY IN (C_i, R_i) SPACE
         # -------------------------------------------------------------
-        # C_i: Local consensus determinacy over anchors
-        C = 1.0 - 4.0 * np.mean((B_star - 0.5)**2, axis=1)
+        # C_i: Local consensus determinacy over anchors in [0, 1].
+        # Highly determined instances have associations close to 0 or 1 (C -> 1),
+        # while ambiguous boundary points near 0.5 yield C -> 0.
+        C = 4.0 * np.mean((B_star - 0.5)**2, axis=1)
         self.stability_ = C
 
         # R_i: Residual noise fraction

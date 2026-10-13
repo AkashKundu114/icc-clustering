@@ -50,7 +50,7 @@ class ModelMetadata(int):
 
 def run_kmeans(X: np.ndarray, k: int, seed: int = 42) -> Tuple[np.ndarray, float, ModelMetadata]:
     """
-    Execute K-Means clustering.
+    Execute standard K-Means++ clustering baseline with 10 restarts.
 
     Parameters
     ----------
@@ -71,7 +71,12 @@ def run_kmeans(X: np.ndarray, k: int, seed: int = 42) -> Tuple[np.ndarray, float
         Diagnostic properties with integer evaluation (n_core = N).
     """
     t0 = time.perf_counter()
-    labels = run_clusterer("kmeans", X, k, seed=seed)
+    from sklearn.cluster import KMeans
+    try:
+        km = KMeans(n_clusters=k, init="k-means++", n_init=10, random_state=seed)
+        labels = km.fit_predict(X)
+    except Exception:
+        labels = run_clusterer("kmeans", X, k, seed=seed)
     runtime = time.perf_counter() - t0
     metadata = ModelMetadata(
         X.shape[0],

@@ -1,0 +1,8 @@
+comparison,competitor,icc_mean_rank,comp_mean_rank,wilcoxon_stat,raw_p_value,holm_threshold,significant_holm
+ICC_v2 vs Ward,Ward,2.625,5.875,3.0,0.0390625,0.0071428571428571435,False
+ICC_v2 vs Spectral,Spectral,2.625,5.5,3.0,0.0390625,0.008333333333333333,False
+ICC_v2 vs Li_et_al_2019,Li_et_al_2019,2.625,4.75,4.0,0.0546875,0.01,False
+ICC_v2 vs ICC_v1,ICC_v1,2.625,3.5,5.0,0.078125,0.0125,False
+ICC_v2 vs Standard_Consensus,Standard_Consensus,2.625,4.75,7.0,0.1484375,0.016666666666666666,False
+ICC_v2 vs K-Means,K-Means,2.625,5.125,8.0,0.1953125,0.025,False
+ICC_v2 vs FCM,FCM,2.625,3.875,9.0,0.25,0.05,False

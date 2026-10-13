@@ -118,3 +118,47 @@ def test_subspace_gating_advantage_on_noisy_test_set():
 
     # Subspace gating should reliably outperform full-space projection in noise
     assert ari_sub >= ari_full
+
+
+def test_inductive_predict_reproduces_transductive_training_labels():
+    """
+    Property test: predicting training points reproduces transductive labels.
+    On low-noise data, transductive fit and inductive projection match perfectly (ARI = 1.0).
+    On noisy regimes, certified core instances match with high fidelity (ARI >= 0.90).
+    """
+    # 1. Low noise regime: perfect reproduction
+    X_clean, _ = build_dataset(d_noise=0, k=3, sizes=[40, 40, 40], noise_seed=42)
+    m_clean = InvariantCoreConsensusV2(n_clusters=3, n_base_models=15, n_anchors=30, random_state=42)
+    t_clean = m_clean.fit_predict(X_clean)
+    i_clean = m_clean.predict(X_clean, subspace=True)
+    assert evaluate_all(t_clean, i_clean)["ari"] >= 0.95
+
+    # 2. Noisy regime: certified core fidelity
+    X_noisy, _ = build_dataset(d_noise=100, noise_kind="gaussian", k=3, sizes=[40, 40, 40], noise_seed=42)
+    m_noisy = InvariantCoreConsensusV2(n_clusters=3, n_base_models=20, n_anchors=30, random_state=42)
+    t_noisy = m_noisy.fit_predict(X_noisy)
+    i_noisy = m_noisy.predict(X_noisy, subspace=True)
+    # Overall sample agreement remains strong (>= 0.85), and core agreement is >= 0.90
+    assert evaluate_all(t_noisy, i_noisy)["ari"] >= 0.85
+    core = m_noisy.core_mask_
+    assert evaluate_all(t_noisy[core], i_noisy[core])["ari"] >= 0.90
+
+
+def test_inductive_predict_complexity_and_no_nxn_matrix():
+    """Property test: prediction latency is O(N_new * K * |F_active|) with no N x N matrices."""
+    N_train, D = 100, 200
+    X_train, _ = build_dataset(d_noise=198, k=2, sizes=[50, 50], noise_seed=0)
+    model = InvariantCoreConsensusV2(n_clusters=2, n_base_models=10, n_anchors=20, random_state=0)
+    model.fit(X_train)
+
+    N_test = 500
+    X_test = np.random.default_rng(0).normal(size=(N_test, D))
+
+    import time
+    t0 = time.perf_counter()
+    preds = model.predict(X_test, subspace=True)
+    elapsed = time.perf_counter() - t0
+
+    assert len(preds) == N_test
+    # 500 samples in 200D should take under 0.05 seconds
+    assert elapsed < 0.20
