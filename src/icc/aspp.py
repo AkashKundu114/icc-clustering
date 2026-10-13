@@ -27,15 +27,14 @@ Mathematical Architecture:
 """
 
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple, Any, Union
+from typing import Any, Dict, List, Optional, Tuple
+
 import numpy as np
 import pandas as pd
 import scipy.linalg as sla
-from scipy.spatial.distance import cdist
 
 from .core import run_clusterer
 from .metrics import adjusted_rand_score
-
 
 ASPP_FAMILIES = ("sampling", "feature", "measurement", "technical", "algorithmic")
 
@@ -178,8 +177,8 @@ def _compute_cluster_retention(
             continue
 
         best_jaccard = 0.0
-        for l in range(n_pert_clusters):
-            mask_pert_l = (labels_pert == l)
+        for cluster_idx in range(n_pert_clusters):
+            mask_pert_l = (labels_pert == cluster_idx)
             intersection = np.sum(mask_ref_k & mask_pert_l)
             union = np.sum(mask_ref_k | mask_pert_l)
             if union > 0:

@@ -8,10 +8,11 @@ Datasets:
 
 import os
 from pathlib import Path
-from typing import Tuple, Dict, Any, Optional
+from typing import Any, Dict, Optional, Tuple
+
 import numpy as np
 import scipy.io as sio
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 _DEFAULT_CACHE = _PROJECT_ROOT / "data" / "cache"
@@ -20,8 +21,8 @@ _DEFAULT_RAW = _PROJECT_ROOT / "data" / "raw" / "indian_pines"
 
 def _download_file(url: str, dest_path: str):
     """Download a file with user-agent headers and SSL verification handling."""
-    import urllib.request
     import ssl
+    import urllib.request
     ctx = ssl._create_unverified_context()
     req = urllib.request.Request(
         url,
