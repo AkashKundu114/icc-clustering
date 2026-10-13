@@ -64,6 +64,9 @@ htmlcov/
 Thumbs.db
 
 # Manuscript & Publication artifacts (embargoed / kept separate during peer review)
+paper/
+manuscript/
+springer_manuscript/
 ieee_manuscript/
 *.aux
 *.bbl
@@ -74,4 +77,7 @@ ieee_manuscript/
 *.synctex.gz
 *.fls
 *.fdb_latexmk
+*.pdf
+*.zip
+
 
