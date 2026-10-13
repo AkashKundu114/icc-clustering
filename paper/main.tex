@@ -11,6 +11,26 @@
 \usepackage{microtype}
 \usepackage{multirow}
 \usepackage{url}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+% ORCID icon definition
+\definecolor{orcidlogocol}{HTML}{A6CE39}
+\newcommand{\orcidicon}[1]{%
+  \href{https://orcid.org/#1}{%
+    \begin{tikzpicture}[yscale=-1,transform shape]
+      \fill[orcidlogocol] (0,0) circle [radius=0.18];
+      \node[inner sep=0pt, text=white, font=\fontsize{3pt}{3pt}\selectfont\sffamily\bfseries] at (0,0) {ID};
+    \end{tikzpicture}%
+  }%
+}
 \ifCLASSOPTIONcompsoc
   \usepackage[caption=false,font=footnotesize,labelfont=sf,textfont=sf]{subfig}
 \else
@@ -41,7 +61,7 @@
 
 \title{Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes}
 
-\author{Akash~Kundu,
+\author{Akash~Kundu$^{\text{\orcidicon{0009-0003-8246-7316}}}$,
         Trinankur~Guha,
         Rupankar~Ghatak,
         Anubhab~Naskar,
