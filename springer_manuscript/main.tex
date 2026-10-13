@@ -60,7 +60,7 @@
 
 \author[1]{\fnm{Kalyan Kumar} \sur{Das}}
 
-\affil[1]{\orgdiv{Department of Computer Science and Engineering}, \orgname{Techno India University}, \orgaddress{\city{Kolkata}, \state{West Bengal}, \country{India}}}
+\affil[1]{\orgdiv{Department of Computer Science and Engineering}, \orgname{Techno India University}, \orgaddress{\street{EM-4, Sector V, Bidhannagar}, \city{Kolkata}, \postcode{700091}, \state{West Bengal}, \country{India}}}
 
 \abstract{Consensus clustering synthesizes base partitions to discover robust data groupings. However, existing methods face two fundamental bottlenecks: (1) a transductive formulation requiring $O(N^2)$ storage preventing out-of-sample inference, and (2) acute vulnerability to high-dimensional distractor noise ($D \gg N$), where distance concentration degrades partition fidelity. We propose \textbf{Inductive Consensus Clustering (ICC-v2)}, architected for small-sample, high-dimensional regimes subject to isotropic noise. ICC-v2 introduces: (1) an $O(N \cdot D)$ feature screening filter using Sarle's Bimodality Coefficient (Variance-Stabilized Subspace Gating, VSSG) isolating multimodal dimensions; (2) a determinacy-based bipartite anchor consensus graph reducing auxiliary memory from $O(N^2)$ to $O(N \cdot L)$; and (3) stability-weighted centroid assignment for instant $O(K \cdot |\mathcal{F}_{\text{active}}|)$ inductive inference. Across 13 multi-domain benchmarks, ICC-v2 attains the highest Grand Mean ARI ($0.1599$) and commands Rank \#1 ($R=1.50$) on ultra-high-dimensional biological regimes ($D/N > 20$, $+300\%$ to $+1{,}250\%$ ARI on Leukemia and SRBCT), while reducing auxiliary memory by $39.1\%$ at $N=8{,}000$ and scaling linearly to $N=1{,}000{,}000$ instances.}
 
