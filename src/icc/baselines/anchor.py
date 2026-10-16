@@ -17,9 +17,12 @@ import numpy as np
 import scipy.linalg as sla
 from scipy.spatial.distance import cdist
 
+from .classical import ModelMetadata
+
 _SKLEARN_AVAILABLE = False
 try:
-    from sklearn.cluster import KMeans as _SkKMeans, kmeans_plusplus as _sk_kmeans_plusplus
+    from sklearn.cluster import KMeans as _SkKMeans
+    from sklearn.cluster import kmeans_plusplus as _sk_kmeans_plusplus
     _test = _SkKMeans(n_clusters=2, n_init=1).fit_predict(np.zeros((4, 2)))
     _SKLEARN_AVAILABLE = True
 except (ImportError, Exception):
@@ -53,8 +56,6 @@ def _kmeans_cluster(X: np.ndarray, k: int, random_state: int = 42, n_init: int =
             pass
     from src.icc.core import run_clusterer
     return run_clusterer("kmeans", X, k, seed=random_state).astype(np.int64)
-
-from src.icc.baselines.classical import ModelMetadata
 
 
 def construct_anchor_bipartite_graph(

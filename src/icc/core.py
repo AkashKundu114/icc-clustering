@@ -18,26 +18,17 @@ from scipy.spatial.distance import cdist
 # Try importing sklearn; fallback if DLLs or modules are blocked
 _SKLEARN_AVAILABLE = False
 try:
-    from sklearn.cluster import KMeans as _SkKMeans
     from sklearn.cluster import AgglomerativeClustering as _SkAgg
+    from sklearn.cluster import KMeans as _SkKMeans
     from sklearn.cluster import SpectralClustering as _SkSpectral
-    from sklearn.mixture import GaussianMixture as _SkGMM
     from sklearn.metrics import adjusted_rand_score as _sk_ari
+    from sklearn.mixture import GaussianMixture as _SkGMM
     # Test if underlying cython modules load without policy blocks
     _test = _sk_ari([0, 1], [0, 1])
     _SKLEARN_AVAILABLE = True
 except (ImportError, Exception):
     _SKLEARN_AVAILABLE = False
 # Metrics re-exported from .metrics for backward compatibility
-from .metrics import (
-    adjusted_rand_score,
-    normalized_mutual_info_score,
-    adjusted_mutual_info_score,
-    v_measure_score,
-    fowlkes_mallows_score,
-    evaluate_all,
-    evaluate_all_with_ci,
-)
 
 RNG_DATA_SEED = 42
 CLUSTERERS = ["kmeans", "gmm", "ward", "spectral", "fcm"]
@@ -185,7 +176,6 @@ def _kmeans_numpy(X, k, seed=0, max_iter=100):
 
 
 def _gmm_numpy(X, k, seed=0, max_iter=40, reg_covar=1e-4):
-    rng = np.random.default_rng(seed)
     n, d = X.shape
     # Initialize with kmeans
     init_labels = _kmeans_numpy(X, k, seed=seed)
@@ -289,8 +279,8 @@ def canonical(labels):
     """
     mapping = {}
     canonical_labels = []
-    for l in labels:
-        if l not in mapping:
-            mapping[l] = len(mapping)
-        canonical_labels.append(mapping[l])
+    for label_val in labels:
+        if label_val not in mapping:
+            mapping[label_val] = len(mapping)
+        canonical_labels.append(mapping[label_val])
     return tuple(canonical_labels)

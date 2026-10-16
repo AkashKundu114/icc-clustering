@@ -1,0 +1,7 @@
+test_case,d_noise,d_total,trial,precision_at_50,recall_at_50,precision_at_k,recall_at_k,recall_at_2k
+Noise_Sweep,0,50,0,1.0,1.0,1.0,1.0,1.0
+Noise_Sweep,50,100,0,0.96,0.96,0.96,0.96,1.0
+Noise_Sweep,200,250,0,0.96,0.96,0.96,0.96,0.96
+Noise_Sweep,500,550,0,0.96,0.96,0.96,0.96,0.96
+Noise_Sweep,1000,1050,0,0.94,0.94,0.94,0.94,0.96
+Noise_Sweep,5000,5050,0,0.94,0.94,0.94,0.94,0.96
