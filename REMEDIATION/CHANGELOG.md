@@ -20,3 +20,27 @@ All changes and milestone deliverables during the remediation process are logged
 
 ## [Phase 1: Reproduce and Freeze] - 2026-10-17
 - Subagent E1: Ran as-published test suite (`python -m pytest tests/ --cov=src/icc --cov-report=term`). Captured raw logs to `REMEDIATION/logs/test_suite.log`. Result: 76 passed, 0 failed, 14 warnings, 74% statement coverage across `src/icc`.
+- Subagent E2: Executed all experiment suites (Exp 0 falsification, Exp 1 generalization, Exp 2 ablation, Exp 2.1 VSSG, Exp 3.1 13-dataset benchmark, Exp 3.5 missing data, Exp 4 scalability, Exp 5 extreme scaling) capturing raw logs to `REMEDIATION/logs/`.
+- Subagent E3: Consolidated all 3,430 empirical run observations into `results/results.json`. Generated `results/MANIFEST.md` with SHA256 hashes of 73 input, cache, and result files.
+- Subagent E4: Ran spot-check verification across Table 3 cells and Leukemia ICC-v2 (`REMEDIATION/AUDIT_SPOTCHECK.md`). Populated `REMEDIATION/CLAIMS.md` with evaluated outcomes (188 MATCH, 13 MISMATCH).
+- Completed and signed off `REMEDIATION/PHASE1_REPORT.md`.
+- Committed baseline and tagged `results-frozen` on `remediation/phase1`.
+
+## [Phase 2: Science & Fair Baselines] - 2026-10-17
+- Initialized branch `remediation/phase2` off `results-frozen`.
+- Authored pre-registration protocol in `REMEDIATION/PREREG.md` fixing all hypotheses, subgroups, fair baselines, seeds, and statistical tests prior to execution.
+- Subagent B (Theory & Method):
+  - Solved Proposition 1 analytic separation bound: $2\theta^2 - 6\theta - 3 = 0 \implies \Delta / \sigma_0 = \sqrt{\frac{3 + \sqrt{15}}{2}} \approx 1.854$.
+  - Implemented and verified numerical quadrature across $\nu \in [5, 100]$ in `scripts/verify_prop1.py` (`REMEDIATION/logs/verify_prop1.log`).
+  - Authored `REMEDIATION/THEORY_NOTES.md` detailing Transfer-Cut bipartite SVD equivalence, Sarle's criterion ($5/9$), 1D marginal unimodality boundaries on XOR, and uniform random anchor behavior on small $N$.
+- Subagent C (Experiments):
+  - Implemented fair baselines (Variance Filter, PCA/SVD, Laplacian Score, Sparse K-Means) across all 13 benchmark datasets and 10 seeds (`scripts/run_fair_baselines.py`), outputting 1,170 records to `results/phase2/fair_baselines.csv`.
+  - Implemented direct inductive out-of-sample evaluation (`scripts/run_inductive_direct.py`) across 9 datasets and 10 seeds, outputting 540 records to `results/phase2/inductive_direct.csv`.
+- Subagent D (Statistician):
+  - Evaluated Friedman omnibus test ($\chi^2 = 11.34, p = 0.33$) and true Nemenyi CD ($k=11, N=13 \implies \text{CD} = 4.21$).
+  - Performed subgroup analysis: on the high-D subgroup ($D/N > 20$), ICC-v2 achieves #1 average rank (2.33) and 0.258 mean ARI vs 0.050 for fair baselines.
+  - Generated structured statistical findings in `results/phase2/stats.json`.
+- Artifact Automation:
+  - Implemented `scripts/make_numbers.py` generating 49 synchronized LaTeX macros into `paper/gen/numbers.tex`, `manuscript/gen/numbers.tex`, and `springer_manuscript/numbers.tex`.
+  - Generated `results/phase2/MANIFEST.md` cataloging SHA256 checksums of Phase 2 scientific outputs.
+
