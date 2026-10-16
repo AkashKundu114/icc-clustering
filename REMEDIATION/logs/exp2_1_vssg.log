@@ -1,0 +1,13 @@
+
+[*] Running VSSG Interpretability Audit...
+[*] Running Test Case A: Madelon Feature Selection Audit...
+[+] Saved Madelon audit results to D:\Final Year Project\experiments\exp2_ablation\data\exp2_1_madelon_pr.csv
+[*] Running Test Case B: Synthetic High-D Audit (N=500, D=10000, Signal=50)...
+[+] Saved Synthetic High-D audit results to D:\Final Year Project\experiments\exp2_ablation\data\exp2_1_synthetic_10kd_pr.csv
+[*] Running Test Case C: Noise Dimension Sweep Audit...
+[+] Saved Noise Sweep audit results to D:\Final Year Project\experiments\exp2_ablation\data\exp2_1_noise_sweep_pr.csv
+[OK] Exp 2.1 completed in 17.65s
+[+] Saved D:\Final Year Project\experiments\exp2_ablation\figures\fig22a_vssg_madelon_pr.png and figA_vssg_madelon_pr.png
+[+] Saved D:\Final Year Project\experiments\exp2_ablation\figures\fig22b_vssg_synthetic_pr.png and figB_vssg_synthetic_pr.png
+[+] Saved D:\Final Year Project\experiments\exp2_ablation\figures\fig22c_vssg_noise_degradation.png and figC_vssg_noise_degradation.png
+[+] Saved consolidated D:\Final Year Project\experiments\exp2_ablation\figures\fig22_vssg_interpretability_trinity.png

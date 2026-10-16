@@ -1,0 +1,13 @@
+--- a/experiments/exp2_ablation/src/vssg_interpretability.py
++++ b/experiments/exp2_ablation/src/vssg_interpretability.py
+@@ -14,6 +14,10 @@ import time
+ from pathlib import Path
+ import numpy as np
+ import pandas as pd
++import sys
++root_dir = Path(__file__).resolve().parents[3]
++if str(root_dir) not in sys.path:
++    sys.path.insert(0, str(root_dir))
+ from scipy.stats import kurtosis, skew
+ from sklearn.feature_selection import mutual_info_classif
+ 

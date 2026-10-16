@@ -1,0 +1,214 @@
+python : 
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+At line:1 char:1
++ python experiments/exp0_falsification/run_all.py --run-full > REMEDIA ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\Users\Akash\...rk as expected.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: 
+UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+  warnings.warn(
+=================================================================
+ EXECUTING FULL EXPERIMENT 0 PIPELINE
+=================================================================
+
+[Phase 1/4] Running Baseline Noise Sweep (N=300, K=3)...
+Starting Baseline Experiment 0 Sweep (D_noise in [0, 10000])...
+  d_noise=     0 done in 6.2s (Total: 6.2s)
+  d_noise=    10 done in 5.2s (Total: 11.4s)
+  d_noise=    50 done in 5.5s (Total: 16.9s)
+  d_noise=   100 done in 5.6s (Total: 22.5s)
+  d_noise=   500 done in 5.0s (Total: 27.5s)
+  d_noise=  1000 done in 5.2s (Total: 32.6s)
+  d_noise=  3000 done in 7.0s (Total: 39.7s)
+  d_noise=  5000 done in 8.7s (Total: 48.4s)
+  d_noise= 10000 done in 13.7s (Total: 62.1s)
+
+Saved exp0_runs.csv and exp0_agg.csv to D:\Final Year Project\experiments\exp0_falsification\data
+
+[Phase 2/4] Running 5-Noise-Regime Robustness Sweep...
+Running Noise Types sweep at D_noise=1000 across 5 distributions...
+  Noise kind 'gaussian' completed in 2.6s
+  Noise kind 'student_t' completed in 5.0s
+  Noise kind 'correlated' completed in 7.9s
+  Noise kind 'scaled' completed in 10.4s
+  Noise kind 'sparse' completed in 12.8s
+
+Saved results to D:\Final Year Project\experiments\exp0_falsification\data\exp0_noisetypes.csv
+noise_kind clusterer  mean_ari  stability  mu_within  mu_between      gap
+  gaussian    kmeans  0.001352   0.004156   0.452529    0.451033 0.002804
+  gaussian       gmm  0.000706   0.003984   0.420279    0.419553 0.003278
+  gaussian      ward  0.018954   1.000000   0.355556    0.336433 0.981046
+  gaussian  spectral -0.001845   0.995589   0.342121    0.343983 0.997434
+  gaussian       fcm  0.004021   0.015831   0.336172    0.332143 0.011811
+ student_t    kmeans  0.000345   0.002108   0.658704    0.658357 0.001762
+ student_t       gmm  0.001205   0.002358   0.651094    0.649820 0.001153
+ student_t      ward  0.000643   1.000000   0.863771    0.862867 0.999357
+ student_t  spectral  0.012697   1.000000   0.341010    0.328300 0.987303
+ student_t       fcm  0.005078   0.015260   0.335997    0.330912 0.010183
+correlated    kmeans -0.000113   0.056704   0.370852    0.370983 0.056816
+correlated       gmm -0.000204   0.059191   0.354434    0.354660 0.059395
+correlated      ward -0.000679   1.000000   0.458788    0.459533 1.000679
+correlated  spectral  0.009951   1.000000   0.381481    0.371200 0.990049
+correlated       fcm -0.001263   0.101983   0.341747    0.343028 0.103246
+    scaled    kmeans  0.001111   0.002919   0.433603    0.432463 0.001808
+    scaled       gmm  0.001347   0.004178   0.420458    0.419080 0.002831
+    scaled      ward  0.002434   0.759032   0.357488    0.355037 0.756598
+    scaled  spectral  0.002749   1.000000   0.339663    0.336900 0.997251
+    scaled       fcm  0.005186   0.016206   0.336825    0.331632 0.011020
+    sparse    kmeans  0.000566   0.002883   0.789623    0.788997 0.002317
+    sparse       gmm  0.000713   0.002779   0.819640    0.818730 0.002066
+    sparse      ward  0.000116   0.974455   0.966168    0.965997 0.974339
+    sparse  spectral  0.003663   0.995262   0.376633    0.372850 0.991600
+    sparse       fcm  0.006250   0.012791   0.338111    0.331838 0.006541
+
+[Phase 3/4] Running Genomics-Scale Imbalanced Sweep (ALLAML scale)...
+Starting Genomics-Scale Sweep (N=72, K=2, D_noise up to 20,000)...
+  d_noise=     0 done in 2.0s (Total: 2.0s)
+  d_noise=   100 done in 2.0s (Total: 4.0s)
+  d_noise=   500 done in 2.0s (Total: 6.0s)
+  d_noise=  1000 done in 2.1s (Total: 8.1s)
+  d_noise=  3000 done in 2.3s (Total: 10.4s)
+  d_noise=  5000 done in 2.5s (Total: 12.9s)
+  d_noise= 10000 done in 3.1s (Total: 15.9s)
+  d_noise= 20000 done in 4.5s (Total: 20.4s)
+
+Saved exp0_scaled_runs.csv and exp0_scaled_agg.csv to D:\Final Year Project\experiments\exp0_falsification\data
+
+[Phase 4/4] Running Fine-Grid FCM Phase Transition Sweep...
+Starting Fine-Grid Sweep across 15 noise levels (M=30 seeds)...
+  d_noise=500 done
+  d_noise=750 done
+  d_noise=1000 done
+  d_noise=1250 done
+  d_noise=1500 done
+  d_noise=1750 done
+  d_noise=2000 done
+  d_noise=2250 done
+  d_noise=2500 done
+  d_noise=2750 done
+  d_noise=3000 done
+  d_noise=3500 done
+  d_noise=4000 done
+  d_noise=4500 done
+  d_noise=5000 done
+
+Saved finegrid results to D:\Final Year Project\experiments\exp0_falsification\data\exp0_finegrid.csv
+
+[Figures] Generating all 8 publication figures...
+Generating all 8 Experiment 0 publication figures (and supplementary NMI)...
+  [Saved] D:\Final Year Project\experiments\exp0_falsification\figures\fig1_ari_stability.png
+  [Saved] D:\Final Year Project\experiments\exp0_falsification\figures\fig2_gap.png
+  [Saved] D:\Final Year Project\experiments\exp0_falsification\figures\fig1_supp_nmi_stability.png
+  [Saved] D:\Final Year Project\experiments\exp0_falsification\figures\fig3_within_between.png
+  [Saved] D:\Final Year Project\experiments\exp0_falsification\figures\fig4_noisetype_heatmap.png
+  [Saved] D:\Final Year Project\experiments\exp0_falsification\figures\fig5_scaled_ari_stability.png
+  [Saved] D:\Final Year Project\experiments\exp0_falsification\figures\fig6_scaled_gap.png
+  [Saved] D:\Final Year Project\experiments\exp0_falsification\figures\fig7_regime_comparison.png
+  [Saved] D:\Final Year Project\experiments\exp0_falsification\figures\fig8_fcm_phase_transition.png
+
+All figures successfully generated and saved to: D:\Final Year Project\experiments\exp0_falsification\figures
+
+Full pipeline execution complete!

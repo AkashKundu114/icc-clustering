@@ -1,0 +1,41 @@
+
+[*] Running Multi-Classifier Pseudo-Label Generalization Test across [SVM, RF, MLP, KNN]...
+=================================================================
+ RUNNING MULTI-CLASSIFIER PSEUDO-LABEL GENERALIZATION TEST
+ Target Noise: SCALED | D_noise: [0, 50, 200, 500, 1000, 3000, 5000]
+ Classifiers: [SVM, RF, MLP, KNN] | Trials: 5
+ N=300 (Train=240, Test=60)
+=================================================================
+
+--> Evaluating D_noise = 0     (Total D = 2)
+  [D_noise=    0 in 5.06s] SVM Out-of-Sample Test Acc -> All: 1.000 | Core: 1.000 (Delta: +0.000)
+
+--> Evaluating D_noise = 50    (Total D = 52)
+  [D_noise=   50 in 3.99s] SVM Out-of-Sample Test Acc -> All: 0.510 | Core: 0.487 (Delta: -0.023)
+
+--> Evaluating D_noise = 200   (Total D = 202)
+  [D_noise=  200 in 4.39s] SVM Out-of-Sample Test Acc -> All: 0.370 | Core: 0.360 (Delta: -0.010)
+
+--> Evaluating D_noise = 500   (Total D = 502)
+  [D_noise=  500 in 4.70s] SVM Out-of-Sample Test Acc -> All: 0.357 | Core: 0.317 (Delta: -0.040)
+
+--> Evaluating D_noise = 1000  (Total D = 1002)
+  [D_noise= 1000 in 5.45s] SVM Out-of-Sample Test Acc -> All: 0.337 | Core: 0.337 (Delta: +0.000)
+
+--> Evaluating D_noise = 3000  (Total D = 3002)
+  [D_noise= 3000 in 12.41s] SVM Out-of-Sample Test Acc -> All: 0.360 | Core: 0.350 (Delta: -0.010)
+
+--> Evaluating D_noise = 5000  (Total D = 5002)
+  [D_noise= 5000 in 22.45s] SVM Out-of-Sample Test Acc -> All: 0.340 | Core: 0.290 (Delta: -0.050)
+
+[+] Saved multi-classifier results to D:\Final Year Project\experiments\exp1_generalization\data\exp1_multiclassifier_results.csv (280 evaluations)
+[+] Saved SVM pseudo-label summary to D:\Final Year Project\experiments\exp1_generalization\data\exp1_pseudolabel_results.csv
+
+[Figures] Generating Experiment 1 figures...
+  [Saved] D:\Final Year Project\experiments\exp1_generalization\figures\fig9_inductive_generalization.png
+  [Saved] D:\Final Year Project\experiments\exp1_generalization\figures\fig9_supp_nmi_inductive_generalization.png
+  [Saved] D:\Final Year Project\experiments\exp1_generalization\figures\fig10_pseudolabel_generalization.png
+  [Saved] D:\Final Year Project\experiments\exp1_generalization\figures\fig10b_multiclassifier_generalization.png
+  [Saved] D:\Final Year Project\experiments\exp1_generalization\figures\fig10c_multiclassifier_advantage_heatmap.png
+
+Multi-classifier sweep and figure generation complete!
