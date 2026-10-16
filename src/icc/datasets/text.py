@@ -6,23 +6,23 @@ Datasets:
 - RCV1 Reuters Corpus Volume I (TF-IDF vectorization) [STUB]
 """
 
-import os
-from pathlib import Path
-from typing import Any, Dict, Optional, Tuple
+import os 
+from pathlib import Path 
+from typing import Any ,Dict ,Optional ,Tuple 
 
-import numpy as np
-from sklearn.datasets import fetch_20newsgroups
-from sklearn.feature_extraction.text import TfidfVectorizer
+import numpy as np 
+from sklearn .datasets import fetch_20newsgroups 
+from sklearn .feature_extraction .text import TfidfVectorizer 
 
-_PROJECT_ROOT = Path(__file__).resolve().parents[3]
-_DEFAULT_CACHE = _PROJECT_ROOT / "data" / "cache"
+_PROJECT_ROOT =Path (__file__ ).resolve ().parents [3 ]
+_DEFAULT_CACHE =_PROJECT_ROOT /"data"/"cache"
 
 
-def load_20newsgroups(
-    n_features: int = 10000,
-    cache_dir: Optional[str] = "data/cache",
-    force_download: bool = False,
-) -> Tuple[np.ndarray, np.ndarray, Dict[str, Any]]:
+def load_20newsgroups (
+n_features :int =10000 ,
+cache_dir :Optional [str ]="data/cache",
+force_download :bool =False ,
+)->Tuple [np .ndarray ,np .ndarray ,Dict [str ,Any ]]:
     """
     Load 20 Newsgroups benchmark dataset vectorized with TF-IDF.
 
@@ -48,72 +48,72 @@ def load_20newsgroups(
     ----------
     Lang, K. "Newsweeder: Learning to filter netnews." ICML, 1995.
     """
-    if cache_dir is None:
-        c_dir = str(_DEFAULT_CACHE)
-    elif not os.path.isabs(cache_dir):
-        c_dir = os.path.abspath(os.path.join(_PROJECT_ROOT, cache_dir))
-    else:
-        c_dir = os.path.abspath(cache_dir)
-    os.makedirs(c_dir, exist_ok=True)
-    cache_path = os.path.join(c_dir, "newsgroups20.npz")
+    if cache_dir is None :
+        c_dir =str (_DEFAULT_CACHE )
+    elif not os .path .isabs (cache_dir ):
+        c_dir =os .path .abspath (os .path .join (_PROJECT_ROOT ,cache_dir ))
+    else :
+        c_dir =os .path .abspath (cache_dir )
+    os .makedirs (c_dir ,exist_ok =True )
+    cache_path =os .path .join (c_dir ,"newsgroups20.npz")
 
-    # 1. Check local cache
-    if os.path.exists(cache_path) and not force_download:
-        with np.load(cache_path) as data:
-            X = data["X"]
-            y = data["y"]
-            if X.shape[1] == n_features:
-                metadata = {
-                    "name": "newsgroups20",
-                    "N": int(X.shape[0]),
-                    "D": int(X.shape[1]),
-                    "K": int(len(np.unique(y))),
-                    "d_over_n": round(float(X.shape[1] / X.shape[0]), 2),
-                    "description": "20 Newsgroups document collection with TF-IDF vectorization (K=20)",
+
+    if os .path .exists (cache_path )and not force_download :
+        with np .load (cache_path )as data :
+            X =data ["X"]
+            y =data ["y"]
+            if X .shape [1 ]==n_features :
+                metadata ={
+                "name":"newsgroups20",
+                "N":int (X .shape [0 ]),
+                "D":int (X .shape [1 ]),
+                "K":int (len (np .unique (y ))),
+                "d_over_n":round (float (X .shape [1 ]/X .shape [0 ]),2 ),
+                "description":"20 Newsgroups document collection with TF-IDF vectorization (K=20)",
                 }
-                return X, y, metadata
+                return X ,y ,metadata 
 
-    # 2. Fetch raw dataset
-    print("[*] Fetching 20 Newsgroups (subset='all', remove headers/footers/quotes)...")
-    raw = fetch_20newsgroups(
-        subset="all",
-        remove=("headers", "footers", "quotes"),
+
+    print ("[*] Fetching 20 Newsgroups (subset='all', remove headers/footers/quotes)...")
+    raw =fetch_20newsgroups (
+    subset ="all",
+    remove =("headers","footers","quotes"),
     )
-    raw_texts = raw.data
-    raw_y = np.asarray(raw.target, dtype=np.int64)
+    raw_texts =raw .data 
+    raw_y =np .asarray (raw .target ,dtype =np .int64 )
 
-    # 3. TF-IDF vectorization
-    print(f"[*] Vectorizing {len(raw_texts)} documents (max_features={n_features}, sublinear_tf=True, min_df=5)...")
-    vectorizer = TfidfVectorizer(
-        max_features=n_features,
-        sublinear_tf=True,
-        min_df=5,
+
+    print (f"[*] Vectorizing {len (raw_texts )} documents (max_features={n_features }, sublinear_tf=True, min_df=5)...")
+    vectorizer =TfidfVectorizer (
+    max_features =n_features ,
+    sublinear_tf =True ,
+    min_df =5 ,
     )
-    X_sparse = vectorizer.fit_transform(raw_texts)
+    X_sparse =vectorizer .fit_transform (raw_texts )
 
-    # 4. Convert sparse to dense numpy array (float32 to conserve RAM while preserving precision)
-    X = X_sparse.toarray().astype(np.float32)
-    y = raw_y
 
-    # 5. Cache as newsgroups20.npz
-    np.savez_compressed(cache_path, X=X, y=y)
-    print(f"[+] Cached 'newsgroups20' to {cache_path}: shape={X.shape}, K={len(np.unique(y))}")
+    X =X_sparse .toarray ().astype (np .float32 )
+    y =raw_y 
 
-    metadata = {
-        "name": "newsgroups20",
-        "N": int(X.shape[0]),
-        "D": int(X.shape[1]),
-        "K": int(len(np.unique(y))),
-        "d_over_n": round(float(X.shape[1] / X.shape[0]), 2),
-        "description": "20 Newsgroups document collection with TF-IDF vectorization (K=20)",
+
+    np .savez_compressed (cache_path ,X =X ,y =y )
+    print (f"[+] Cached 'newsgroups20' to {cache_path }: shape={X .shape }, K={len (np .unique (y ))}")
+
+    metadata ={
+    "name":"newsgroups20",
+    "N":int (X .shape [0 ]),
+    "D":int (X .shape [1 ]),
+    "K":int (len (np .unique (y ))),
+    "d_over_n":round (float (X .shape [1 ]/X .shape [0 ]),2 ),
+    "description":"20 Newsgroups document collection with TF-IDF vectorization (K=20)",
     }
-    return X, y, metadata
+    return X ,y ,metadata 
 
 
-def load_rcv1(
-    cache_dir: Optional[str] = None,
-    force_download: bool = False,
-) -> Tuple[np.ndarray, np.ndarray, Dict[str, Any]]:
+def load_rcv1 (
+cache_dir :Optional [str ]=None ,
+force_download :bool =False ,
+)->Tuple [np .ndarray ,np .ndarray ,Dict [str ,Any ]]:
     """
     Load RCV1 Reuters Corpus Volume I subset with TF-IDF representation.
 
@@ -134,4 +134,4 @@ def load_rcv1(
     ----------
     Lewis et al. "RCV1: A new benchmark collection for text categorization research." JMLR, 2004.
     """
-    raise NotImplementedError("Dataset loader not yet implemented. Enable in Phase 4.")
+    raise NotImplementedError ("Dataset loader not yet implemented. Enable in Phase 4.")

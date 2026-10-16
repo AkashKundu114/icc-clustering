@@ -10,59 +10,59 @@ References:
     IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 2024.
 """
 
-import time
-from typing import Tuple
+import time 
+from typing import Tuple 
 
-import numpy as np
-import scipy.linalg as sla
-from scipy.spatial.distance import cdist
+import numpy as np 
+import scipy .linalg as sla 
+from scipy .spatial .distance import cdist 
 
-from .classical import ModelMetadata
+from .classical import ModelMetadata 
 
-_SKLEARN_AVAILABLE = False
-try:
-    from sklearn.cluster import KMeans as _SkKMeans
-    from sklearn.cluster import kmeans_plusplus as _sk_kmeans_plusplus
-    _test = _SkKMeans(n_clusters=2, n_init=1).fit_predict(np.zeros((4, 2)))
-    _SKLEARN_AVAILABLE = True
-except (ImportError, Exception):
-    _SKLEARN_AVAILABLE = False
-
-
-def _kmeans_plusplus_fallback(X: np.ndarray, n_clusters: int, random_state: int = 42) -> Tuple[np.ndarray, np.ndarray]:
-    rng = np.random.default_rng(random_state)
-    n = X.shape[0]
-    first_idx = int(rng.integers(0, n))
-    indices = [first_idx]
-    centers = [X[first_idx]]
-    for _ in range(1, n_clusters):
-        dists = np.min(cdist(X, np.array(centers), metric="sqeuclidean"), axis=1)
-        dists_sum = float(dists.sum())
-        if dists_sum < 1e-12:
-            probs = np.ones(n) / n
-        else:
-            probs = dists / dists_sum
-        next_idx = int(rng.choice(n, p=probs))
-        indices.append(next_idx)
-        centers.append(X[next_idx])
-    return np.array(centers), np.array(indices, dtype=int)
+_SKLEARN_AVAILABLE =False 
+try :
+    from sklearn .cluster import KMeans as _SkKMeans 
+    from sklearn .cluster import kmeans_plusplus as _sk_kmeans_plusplus 
+    _test =_SkKMeans (n_clusters =2 ,n_init =1 ).fit_predict (np .zeros ((4 ,2 )))
+    _SKLEARN_AVAILABLE =True 
+except (ImportError ,Exception ):
+    _SKLEARN_AVAILABLE =False 
 
 
-def _kmeans_cluster(X: np.ndarray, k: int, random_state: int = 42, n_init: int = 10) -> np.ndarray:
-    if _SKLEARN_AVAILABLE:
-        try:
-            return _SkKMeans(n_clusters=k, n_init=n_init, random_state=random_state).fit_predict(X).astype(np.int64)
-        except Exception:
-            pass
-    from src.icc.core import run_clusterer
-    return run_clusterer("kmeans", X, k, seed=random_state).astype(np.int64)
+def _kmeans_plusplus_fallback (X :np .ndarray ,n_clusters :int ,random_state :int =42 )->Tuple [np .ndarray ,np .ndarray ]:
+    rng =np .random .default_rng (random_state )
+    n =X .shape [0 ]
+    first_idx =int (rng .integers (0 ,n ))
+    indices =[first_idx ]
+    centers =[X [first_idx ]]
+    for _ in range (1 ,n_clusters ):
+        dists =np .min (cdist (X ,np .array (centers ),metric ="sqeuclidean"),axis =1 )
+        dists_sum =float (dists .sum ())
+        if dists_sum <1e-12 :
+            probs =np .ones (n )/n 
+        else :
+            probs =dists /dists_sum 
+        next_idx =int (rng .choice (n ,p =probs ))
+        indices .append (next_idx )
+        centers .append (X [next_idx ])
+    return np .array (centers ),np .array (indices ,dtype =int )
 
 
-def construct_anchor_bipartite_graph(
-    X: np.ndarray,
-    anchors: np.ndarray,
-    s: int = 5,
-) -> np.ndarray:
+def _kmeans_cluster (X :np .ndarray ,k :int ,random_state :int =42 ,n_init :int =10 )->np .ndarray :
+    if _SKLEARN_AVAILABLE :
+        try :
+            return _SkKMeans (n_clusters =k ,n_init =n_init ,random_state =random_state ).fit_predict (X ).astype (np .int64 )
+        except Exception :
+            pass 
+    from src .icc .core import run_clusterer 
+    return run_clusterer ("kmeans",X ,k ,seed =random_state ).astype (np .int64 )
+
+
+def construct_anchor_bipartite_graph (
+X :np .ndarray ,
+anchors :np .ndarray ,
+s :int =5 ,
+)->np .ndarray :
     """
     Construct sample-to-anchor bipartite similarity matrix Z.
 
@@ -85,52 +85,52 @@ def construct_anchor_bipartite_graph(
     Z : np.ndarray of shape (N, m)
         Row-stochastic bipartite affinity matrix with Z 1_m = 1_N.
     """
-    N, D = X.shape
-    m = anchors.shape[0]
+    N ,D =X .shape 
+    m =anchors .shape [0 ]
 
-    # Squared Euclidean distance matrix between samples and anchors: shape (N, m)
-    dist = cdist(X, anchors, metric="sqeuclidean")
 
-    s_actual = max(1, min(s, m - 1)) if m > 1 else 1
-    Z = np.zeros((N, m), dtype=np.float64)
+    dist =cdist (X ,anchors ,metric ="sqeuclidean")
 
-    if m > s_actual + 1:
-        # Vectorized s+1 nearest neighbor partition
-        idx = np.argpartition(dist, s_actual, axis=1)[:, : s_actual + 1]
-        sub_dist = np.take_along_axis(dist, idx, axis=1)
-        sub_order = np.argsort(sub_dist, axis=1)
-        sorted_idx = np.take_along_axis(idx, sub_order, axis=1)
-        sorted_dist = np.take_along_axis(sub_dist, sub_order, axis=1)
+    s_actual =max (1 ,min (s ,m -1 ))if m >1 else 1 
+    Z =np .zeros ((N ,m ),dtype =np .float64 )
 
-        d_s1 = sorted_dist[:, s_actual : s_actual + 1]
-        d_top = sorted_dist[:, :s_actual]
-        denom = s_actual * d_s1 - np.sum(d_top, axis=1, keepdims=True)
+    if m >s_actual +1 :
 
-        w = np.where(
-            denom > 1e-12,
-            (d_s1 - d_top) / np.maximum(denom, 1e-12),
-            1.0 / s_actual,
+        idx =np .argpartition (dist ,s_actual ,axis =1 )[:,:s_actual +1 ]
+        sub_dist =np .take_along_axis (dist ,idx ,axis =1 )
+        sub_order =np .argsort (sub_dist ,axis =1 )
+        sorted_idx =np .take_along_axis (idx ,sub_order ,axis =1 )
+        sorted_dist =np .take_along_axis (sub_dist ,sub_order ,axis =1 )
+
+        d_s1 =sorted_dist [:,s_actual :s_actual +1 ]
+        d_top =sorted_dist [:,:s_actual ]
+        denom =s_actual *d_s1 -np .sum (d_top ,axis =1 ,keepdims =True )
+
+        w =np .where (
+        denom >1e-12 ,
+        (d_s1 -d_top )/np .maximum (denom ,1e-12 ),
+        1.0 /s_actual ,
         )
-        np.put_along_axis(Z, sorted_idx[:, :s_actual], w, axis=1)
-    else:
-        # For small anchor sets, use normalized inverse distance
-        inv_d = 1.0 / (dist + 1e-6)
-        Z = inv_d / inv_d.sum(axis=1, keepdims=True)
+        np .put_along_axis (Z ,sorted_idx [:,:s_actual ],w ,axis =1 )
+    else :
 
-    # Ensure exact row-stochastic normalization
-    row_sums = Z.sum(axis=1, keepdims=True)
-    row_sums[row_sums < 1e-12] = 1.0
-    Z /= row_sums
-    return Z
+        inv_d =1.0 /(dist +1e-6 )
+        Z =inv_d /inv_d .sum (axis =1 ,keepdims =True )
 
 
-def run_fcag(
-    X: np.ndarray,
-    k: int,
-    n_anchors: int = 100,
-    seed: int = 42,
-    **kwargs,
-) -> Tuple[np.ndarray, float, ModelMetadata]:
+    row_sums =Z .sum (axis =1 ,keepdims =True )
+    row_sums [row_sums <1e-12 ]=1.0 
+    Z /=row_sums 
+    return Z 
+
+
+def run_fcag (
+X :np .ndarray ,
+k :int ,
+n_anchors :int =100 ,
+seed :int =42 ,
+**kwargs ,
+)->Tuple [np .ndarray ,float ,ModelMetadata ]:
     """
     Execute Fast Clustering with Anchor Guidance (FCAG, Nie et al., IEEE TPAMI 2024).
 
@@ -170,84 +170,84 @@ def run_fcag(
     Nie, Wang, Huang, Li. "Fast Clustering With Anchor Guidance."
     IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 2024.
     """
-    t0 = time.perf_counter()
-    X_arr = np.asarray(X, dtype=np.float64)
-    if X_arr.ndim != 2:
-        raise ValueError(f"Input X must be a 2D matrix, got shape {X_arr.shape}")
-    N, D = X_arr.shape
+    t0 =time .perf_counter ()
+    X_arr =np .asarray (X ,dtype =np .float64 )
+    if X_arr .ndim !=2 :
+        raise ValueError (f"Input X must be a 2D matrix, got shape {X_arr .shape }")
+    N ,D =X_arr .shape 
 
-    if N < k:
-        raise ValueError(f"Number of samples N={N} cannot be smaller than number of clusters k={k}")
-    if k < 2:
-        raise ValueError(f"Number of clusters k must be >= 2, got {k}")
+    if N <k :
+        raise ValueError (f"Number of samples N={N } cannot be smaller than number of clusters k={k }")
+    if k <2 :
+        raise ValueError (f"Number of clusters k must be >= 2, got {k }")
 
-    # Clamp anchor count m in [k, N]
-    m = min(n_anchors, N)
-    if m < k:
-        m = k
 
-    s = kwargs.get("s", 5)
-    n_init = kwargs.get("n_init", 10)
+    m =min (n_anchors ,N )
+    if m <k :
+        m =k 
 
-    # Step a: Select m anchor points via k-means++
-    if m >= N:
-        anchors = np.copy(X_arr)
-    else:
-        if _SKLEARN_AVAILABLE:
-            try:
-                anchors, _ = _sk_kmeans_plusplus(X_arr, n_clusters=m, random_state=seed)
-            except Exception:
-                anchors, _ = _kmeans_plusplus_fallback(X_arr, n_clusters=m, random_state=seed)
-        else:
-            anchors, _ = _kmeans_plusplus_fallback(X_arr, n_clusters=m, random_state=seed)
+    s =kwargs .get ("s",5 )
+    n_init =kwargs .get ("n_init",10 )
 
-    # Step b: Construct anchor-to-sample bipartite graph Z
-    Z = construct_anchor_bipartite_graph(X_arr, anchors, s=s)
 
-    # Step c: Solve generalized eigenvalue problem on Z^T Z
-    # Column degree vector d_c: shape (m,)
-    d_c = np.sum(Z, axis=0)
-    d_c_inv_sqrt = 1.0 / np.sqrt(np.fmax(d_c, 1e-12))
+    if m >=N :
+        anchors =np .copy (X_arr )
+    else :
+        if _SKLEARN_AVAILABLE :
+            try :
+                anchors ,_ =_sk_kmeans_plusplus (X_arr ,n_clusters =m ,random_state =seed )
+            except Exception :
+                anchors ,_ =_kmeans_plusplus_fallback (X_arr ,n_clusters =m ,random_state =seed )
+        else :
+            anchors ,_ =_kmeans_plusplus_fallback (X_arr ,n_clusters =m ,random_state =seed )
 
-    # M = D_c^{-1/2} Z^T Z D_c^{-1/2} of shape (m, m)
-    ZT_Z = Z.T @ Z
-    M = (d_c_inv_sqrt[:, None] * ZT_Z) * d_c_inv_sqrt[None, :]
-    M = 0.5 * (M + M.T)  # Ensure numerical symmetry
 
-    evals, evecs = sla.eigh(M)
+    Z =construct_anchor_bipartite_graph (X_arr ,anchors ,s =s )
 
-    # Top k eigenvectors corresponding to the largest eigenvalues
-    top_indices = np.argsort(evals)[::-1][:k]
-    evals_top = np.fmax(evals[top_indices], 1e-12)
-    U_m = evecs[:, top_indices]  # (m, k)
 
-    # Project to sample eigenvectors: F = Z D_c^{-1/2} U_m Lambda^{-1/2}
-    F = (Z * d_c_inv_sqrt[None, :]) @ (U_m / np.sqrt(evals_top)[None, :])
 
-    # Step d: Discretize eigenvectors for final assignment
-    F_norm = F / (np.linalg.norm(F, axis=1, keepdims=True) + 1e-12)
-    labels = _kmeans_cluster(F_norm, k=k, random_state=seed, n_init=n_init)
+    d_c =np .sum (Z ,axis =0 )
+    d_c_inv_sqrt =1.0 /np .sqrt (np .fmax (d_c ,1e-12 ))
 
-    runtime_seconds = time.perf_counter() - t0
-    metadata = ModelMetadata(
-        m,
-        method="FCAG",
-        n_samples=N,
-        n_features=D,
-        n_clusters=k,
-        n_anchors=m,
-        n_core=m,
+
+    ZT_Z =Z .T @Z 
+    M =(d_c_inv_sqrt [:,None ]*ZT_Z )*d_c_inv_sqrt [None ,:]
+    M =0.5 *(M +M .T )
+
+    evals ,evecs =sla .eigh (M )
+
+
+    top_indices =np .argsort (evals )[::-1 ][:k ]
+    evals_top =np .fmax (evals [top_indices ],1e-12 )
+    U_m =evecs [:,top_indices ]
+
+
+    F =(Z *d_c_inv_sqrt [None ,:])@(U_m /np .sqrt (evals_top )[None ,:])
+
+
+    F_norm =F /(np .linalg .norm (F ,axis =1 ,keepdims =True )+1e-12 )
+    labels =_kmeans_cluster (F_norm ,k =k ,random_state =seed ,n_init =n_init )
+
+    runtime_seconds =time .perf_counter ()-t0 
+    metadata =ModelMetadata (
+    m ,
+    method ="FCAG",
+    n_samples =N ,
+    n_features =D ,
+    n_clusters =k ,
+    n_anchors =m ,
+    n_core =m ,
     )
-    return labels, runtime_seconds, metadata
+    return labels ,runtime_seconds ,metadata 
 
 
-def run_fastmvc(
-    X: np.ndarray,
-    k: int,
-    n_anchors: int = 100,
-    seed: int = 42,
-    **kwargs,
-) -> Tuple[np.ndarray, float, ModelMetadata]:
+def run_fastmvc (
+X :np .ndarray ,
+k :int ,
+n_anchors :int =100 ,
+seed :int =42 ,
+**kwargs ,
+)->Tuple [np .ndarray ,float ,ModelMetadata ]:
     """
     Execute Fast Multi-view Clustering (FastMVC, Huang et al., IEEE TKDE 2023).
 
@@ -292,94 +292,94 @@ def run_fastmvc(
     Huang, Wang, Lai. "Fast Multi-view Clustering via Ensembles: Towards
     Scalability, Superiority, and Simplicity." IEEE TKDE, 2023.
     """
-    t0 = time.perf_counter()
-    X_arr = np.asarray(X, dtype=np.float64)
-    if X_arr.ndim != 2:
-        raise ValueError(f"Input X must be a 2D matrix, got shape {X_arr.shape}")
-    N, D = X_arr.shape
+    t0 =time .perf_counter ()
+    X_arr =np .asarray (X ,dtype =np .float64 )
+    if X_arr .ndim !=2 :
+        raise ValueError (f"Input X must be a 2D matrix, got shape {X_arr .shape }")
+    N ,D =X_arr .shape 
 
-    if N < k:
-        raise ValueError(f"Number of samples N={N} cannot be smaller than number of clusters k={k}")
-    if k < 2:
-        raise ValueError(f"Number of clusters k must be >= 2, got {k}")
+    if N <k :
+        raise ValueError (f"Number of samples N={N } cannot be smaller than number of clusters k={k }")
+    if k <2 :
+        raise ValueError (f"Number of clusters k must be >= 2, got {k }")
 
-    # Clamp anchor count m in [k, N]
-    m = min(n_anchors, N)
-    if m < k:
-        m = k
 
-    n_views = kwargs.get("n_views", 15)
-    subspace_rate = kwargs.get("subspace_rate", 0.5)
-    s = kwargs.get("s", 5)
-    n_init = kwargs.get("n_init", 10)
+    m =min (n_anchors ,N )
+    if m <k :
+        m =k 
 
-    rng = np.random.default_rng(seed)
+    n_views =kwargs .get ("n_views",15 )
+    subspace_rate =kwargs .get ("subspace_rate",0.5 )
+    s =kwargs .get ("s",5 )
+    n_init =kwargs .get ("n_init",10 )
 
-    # Step 1: Select m anchor points via k-means++ across global sample space
-    if m >= N:
-        anchor_indices = np.arange(N)
-    else:
-        if _SKLEARN_AVAILABLE:
-            try:
-                _, anchor_indices = _sk_kmeans_plusplus(X_arr, n_clusters=m, random_state=seed)
-            except Exception:
-                _, anchor_indices = _kmeans_plusplus_fallback(X_arr, n_clusters=m, random_state=seed)
-        else:
-            _, anchor_indices = _kmeans_plusplus_fallback(X_arr, n_clusters=m, random_state=seed)
+    rng =np .random .default_rng (seed )
 
-    # Step 2 & 3: Construct view-specific bipartite graphs and fuse across views
-    sub_d = max(2, int(D * subspace_rate))
-    sub_d = min(sub_d, D)
 
-    Z_fused = np.zeros((N, m), dtype=np.float64)
+    if m >=N :
+        anchor_indices =np .arange (N )
+    else :
+        if _SKLEARN_AVAILABLE :
+            try :
+                _ ,anchor_indices =_sk_kmeans_plusplus (X_arr ,n_clusters =m ,random_state =seed )
+            except Exception :
+                _ ,anchor_indices =_kmeans_plusplus_fallback (X_arr ,n_clusters =m ,random_state =seed )
+        else :
+            _ ,anchor_indices =_kmeans_plusplus_fallback (X_arr ,n_clusters =m ,random_state =seed )
 
-    for _ in range(n_views):
-        # Sample random subspace of features for this view
-        if sub_d < D:
-            feat_idx = rng.choice(D, size=sub_d, replace=False)
-            X_v = X_arr[:, feat_idx]
-        else:
-            X_v = X_arr
 
-        anchors_v = X_v[anchor_indices]
-        Z_v = construct_anchor_bipartite_graph(X_v, anchors_v, s=s)
-        Z_fused += Z_v
+    sub_d =max (2 ,int (D *subspace_rate ))
+    sub_d =min (sub_d ,D )
 
-    # Step 4: Early-stage graph fusion
-    Z_fused /= max(1, n_views)
+    Z_fused =np .zeros ((N ,m ),dtype =np .float64 )
 
-    # Step 5: Solve generalized eigenvalue problem on fused bipartite graph
-    d_c = np.sum(Z_fused, axis=0)
-    d_c_inv_sqrt = 1.0 / np.sqrt(np.fmax(d_c, 1e-12))
+    for _ in range (n_views ):
 
-    ZT_Z = Z_fused.T @ Z_fused
-    M = (d_c_inv_sqrt[:, None] * ZT_Z) * d_c_inv_sqrt[None, :]
-    M = 0.5 * (M + M.T)  # Ensure numerical symmetry
+        if sub_d <D :
+            feat_idx =rng .choice (D ,size =sub_d ,replace =False )
+            X_v =X_arr [:,feat_idx ]
+        else :
+            X_v =X_arr 
 
-    evals, evecs = sla.eigh(M)
+        anchors_v =X_v [anchor_indices ]
+        Z_v =construct_anchor_bipartite_graph (X_v ,anchors_v ,s =s )
+        Z_fused +=Z_v 
 
-    # Top k eigenvectors corresponding to the largest eigenvalues
-    top_indices = np.argsort(evals)[::-1][:k]
-    evals_top = np.fmax(evals[top_indices], 1e-12)
-    U_m = evecs[:, top_indices]  # (m, k)
 
-    # Project to sample eigenvectors: F = Z_fused D_c^{-1/2} U_m Lambda^{-1/2}
-    F = (Z_fused * d_c_inv_sqrt[None, :]) @ (U_m / np.sqrt(evals_top)[None, :])
+    Z_fused /=max (1 ,n_views )
 
-    # Step 6: Discretize eigenvectors for final assignment
-    F_norm = F / (np.linalg.norm(F, axis=1, keepdims=True) + 1e-12)
-    labels = _kmeans_cluster(F_norm, k=k, random_state=seed, n_init=n_init)
 
-    runtime_seconds = time.perf_counter() - t0
-    metadata = ModelMetadata(
-        m,
-        method="FastMVC",
-        n_samples=N,
-        n_features=D,
-        n_clusters=k,
-        n_anchors=m,
-        n_views=n_views,
-        n_core=m,
+    d_c =np .sum (Z_fused ,axis =0 )
+    d_c_inv_sqrt =1.0 /np .sqrt (np .fmax (d_c ,1e-12 ))
+
+    ZT_Z =Z_fused .T @Z_fused 
+    M =(d_c_inv_sqrt [:,None ]*ZT_Z )*d_c_inv_sqrt [None ,:]
+    M =0.5 *(M +M .T )
+
+    evals ,evecs =sla .eigh (M )
+
+
+    top_indices =np .argsort (evals )[::-1 ][:k ]
+    evals_top =np .fmax (evals [top_indices ],1e-12 )
+    U_m =evecs [:,top_indices ]
+
+
+    F =(Z_fused *d_c_inv_sqrt [None ,:])@(U_m /np .sqrt (evals_top )[None ,:])
+
+
+    F_norm =F /(np .linalg .norm (F ,axis =1 ,keepdims =True )+1e-12 )
+    labels =_kmeans_cluster (F_norm ,k =k ,random_state =seed ,n_init =n_init )
+
+    runtime_seconds =time .perf_counter ()-t0 
+    metadata =ModelMetadata (
+    m ,
+    method ="FastMVC",
+    n_samples =N ,
+    n_features =D ,
+    n_clusters =k ,
+    n_anchors =m ,
+    n_views =n_views ,
+    n_core =m ,
     )
-    return labels, runtime_seconds, metadata
+    return labels ,runtime_seconds ,metadata 
 
