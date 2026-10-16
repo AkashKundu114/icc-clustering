@@ -42,6 +42,16 @@ def main():
     macros.append(r"\newcommand{\TableThreeLiGrandMean}{0.100}")
     macros.append(r"\newcommand{\TableThreeFcmGrandMean}{0.071}")
 
+    macros.append(r"\newcommand{\ARIsrbct}{0.538}")
+    macros.append(r"\newcommand{\ARIleukemia}{0.680}")
+    macros.append(r"\newcommand{\ARIovarian}{0.052}")
+    macros.append(r"\newcommand{\MeanRankDEC}{4.31}")
+    macros.append(r"\newcommand{\MeanRankStdCons}{5.08}")
+    macros.append(r"\newcommand{\MeanRankICCvTwo}{5.46}")
+    macros.append(r"\newcommand{\RankBioICCvTwo}{2.33}")
+    macros.append(r"\newcommand{\RankBioDEC}{5.00}")
+    macros.append(r"\newcommand{\RankBioStdCons}{6.33}")
+
     macros.append(r"\newcommand{\LeukemiaTableThreeARI}{0.680}")
     macros.append(r"\newcommand{\LeukemiaTableThreeStd}{0.363}")
     macros.append(r"\newcommand{\LeukemiaAblationVFiftyARI}{0.621}")

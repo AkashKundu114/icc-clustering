@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Generates Figure 0: Motivational Conceptual Illustration for IEEE TKDE Manuscript.
 
@@ -24,7 +23,6 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 MANUSCRIPT_FIGS = ROOT_DIR / "ieee_manuscript" / "figures"
 MANUSCRIPT_FIGS.mkdir(parents=True, exist_ok=True)
 
-# Styling adhering to IEEE TKDE standards
 plt.rcParams.update({
     "font.family": "serif",
     "font.size": 11,
@@ -41,23 +39,18 @@ def generate_conceptual_figure():
     fig, axes = plt.subplots(2, 2, figsize=(12, 9.2), dpi=300)
     rng = np.random.default_rng(42)
 
-    # -------------------------------------------------------------------------
-    # Panel (a): True Signal Subspace (d=2)
-    # -------------------------------------------------------------------------
     ax_a = axes[0, 0]
     n_per = 60
     c1 = rng.normal(loc=[-2.5, -1.0], scale=0.55, size=(n_per, 2))
     c2 = rng.normal(loc=[2.5, -1.0], scale=0.55, size=(n_per, 2))
     c3 = rng.normal(loc=[0.0, 2.8], scale=0.55, size=(n_per, 2))
 
-    colors = ["#1f77b4", "#2ca02c", "#ff7f0e"]
+    colors = ["
     clusters = [c1, c2, c3]
     labels = ["Cluster 1", "Cluster 2", "Cluster 3"]
 
     for i, (pts, col, lab) in enumerate(zip(clusters, colors, labels)):
-        # Plot points
         ax_a.scatter(pts[:, 0], pts[:, 1], c=col, s=36, alpha=0.7, edgecolors="none", label=lab)
-        # Highlight anchor core points (closest to center)
         center = np.mean(pts, axis=0)
         dists = np.linalg.norm(pts - center, axis=1)
         core_idx = np.argsort(dists)[:8]
@@ -70,11 +63,7 @@ def generate_conceptual_figure():
     ax_a.legend(loc="upper right", framealpha=0.9)
     ax_a.grid(True, linestyle="--", alpha=0.4)
 
-    # -------------------------------------------------------------------------
-    # Panel (b): Noise Drowning & Distance Concentration
-    # -------------------------------------------------------------------------
     ax_b = axes[0, 1]
-    # In random noise dimensions, points from all clusters completely mix
     noise1 = rng.normal(loc=0.0, scale=1.0, size=(n_per * 3,))
     noise2 = rng.normal(loc=0.0, scale=1.0, size=(n_per * 3,))
 
@@ -89,7 +78,6 @@ def generate_conceptual_figure():
     ax_b.set_ylim(-3.5, 3.8)
     ax_b.grid(True, linestyle="--", alpha=0.4)
 
-    # Inset: Distance Concentration Curve (lowered to avoid title overlap)
     ax_inset = ax_b.inset_axes([0.52, 0.44, 0.44, 0.38])
     d_vals = [2, 10, 50, 200, 1000, 5000]
     rel_spread = []
@@ -99,7 +87,7 @@ def generate_conceptual_figure():
         spread = (np.max(pw) - np.min(pw)) / np.min(pw)
         rel_spread.append(spread)
 
-    ax_inset.plot(d_vals, rel_spread, "d-", color="#d62728", linewidth=2.0, markersize=5.5)
+    ax_inset.plot(d_vals, rel_spread, "d-", color="
     ax_inset.set_xscale("log")
     ax_inset.set_title("Distance Concentration\n$(d_{\\max}-d_{\\min})/d_{\\min} \\to 0$", fontsize=8.0, pad=3)
     ax_inset.set_xlabel("Dimension $D$", fontsize=7.5)
@@ -107,23 +95,19 @@ def generate_conceptual_figure():
     ax_inset.tick_params(labelsize=7.0)
     ax_inset.grid(True, linestyle=":", alpha=0.5)
 
-    # -------------------------------------------------------------------------
-    # Panel (c): Variance-Stabilized Subspace Gating (VSSG)
-    # -------------------------------------------------------------------------
     ax_c = axes[1, 0]
     total_dims = 100
-    # Simulate bimodality score: top 2 features are signal, 98 are noise
     bimodality = rng.normal(loc=0.18, scale=0.04, size=total_dims)
-    bimodality[0] = 0.88  # Signal 1
-    bimodality[1] = 0.82  # Signal 2
-    bimodality[5] = 0.32  # Small spurious fluctuation
+    bimodality[0] = 0.88
+    bimodality[1] = 0.82
+    bimodality[5] = 0.32
 
     dim_indices = np.arange(total_dims)
-    bar_cols = ["#d62728" if i in [0, 1] else "#aec7e8" for i in dim_indices]
+    bar_cols = ["
 
     ax_c.bar(dim_indices, bimodality, color=bar_cols, width=0.8, edgecolor="none")
     threshold = 0.28
-    ax_c.axhline(threshold, color="#2ca02c", linestyle="--", linewidth=2.0,
+    ax_c.axhline(threshold, color="
                  label=f"VSSG Candidate Pool Cutoff ($\\rho_{{\\text{{pool}}}}$)")
 
     ax_c.annotate("True Signal $X_1$\n(Recovered)", xy=(0, 0.88), xytext=(8, 0.80),
@@ -143,26 +127,19 @@ def generate_conceptual_figure():
     ax_c.legend(loc="upper right", framealpha=0.9)
     ax_c.grid(True, linestyle="--", alpha=0.4)
 
-    # -------------------------------------------------------------------------
-    # Panel (d): Geometry-Calibrated Inductive Projection
-    # -------------------------------------------------------------------------
     ax_d = axes[1, 1]
-    # Draw centroids and unseen test query
     centroids = np.array([[-2.5, -1.0], [2.5, -1.0], [0.0, 2.8]])
     for i, (cnt, col, lab) in enumerate(zip(centroids, colors, labels)):
-        # Confidence ellipse
         ellipse = patches.Ellipse(cnt, width=1.8, height=1.4, angle=0,
                                   edgecolor=col, facecolor=col, alpha=0.15, linestyle="--", linewidth=1.5)
         ax_d.add_patch(ellipse)
         ax_d.scatter(cnt[0], cnt[1], c=col, marker="P", s=200, edgecolors="black",
                      linewidths=1.2, label=f"Anchor Centroid $\\mu_{i+1}$", zorder=6)
 
-    # Unseen query sample
     x_query = np.array([1.6, -0.4])
     ax_d.scatter(x_query[0], x_query[1], c="red", marker="o", s=130, edgecolors="black",
                  linewidths=1.5, label="Unseen Query $x_{\\text{new}}$", zorder=7)
 
-    # Projection vectors to centroids
     for i, cnt in enumerate(centroids):
         dist = np.linalg.norm(x_query - cnt)
         lw = 2.4 if i == 1 else 1.0
@@ -175,7 +152,7 @@ def generate_conceptual_figure():
                   xy=x_query, xytext=(0.3, 0.7),
                   arrowprops=dict(facecolor="red", arrowstyle="->", lw=1.2),
                   fontsize=9.0, fontweight="bold",
-                  bbox=dict(boxstyle="round,pad=0.4", fc="#fff2f2", ec="red", lw=1.0))
+                  bbox=dict(boxstyle="round,pad=0.4", fc="
 
     ax_d.set_title("(d) Closed-Form Inductive Projection\nSubspace distance to anchor centroids assigns query $x_{\\text{new}}$", fontweight="bold", pad=8)
     ax_d.set_xlabel("Projected Feature $X_1$")
