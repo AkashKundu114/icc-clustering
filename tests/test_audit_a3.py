@@ -1,6 +1,9 @@
-import warnings, numpy as np, pytest
-from src.icc.core import build_dataset
+import numpy as np
+import pytest
+
 from src.icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
+from src.icc.core import build_dataset
+
 
 def _data():
     return build_dataset(20, "gaussian", noise_seed=0, sizes=[40, 40, 40], k=3, signal_dim=2)

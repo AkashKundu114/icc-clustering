@@ -80,4 +80,11 @@ ieee_manuscript/
 *.pdf
 *.zip
 
+# Local scratch and agent metadata
+.agents/
+.mcp.json
+file_list_inventory.txt
+repo_file_tree.txt
+submission_audit/
+
 
