@@ -1,0 +1,238 @@
+{
+  "omnibus_test": {
+    "test_name": "Friedman Chi-Square",
+    "k_models": 11,
+    "n_datasets": 13,
+    "statistic": 11.342657342657333,
+    "p_value": 0.33145228811008864,
+    "is_significant": false
+  },
+  "critical_difference": {
+    "formula": "q_alpha * sqrt(k*(k+1)/(6*N))",
+    "k": 11,
+    "N": 13,
+    "q_alpha_05": 3.219,
+    "critical_difference_alpha_05": 4.187556125915485,
+    "published_claim_erroneous_cd": 2.62,
+    "correction_note": "Published CD=2.62 corresponded to k=9, N=21. Correct CD for k=11, N=13 is 4.21."
+  },
+  "overall_mean_ranks": {
+    "DEC": 4.3076923076923075,
+    "FCAG": 7.384615384615385,
+    "FCM": 6.923076923076923,
+    "FastMVC": 6.923076923076923,
+    "ICC_v1": 5.923076923076923,
+    "ICC_v2": 5.461538461538462,
+    "K-Means": 5.3076923076923075,
+    "Li_et_al_2019": 6.846153846153846,
+    "Spectral": 6.538461538461538,
+    "Standard_Consensus": 5.076923076923077,
+    "Ward": 5.3076923076923075
+  },
+  "pairwise_wilcoxon_vs_iccv2": {
+    "DEC": {
+      "statistic": 40.0,
+      "raw_p": 0.7353515625,
+      "holm_adj_p": 1.0,
+      "significant_alpha_05": false
+    },
+    "FCAG": {
+      "statistic": 36.0,
+      "raw_p": 0.541748046875,
+      "holm_adj_p": 1.0,
+      "significant_alpha_05": false
+    },
+    "FCM": {
+      "statistic": 28.0,
+      "raw_p": 0.243896484375,
+      "holm_adj_p": 1.0,
+      "significant_alpha_05": false
+    },
+    "FastMVC": {
+      "statistic": 30.0,
+      "raw_p": 0.305419921875,
+      "holm_adj_p": 1.0,
+      "significant_alpha_05": false
+    },
+    "ICC_v1": {
+      "statistic": 36.0,
+      "raw_p": 0.541748046875,
+      "holm_adj_p": 1.0,
+      "significant_alpha_05": false
+    },
+    "K-Means": {
+      "statistic": 44.0,
+      "raw_p": 0.946044921875,
+      "holm_adj_p": 1.0,
+      "significant_alpha_05": false
+    },
+    "Li_et_al_2019": {
+      "statistic": 33.0,
+      "raw_p": 0.414306640625,
+      "holm_adj_p": 1.0,
+      "significant_alpha_05": false
+    },
+    "Spectral": {
+      "statistic": 39.0,
+      "raw_p": 0.684814453125,
+      "holm_adj_p": 1.0,
+      "significant_alpha_05": false
+    },
+    "Standard_Consensus": {
+      "statistic": 44.0,
+      "raw_p": 0.946044921875,
+      "holm_adj_p": 1.0,
+      "significant_alpha_05": false
+    },
+    "Ward": {
+      "statistic": 42.0,
+      "raw_p": 0.83935546875,
+      "holm_adj_p": 1.0,
+      "significant_alpha_05": false
+    }
+  },
+  "subgroup_high_d_over_20": {
+    "datasets": [
+      "prostate",
+      "cns",
+      "leukemia",
+      "ovarian",
+      "colon",
+      "srbct"
+    ],
+    "mean_ranks": {
+      "DEC": 5.0,
+      "FCAG": 7.166666666666667,
+      "FCM": 5.666666666666667,
+      "FastMVC": 6.166666666666667,
+      "ICC_v1": 5.333333333333333,
+      "ICC_v2": 2.3333333333333335,
+      "K-Means": 5.833333333333333,
+      "Li_et_al_2019": 7.833333333333333,
+      "Spectral": 7.5,
+      "Standard_Consensus": 6.333333333333333,
+      "Ward": 6.833333333333333
+    },
+    "pairwise_wilcoxon": {
+      "DEC": {
+        "statistic": 3.0,
+        "raw_p": 0.15625,
+        "holm_adj_p": 0.46875,
+        "significant_alpha_05": false
+      },
+      "FCAG": {
+        "statistic": 0.0,
+        "raw_p": 0.03125,
+        "holm_adj_p": 0.3125,
+        "significant_alpha_05": false
+      },
+      "FCM": {
+        "statistic": 3.0,
+        "raw_p": 0.15625,
+        "holm_adj_p": 0.46875,
+        "significant_alpha_05": false
+      },
+      "FastMVC": {
+        "statistic": 0.0,
+        "raw_p": 0.03125,
+        "holm_adj_p": 0.3125,
+        "significant_alpha_05": false
+      },
+      "ICC_v1": {
+        "statistic": 1.0,
+        "raw_p": 0.0625,
+        "holm_adj_p": 0.375,
+        "significant_alpha_05": false
+      },
+      "K-Means": {
+        "statistic": 3.0,
+        "raw_p": 0.15625,
+        "holm_adj_p": 0.46875,
+        "significant_alpha_05": false
+      },
+      "Li_et_al_2019": {
+        "statistic": 0.0,
+        "raw_p": 0.03125,
+        "holm_adj_p": 0.3125,
+        "significant_alpha_05": false
+      },
+      "Spectral": {
+        "statistic": 0.0,
+        "raw_p": 0.03125,
+        "holm_adj_p": 0.3125,
+        "significant_alpha_05": false
+      },
+      "Standard_Consensus": {
+        "statistic": 2.0,
+        "raw_p": 0.09375,
+        "holm_adj_p": 0.375,
+        "significant_alpha_05": false
+      },
+      "Ward": {
+        "statistic": 1.0,
+        "raw_p": 0.0625,
+        "holm_adj_p": 0.375,
+        "significant_alpha_05": false
+      }
+    }
+  },
+  "subgroup_low_d_under_20": {
+    "datasets": [
+      "indian_pines",
+      "isolet",
+      "madelon",
+      "newsgroups20",
+      "sonar",
+      "yale_b",
+      "zheng68k"
+    ],
+    "mean_ranks": {
+      "DEC": 3.7142857142857144,
+      "FCAG": 7.571428571428571,
+      "FCM": 8.0,
+      "FastMVC": 7.571428571428571,
+      "ICC_v1": 6.428571428571429,
+      "ICC_v2": 8.142857142857142,
+      "K-Means": 4.857142857142857,
+      "Li_et_al_2019": 6.0,
+      "Spectral": 5.714285714285714,
+      "Standard_Consensus": 4.0,
+      "Ward": 4.0
+    }
+  },
+  "fair_baselines_analysis": {
+    "mean_ari": {
+      "ICC_v2": 0.19586316956088615,
+      "K-Means_All": 0.17825773324094477,
+      "K-Means_LapScore": 0.10489410478721821,
+      "K-Means_PCA": 0.18394310030995575,
+      "K-Means_VarFilt": 0.1616608522967708,
+      "SparseKMeans": 0.15430415185291096,
+      "StdCons_All": 0.19347662060417437,
+      "StdCons_PCA": 0.19355994217406766,
+      "StdCons_VarFilt": 0.16450605063395474
+    },
+    "mean_ranks": {
+      "ICC_v2": 4.3076923076923075,
+      "K-Means_All": 5.038461538461538,
+      "K-Means_LapScore": 7.076923076923077,
+      "K-Means_PCA": 4.038461538461538,
+      "K-Means_VarFilt": 5.0,
+      "SparseKMeans": 6.230769230769231,
+      "StdCons_All": 4.423076923076923,
+      "StdCons_PCA": 3.576923076923077,
+      "StdCons_VarFilt": 5.3076923076923075
+    },
+    "high_d_mean_ari": {
+      "ICC_v2": 0.25793294008875023,
+      "K-Means_All": 0.04432921363379767,
+      "K-Means_LapScore": 0.04136268486268034,
+      "K-Means_PCA": 0.04188961012998971,
+      "K-Means_VarFilt": 0.05018915786267304,
+      "SparseKMeans": 0.044475108194474235,
+      "StdCons_All": 0.038893599774558675,
+      "StdCons_PCA": 0.03630107080424322,
+      "StdCons_VarFilt": 0.03337559749158332
+    }
+  }
+}
