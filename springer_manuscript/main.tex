@@ -89,7 +89,7 @@ Despite wide adoption across bioinformatics, computer vision, and knowledge disc
 
 To overcome these foundational limitations, this paper develops the \textbf{Inductive Consensus Clustering (ICC)} framework (Fig.~\ref{fig:conceptual_overview}). We first examine the finite-sample empirical breakdown of consensus stability under isotropic distractor noise (Exp~0), illustrating how distance concentration generates deceptive consensus stability on arbitrary noise boundaries. Motivated by these empirical findings, we architect \textbf{ICC-v2}, a unified four-stage framework:
 \begin{itemize}
-    \item \textbf{Variance-Stabilized Subspace Gating (VSSG):} An $O(N \cdot D)$ linear feature screening mechanism utilizing Sarle's Bimodality Coefficient ($BC_d = \frac{\mathrm{Skewness}^2(\mathbf{f}_d) + 1}{\mathrm{Kurtosis}(\mathbf{f}_d) + 3}$) to purge unimodal distractor noise prior to base ensemble fitting.
+    \item \textbf{Variance-Stabilized Subspace Gating (VSSG):} An $O(N \cdot D)$ linear feature screening mechanism utilizing Sarle's Bimodality Coefficient with finite-sample null correction ($\hat{b}_d = \frac{\hat{\gamma}_d^2 + 1}{\hat{\kappa}_d + 3 \frac{(N-1)^2}{(N-2)(N-3)} + \epsilon}$) to purge unimodal distractor noise prior to base ensemble fitting.
     \item \textbf{Determinacy-Based Bipartite Anchor Consensus:} Constructs a rectangular bipartite co-association graph $B \in [0, 1]^{N \times L}$ over $L$ core anchors selected via quadratic consensus determinacy ($\sigma_i = \frac{1}{N-1}\sum_{j \neq i} S_{ij}^2$), reducing auxiliary memory from $O(N^2)$ to $O(N \cdot L)$ and accelerating spectral decomposition onto an $L \times L$ core affinity space.
     \item \textbf{Stability-Weighted Subspace Centroid Assignment:} Provides closed-form inductive out-of-sample mapping that assigns unseen query instances in $O(K \cdot |\mathcal{F}_{\text{active}}|)$ time without recomputing the consensus graph.
     \item \textbf{Anchor-Space Perturbation Profiling (ASPP):} Probes cluster structural resilience across five physical perturbation families directly over certified anchor coordinates, delivering interpretable perturbation sensitivity indices ($PSI_k$) and calibrated out-of-sample query confidence without quadratic overhead.
@@ -166,9 +166,9 @@ As ambient distractor dimensions $D_{\text{noise}}$ expand ($D \gg N$), pairwise
 \Statex \textbf{// Stage 1: Multimodality Subspace Gating (VSSG)}
 \For{each feature column $d \in \{1,\dots,D\}$}
     \State Compute Sarle's Bimodality Coefficient:
-    \State $b_d \leftarrow \frac{\mathrm{Skewness}^2(\mathbf{f}_d) + 1}{\mathrm{Kurtosis}(\mathbf{f}_d) + 3 + \epsilon}$.
+    \State $\hat{b}_d \leftarrow \frac{\hat{\gamma}_d^2 + 1}{\hat{\kappa}_d + 3 \frac{(N-1)^2}{(N-2)(N-3)} + \epsilon}$.
 \EndFor
-\State Extract candidate pool $\mathcal{F}_{\text{active}} \leftarrow \text{TopRank}(b, \max(K, \lfloor \alpha \cdot D \rfloor))$.
+\State Extract candidate pool $\mathcal{F}_{\text{active}} \leftarrow \{d \mid \hat{b}_d \ge 5/9\}$ (capped at top $\min(D, \max(100, \lfloor 0.15 D \rfloor))$).
 \Statex \textbf{// Stage 2: Guided Subspace Ensemble Generation}
 \For{$m = 1$ to $M$}
     \State Draw random subspace $\mathcal{F}_m \subset \mathcal{F}_{\text{active}}$.
@@ -179,9 +179,9 @@ As ambient distractor dimensions $D_{\text{noise}}$ expand ($D \gg N$), pairwise
 \State Select $L = \min(L_{\text{budget}}, |\mathcal{A}_{\text{core}}|)$ core anchors (default $L=40$, adaptive $L=\max(40, 10K)$) from certified core $\{i \mid \sigma_i \ge \text{Quantile}(\boldsymbol{\sigma}, \tau_{\text{core}})\}$.
 \State Construct bipartite co-association matrix $B \in [0, 1]^{N \times L}$:
 \State $B_{ia} \leftarrow \frac{1}{M}\sum_{m=1}^M \mathbf{1}\{\pi_m(\mathbf{x}_i) = \pi_m(\mathbf{x}_a)\}$.
-\State Row-normalize $B_{\text{norm}} \leftarrow D_R^{-1} B$, and compute $W_{\text{anchor}} \leftarrow B_{\text{norm}}^T B_{\text{norm}} \in \mathbb{R}^{L \times L}$.
-\State Solve normalized Laplacian $L_{\text{anchor}} \leftarrow I - D_A^{-1/2} W_{\text{anchor}} D_A^{-1/2}$ for top $K$ eigenvectors $V \in \mathbb{R}^{L \times K}$.
-\State Compute instance embedding $U \leftarrow B_{\text{norm}} V \in \mathbb{R}^{N \times K}$ (row-normalized).
+\State Row-normalize $B_{\text{norm}} \leftarrow \Delta_R^{-1} B$, and compute $W_{\text{anchor}} \leftarrow B_{\text{norm}}^T B_{\text{norm}} \in \mathbb{R}^{L \times L}$.
+\State Solve normalized Laplacian $L_{\text{anchor}} \leftarrow I_L - \Delta_A^{-1/2} W_{\text{anchor}} \Delta_A^{-1/2}$ for eigenvectors $V \in \mathbb{R}^{L \times K}$ of the $K$ smallest eigenvalues.
+\State Compute instance embedding $U \leftarrow B_{\text{norm}} \Delta_A^{-1/2} V \Sigma^{-1/2} \in \mathbb{R}^{N \times K}$ (row-normalized).
 \State Extract consensus labels $\mathbf{y} \leftarrow \text{K-Means}(U, K)$.
 \Statex \textbf{// Stage 4: Stability-Weighted Centroid Induction}
 \For{$k = 1$ to $K$}
@@ -202,8 +202,8 @@ Under isotropic noise in $D \gg N$ regimes, classical variance thresholding fail
 \end{equation}
 where $\hat{\gamma}_d$ is empirical sample skewness, $\hat{\kappa}_d$ is Fisher's excess kurtosis, and the denominator represents Pearson kurtosis $\hat{\beta}_{2, d}$ adjusted for finite-sample normal null expectations. Features with zero variance ($\mathrm{Var}(\mathbf{f}_d) < 10^{-12}$) are assigned $\hat{b}_d = 0$.
 
-\begin{proposition}[Conditional Multimodality Separation Bound]
-For a standard unimodal Gaussian distractor distribution, $\gamma = 0$ and $\kappa = 0$, yielding $\mathbb{E}[\hat{b}_d] \approx 1/3 \approx 0.333$. For a continuous uniform distribution, $b_d = 5/9 \approx 0.555$. For an equal-weight two-component Gaussian mixture $0.5\mathcal{N}(-\Delta, \sigma^2) + 0.5\mathcal{N}(\Delta, \sigma^2)$, exact moment derivation reveals that the bimodality coefficient satisfies $b_d > 5/9$ if and only if normalized component separation satisfies $r = \Delta^2 / \sigma^2 > (3 + \sqrt{15})/2 \approx 3.436$, corresponding to separation ratio $\Delta / \sigma > \sqrt{(3+\sqrt{15})/2} \approx 1.854$. For asymmetric mixtures ($w \neq 0.5$), the threshold scales inversely with component variance $w(1-w)$.
+\begin{proposition}[Conditional Multimodality Separation Bound]\label{prop:multimodality_bound}
+For a standard unimodal Gaussian distractor distribution, $\gamma = 0$ and $\kappa = 0$, yielding $\mathbb{E}[\hat{b}_d] \approx 1/3 \approx 0.333$. For a continuous uniform distribution, $b_d = 5/9 \approx 0.555$. For an equal-weight two-component Gaussian mixture $0.5\mathcal{N}(-\Delta, \sigma^2) + 0.5\mathcal{N}(\Delta, \sigma^2)$, exact moment derivation reveals that the bimodality coefficient satisfies $b_d > 5/9$ if and only if normalized component separation satisfies $r = \Delta^2 / \sigma^2 > (3 + \sqrt{15})/2 \approx 3.436$, corresponding to separation ratio $\Delta / \sigma > \sqrt{(3+\sqrt{15})/2} \approx 1.854$. For asymmetric two-component mixtures with weights $w \in (0, 1)$ and $1-w$, skewness is non-zero ($\gamma \neq 0$), shifting the critical threshold upward as imbalance increases; as $w(1-w) \to 0$, extreme component separation is required to cross $5/9$. For general multi-component mixtures ($K > 2$), marginal multimodality emerges when adjacent centroid gaps exceed $|\mu_k - \mu_{k-1}| > 1.854 \sigma$.
 \end{proposition}
 
 Computing $\hat{b}_d$ requires only empirical second, third, and fourth moments across instances, executing in strictly \textbf{$O(N \cdot D)$ time} with zero quadratic distance computations. We formalize the foundational inductive bias and boundary conditions of VSSG:
@@ -211,11 +211,20 @@ Computing $\hat{b}_d$ requires only empirical second, third, and fourth moments 
 Informative subspace dimensions separating ground-truth clusters exhibit marginal multimodality ($\hat{b}_d \ge 5/9$), whereas uninformative nuisance distractor dimensions are continuous and unimodal ($\hat{b}_d \le 5/9$).
 \end{assumption}
 
+\begin{remark}[Theoretical Failure Modes of Marginal Bimodality Gating]\label{rem:vssg_failures}
+Assumption~\ref{assump:multimodal} imposes an inductive filter that exhibits three specific failure boundaries:
+\begin{enumerate}
+    \item \textbf{Skewed Unimodal Distributions:} High marginal skewness $\hat{\gamma}_d$ (e.g., in lognormal distributions, Pareto tails, or zero-inflated expression counts) mathematically inflates $\hat{b}_d \ge 5/9$ because Sarle's index scales with $(\gamma^2+1)/\beta_2$, falsely tagging skewed unimodal noise as multimodal.
+    \item \textbf{Non-Linear Parity / XOR Manifolds:} In multivariate parity problems (such as the Madelon benchmark comprising 5 informative hypercube vertices, 15 redundant linear combinations, and 480 distractor noise features), cluster identity depends on joint feature configurations whose 1D marginals are strictly unimodal. Consequently, 1D screening cannot detect pure XOR parity coordinates, bounding marginal discovery ($\text{Recall}@K$ peaks at $\sim 0.45$).
+    \item \textbf{Finite-Sample Estimator Variance ($N \le 100$):} In small sample sizes, sample skewness and kurtosis estimators exhibit high sampling variance, causing occasional false-positive threshold crossings. This motivates the finite-sample normal null correction $3\frac{(N-1)^2}{(N-2)(N-3)}$ and strict pool size capping.
+\end{enumerate}
+\end{remark}
+
 \begin{remark}[Sparsity and Zero-Inflation Boundary]
 Under highly sparse or zero-inflated representations (e.g., raw TF-IDF document vectors or single-cell counts with $\ge 90\%$ zeros), the discrete point mass at zero inflates skewness and kurtosis, causing marginal $\hat{b}_d$ scores to degrade. In such regimes, dense continuous representation learning or latent semantic indexing should precede subspace gating.
 \end{remark}
 
-Under Assumption~\ref{assump:multimodal}, VSSG selects all candidate dimensions satisfying $\hat{b}_d \ge 5/9$ (capped at an active pool size $\le \min(D, \max(100, 0.15 D))$), ensuring that base clusterers operate on signal-rich subspaces.
+Under Assumption~\ref{assump:multimodal}, VSSG selects candidate dimensions via null-calibrated thresholding $\hat{b}_d \ge 5/9$ (capped at an active pool size of at most $\min(D, \max(100, \lfloor 0.15 D \rfloor))$), or via top-fraction ranking $\text{TopRank}(\hat{b}, \max(K, \lfloor \alpha D \rfloor))$, ensuring base clusterers operate on signal-rich subspaces.
 
 \subsection{Determinacy-Based Bipartite Anchor Consensus}
 Classical consensus methods construct a dense $N \times N$ co-association matrix $S$ and perform graph partitioning in $O(N^2)$ to $O(N^3)$ time and $O(N^2)$ auxiliary memory. Rather than materializing all-pairs co-association, ICC-v2 evaluates exact sample determinacy $\sigma_i = \frac{1}{N - 1} \sum_{j \neq i} S_{ij}^2$ in linear memory.
@@ -228,9 +237,17 @@ Let $P \in \{0, \dots, K-1\}^{M \times N}$ denote the ensemble partition matrix.
 which computes exact sample determinacy $\sigma_i = \frac{1}{N-1}\left(\sum_{j=1}^N S_{ij}^2 - 1\right)$ in $O(M^2 N + M^2 K^2)$ time and $O(N + K^2)$ working memory, without materializing the $N \times N$ matrix $S$.
 \end{proposition}
 
-Given the exact sample stability vector $\boldsymbol{\sigma} \in [0, 1]^N$ established by Proposition~\ref{prop:linear_determinacy}, ICC-v2 extracts a core anchor set $\mathcal{A}_{\text{core}} = \{a_1, \dots, a_L\}$ of size $L \ll N$ (default $L=40$) from samples exceeding stability quantile $\tau_{\text{core}}$. ICC-v2 then constructs a rectangular bipartite co-association matrix $B \in [0, 1]^{N \times L}$ where $B_{ia} = \frac{1}{M}\sum_{m=1}^M \mathbf{1}\{\pi_m(\mathbf{x}_i) = \pi_m(\mathbf{x}_a)\}$ in strictly $O(N \cdot L)$ memory.
+Given the exact sample stability vector $\boldsymbol{\sigma} \in [0, 1]^N$ established by Proposition~\ref{prop:linear_determinacy}, ICC-v2 extracts a core anchor set $\mathcal{A}_{\text{core}} = \{a_1, \dots, a_L\}$ of size $L \ll N$ (default benchmark configuration uses $L=40$; adaptive mode sets $L=\max(40, 10K)$) from samples exceeding stability quantile $\tau_{\text{core}}$. ICC-v2 then constructs a rectangular bipartite co-association matrix $B \in [0, 1]^{N \times L}$ where $B_{ia} = \frac{1}{M}\sum_{m=1}^M \mathbf{1}\{\pi_m(\mathbf{x}_i) = \pi_m(\mathbf{x}_a)\}$ in strictly $O(N \cdot L)$ memory.
 
-With row-normalized $B_{\text{norm}} = D_R^{-1} B$, the anchor affinity matrix is $W_{\text{anchor}} = B_{\text{norm}}^T B_{\text{norm}} \in \mathbb{R}^{L \times L}$. Following bipartite Transfer-Cut spectral theory~\cite{li2015transfer,nie2024fast}, solving the normalized Laplacian eigensystem $L_{\text{anchor}} V = \lambda V$ yields the exact dual sample embedding $U = B_{\text{norm}} D_W^{-1/2} V \in \mathbb{R}^{N \times K}$, followed by K-Means clustering.
+To prevent notation clash between ambient feature dimension $D$ and graph degree matrices, let $\Delta_R = \operatorname{diag}(B \mathbf{1}_L) \in \mathbb{R}^{N \times N}$ denote the row-sum normalization matrix, yielding $B_{\text{norm}} = \Delta_R^{-1} B$. The anchor affinity matrix is $W_{\text{anchor}} = B_{\text{norm}}^T B_{\text{norm}} \in \mathbb{R}^{L \times L}$, with diagonal degree matrix $\Delta_A = \operatorname{diag}(W_{\text{anchor}} \mathbf{1}_L) \in \mathbb{R}^{L \times L}$. Following bipartite Transfer-Cut spectral theory~\cite{li2015transfer,nie2024fast}, we construct the normalized anchor Laplacian $L_{\text{anchor}} = I_L - \Delta_A^{-1/2} W_{\text{anchor}} \Delta_A^{-1/2}$ and solve for the eigenvectors $V \in \mathbb{R}^{L \times K}$ corresponding to the $K$ \textbf{smallest eigenvalues} $\lambda_1 \le \dots \le \lambda_K$ (equivalent to the largest eigenvectors of the normalized affinity operator). The dual instance embedding is given by:
+\begin{equation}
+    U = B_{\text{norm}} \Delta_A^{-1/2} V \Sigma^{-1/2} \in \mathbb{R}^{N \times K},
+\end{equation}
+where $\Sigma = \operatorname{diag}(\max(1 - \lambda_1, 10^{-4}), \dots, \max(1 - \lambda_K, 10^{-4}))$ prevents eigenvalue explosion near $\lambda_k = 1$, followed by unit row-normalization and final K-Means clustering.
+
+\begin{remark}[Determinacy Anchor Concentration and Category Imbalance]\label{rem:anchor_bias}
+Consensus determinacy $\sigma_i$ measures the consistency with which sample $i$ is co-partitioned across base clusterers. Consequently, samples situated in dense, well-separated, high-density clusters naturally achieve higher determinacy than samples residing in diffuse, overlapping, or minority clusters. Because $\mathcal{A}_{\text{core}}$ draws anchors without per-cluster stratification, anchors disproportionately concentrate in majority classes. In datasets with large category counts ($K \ge 16$, such as Isolet with $K=26$, 20 Newsgroups with $K=20$, and Indian Pines with $K=16$), a fixed budget of $L=40$ allocates fewer than two anchors per cluster on average, leading to minority subtype under-sampling and explaining why dense hierarchical clustering and deep models maintain an advantage on these multi-class benchmarks.
+\end{remark}
 
 \begin{theorem}[Computational and Memory Complexity of Bipartite ICC-v2]
 Let $N$ be the sample size, $D$ ambient dimensionality, $M$ ensemble size, $L$ anchor budget ($L \ll N$), $K$ cluster count, and $I_{\text{km}}$ base K-Means iterations. Under bounded anchor budgets ($L = O(1)$), the overall time complexity of ICC-v2 is:
