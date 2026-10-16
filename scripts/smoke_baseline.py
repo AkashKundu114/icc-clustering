@@ -3,7 +3,7 @@ from pathlib import Path
 root_dir = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(root_dir))
 import numpy as np
-from src.icc.consensus_v2 import InvariantCoreConsensusV2
+from icc.consensus_v2 import InvariantCoreConsensusV2
 
 data_leuk = np.load("experiments/exp3_real_world_benchmarks/data/cache/leukemia.npz")
 X_leuk, y_leuk = data_leuk["X"].astype(np.float64), data_leuk["y"]

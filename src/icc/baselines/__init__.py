@@ -9,7 +9,7 @@ Supports 14 methods across 4 categories:
   - Anchor-Based Scalable: FCAG, FastMVC
 
 Usage:
-    from src.icc.baselines import get_model, list_models
+    from icc.baselines import get_model, list_models
     model_fn = get_model("K-Means")
     labels, runtime, meta = model_fn(X, k, seed=42)
 """
@@ -40,7 +40,6 @@ from .consensus import (
 )
 from .deep import run_dec
 
-# Project root resolution (3 levels up from src/icc/baselines/__init__.py)
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 _CONFIG_PATH = _PROJECT_ROOT / "configs" / "baselines.yaml"
 
@@ -54,7 +53,6 @@ def _load_baselines_yaml() -> Dict[str, Any]:
     return data or {}
 
 
-# Static direct lookup table for fast execution without overhead
 _STATIC_DISPATCH: Dict[str, Callable] = {
     "kmeans": run_kmeans,
     "k-means": run_kmeans,
@@ -103,7 +101,6 @@ def list_models(category: Optional[str] = None) -> List[str]:
     cfg = _load_baselines_yaml()
     methods = cfg.get("methods", {})
     if not methods:
-        # Fallback to static registry keys
         return list(_STATIC_DISPATCH.keys())
 
     matched: List[str] = []
@@ -135,11 +132,9 @@ def get_model(name: str) -> Callable:
     """
     norm = name.strip().lower().replace("-", "_").replace(" ", "_")
 
-    # Fast path: check static dispatch table
     if norm in _STATIC_DISPATCH:
         return _STATIC_DISPATCH[norm]
 
-    # Dynamic path: query configs/baselines.yaml
     cfg = _load_baselines_yaml()
     methods = cfg.get("methods", {})
 
@@ -159,10 +154,7 @@ def get_model(name: str) -> Callable:
             mod = importlib.import_module(mod_path)
             return getattr(mod, func_name)
 
-    raise KeyError(
-        f"Unknown baseline algorithm '{name}'. "
-        f"Available models: {list_models()}"
-    )
+    raise KeyError(f"Unknown baseline algorithm '{name}'. Available models: {list_models()}")
 
 
 __all__ = [

@@ -15,36 +15,39 @@ References:
 import os
 import time
 from typing import Any, List, Tuple
+
 import numpy as np
+
+from icc.baselines.classical import ModelMetadata
 
 _SKLEARN_AVAILABLE = False
 try:
     from sklearn.cluster import KMeans as _SkKMeans
+
     _test = _SkKMeans(n_clusters=2, n_init=1).fit_predict(np.zeros((4, 2)))
     _SKLEARN_AVAILABLE = True
 except (ImportError, Exception):
     _SKLEARN_AVAILABLE = False
-
-from src.icc.baselines.classical import ModelMetadata
 
 
 def _check_tensorflow():
     """
     Ensure TensorFlow or Keras is installed; raise informative ImportError otherwise.
     """
-    # 1. Attempt TensorFlow import
+
     try:
         import tensorflow as tf
+
         _ = tf.__version__
         return "tensorflow"
     except (ImportError, Exception):
         pass
 
-    # 2. Attempt Keras import with PyTorch fallback
     try:
         if "KERAS_BACKEND" not in os.environ:
             os.environ["KERAS_BACKEND"] = "torch"
         import keras
+
         _ = keras.__version__
         return "keras"
     except (ImportError, Exception) as err:
@@ -61,22 +64,21 @@ def _import_deep_backend():
     """
     _check_tensorflow()
 
-    # Attempt TensorFlow first if functional
     try:
         import tensorflow as tf
         from tensorflow import keras
         from tensorflow.keras import layers, losses, models, optimizers
-        # Quick validation
+
         _ = tf.constant(1.0)
         return "tensorflow", tf, keras, layers, models, optimizers, losses
     except (ImportError, Exception):
         pass
 
-    # Fallback to Keras 3 with PyTorch backend
     if "KERAS_BACKEND" not in os.environ:
         os.environ["KERAS_BACKEND"] = "torch"
     import keras
     from keras import layers, losses, models, optimizers
+
     return "keras", None, keras, layers, models, optimizers, losses
 
 
@@ -100,7 +102,7 @@ def target_distribution(q: np.ndarray) -> np.ndarray:
     """
     q_arr = np.asarray(q, dtype=np.float64)
     col_sums = q_arr.sum(axis=0) + 1e-10
-    weight = q_arr ** 2 / col_sums
+    weight = q_arr**2 / col_sums
     row_sums = weight.sum(axis=1, keepdims=True) + 1e-10
     p = weight / row_sums
     return p.astype(np.float32)
@@ -114,6 +116,7 @@ def _build_clustering_layer_cls(layers_module):
         Clustering layer converts latent representations into soft cluster assignments
         using Student's t-distribution kernel (Xie et al., 2016).
         """
+
         def __init__(self, n_clusters: int, alpha: float = 1.0, initial_weights=None, **kwargs):
             super().__init__(**kwargs)
             self.n_clusters = n_clusters
@@ -135,9 +138,10 @@ def _build_clustering_layer_cls(layers_module):
             super().build(input_shape)
 
         def call(self, inputs):
-            # Try keras.ops if available (Keras 3 multi-backend)
+
             try:
                 from keras import ops
+
                 inputs_exp = ops.expand_dims(inputs, axis=1)
                 clusters_exp = ops.expand_dims(self.clusters, axis=0)
                 dist_sq = ops.sum(ops.square(inputs_exp - clusters_exp), axis=-1)
@@ -145,8 +149,8 @@ def _build_clustering_layer_cls(layers_module):
                 q = ops.power(q, (self.alpha + 1.0) / 2.0)
                 return q / ops.sum(q, axis=1, keepdims=True)
             except (ImportError, Exception):
-                # Fallback to TensorFlow Keras backend
                 import tensorflow as tf
+
                 inputs_exp = tf.expand_dims(inputs, axis=1)
                 clusters_exp = tf.expand_dims(self.clusters, axis=0)
                 dist_sq = tf.reduce_sum(tf.square(inputs_exp - clusters_exp), axis=-1)
@@ -159,10 +163,12 @@ def _build_clustering_layer_cls(layers_module):
 
         def get_config(self):
             config = super().get_config()
-            config.update({
-                "n_clusters": self.n_clusters,
-                "alpha": self.alpha,
-            })
+            config.update(
+                {
+                    "n_clusters": self.n_clusters,
+                    "alpha": self.alpha,
+                }
+            )
             return config
 
     return ClusteringLayer
@@ -198,7 +204,6 @@ def build_autoencoder(
     x_in = layers_module.Input(shape=(dims[0],), name="input")
     h = x_in
 
-    # Encoder hidden layers
     for i in range(n_stacks - 1):
         h = layers_module.Dense(
             dims[i + 1],
@@ -207,14 +212,12 @@ def build_autoencoder(
             name=f"encoder_{i}",
         )(h)
 
-    # Latent bottleneck layer
     latent = layers_module.Dense(
         dims[-1],
         kernel_initializer=init,
         name="latent",
     )(h)
 
-    # Decoder hidden layers
     h = latent
     for i in range(n_stacks - 1, 0, -1):
         h = layers_module.Dense(
@@ -224,7 +227,6 @@ def build_autoencoder(
             name=f"decoder_{i}",
         )(h)
 
-    # Reconstruction output layer
     x_out = layers_module.Dense(
         dims[0],
         kernel_initializer=init,
@@ -288,7 +290,6 @@ def run_dec(
     """
     t0 = time.perf_counter()
 
-    # 1. Validate inputs
     X_arr = np.asarray(X, dtype=np.float32)
     if X_arr.ndim != 2:
         raise ValueError(f"Input X must be a 2D matrix, got shape {X_arr.shape}")
@@ -298,12 +299,8 @@ def run_dec(
     if k < 2:
         raise ValueError(f"Number of clusters k must be >= 2, got {k}")
 
-    # 2. Check & load deep learning backend
-    backend_type, tf_module, keras_module, layers_mod, models_mod, optimizers_mod, losses_mod = (
-        _import_deep_backend()
-    )
+    backend_type, tf_module, keras_module, layers_mod, models_mod, optimizers_mod, losses_mod = _import_deep_backend()
 
-    # 3. Configure compute device and random seeds gracefully
     device_name = "cpu"
     if backend_type == "tensorflow" and tf_module is not None:
         try:
@@ -321,6 +318,7 @@ def run_dec(
     else:
         try:
             import torch
+
             if torch.cuda.is_available():
                 device_name = "gpu"
                 torch.cuda.manual_seed_all(seed)
@@ -334,7 +332,6 @@ def run_dec(
     except Exception:
         pass
 
-    # 4. Determine architecture dimensions
     default_dims = [D, 500, 500, 2000, 10]
     dims = kwargs.get("dims", default_dims)
     if len(dims) < 2 or dims[0] != D:
@@ -345,7 +342,6 @@ def run_dec(
     lr_finetune = kwargs.get("lr_finetune", 0.001)
     tol = kwargs.get("tol", 0.001)
 
-    # 5. Build and pretrain autoencoder
     autoencoder, encoder = build_autoencoder(dims, layers_mod, models_mod)
     autoencoder.compile(
         optimizer=optimizers_mod.Adam(learning_rate=lr_pretrain),
@@ -377,7 +373,6 @@ def run_dec(
             verbose=0,
         )
 
-    # 6. Initialize cluster centers via KMeans on latent representations
     z = np.asarray(encoder.predict(X_arr, batch_size=batch_size, verbose=0))
     if _SKLEARN_AVAILABLE:
         try:
@@ -385,15 +380,16 @@ def run_dec(
             y_pred = kmeans.fit_predict(z)
             centers = kmeans.cluster_centers_
         except Exception:
-            from src.icc.core import run_clusterer
+            from icc.core import run_clusterer
+
             y_pred = run_clusterer("kmeans", z, k, seed=seed)
             centers = np.array([z[y_pred == c].mean(axis=0) if np.any(y_pred == c) else z[c] for c in range(k)])
     else:
-        from src.icc.core import run_clusterer
+        from icc.core import run_clusterer
+
         y_pred = run_clusterer("kmeans", z, k, seed=seed)
         centers = np.array([z[y_pred == c].mean(axis=0) if np.any(y_pred == c) else z[c] for c in range(k)])
 
-    # 7. Build DEC Model
     ClusteringLayer = _build_clustering_layer_cls(layers_mod)
     clustering_layer = ClusteringLayer(
         n_clusters=k,
@@ -408,22 +404,18 @@ def run_dec(
         loss=losses_mod.KLDivergence(),
     )
 
-    # 8. Fine-tuning loop with Student-t clustering loss and target distribution P
     y_pred_last = np.copy(y_pred)
     for epoch in range(finetune_epochs):
-        # Periodically compute soft assignments Q and target distribution P
         q = np.asarray(dec_model.predict(X_arr, batch_size=batch_size, verbose=0))
         p = target_distribution(q)
         y_pred = q.argmax(axis=1)
 
-        # Check stopping criterion: delta label assignments
         delta_label = np.sum(y_pred != y_pred_last).astype(float) / N
         y_pred_last = np.copy(y_pred)
 
         if epoch > 0 and delta_label < tol:
             break
 
-        # Train 1 epoch on (X, P)
         dec_model.fit(
             X_arr,
             p,
@@ -433,7 +425,6 @@ def run_dec(
             verbose=0,
         )
 
-    # 9. Extract final predictions
     q_final = np.asarray(dec_model.predict(X_arr, batch_size=batch_size, verbose=0))
     final_labels = q_final.argmax(axis=1).astype(np.int64)
 
@@ -468,9 +459,7 @@ def run_idec(
     Guo et al. "Improved deep embedded clustering with local structure preservation."
     IJCAI, 2017.
     """
-    raise NotImplementedError(
-        "IDEC deep clustering baseline not yet implemented. Enable in Phase 4."
-    )
+    raise NotImplementedError("IDEC deep clustering baseline not yet implemented. Enable in Phase 4.")
 
 
 def run_contrastive_clustering(
@@ -486,9 +475,7 @@ def run_contrastive_clustering(
     ----------
     Li, Hu, Liu, Peng, Zhou, Peng. "Contrastive clustering." AAAI, 2021.
     """
-    raise NotImplementedError(
-        "Contrastive Clustering baseline not yet implemented. Enable in Phase 4."
-    )
+    raise NotImplementedError("Contrastive Clustering baseline not yet implemented. Enable in Phase 4.")
 
 
 def run_scan(
@@ -504,7 +491,4 @@ def run_scan(
     ----------
     Van Gansbeke et al. "SCAN: Learning to classify images without labels." ECCV, 2020.
     """
-    raise NotImplementedError(
-        "SCAN baseline not yet implemented. Enable in Phase 4."
-    )
-
+    raise NotImplementedError("SCAN baseline not yet implemented. Enable in Phase 4.")

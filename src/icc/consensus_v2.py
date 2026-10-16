@@ -29,15 +29,15 @@ Mathematical Architecture:
    in anchor space with linear O(N * L) auxiliary memory.
 """
 
-import time
-from typing import Optional, Union, Dict, Any, List, Tuple
+from typing import Any, Dict, List, Optional
+
 import numpy as np
 import scipy.linalg as sla
 from scipy.spatial.distance import cdist
 from scipy.stats import kurtosis, skew
 
-from .core import run_clusterer, pairwise_coassoc, canonical
-from .aspp import ASPPConfig, AnchorSpacePerturbationProfiler
+from .aspp import AnchorSpacePerturbationProfiler, ASPPConfig
+from .core import run_clusterer
 
 
 class InvariantCoreConsensusV2:
@@ -108,30 +108,32 @@ class InvariantCoreConsensusV2:
     ):
         if beta is not None:
             import warnings
-            warnings.warn("`beta` is not used by ICC-v2 and is deprecated; it has no effect.", DeprecationWarning, stacklevel=2)
+
+            warnings.warn(
+                "`beta` is not used by ICC-v2 and is deprecated; it has no effect.", DeprecationWarning, stacklevel=2
+            )
         if random_seed is not None:
             random_state = random_seed
         self.n_clusters = n_clusters
-        self.k = n_clusters  # Backward compatibility alias
+        self.k = n_clusters
         self.n_base_models = n_base_models
-        self.M = n_base_models  # Backward compatibility alias
+        self.M = n_base_models
         self.n_anchors = n_anchors
-        self.L = n_anchors  # Backward compatibility alias
+        self.L = n_anchors
         self.core_quantile = core_quantile
         self.subspace_rate = subspace_rate
-        self.beta = beta  # Deprecated, unused
-        self.pool_frac = pool_frac  # Used by pool_mode 'bc_frac' / 'random_frac'
-        self.embedding = embedding  # 'legacy' (B_norm V) | 'transfer_cut' (bipartite degree/eigenvalue scaled)
-        self.dense_threshold = dense_threshold  # N <= threshold uses dense/exact co-association path
+        self.beta = beta
+        self.pool_frac = pool_frac
+        self.embedding = embedding
+        self.dense_threshold = dense_threshold
         self.base_clusterer = base_clusterer
         self.enable_aspp = enable_aspp
         self.aspp_config = aspp_config
         self.random_state = random_state
-        self.pool_mode = pool_mode      # 'legacy' (>=15% floor) | 'robust' (median+c*MAD) | 'gauss' (Bonferroni Gaussian-null) | 'random' (control) | 'null_calibrated' (BC >= 5/9) | 'bc_frac' | 'random_frac'
+        self.pool_mode = pool_mode
         self.pool_mad_c = pool_mad_c
         self.pool_alpha = pool_alpha
 
-        # Fitted attributes
         self.labels_: Optional[np.ndarray] = None
         self.stability_: Optional[np.ndarray] = None
         self.core_mask_: Optional[np.ndarray] = None
@@ -142,7 +144,6 @@ class InvariantCoreConsensusV2:
         self.anchor_centroids_: Optional[np.ndarray] = None
         self.U_emb_: Optional[np.ndarray] = None
 
-        # ASPP attributes
         self.fingerprints_: Optional[Any] = None
         self.psi_: Optional[np.ndarray] = None
         self.reliability_categories_: Optional[List[str]] = None
@@ -168,9 +169,6 @@ class InvariantCoreConsensusV2:
         k = self.n_clusters
         rng = np.random.default_rng(self.random_state)
 
-        # ---------------------------------------------------------------------
-        # 1. Feature Saliency Scoring (Bimodality & Dispersion Prior)
-        # ---------------------------------------------------------------------
         bimodal = np.zeros(D, dtype=np.float64)
         var = np.var(X, axis=0)
         valid_mask = var > 1e-12
@@ -178,17 +176,13 @@ class InvariantCoreConsensusV2:
             X_valid = X[:, valid_mask]
             kurt = kurtosis(X_valid, axis=0, bias=False) if N >= 4 else kurtosis(X_valid, axis=0)
             sk = skew(X_valid, axis=0, bias=False) if N >= 3 else skew(X_valid, axis=0)
-            # Finite-sample Sarle Bimodality Coefficient:
-            # Fisher excess kurtosis converted to Pearson kurtosis with finite-sample null correction
+
             finite_corr = 3.0 * ((N - 1) ** 2) / ((N - 2) * (N - 3)) if N >= 4 else 3.0
             denom = kurt + finite_corr + 1e-5
             denom = np.fmax(denom, 1e-5)
             bimodal[valid_mask] = (sk**2 + 1.0) / denom
         self.feature_scores_ = bimodal
 
-        # ---------------------------------------------------------------------
-        # 2. Adaptive Candidate Pool (VSSG Gating)
-        # ---------------------------------------------------------------------
         if self.pool_mode == "legacy":
             top_frac = min(1.0, max(0.15, 100.0 / D))
             pool_size = max(k, int(top_frac * D))
@@ -198,8 +192,10 @@ class InvariantCoreConsensusV2:
             if self.pool_mode == "bc_frac":
                 candidate_pool = np.argsort(bimodal)[-pool_size:]
             else:
-                candidate_pool = np.random.default_rng(self.random_state + 12345).choice(D, size=pool_size, replace=False)
-        elif self.pool_mode == "random":   # control: same pool size as legacy, BC ranking ignored
+                candidate_pool = np.random.default_rng(self.random_state + 12345).choice(
+                    D, size=pool_size, replace=False
+                )
+        elif self.pool_mode == "random":
             top_frac = min(1.0, max(0.15, 100.0 / D))
             pool_size = max(k, int(top_frac * D))
             candidate_pool = np.random.default_rng(self.random_state + 12345).choice(D, size=pool_size, replace=False)
@@ -210,23 +206,23 @@ class InvariantCoreConsensusV2:
             thr = med + self.pool_mad_c * mad
             cand = np.where(valid_mask & (bimodal > thr))[0]
             if len(cand) < max(k, 2):
-                cand = np.argsort(bimodal)[-max(k, 2):]
+                cand = np.argsort(bimodal)[-max(k, 2) :]
             candidate_pool = cand
         elif self.pool_mode == "gauss":
             from scipy.stats import norm
+
             rn = np.random.default_rng(0)
             Z = rn.normal(size=(N, 2000))
             kz = kurtosis(Z, axis=0, bias=False) if N >= 4 else kurtosis(Z, axis=0)
             sz = skew(Z, axis=0, bias=False) if N >= 3 else skew(Z, axis=0)
             fc = 3.0 * ((N - 1) ** 2) / ((N - 2) * (N - 3)) if N >= 4 else 3.0
-            nb = (sz ** 2 + 1.0) / np.fmax(kz + fc + 1e-5, 1e-5)
+            nb = (sz**2 + 1.0) / np.fmax(kz + fc + 1e-5, 1e-5)
             thr = nb.mean() + norm.ppf(1 - self.pool_alpha / max(D, 1)) * nb.std()
             cand = np.where(valid_mask & (bimodal > thr))[0]
             if len(cand) < max(k, 2):
-                cand = np.argsort(bimodal)[-max(k, 2):]
+                cand = np.argsort(bimodal)[-max(k, 2) :]
             candidate_pool = cand
         elif self.pool_mode == "null_calibrated":
-            # Unimodal distributions (Gaussian, Laplace, Logistic) satisfy BC <= 5/9 (~0.5556).
             bimodal_threshold = 5.0 / 9.0
             passing_indices = np.where(bimodal >= bimodal_threshold)[0]
             min_features = min(2, D)
@@ -238,23 +234,18 @@ class InvariantCoreConsensusV2:
                     top_pass = np.argsort(bimodal[passing_indices])[-max_pool:]
                     candidate_pool = passing_indices[top_pass]
             else:
-                candidate_pool = np.argsort(bimodal)[-min(D, max(2, k)):]
+                candidate_pool = np.argsort(bimodal)[-min(D, max(2, k)) :]
         else:
             raise ValueError(f"Unknown pool_mode: {self.pool_mode}")
         self.selected_features_ = candidate_pool
 
-        # Subspace drawing size
         sub_size = max(2, int(len(candidate_pool) * self.subspace_rate))
 
-        # Determine base clusterer engine
         if self.base_clusterer == "auto":
             base_engine = "spectral" if N <= 100 else "kmeans"
         else:
             base_engine = self.base_clusterer
 
-        # ---------------------------------------------------------------------
-        # 3. Base Clusterers on Diverse Guided Subspaces
-        # ---------------------------------------------------------------------
         partitions = []
         for m in range(self.n_base_models):
             seed_m = int(rng.integers(0, 1000000))
@@ -263,15 +254,9 @@ class InvariantCoreConsensusV2:
             p = run_clusterer(base_engine, X_sub, k, seed=seed_m)
             partitions.append(p)
 
-        # ---------------------------------------------------------------------
-        # 4. Certified Core Anchors & Bipartite Graph Construction
-        # ---------------------------------------------------------------------
-        P_stack = np.array(partitions)  # shape (M, N)
+        P_stack = np.array(partitions)
 
         if N <= self.dense_threshold:
-            # Exact closed-form determinacy identity:
-            # sum_{j=1}^N S_{ij}^2 = 1/M^2 sum_{m1, m2} C_{m1, m2}(pi_{m1}(i), pi_{m2}(i))
-            # exactly matches dense pairwise co-association S with zero diagonal in O(M^2 N + M^2 K^2)
             lin_sum_sq = np.zeros(N, dtype=np.float64)
             for m1 in range(self.n_base_models):
                 for m2 in range(self.n_base_models):
@@ -279,7 +264,7 @@ class InvariantCoreConsensusV2:
                     counts = np.bincount(joint, minlength=k * k)
                     lin_sum_sq += counts[joint]
 
-            sample_stability = np.maximum(0.0, (lin_sum_sq / (self.n_base_models ** 2) - 1.0) / max(1, N - 1))
+            sample_stability = np.maximum(0.0, (lin_sum_sq / (self.n_base_models**2) - 1.0) / max(1, N - 1))
             self.stability_ = sample_stability
 
             tau_stab = np.quantile(sample_stability, self.core_quantile)
@@ -295,18 +280,16 @@ class InvariantCoreConsensusV2:
             anchor_idx = rng.choice(core_idx, size=L, replace=False)
             self.anchor_indices_ = anchor_idx
 
-            P_anchors = P_stack[:, anchor_idx]  # shape (M, L)
+            P_anchors = P_stack[:, anchor_idx]
             B = np.zeros((N, L), dtype=np.float64)
             for m in range(self.n_base_models):
                 B += (P_stack[m, :, None] == P_anchors[m, None, :]).astype(np.float64)
             B /= self.n_base_models
         else:
-            # Scalable subsampled path for N > dense_threshold (e.g. testing scaling at N > 2,000)
             sub_n = min(N, 1000)
             cand_idx = rng.choice(N, size=sub_n, replace=False)
-            P_cand = P_stack[:, cand_idx]   # shape (M, sub_n)
+            P_cand = P_stack[:, cand_idx]
 
-            # Sample determinacy over representative candidate subset
             P_cand_expanded = P_cand[:, :, None] == P_cand[:, None, :]
             S_sub = P_cand_expanded.mean(axis=0)
             np.fill_diagonal(S_sub, 0.0)
@@ -334,9 +317,6 @@ class InvariantCoreConsensusV2:
             sample_stability = np.mean(B, axis=1)
             self.stability_ = sample_stability
 
-        # ---------------------------------------------------------------------
-        # 5. Bipartite Spectral Decomposition (Transfer-Cut)
-        # ---------------------------------------------------------------------
         row_sums = B.sum(axis=1, keepdims=True)
         row_sums[row_sums < 1e-12] = 1.0
         B_norm = B / row_sums
@@ -365,14 +345,10 @@ class InvariantCoreConsensusV2:
         pred = run_clusterer("kmeans", U_emb, k, seed=self.random_state)
         self.labels_ = pred
 
-        # ---------------------------------------------------------------------
-        # 6. Geometry-Calibrated Inductive Centroids in Feature Space
-        # ---------------------------------------------------------------------
         self.anchor_centroids_ = np.zeros((k, D))
         for c in range(k):
-            mask_c = (pred == c)
+            mask_c = pred == c
             if np.any(mask_c):
-                # Weighted by sample stability to prioritize certified core points
                 weights = sample_stability[mask_c]
                 w_sum = weights.sum()
                 if w_sum > 1e-12:
@@ -382,9 +358,6 @@ class InvariantCoreConsensusV2:
             else:
                 self.anchor_centroids_[c] = np.mean(X, axis=0)
 
-        # ---------------------------------------------------------------------
-        # 7. Optional Anchor-Space Perturbation Profiling (ASPP)
-        # ---------------------------------------------------------------------
         if self.enable_aspp:
             self.profile_perturbations(X, config=self.aspp_config, batch_vector=batch_vector)
 
@@ -406,6 +379,25 @@ class InvariantCoreConsensusV2:
         """
         self.fit_predict(X, batch_vector=batch_vector)
         return self
+
+    def transform(self, X: Optional[np.ndarray] = None) -> np.ndarray:
+        """
+        Return the low-dimensional spectral embedding representation.
+
+        Parameters
+        ----------
+        X : Optional[np.ndarray], default=None
+            If None, returns fitted training embedding U_emb_ of shape (N, K).
+
+        Returns
+        -------
+        embedding : np.ndarray of shape (N, K)
+        """
+        if self.U_emb_ is None:
+            raise RuntimeError("Model has not been fitted yet. Call fit() first.")
+        if X is None:
+            return self.U_emb_
+        return self.predict_proba(X)
 
     def profile_perturbations(
         self,
@@ -504,7 +496,6 @@ class InvariantCoreConsensusV2:
         else:
             dists = cdist(X_new, self.anchor_centroids_, metric="euclidean")
 
-        # Softmax over negative distances
         logits = -dists / max(1e-6, temperature)
         exp_logits = np.exp(logits - np.max(logits, axis=1, keepdims=True))
         return exp_logits / np.sum(exp_logits, axis=1, keepdims=True)
@@ -559,9 +550,7 @@ class InvariantCoreConsensusV2:
             psi_assigned = np.nan_to_num(self.psi_[preds], nan=0.5)
             confidence = np.nan_to_num(np.clip(margin * (1.0 - psi_assigned), 0.0, 1.0), nan=0.0)
             reliability = (
-                [self.reliability_categories_[p] for p in preds]
-                if self.reliability_categories_ is not None
-                else None
+                [self.reliability_categories_[p] for p in preds] if self.reliability_categories_ is not None else None
             )
         else:
             psi_assigned = None

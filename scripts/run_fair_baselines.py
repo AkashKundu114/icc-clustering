@@ -13,8 +13,8 @@ from scipy.spatial.distance import cdist
 root_dir = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(root_dir))
 
-from src.icc.consensus_v2 import InvariantCoreConsensusV2
-from src.icc.baselines.consensus import run_standard_consensus
+from icc.consensus_v2 import InvariantCoreConsensusV2
+from icc.baselines.consensus import run_standard_consensus
 
 DATASETS = [
     "colon", "leukemia", "srbct", "cns", "lymphoma", "ovarian",

@@ -12,7 +12,8 @@ Requires:
 import os
 import tarfile
 from pathlib import Path
-from typing import Tuple, Dict, Any, Optional
+from typing import Any, Dict, Optional, Tuple
+
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
 
@@ -25,11 +26,11 @@ def _check_scanpy():
     """Ensure scanpy is installed; raise informative ImportError otherwise."""
     try:
         import scanpy as sc
+
         return sc
     except ImportError as e:
         raise ImportError(
-            "scanpy is required for scRNA-seq datasets. "
-            "Install via: pip install 'icc[bio]' or pip install scanpy"
+            "scanpy is required for scRNA-seq datasets. Install via: pip install 'icc[bio]' or pip install scanpy"
         ) from e
 
 
@@ -93,7 +94,6 @@ def load_zheng68k(
     cache_filename = "zheng68k.npz" if mode == "reduced" else f"zheng68k_{mode}.npz"
     cache_path = os.path.join(c_dir, cache_filename)
 
-    # 1. Check local cache
     if os.path.exists(cache_path) and not force_download:
         with np.load(cache_path) as data:
             X = data["X"]
@@ -109,15 +109,12 @@ def load_zheng68k(
             }
             return X, y, metadata
 
-    # 2. Check scanpy availability
     sc = _check_scanpy()
 
-    # 3. Load dataset based on mode
     if mode == "reduced":
         print("[*] Loading Zheng68k PBMC reduced subset via scanpy...")
         adata = sc.datasets.pbmc68k_reduced()
 
-        # If n_top_genes requested is smaller than available genes, filter to top HVGs
         if n_top_genes < adata.n_vars and "dispersions_norm" in adata.var:
             top_genes_idx = np.argsort(adata.var["dispersions_norm"].values)[-n_top_genes:]
             adata = adata[:, top_genes_idx]
@@ -146,13 +143,14 @@ def load_zheng68k(
         if not os.path.exists(mtx_dir):
             tar_path = os.path.join(r_dir, "fresh_68k_pbmc_donor_a_filtered_gene_bc_matrices.tar.gz")
             if not os.path.exists(tar_path):
-                import urllib.request
                 import ssl
+                import urllib.request
+
                 url = (
                     "https://cf.10xgenomics.com/samples/cell-exp/1.1.0/fresh_68k_pbmc_donor_a/"
                     "fresh_68k_pbmc_donor_a_filtered_gene_bc_matrices.tar.gz"
                 )
-                print(f"[*] Downloading full 68k PBMC matrix from 10x Genomics...")
+                print("[*] Downloading full 68k PBMC matrix from 10x Genomics...")
                 ctx = ssl._create_unverified_context()
                 req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
                 with urllib.request.urlopen(req, timeout=120, context=ctx) as resp, open(tar_path, "wb") as f_out:
@@ -165,7 +163,7 @@ def load_zheng68k(
         print("[*] Reading 10x matrix...")
         adata = sc.read_10x_mtx(mtx_dir, var_names="gene_symbols", cache=True)
 
-        print(f"[*] Preprocessing 68k cells: filter_cells, filter_genes, normalize, log1p, HVG selection...")
+        print("[*] Preprocessing 68k cells: filter_cells, filter_genes, normalize, log1p, HVG selection...")
         sc.pp.filter_cells(adata, min_genes=200)
         sc.pp.filter_genes(adata, min_cells=3)
         sc.pp.normalize_total(adata, target_sum=1e4)
@@ -173,12 +171,15 @@ def load_zheng68k(
         sc.pp.highly_variable_genes(adata, n_top_genes=n_top_genes, subset=True)
         sc.pp.scale(adata, max_value=10)
 
-        X = adata.X.toarray().astype(np.float32) if hasattr(adata.X, "toarray") else np.asarray(adata.X, dtype=np.float32)
+        X = (
+            adata.X.toarray().astype(np.float32)
+            if hasattr(adata.X, "toarray")
+            else np.asarray(adata.X, dtype=np.float32)
+        )
         y = np.zeros(X.shape[0], dtype=np.int64)
     else:
         raise ValueError(f"Unknown mode '{mode}' for load_zheng68k. Expected 'reduced' or 'full'.")
 
-    # 4. Save to cache
     np.savez_compressed(cache_path, X=X, y=y)
     print(f"[+] Cached 'zheng68k' ({mode}) to {cache_path}: shape={X.shape}, K={len(np.unique(y))}")
 

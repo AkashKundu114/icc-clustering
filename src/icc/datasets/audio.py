@@ -7,10 +7,11 @@ Datasets:
 
 import os
 from pathlib import Path
-from typing import Tuple, Dict, Any, Optional
+from typing import Any, Dict, Optional, Tuple
+
 import numpy as np
 from sklearn.datasets import fetch_openml
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 _DEFAULT_CACHE = _PROJECT_ROOT / "data" / "cache"
@@ -54,7 +55,6 @@ def load_isolet(
     os.makedirs(c_dir, exist_ok=True)
     cache_path = os.path.join(c_dir, "isolet.npz")
 
-    # 1. Check local cache
     if os.path.exists(cache_path) and not force_download:
         with np.load(cache_path) as data:
             X = data["X"]
@@ -69,27 +69,22 @@ def load_isolet(
             }
             return X, y, metadata
 
-    # 2. Fetch raw dataset from OpenML
     print("[*] Fetching Isolet from OpenML (name='isolet', version=1)...")
     raw = fetch_openml("isolet", version=1, parser="auto")
 
-    # Extract features and targets
     raw_X = np.asarray(raw.data, dtype=np.float64)
     raw_y = np.asarray(raw.target)
 
-    # Impute NaNs if any (defensive check)
     if np.isnan(raw_X).any():
         col_means = np.nanmean(raw_X, axis=0)
         col_means = np.nan_to_num(col_means, nan=0.0)
         inds = np.where(np.isnan(raw_X))
         raw_X[inds] = np.take(col_means, inds[1])
 
-    # 3. Standardize and encode targets
     print("[*] Preprocessing: StandardScaler and LabelEncoder...")
     X = StandardScaler().fit_transform(raw_X).astype(np.float32)
     y = LabelEncoder().fit_transform(raw_y).astype(np.int64)
 
-    # 4. Save to cache
     np.savez_compressed(cache_path, X=X, y=y)
     print(f"[+] Cached 'isolet' to {cache_path}: shape={X.shape}, K={len(np.unique(y))}")
 

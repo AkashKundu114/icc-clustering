@@ -8,10 +8,11 @@ Datasets:
 
 import os
 from pathlib import Path
-from typing import Tuple, Dict, Any, Optional
+from typing import Any, Dict, Optional, Tuple
+
 import numpy as np
 import scipy.io as sio
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 _DEFAULT_CACHE = _PROJECT_ROOT / "data" / "cache"
@@ -20,8 +21,9 @@ _DEFAULT_RAW = _PROJECT_ROOT / "data" / "raw" / "yale_b"
 
 def _download_file(url: str, dest_path: str):
     """Download a file with user-agent headers and SSL verification handling."""
-    import urllib.request
     import ssl
+    import urllib.request
+
     ctx = ssl._create_unverified_context()
     req = urllib.request.Request(
         url,
@@ -64,7 +66,6 @@ def download_yale_b(
     if os.path.exists(mat_path) and not force:
         return mat_path
 
-    # Primary (Deng Cai repository) and backup mirrors
     mirrors = [
         "http://www.cad.zju.edu.cn/home/dengcai/Data/YaleB/YaleB_32x32.mat",
     ]
@@ -125,7 +126,6 @@ def load_yale_b(
     os.makedirs(c_dir, exist_ok=True)
     cache_path = os.path.join(c_dir, "yale_b.npz")
 
-    # 1. Check local cache
     if os.path.exists(cache_path) and not force_download:
         with np.load(cache_path) as data:
             X = data["X"]
@@ -140,7 +140,6 @@ def load_yale_b(
             }
             return X, y, metadata
 
-    # 2. Download / locate raw dataset
     mat_path = download_yale_b(raw_dir=raw_dir, force=force_download)
 
     print(f"[*] Loading raw .mat from {mat_path}...")
@@ -148,12 +147,10 @@ def load_yale_b(
     fea = mat["fea"].astype(np.float64)
     gnd = mat["gnd"].ravel()
 
-    # 3. Standardize features and encode targets
     print(f"[*] Preprocessing {fea.shape[0]} images ({fea.shape[1]} features, {len(np.unique(gnd))} classes)...")
     X = StandardScaler().fit_transform(fea).astype(np.float32)
     y = LabelEncoder().fit_transform(gnd).astype(np.int64)
 
-    # 4. Save to cache
     np.savez_compressed(cache_path, X=X, y=y)
     print(f"[+] Cached 'yale_b' to {cache_path}: shape={X.shape}, K={len(np.unique(y))}")
 

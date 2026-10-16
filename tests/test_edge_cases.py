@@ -13,8 +13,8 @@ Verifies robustness against:
 import numpy as np
 import pytest
 
-from src.icc.consensus_v2 import InvariantCoreConsensusV2
-from src.icc.metrics import evaluate_all
+from icc.consensus_v2 import InvariantCoreConsensusV2
+from icc.metrics import evaluate_all
 
 HAS_IMPUTE = False
 try:

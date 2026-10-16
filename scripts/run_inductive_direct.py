@@ -14,7 +14,7 @@ from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
 root_dir = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(root_dir))
 
-from src.icc.consensus_v2 import InvariantCoreConsensusV2
+from icc.consensus_v2 import InvariantCoreConsensusV2
 
 DATASETS = [
     "colon", "leukemia", "srbct", "cns", "lymphoma", "ovarian",

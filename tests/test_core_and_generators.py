@@ -11,8 +11,8 @@ Covers:
 import numpy as np
 import pytest
 
-from src.icc.core import build_dataset, run_clusterer, pairwise_coassoc, canonical
-from src.icc.consensus import InvariantCoreConsensus
+from icc.core import build_dataset, run_clusterer, pairwise_coassoc, canonical
+from icc.consensus import InvariantCoreConsensus
 
 
 @pytest.mark.parametrize("noise_kind", ["gaussian", "student_t", "correlated", "scaled", "sparse"])

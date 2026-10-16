@@ -2,8 +2,6 @@
 Diagnostic utilities for partition tracking, entropy, and canonicalization.
 """
 
-from .core import canonical
-
 
 def partition_entropy(partitions):
     """
@@ -11,6 +9,7 @@ def partition_entropy(partitions):
     A score of 0.0 indicates 100% deterministic collapse to a single partition.
     """
     import numpy as np
+
     distinct = list(dict.fromkeys(partitions))
     counts = np.array([partitions.count(p) for p in distinct], dtype=float)
     probs = counts / counts.sum()

@@ -8,10 +8,11 @@ Datasets:
 
 import os
 from pathlib import Path
-from typing import Tuple, Dict, Any, Optional
+from typing import Any, Dict, Optional, Tuple
+
 import numpy as np
 import scipy.io as sio
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 _DEFAULT_CACHE = _PROJECT_ROOT / "data" / "cache"
@@ -20,8 +21,9 @@ _DEFAULT_RAW = _PROJECT_ROOT / "data" / "raw" / "indian_pines"
 
 def _download_file(url: str, dest_path: str):
     """Download a file with user-agent headers and SSL verification handling."""
-    import urllib.request
     import ssl
+    import urllib.request
+
     ctx = ssl._create_unverified_context()
     req = urllib.request.Request(
         url,
@@ -65,7 +67,6 @@ def download_indian_pines(
     if os.path.exists(img_path) and os.path.exists(gt_path) and not force:
         return img_path, gt_path
 
-    # Primary (AWS CDN via HuggingFace) and Secondary (EHU CCWINTCO) mirrors
     mirrors = [
         (
             "https://huggingface.co/datasets/danaroth/indian_pines/resolve/main/Indian_pines_corrected.mat",
@@ -136,7 +137,6 @@ def load_indian_pines(
     os.makedirs(c_dir, exist_ok=True)
     cache_path = os.path.join(c_dir, "indian_pines.npz")
 
-    # 1. Check local cache
     if os.path.exists(cache_path) and not force_download:
         with np.load(cache_path) as data:
             X = data["X"]
@@ -151,30 +151,25 @@ def load_indian_pines(
             }
             return X, y, metadata
 
-    # 2. Download / load raw .mat files
     img_path, gt_path = download_indian_pines(raw_dir=raw_dir, force=force_download)
 
     img_mat = sio.loadmat(img_path)
     gt_mat = sio.loadmat(gt_path)
 
-    # Detect data keys
     data_keys = [k for k in img_mat.keys() if not k.startswith("__")]
     gt_keys = [k for k in gt_mat.keys() if not k.startswith("__")]
 
     X_cube = img_mat["indian_pines_corrected"] if "indian_pines_corrected" in img_mat else img_mat[data_keys[0]]
     gt_map = gt_mat["indian_pines_gt"] if "indian_pines_gt" in gt_mat else gt_mat[gt_keys[0]]
 
-    # 3. Filter background (label == 0) and extract pixel features
     valid_mask = gt_map > 0
     X_raw = X_cube[valid_mask].astype(np.float64)
     y_raw = gt_map[valid_mask]
 
-    # 4. Standardize features and encode targets
     print(f"[*] Preprocessing {X_raw.shape[0]} pixels across {X_raw.shape[1]} spectral bands...")
     X = StandardScaler().fit_transform(X_raw).astype(np.float32)
     y = LabelEncoder().fit_transform(y_raw).astype(np.int64)
 
-    # 5. Save to cache
     np.savez_compressed(cache_path, X=X, y=y)
     print(f"[+] Cached 'indian_pines' to {cache_path}: shape={X.shape}, K={len(np.unique(y))}")
 

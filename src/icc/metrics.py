@@ -11,30 +11,31 @@ for external cluster validation metrics:
 - Composite evaluators with bootstrap confidence intervals
 """
 
-from typing import Dict, Any, Union
+from typing import Dict
+
 import numpy as np
 
-# Dual-backend detection: prefer scikit-learn for high-performance C/Cython execution
-_sk_ari = None
-_sk_nmi = None
-_sk_ami = None
-_sk_v_measure = None
-_sk_fm = None
-
-_SKLEARN_AVAILABLE = False
 try:
-    from sklearn.metrics import adjusted_rand_score as _sk_ari
-    from sklearn.metrics import normalized_mutual_info_score as _sk_nmi
-    from sklearn.metrics import adjusted_mutual_info_score as _sk_ami
-    from sklearn.metrics import v_measure_score as _sk_v_measure
-    from sklearn.metrics import fowlkes_mallows_score as _sk_fm
+    import sklearn.metrics as _skm
+
+    _sk_ari = _skm.adjusted_rand_score
+    _sk_nmi = _skm.normalized_mutual_info_score
+    _sk_ami = _skm.adjusted_mutual_info_score
+    _sk_v_measure = _skm.v_measure_score
+    _sk_fm = _skm.fowlkes_mallows_score
     _test = _sk_ari([0, 1], [0, 1])
     _SKLEARN_AVAILABLE = True
 except (ImportError, Exception):
+    _sk_ari = None
+    _sk_nmi = None
+    _sk_ami = None
+    _sk_v_measure = None
+    _sk_fm = None
     _SKLEARN_AVAILABLE = False
 
 try:
     from scipy.stats import hypergeom as _sp_hypergeom
+
     _SCIPY_HYPERGEOM_AVAILABLE = True
 except (ImportError, Exception):
     _SCIPY_HYPERGEOM_AVAILABLE = False
@@ -86,13 +87,13 @@ def adjusted_rand_score(labels_true: np.ndarray, labels_pred: np.ndarray) -> flo
 def normalized_mutual_info_score(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     """
     Computes Normalized Mutual Information (NMI) using arithmetic mean normalization.
-    
+
     Mathematical Definition:
         Let H(U) = - ∑_i P(u_i) log P(u_i) and H(V) = - ∑_j P(v_j) log P(v_j).
         Let I(U; V) = ∑_{ij} P(u_i, v_j) log [ P(u_i, v_j) / (P(u_i) P(v_j)) ].
-        
+
         NMI(U, V) = 2 * I(U; V) / [ H(U) + H(V) ]
-    
+
     Range:
         [0.0, 1.0]. 1.0 denotes perfect information concordance; 0.0 indicates statistical independence.
     """
@@ -132,15 +133,15 @@ def normalized_mutual_info_score(y_true: np.ndarray, y_pred: np.ndarray) -> floa
 def adjusted_mutual_info_score(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     """
     Computes Adjusted Mutual Information (AMI) under the generalized hypergeometric model.
-    
+
     Mathematical Definition:
         AMI(U, V) = [ I(U; V) - E[I(U; V)] ] / [ (H(U) + H(V)) / 2 - E[I(U; V)] ]
-        
+
         where E[I(U; V)] is the expected mutual information between two random clusterings
         with fixed marginal cluster sizes (Vinh et al., 2010):
         E[I] = ∑_{i=1}^R ∑_{j=1}^C ∑_{n_{ij}} (n_{ij}/N) log( (N n_{ij}) / (a_i b_j) ) P(n_{ij})
         with P(n_{ij}) being Hypergeometric(N, a_i, b_j).
-    
+
     Range:
         [-0.5, 1.0]. 1.0 indicates perfect agreement; 0.0 corresponds to expected chance overlap.
     """
@@ -173,7 +174,6 @@ def adjusted_mutual_info_score(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     mask = p_ij > 0
     mi = np.sum(p_ij[mask] * np.log(p_ij[mask] / (denom[mask] + 1e-12)))
 
-    # Compute expected mutual information under hypergeometric model
     emi = 0.0
     if _SCIPY_HYPERGEOM_AVAILABLE:
         for i in range(R):
@@ -186,7 +186,6 @@ def adjusted_mutual_info_score(y_true: np.ndarray, y_pred: np.ndarray) -> float:
                     if p > 0:
                         emi += (nij / n) * np.log((n * nij) / (ai * bj)) * p
     else:
-        # Asymptotic approximation for large N if scipy is absent
         emi = max(0.0, float((R - 1) * (C - 1)) / (2.0 * n))
 
     mean_h = (h_u + h_v) / 2.0
@@ -203,13 +202,13 @@ def v_measure_score(y_true: np.ndarray, y_pred: np.ndarray, beta: float = 1.0) -
     """
     Computes V-Measure score (Rosenberg & Hirschberg, 2007).
     Harmonic mean of homogeneity (h) and completeness (c) weighted by beta.
-    
+
     Mathematical Definition:
         h = 1 - H(C | K) / H(C) = I(C; K) / H(C)
         c = 1 - H(K | C) / H(K) = I(C; K) / H(K)
-        
+
         V_beta = (1 + beta) * h * c / (beta * h + c)
-    
+
     Range:
         [0.0, 1.0]. 1.0 represents clusters that are both fully homogeneous and complete.
     """
@@ -253,11 +252,11 @@ def fowlkes_mallows_score(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     """
     Computes Fowlkes-Mallows Index (FM Index; Fowlkes & Mallows, 1983).
     Geometric mean of pairwise precision and recall between two clusterings.
-    
+
     Mathematical Definition:
         FM = TP / sqrt( (TP + FP) * (TP + FN) )
            = ∑_{ij} C(n_{ij}, 2) / sqrt( [∑_i C(a_i, 2)] * [∑_j C(b_j, 2)] )
-    
+
     Range:
         [0.0, 1.0]. 1.0 indicates identical clusterings; 0.0 indicates no pairwise overlap.
     """
@@ -290,7 +289,7 @@ def fowlkes_mallows_score(y_true: np.ndarray, y_pred: np.ndarray) -> float:
 def evaluate_all(y_true: np.ndarray, y_pred: np.ndarray) -> Dict[str, float]:
     """
     Computes all 5 standard external clustering metrics in a single pass.
-    
+
     Returns:
         dict: Keys {"ari", "nmi", "ami", "v_measure", "fm_index"}.
     """
@@ -312,14 +311,14 @@ def evaluate_all_with_ci(
 ) -> Dict[str, Dict[str, float]]:
     """
     Computes all clustering metrics with empirical bootstrap confidence intervals.
-    
+
     Args:
         y_true: Ground truth cluster assignments.
         y_pred: Predicted cluster assignments.
         n_bootstrap: Number of bootstrap resamples (default: 1000).
         alpha: Two-tailed significance level (default: 0.05 for 95% CI).
         random_seed: RNG seed for reproducible sampling.
-        
+
     Returns:
         dict: Mapping each metric name to {"mean": float, "ci_low": float, "ci_high": float}.
     """

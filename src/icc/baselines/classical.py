@@ -6,11 +6,11 @@ Provides wrappers for K-Means, Ward, Spectral Clustering, and Fuzzy C-Means (FCM
 """
 
 import time
-from typing import Any, Tuple
+from typing import Any, Dict, Tuple
 
 import numpy as np
 
-from src.icc.core import run_clusterer
+from icc.core import run_clusterer
 
 
 class ModelMetadata(int):
@@ -18,6 +18,9 @@ class ModelMetadata(int):
     Hybrid return container that behaves as an integer (for legacy scripts expecting `lc = N`)
     while also supporting full dictionary indexing (for scripts accessing `metadata["method"]`).
     """
+
+    _data: Dict[str, Any]
+
     def __new__(cls, val: int, **kwargs):
         obj = super().__new__(cls, int(val))
         obj._data = kwargs
@@ -168,7 +171,6 @@ def run_fcm(X: np.ndarray, k: int, seed: int = 42) -> Tuple[np.ndarray, float, M
     return labels, runtime, metadata
 
 
-# Backward compatibility aliases
 run_single_kmeans = run_kmeans
 run_single_ward = run_ward
 run_single_spectral = run_spectral

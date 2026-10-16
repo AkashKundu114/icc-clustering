@@ -4,8 +4,8 @@ Unit tests for InvariantCoreConsensusV2 (src/icc/consensus_v2.py).
 
 import pytest
 import numpy as np
-from src.icc.consensus_v2 import InvariantCoreConsensusV2
-from src.icc import InvariantCoreConsensusV2 as RootICC2
+from icc.consensus_v2 import InvariantCoreConsensusV2
+from icc import InvariantCoreConsensusV2 as RootICC2
 from experiments.exp3_real_world_benchmarks.src.benchmark_models import run_icc_v2, InvariantCoreConsensusV2 as Exp3ICC2
 
 

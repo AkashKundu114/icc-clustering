@@ -17,10 +17,10 @@ import time
 import numpy as np
 from tabulate import tabulate
 
-from src.icc.consensus_v2 import InvariantCoreConsensusV2
-from src.icc.baselines.classical import run_kmeans, run_spectral
-from src.icc.core import build_dataset
-from src.icc.metrics import evaluate_all
+from icc.consensus_v2 import InvariantCoreConsensusV2
+from icc.baselines.classical import run_kmeans, run_spectral
+from icc.core import build_dataset
+from icc.metrics import evaluate_all
 
 
 def main():

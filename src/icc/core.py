@@ -15,29 +15,19 @@ import scipy.cluster.hierarchy as sch
 import scipy.linalg as sla
 from scipy.spatial.distance import cdist
 
-# Try importing sklearn; fallback if DLLs or modules are blocked
 _SKLEARN_AVAILABLE = False
 try:
-    from sklearn.cluster import KMeans as _SkKMeans
     from sklearn.cluster import AgglomerativeClustering as _SkAgg
+    from sklearn.cluster import KMeans as _SkKMeans
     from sklearn.cluster import SpectralClustering as _SkSpectral
-    from sklearn.mixture import GaussianMixture as _SkGMM
     from sklearn.metrics import adjusted_rand_score as _sk_ari
-    # Test if underlying cython modules load without policy blocks
+    from sklearn.mixture import GaussianMixture as _SkGMM
+
     _test = _sk_ari([0, 1], [0, 1])
     _SKLEARN_AVAILABLE = True
 except (ImportError, Exception):
     _SKLEARN_AVAILABLE = False
-# Metrics re-exported from .metrics for backward compatibility
-from .metrics import (
-    adjusted_rand_score,
-    normalized_mutual_info_score,
-    adjusted_mutual_info_score,
-    v_measure_score,
-    fowlkes_mallows_score,
-    evaluate_all,
-    evaluate_all_with_ci,
-)
+
 
 RNG_DATA_SEED = 42
 CLUSTERERS = ["kmeans", "gmm", "ward", "spectral", "fcm"]
@@ -56,7 +46,7 @@ def make_signal(n_per_cluster=100, k=3, signal_dim=2, seed=RNG_DATA_SEED, sizes=
         k = len(sizes)
 
     centers = rng.normal(scale=6.0, size=(k, signal_dim))
-    # Enforce minimum separation margin
+
     while True:
         d = np.linalg.norm(centers[:, None, :] - centers[None, :, :], axis=-1)
         np.fill_diagonal(d, np.inf)
@@ -98,7 +88,7 @@ def make_noise(n, d_noise, kind="gaussian", seed=0):
         out = np.zeros((n, n_blocks * block))
         for b in range(n_blocks):
             factor = rng.normal(size=(n, 1))
-            out[:, b * block:(b + 1) * block] = 0.7 * factor + 0.3 * rng.normal(size=(n, block))
+            out[:, b * block : (b + 1) * block] = 0.7 * factor + 0.3 * rng.normal(size=(n, block))
         return out[:, :d_noise]
 
     if kind == "scaled":
@@ -114,14 +104,12 @@ def make_noise(n, d_noise, kind="gaussian", seed=0):
     raise ValueError(f"Unknown noise kind: {kind}")
 
 
-def build_dataset(d_noise, noise_kind="gaussian", noise_seed=0,
-                   n_per_cluster=100, k=3, signal_dim=2, sizes=None):
+def build_dataset(d_noise, noise_kind="gaussian", noise_seed=0, n_per_cluster=100, k=3, signal_dim=2, sizes=None):
     """Constructs dataset X = [S, N] and labels y with Z-score column standardization."""
     S, y = make_signal(n_per_cluster=n_per_cluster, k=k, signal_dim=signal_dim, sizes=sizes)
     N = make_noise(S.shape[0], d_noise, kind=noise_kind, seed=noise_seed)
     X = np.hstack([S, N]) if d_noise > 0 else S
 
-    # Standardize column-wise
     std = np.std(X, axis=0)
     std[std < 1e-12] = 1.0
     X = (X - np.mean(X, axis=0)) / std
@@ -134,7 +122,7 @@ def _fcm_like(X, k, seed, m=2.0, n_iter=100, tol=1e-5):
     n = X.shape[0]
     u = rng.dirichlet(np.ones(k), size=n)
     for _ in range(n_iter):
-        um = u ** m
+        um = u**m
         denom = um.sum(axis=0)[:, None]
         denom[denom < 1e-12] = 1e-12
         centers = (um.T @ X) / denom
@@ -157,11 +145,10 @@ def _kmeans_numpy(X, k, seed=0, max_iter=100):
     if n <= k:
         return np.arange(n, dtype=int)
 
-    # k-means++ initialization to prevent duplicate or collapsed initial centers
     centers = np.empty((k, X.shape[1]), dtype=X.dtype)
     centers[0] = X[rng.choice(n)]
     for c in range(1, k):
-        dists = cdist(X, centers[:c], metric='sqeuclidean')
+        dists = cdist(X, centers[:c], metric="sqeuclidean")
         min_dists = np.min(dists, axis=1)
         sum_dists = np.sum(min_dists)
         if sum_dists > 1e-12:
@@ -172,56 +159,54 @@ def _kmeans_numpy(X, k, seed=0, max_iter=100):
 
     labels = np.zeros(n, dtype=int)
     for _ in range(max_iter):
-        dists = cdist(X, centers, metric='sqeuclidean')
+        dists = cdist(X, centers, metric="sqeuclidean")
         new_labels = np.argmin(dists, axis=1)
         if np.array_equal(labels, new_labels):
             break
         labels = new_labels
         for c in range(k):
-            mask = (labels == c)
+            mask = labels == c
             if np.any(mask):
                 centers[c] = X[mask].mean(axis=0)
     return labels
 
 
 def _gmm_numpy(X, k, seed=0, max_iter=40, reg_covar=1e-4):
-    rng = np.random.default_rng(seed)
     n, d = X.shape
-    # Initialize with kmeans
     init_labels = _kmeans_numpy(X, k, seed=seed)
     weights = np.ones(k) / k
     means = np.array([X[init_labels == c].mean(axis=0) if np.any(init_labels == c) else X[c] for c in range(k)])
-    vars_ = np.array([X[init_labels == c].var(axis=0) + reg_covar if np.any(init_labels == c) else np.ones(d) for c in range(k)])
+    vars_ = np.array(
+        [X[init_labels == c].var(axis=0) + reg_covar if np.any(init_labels == c) else np.ones(d) for c in range(k)]
+    )
 
     for _ in range(max_iter):
-        # E-step
         log_resp = np.zeros((n, k))
         for c in range(k):
             var_c = vars_[c]
             diff = X - means[c]
-            log_prob = -0.5 * (np.sum(np.log(var_c)) + np.sum((diff ** 2) / var_c, axis=1) + d * np.log(2 * np.pi))
+            log_prob = -0.5 * (np.sum(np.log(var_c)) + np.sum((diff**2) / var_c, axis=1) + d * np.log(2 * np.pi))
             log_resp[:, c] = np.log(weights[c] + 1e-12) + log_prob
         max_log = np.max(log_resp, axis=1, keepdims=True)
         resp = np.exp(log_resp - max_log)
         resp /= resp.sum(axis=1, keepdims=True)
 
-        # M-step
         Nk = resp.sum(axis=0) + 1e-12
         weights = Nk / n
         means = (resp.T @ X) / Nk[:, None]
         for c in range(k):
             diff = X - means[c]
-            vars_[c] = (resp[:, c] @ (diff ** 2)) / Nk[c] + reg_covar
+            vars_[c] = (resp[:, c] @ (diff**2)) / Nk[c] + reg_covar
 
     return np.argmax(resp, axis=1)
 
 
 def _spectral_scipy(X, k, seed=0, n_neighbors=10):
-    dists = cdist(X, X, metric='sqeuclidean')
+    dists = cdist(X, X, metric="sqeuclidean")
     n = X.shape[0]
     W = np.zeros((n, n))
     for i in range(n):
-        nn_idx = np.argsort(dists[i])[:n_neighbors + 1]
+        nn_idx = np.argsort(dists[i])[: n_neighbors + 1]
         W[i, nn_idx] = 1.0
         W[nn_idx, i] = 1.0
     deg = W.sum(axis=1)
@@ -242,19 +227,26 @@ def run_clusterer(name, X, k, seed):
             if name == "kmeans":
                 return _SkKMeans(n_clusters=k, init="random", n_init=1, random_state=seed).fit_predict(X)
             if name == "gmm":
-                return _SkGMM(n_components=k, covariance_type="diag", random_state=seed, n_init=1, reg_covar=1e-4).fit_predict(X)
+                return _SkGMM(
+                    n_components=k, covariance_type="diag", random_state=seed, n_init=1, reg_covar=1e-4
+                ).fit_predict(X)
             if name == "ward":
                 rng = np.random.default_rng(seed)
                 jitter = rng.normal(scale=1e-4, size=X.shape)
                 return _SkAgg(n_clusters=k, linkage="ward").fit_predict(X + jitter)
             if name == "spectral":
-                return _SkSpectral(n_clusters=k, affinity="nearest_neighbors", n_neighbors=10, random_state=seed, assign_labels="kmeans").fit_predict(X)
+                return _SkSpectral(
+                    n_clusters=k,
+                    affinity="nearest_neighbors",
+                    n_neighbors=10,
+                    random_state=seed,
+                    assign_labels="kmeans",
+                ).fit_predict(X)
             if name == "fcm":
                 return _fcm_like(X, k, seed)
         except Exception:
-            pass  # fallback below
+            pass
 
-    # Fallback NumPy/SciPy engine
     if name == "kmeans":
         return _kmeans_numpy(X, k, seed=seed)
     if name == "gmm":
@@ -289,8 +281,8 @@ def canonical(labels):
     """
     mapping = {}
     canonical_labels = []
-    for l in labels:
-        if l not in mapping:
-            mapping[l] = len(mapping)
-        canonical_labels.append(mapping[l])
+    for lbl in labels:
+        if lbl not in mapping:
+            mapping[lbl] = len(mapping)
+        canonical_labels.append(mapping[lbl])
     return tuple(canonical_labels)
