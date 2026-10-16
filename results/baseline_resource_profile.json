@@ -1,0 +1,36 @@
+{
+  "initial_rss_mb": 174.29,
+  "final_rss_mb": 186.75,
+  "scenarios": [
+    {
+      "scenario": "Large N (N=5000, D=50, K=3)",
+      "elapsed_sec": 3.267,
+      "peak_ram_mb": 9.07,
+      "n_unique_labels": 3
+    },
+    {
+      "scenario": "High D (N=500, D=5000, K=3)",
+      "elapsed_sec": 0.5684,
+      "peak_ram_mb": 76.54,
+      "n_unique_labels": 3
+    },
+    {
+      "scenario": "Standard (N=1000, D=2000, K=3)",
+      "elapsed_sec": 0.6063,
+      "peak_ram_mb": 61.14,
+      "n_unique_labels": 3
+    },
+    {
+      "scenario": "ASPP Diagnostic (N=500, D=200, K=3)",
+      "elapsed_sec": 0.4647,
+      "peak_ram_mb": 4.19,
+      "psi_mean": 0.5515
+    },
+    {
+      "scenario": "Streaming Query (10,000 queries)",
+      "elapsed_sec": 0.0046,
+      "peak_ram_mb": 4.05,
+      "throughput_sps": 2176515.4
+    }
+  ]
+}

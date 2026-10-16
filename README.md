@@ -6,7 +6,7 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Tests: Passing](https://img.shields.io/badge/pytest-76%2F76%20passed-brightgreen.svg)]()
+[![Tests: Passing](https://img.shields.io/badge/pytest-113%2F113%20passed-brightgreen.svg)]()
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![IEEE Compliance](https://img.shields.io/badge/IEEE%20TKDE-Compliant%20(Grade%20A%2B)-success.svg)]()
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0003--8246--7316-A6CE39?logo=orcid&logoColor=white)](https://orcid.org/0009-0003-8246-7316)
@@ -85,8 +85,10 @@ icc-clustering/
 │   ├── exp3_real_world_benchmarks/            # Experiment 3: 13-dataset multi-domain benchmarks & missing data
 │   ├── exp4_scalability_and_sensitivity/      # Experiment 4: Scalability, sensitivity, and anchor fidelity
 │   └── exp5_extreme_scale/                    # Experiment 5: Asymptotic scaling stress testing
-├── tests/                                     # Automated test suite (76/76 tests passing)
+├── tests/                                     # Automated test suite (113/113 tests passing)
+│   ├── test_adversarial_inputs.py             # Boundary, NaN/Inf, and security hardening tests (33 tests)
 │   ├── test_consensus_v2.py                   # Core ICC-v2 algorithm tests
+│   ├── test_edge_cases.py                     # Constant feature, duplicate, and small-N edge cases
 │   ├── test_aspp.py                           # Anchor-Space Perturbation Profiling tests
 │   ├── test_datasets.py                       # Dataset loader validation tests
 │   ├── test_baselines.py                      # Baseline wrapper compatibility tests
@@ -216,7 +218,7 @@ Run the automated test suite to verify the installation:
 python -m pytest tests/ -v
 ```
 
-All 76 unit and integration tests should pass without errors.
+All 113 unit, integration, edge-case, and adversarial hardening tests should pass without errors.
 
 ---
 

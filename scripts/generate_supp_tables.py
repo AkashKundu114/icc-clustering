@@ -15,8 +15,9 @@ Outputs:
 """
 
 from pathlib import Path
-import pandas as pd
+
 import numpy as np
+import pandas as pd
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT_DIR / "experiments" / "exp3_real_world_benchmarks" / "data"
