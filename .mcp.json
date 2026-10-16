@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "xerj": {
+      "command": "C:\\Users\\Akash\\AppData\\Local\\Programs\\xerj\\xerj.exe",
+      "args": [
+        "mcp"
+      ],
+      "env": {
+        "XERJ_URL": "http://localhost:9200",
+        "XERJ_DISABLE_FEEDBACK": "true"
+      }
+    }
+  }
+}

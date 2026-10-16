@@ -1,313 +1,155 @@
-<div align="center">
-
 # Inductive Consensus Clustering (ICC-v2)
 
-### Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes
+Official reference implementation of the manuscript:  
+**"Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"** (Under Review).
 
-[![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
+[![CI](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml/badge.svg)](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml)
+[![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Tests: Passing](https://img.shields.io/badge/pytest-76%2F76%20passed-brightgreen.svg)]()
+[![Tests: Passing](https://img.shields.io/badge/pytest-77%2F77%20passed-brightgreen.svg)]()
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
-[![IEEE Compliance](https://img.shields.io/badge/IEEE%20TKDE-Compliant%20(Grade%20A%2B)-success.svg)]()
-[![ORCID](https://img.shields.io/badge/ORCID-0009--0003--8246--7316-A6CE39?logo=orcid&logoColor=white)](https://orcid.org/0009-0003-8246-7316)
-
-**Author:** Akash Kundu [![ORCID](https://img.shields.io/badge/ORCID-0009--0003--8246--7316-A6CE39?logo=orcid&logoColor=white)](https://orcid.org/0009-0003-8246-7316)  
-**Affiliation:** Department of Computer Science and Engineering, Techno India University  
-**Contact:** `akash231001001449@technoindiaeducation.com` | `akashkundu11522@gmail.com`
-**ORCID:** [0009-0003-8246-7316](https://orcid.org/0009-0003-8246-7316)
-
-[**Paper Status**](#citation-and-academic-context) | [**Quickstart**](#environment-setup-and-installation) | [**Reproducibility Guide**](#reproduction-cli-guide) | [**Citation**](#citation-and-academic-context)
-
-</div>
 
 ---
 
-## Abstract and Overview
+## Overview
 
-Consensus clustering synthesizes diverse base partitions to discover robust underlying structure across complex datasets. However, existing consensus methodologies face two critical theoretical and computational bottlenecks:
-1. **Transductive and Quadratic Complexity:** Classical co-association matrices scale as $\mathcal{O}(N^2)$ in memory and runtime, rendering full spectral consensus intractable on large datasets and providing no closed-form mechanism for inductive out-of-sample projection.
-2. **High-Dimensional Distractor Noise ($D \gg N$):** In high-dimensional regimes dominated by uninformative dimensions, distance concentration degrades base partition fidelity, causing standard ensemble consensus to collapse into spurious or arbitrary groupings.
+Consensus clustering synthesizes diverse base clusterings into a unified partition. However, in high-dimensional noise regimes (D >> N), distance concentration degrades base partition quality, while classical O(N^2) co-association matrices prevent out-of-sample inference.
 
-This repository provides the reference implementation of **Inductive Consensus Clustering (ICC-v2)**:
-- **Multimodality Subspace Gating (VSSG):** A linear $\mathcal{O}(N \cdot D)$ unsupervised feature screening mechanism based on Sarle's Bimodality Coefficient that isolates informative multi-modal dimensions from unimodal background noise prior to base ensemble construction.
-- **Determinacy-Based Bipartite Anchor Consensus:** An $\mathcal{O}(N \cdot L)$ rectangular bipartite co-association formulation that reduces auxiliary memory from $\mathcal{O}(N^2)$ to $\mathcal{O}(NL)$ ($L \ll N$) while preserving exact spectral cluster extraction.
-- **Stability-Weighted Active Subspace Centroid Assignment:** A closed-form inductive out-of-sample projection rule requiring only $\mathcal{O}(K \cdot |\mathcal{F}_{\text{active}}|)$ operations per query point, eliminating the need to recompute the ensemble graph.
-- **Anchor-Space Perturbation Profiling (ASPP):** An interpretable multi-family stability diagnostic framework (sampling, feature, measurement, technical, algorithmic) evaluated in anchor space ($\mathcal{O}(NL)$ memory) that yields cluster fingerprints, Perturbation Sensitivity Index (PSI), and inductive query confidence bounds without $\mathcal{O}(N^2)$ tensor bottlenecks.
-- **Reproducible Multi-Domain Evaluation:** An extensive experimental suite spanning 13 real-world datasets, 11 baseline algorithms, 1,430 model executions, missing-data sensitivity analyses, and asymptotic scalability evaluations up to $N = 1,000,000$ and $D = 100,000$.
+**Inductive Consensus Clustering (ICC-v2)** resolves these challenges:
+- **Variance-Stabilized Subspace Gating (VSSG):** Unsupervised linear O(N * D) feature screening using Sarle's Bimodality Coefficient to separate multimodal signals from unimodal background noise.
+- **Bipartite Anchor Consensus:** Compresses O(N^2) co-association into an O(N * L) rectangular bipartite graph (L << N) with Transfer-Cut degree and eigenvalue normalization.
+- **Closed-Form Inductive Inference:** Stability-weighted active centroid projection requiring only O(K * |F_active|) operations per query instance without graph recomputation.
+- **Anchor-Space Perturbation Profiling (ASPP):** Multi-family cluster reliability certification yielding cluster fingerprints and query confidence bounds in linear O(NL) memory.
 
 ---
 
-## Repository Structure
+## When to Use and Limitations
 
-```
-icc-clustering/
-├── README.md                                  # Repository overview, empirical findings, and reproduction guide
-├── pyproject.toml                             # PEP 517/621 packaging and static analysis configuration
-├── requirements.txt                           # Core runtime dependencies
-├── configs/                                   # Declarative experiment and dataset registries
-│   ├── datasets.yaml                          # Multi-domain benchmark registry (13 datasets)
-│   ├── baselines.yaml                         # Baseline algorithm registry (11 methods)
-│   └── experiment_defaults.yaml               # Shared hyperparameters and plotting specifications
-├── data/                                      # Benchmark data directories (cache ignored by Git)
-│   ├── cache/                                 # Preprocessed array storage (.npz)
-│   └── raw/                                   # Raw benchmark matrices and downloads
-├── src/                                       # Core implementation package (`icc`)
-│   └── icc/
-│       ├── __init__.py                        # Top-level API exports
-│       ├── aspp.py                            # Anchor-Space Perturbation Profiler (ASPP)
-│       ├── consensus.py                       # InvariantCoreConsensus (ICC-v1 anchor-only baseline)
-│       ├── consensus_v2.py                    # InvariantCoreConsensusV2 (ICC-v2 production framework)
-│       ├── core.py                            # Synthetic generators, clusterer wrappers, co-association
-│       ├── metrics.py                         # Multi-metric evaluation (ARI, NMI, AMI, V-Measure, FM-Index)
-│       ├── diagnostics.py                     # Canonical partition mapping and stability diagnostics
-│       ├── datasets/                          # Multi-domain dataset loaders
-│       │   ├── __init__.py                    # Unified loader entrypoint
-│       │   ├── registry.py                    # YAML-driven dataset discovery and caching engine
-│       │   ├── genomics.py                    # Cancer microarray and mass spectrometry loaders
-│       │   ├── text.py                        # 20 Newsgroups TF-IDF sparse text loader
-│       │   ├── audio.py                       # Isolet spoken alphabet phoneme loader
-│       │   ├── spectral.py                    # Indian Pines AVIRIS hyperspectral loader
-│       │   ├── image.py                       # Extended Yale B facial illumination loader
-│       │   └── scrnaseq.py                    # Zheng68k PBMC single-cell RNA-seq loader
-│       └── baselines/                         # Standardized baseline algorithm wrappers
-│           ├── __init__.py                    # Model registry and discovery factory
-│           ├── classical.py                   # Single-model baselines: K-Means, Ward, Spectral, FCM
-│           ├── consensus.py                   # Ensemble baselines: Standard Consensus, Li et al. (2019), ICC
-│           ├── deep.py                        # Deep clustering: DEC (Deep Embedded Clustering)
-│           └── anchor.py                      # Scalable anchor baselines: FCAG (TPAMI 2024), FastMVC (TKDE 2023)
-├── experiments/                               # Empirical verification and benchmark suites
-│   ├── audit_controls/                        # Statistical audit controls: A2 subspace pool rules, A3 Transfer-Cut, E1 21-dataset benchmarks, E3 pool-size sensitivity
-│   │   ├── src/                               # Reproduction scripts (a2_controls, a3_embedding, e1_extended, e3_pool_curve, etc.)
-│   │   └── data/                              # Empirical audit matrices & summaries
-│   ├── exp0_falsification/                    # Experiment 0: Consensus stability falsification
-│   ├── exp1_generalization/                   # Experiment 1: Downstream inductive classification
-│   ├── exp2_ablation/                         # Experiment 2: Architectural component ablations & VSSG suite
-│   ├── exp3_real_world_benchmarks/            # Experiment 3: 13-dataset multi-domain benchmarks & missing data
-│   ├── exp4_scalability_and_sensitivity/      # Experiment 4: Scalability, sensitivity, and anchor fidelity
-│   └── exp5_extreme_scale/                    # Experiment 5: Asymptotic scaling stress testing
-├── tests/                                     # Automated test suite (76/76 tests passing)
-│   ├── test_consensus_v2.py                   # Core ICC-v2 algorithm tests
-│   ├── test_aspp.py                           # Anchor-Space Perturbation Profiling tests
-│   ├── test_datasets.py                       # Dataset loader validation tests
-│   ├── test_baselines.py                      # Baseline wrapper compatibility tests
-│   ├── test_metrics.py                        # Metric mathematical verification tests
-│   ├── test_exp1_multiclassifier.py           # Multi-classifier pipeline tests
-│   ├── test_anchor_fidelity.py                # Bipartite approximation fidelity tests
-│   └── test_audit_a3.py                       # Transfer-Cut embedding and gating audit tests
-├── docs/                                      # Theoretical proofs, literature surveys, and reports
-│   ├── audit_reports/                         # Methodological & statistical audit reports (Reports 00-11, Remediation 01-12)
-│   └── THEORETICAL_FOUNDATIONS.md             # Formal theorems, propositions, and mathematical proofs
-├── CONTRIBUTING.md                            # Contributor guidelines and environment setup
-├── CODE_OF_CONDUCT.md                         # Contributor Covenant standard
-├── SECURITY.md                                # Security policy and vulnerability disclosure protocol
-├── LICENSE                                    # MIT License
-└── CITATION.cff                               # Citation metadata format
-```
+- **Optimal Regimes:** Small-sample, continuous high-dimensional data (D >> N, D/N > 20) with localized cluster separation under additive isotropic distractor noise (e.g. genomic microarrays, mass spectrometry assays).
+- **When NOT to Use:**
+  - Large-sample low-dimensional data (N >> D) or ultra-sparse count matrices (e.g. single-cell count matrices with high zero inflation or sparse TF-IDF text), where classical Ward or DEC is preferred.
+  - Non-linear multi-feature XOR interactions (e.g. Madelon), where 1D marginal unimodality cannot detect joint multi-variable dependencies.
+  - Very large cluster counts (K >= 20) with small anchor budgets (L < K).
 
 ---
 
-## Benchmark Suite Coverage
-
-### 1. Multi-Domain Benchmark Datasets (13 Datasets Across 7 Domains)
-
-The evaluation spans 13 benchmark datasets representing distinct structural characteristics, dimensionality regimes ($D \in [60, 15,154]$), sample scales ($N \in [60, 68,579]$), and cluster counts ($K \in [2, 38]$):
-
-| Dataset | Domain | Samples ($N$) | Features ($D$) | Clusters ($K$) | Ratio ($D/N$) | Structural Challenge | Evaluation Status |
-|---|---|:---:|:---:|:---:|:---:|---|:---:|
-| **Sonar** | Acoustic Sensors | $208$ | $60$ | $2$ | $0.29$ | Continuous sonar returns (mines vs. rocks) | Verified |
-| **Madelon** | Synthetic Distractor | $500$ | $500$ | $2$ | $1.00$ | 20 non-linear XOR features + 480 distractor noise features | Verified |
-| **Colon** | Cancer Genomics | $62$ | $2,000$ | $2$ | $32.26$ | Colon tumor vs. normal tissue biopsies | Verified |
-| **SRBCT** | Cancer Genomics | $83$ | $2,308$ | $4$ | $27.81$ | Small Round Blue Cell Tumors (4 diagnostic subtypes) | Verified |
-| **CNS** | Cancer Genomics | $60$ | $7,129$ | $2$ | $118.82$ | Embryonal central nervous system tumors | Verified |
-| **Leukemia** | Cancer Genomics | $72$ | $7,129$ | $2$ | $99.01$ | Acute lymphoblastic vs. acute myeloid leukemia | Verified |
-| **Prostate** | Cancer Genomics | $102$ | $12,600$ | $2$ | $123.53$ | Prostate tumor vs. benign prostate specimens | Verified |
-| **Ovarian** | Mass Spectrometry | $253$ | $15,154$ | $2$ | $59.90$ | High-resolution SELDI-TOF proteomic mass spectra | Verified |
-| **20 Newsgroups** | Text Classification | $18,846$ | $10,000$ | $20$ | $0.53$ | High-dimensional sparse TF-IDF document vectors | Verified |
-| **Isolet** | Speech Recognition | $7,797$ | $617$ | $26$ | $0.08$ | Continuous spoken alphabet phoneme spectral features | Verified |
-| **Indian Pines** | Hyperspectral Imaging | $10,249$ | $200$ | $16$ | $0.02$ | Airborne AVIRIS sensor continuous spectral reflectance | Verified |
-| **Yale B** | Facial Biometrics | $2,414$ | $1,024$ | $38$ | $0.42$ | Cropped facial reflectance across extreme illumination | Verified |
-| **Zheng68k** | scRNA-seq Transcriptomics | $68,579$ | $2,000$ | $11$ | $0.03$ | Ultra-sparse single-cell PBMC transcriptomics | Verified |
-
----
-
-### 2. Baseline Clustering Frameworks (11 Methods Across 4 Paradigms)
-
-ICC-v2 is evaluated against 10 representative baselines:
-
-| Category | Method | Key Reference | Venue and Year | Algorithmic Complexity | Core Mechanism |
-|---|---|---|---|:---:|---|
-| **Classical Single-Model** | **K-Means** | Lloyd | IEEE TIT 1982 | $\mathcal{O}(N D K)$ | Distance-to-centroid iterative minimization |
-| **Classical Single-Model** | **Ward Linkage** | Ward | JASA 1963 | $\mathcal{O}(N^2 D)$ | Hierarchical minimum-variance agglomeration |
-| **Classical Single-Model** | **Spectral Clustering** | Von Luxburg | Stat. Comput. 2007 | $\mathcal{O}(N^3)$ | Graph Laplacian eigen-decomposition |
-| **Classical Single-Model** | **Fuzzy C-Means (FCM)** | Bezdek | Plenum Press 1981 | $\mathcal{O}(N D K)$ | Soft membership objective optimization |
-| **Consensus Ensemble** | **Standard Consensus** | Fred & Jain | IEEE TPAMI 2005 | $\mathcal{O}(N^2)$ | Dense all-pairs co-association matrix |
-| **Consensus Ensemble** | **Core-Halo Consensus** | Li et al. | Artif. Intell. 2019 | $\mathcal{O}(N^2)$ | Determinacy-thresholded core extraction |
-| **Deep Clustering** | **DEC** | Xie et al. | ICML 2016 | Neural GPU | Autoencoder latent Student-$t$ distribution divergence |
-| **Anchor-Based Scalable** | **FCAG** | Nie et al. | IEEE TPAMI 2024 | $\mathcal{O}(N M K)$ | Anchor-guided bipartite graph spectral clustering |
-| **Anchor-Based Scalable** | **FastMVC** | Huang et al. | IEEE TKDE 2023 | $\mathcal{O}(N M K)$ | Multi-view bipartite anchor graph consensus fusion |
-| **Consensus (Ablation)** | **ICC-v1** (Anchor-Only) | Kundu (This Work) | TKDE 2026 | $\mathcal{O}(N L K)$ | Bipartite core anchors without subspace gating |
-| **Consensus (Proposed)** | **ICC-v2** (Full Framework) | Kundu (This Work) | TKDE 2026 | $\mathcal{O}(N L K)$ | VSSG subspace gating + bipartite anchor consensus |
-
----
-
-## Summary of Key Empirical Findings
-
-### 1. Falsification of Consensus Stability under Distractor Noise (Experiment 0)
-- **Universal Stability Trap Refuted:** Isotropic distractor noise does not produce identical failure modes across distinct clustering objectives. K-Means and Gaussian Mixture Models exhibit classical dispersion instability ($\text{Stability} \to 0$ as $D_{\text{noise}} \to \infty$).
-- **Objective-Specific Vulnerability:** Graph-partitioning and density-based consensus methods (e.g., Ward and dense spectral consensus) converge toward spurious, highly confident partition artifacts under high dimensions, falsely reporting high stability despite zero true cluster recovery.
-
-### 2. Downstream Inductive Generalization (Experiment 1)
-- **Sample Complexity Efficiency:** Downstream classifiers trained exclusively on the certified determinacy core (50% sample budget) attain parity with models trained on 100% of the dataset under low-to-moderate distractor noise ($D_{\text{noise}} \le 50$, achieving test accuracy of $1.000$).
-- **Ambient Distractor Regimes & Pseudo-Label Audit:** In high-dimensional ambient noise ($D_{\text{noise}} \ge 1,000$), downstream classifiers trained on unguided ambient features degrade toward chance accuracy ($\approx 33.3\%$ for $K=3$). Independent 10-trial re-runs and committed CSV audits (`e5_exp1_pseudolabel_rerun.csv`) show that core pseudo-labels change test accuracy by $-0.010$ (committed) and $+0.004$ (re-run) versus all pseudo-labels (effectively zero effect; all models hover near chance $0.31\text{--}0.37$). In the ground-truth-label variant, a 50% ICC-v1 core is below full-data training at every $D_{\text{noise}} > 0$.
-
-### 3. Component Architectural Ablations (Experiment 2)
-- **Core Certification:** Determinacy-based core selection provides a $+34\%$ Adjusted Rand Index (ARI) improvement in clean data regimes ($D_{\text{noise}} = 0$).
-- **VSSG Feature Ranking & Pool Dynamics:** Sarle's Bimodality Coefficient ranks planted signal features with high precision (precision@50 $\approx 0.94\text{--}0.96$ up to $D_{\text{noise}} = 5,000$). With calibrated gating (`pool_mode="robust"` or `"null_calibrated"`), downstream recovery is restored from chance ($\text{ARI} \approx 0.00$) to $\text{ARI} > 0.85$ under Gaussian noise. On real cancer microarrays (Leukemia, SRBCT), the wide ensemble pool with Transfer-Cut consensus is essential, delivering up to $+4,376\%$ lift over single-pass feature filter controls.
-
-### 4. Multi-Domain Benchmarking and Missing-Data Resilience (Experiment 3)
-- **High-Dimensional Domain Specialization:** Across 13 benchmark datasets and 1,430 model executions (`exp3_1_benchmark_matrix_v2.csv`), ICC-v2 attains a Grand Mean ARI of **0.1599** (mean rank 5.46 of 11). Across the general 13-dataset suite, omnibus Friedman test yields $\chi^2_F = 11.34, p = 0.33$, and pairwise Wilcoxon differences do not survive Holm-Bonferroni correction ($p \in [0.24, 0.95]$). However, ICC-v2 demonstrates commanding Rank #1 dominance ($R = 2.33$) specifically on ultra-high-dimensional continuous biomedical cancer assays ($D/N > 20$, e.g., Leukemia ARI = 0.680 vs. DEC 0.148, SRBCT ARI = 0.538 vs. Std Cons 0.040, Ovarian ARI = 0.052), maintaining cluster recovery where deep models collapse due to sample sparsity ($N \le 100$).
-- **Operating Envelope & Trade-offs:** On large-sample sparse text and single-cell count matrices (20 Newsgroups, Zheng68k), hierarchical Ward and DEC outperform ICC-v2, as zero-inflation violates the continuous unimodal distractor noise assumption.
-- **Missing-Data Stability:** Across the 3 primary benchmark datasets (`exp3_5_missing_data_results.csv`), aggregate mean ARI transitions from 0.465 ($\rho=0.0$) to 0.393 ($\rho=0.10$), 0.177 ($\rho=0.30$), and 0.169 ($\rho=0.50$). In multi-dataset audit sweeps across all 8 cached benchmarks (`e5_missing_rerun.csv`, MCAR + mean imputation, 5 seeds), on the 3 informative datasets ICC-v2 retains about 108% / 80% / 33% / 41% of its 0%-missing ARI at 10% / 20% / 30% / 50% missing, reaching K-Means baseline level by 30%. The earlier claim of $>80\%$ retention at 40% MCAR is not supported (the committed 3-dataset file agrees: 38% at 30%).
-
-### 5. Computational Scalability and Asymptotic Behavior (Experiments 4 and 5)
-- **Linear Sample Scaling:** Empirical execution times scale strictly as $\mathcal{O}(N)$ on the scalable anchor path ($N > 2{,}000$). In dedicated per-process benchmark sweeps (`e6_scaling.csv`, $D=200$, $N \in [500, 32{,}000]$), the dense path ($N \le 2{,}000$) exhibits quadratic $\mathcal{O}(N^2)$ memory growth (scaling from 6 MB to 61 MB, time log-log slope 1.18), while the scalable anchor path ($N > 2{,}000$) shows near-linear execution (log-log slope 0.66, 6 MB at $N=2{,}001$ to 98 MB at $N=32{,}000$, with $0.77\text{s}$ runtime). Note that the scalable path yields different partition labels from the dense path under high noise.
-- **Memory Reduction:** Auxiliary bipartite storage requires $O(NL + L^2)$ floats, yielding a $39.1\%$ memory reduction over dense $O(N^2)$ consensus at $N = 8,000$, and enabling execution at scales where dense methods trigger out-of-memory errors.
-
----
-
-## Environment Setup and Installation
-
-The package requires Python 3.10 or newer and follows PEP 517/621 packaging conventions:
-
-### 1. Installation
+## Installation
 
 ```bash
 # Clone the repository
 git clone https://github.com/AkashKundu114/icc-clustering.git
 cd icc-clustering
 
-# Install the core package in editable mode
+# Install core package in editable mode
 pip install -e .
-```
 
-### 2. Optional Dependency Groups
-
-Install additional dependency sets depending on the desired experimental scope:
-
-```bash
-# Deep learning baselines (PyTorch, TensorFlow, Keras for DEC)
-pip install -e ".[deep]"
-
-# Single-cell transcriptomics tools (Scanpy, AnnData for Zheng68k)
-pip install -e ".[bio]"
-
-# Development, static analysis, and testing tools (Pytest, Ruff)
+# Optional development tools
 pip install -e ".[dev]"
-
-# All optional dependencies
-pip install -e ".[all]"
 ```
 
-### 3. Test Suite Verification
-
-Run the automated test suite to verify the installation:
-
+Run tests to verify installation:
 ```bash
 python -m pytest tests/ -v
 ```
 
-All 76 unit and integration tests should pass without errors.
-
 ---
 
-## Reproduction CLI Guide
-
-All experimental figures and tables can be reproduced directly from precomputed evaluation caches or re-executed from scratch:
-
-```bash
-# Experiment 0: Falsification Suite (Figures 1-8)
-python experiments/exp0_falsification/run_all.py --reproduce-plots
-
-# Experiment 1: Inductive Generalization Suite (Figures 9, 10, 10b, 10c)
-python experiments/exp1_generalization/run_exp1.py --run-full
-
-# Experiment 2: Ablation and VSSG Interpretability Audit (Figures 11-13, 22a-c)
-python experiments/exp2_ablation/run_exp2.py --reproduce-plots
-
-# Experiment 3: 13-Dataset Benchmarks and Missing Data Audit (Figures 14-17, 25a-b)
-python experiments/exp3_real_world_benchmarks/run_exp3.py --reproduce-plots
-
-# Experiment 4: Scalability, Sensitivity, and Anchor Fidelity (Figures 18-21, 23, 24)
-python experiments/exp4_scalability_and_sensitivity/run_exp4.py --reproduce-plots
-
-# Experiment 5: Extreme Asymptotic Scaling Stress Suite (Figure 26)
-python experiments/exp5_extreme_scale/run_exp5.py --reproduce-plots
-```
-
----
-
-## Python API Usage
-
-The package provides a scikit-learn-compatible estimator interface:
+## Quickstart (Offline Synthetic Example)
 
 ```python
+import numpy as np
 from icc import ICC
-from icc.datasets.registry import load_dataset
 from icc.metrics import evaluate_all
 
-# 1. Load benchmark dataset
-X, y_true, meta = load_dataset("leukemia")
-print(f"Loaded {meta['display_name']}: N={X.shape[0]}, D={X.shape[1]}")
+# 1. Generate synthetic data (N=150, D=300, K=3) with 15 informative features
+rng = np.random.default_rng(42)
+X = rng.standard_normal((150, 300))
+y_true = np.array([0] * 50 + [1] * 50 + [2] * 50)
+X[:50, :15] += 2.5
+X[50:100, :15] -= 2.5
 
-# 2. Initialize and fit the ICC-v2 estimator
-model = ICC(
-    n_clusters=2,
-    n_base_models=25,
-    n_anchors=40,
-    subspace_rate=0.25,
-    core_quantile=0.50,
-    enable_aspp=True,
-    random_state=42,
-)
+# 2. Fit estimator
+model = ICC(n_clusters=3, n_base_models=25, n_anchors=30, random_state=42)
 labels = model.fit_predict(X)
 
-# 3. Evaluate clustering quality across standardized metrics
+# 3. Evaluate clustering
 metrics = evaluate_all(y_true, labels)
-print("Evaluation Results:")
-print(f"  Adjusted Rand Index (ARI):       {metrics['ari']:.4f}")
-print(f"  Normalized Mutual Info (NMI):    {metrics['nmi']:.4f}")
-print(f"  Adjusted Mutual Info (AMI):      {metrics['ami']:.4f}")
-print(f"  V-Measure:                       {metrics['v_measure']:.4f}")
-print(f"  Fowlkes-Mallows Index (FM):      {metrics['fm_index']:.4f}")
+print(f"Training ARI: {metrics['ari']:.4f}")
 
-# 4. Inductive out-of-sample prediction and embedding coordinates
-out_of_sample_points = X[:5]
-predicted_clusters = model.predict(out_of_sample_points)
-print("Inductive predictions for query instances:", predicted_clusters)
-embedding = model.transform()
-print(f"Spectral embedding shape: {embedding.shape}")
+# 4. Inductive prediction for unseen queries
+X_query = rng.standard_normal((5, 300))
+X_query[:, :15] += 2.5
+print("Out-of-sample predictions:", model.predict(X_query).tolist())
 ```
 
 ---
 
-## Citation and Academic Context
+## Results Summary (Single Source of Truth)
 
-If you use this codebase, benchmark results, or methodology in your research, please cite:
+All numbers are generated directly from frozen evaluation runs (`results/results.json` and `results/phase2/stats.json`):
+
+Across all 13 benchmark datasets (1,430 model executions), omnibus Friedman testing indicates no statistically significant difference across the complete heterogeneous benchmark suite (Friedman chi^2 = 11.34, p = 0.33, Critical Difference = 4.21). However, on the target ultra-high-dimensional biological cancer assays (D/N > 20), ICC-v2 commands Rank #1:
+
+| Method | High-D Mean ARI (D/N > 20) | High-D Rank | Overall 13-Dataset Rank |
+| :--- | :---: | :---: | :---: |
+| **ICC-v2 (Proposed)** | **0.258** | **2.33** | 5.46 |
+| **Variance Filter + K-Means** | 0.050 | - | - |
+| **Sparse K-Means** | 0.044 | - | - |
+| **PCA + K-Means** | 0.042 | - | - |
+| **Laplacian Score + K-Means** | 0.041 | - | - |
+| **Standard K-Means** | 0.044 | 5.83 | 5.31 |
+| **Standard Consensus** | 0.039 | 6.33 | 5.08 |
+| **DEC (Deep Embedded)** | - | 5.00 | 4.31 |
+
+Detailed per-dataset metrics, baselines, and ablation tables are available in the manuscript and `results/phase2/`.
+
+---
+
+## Reproducing the Paper
+
+```bash
+# Fast smoke verification (synthetic + real leukemia/srbct benchmarks)
+python scripts/reproduce.py --scope smoke
+
+# Fetch and verify benchmark datasets
+python scripts/fetch_data.py
+
+# Offline synthetic quickstart
+python examples/quickstart.py
+
+# Real Leukemia out-of-sample evaluation
+python examples/leukemia_inductive.py
+```
+
+Expected smoke runtime: < 3 seconds on modern multi-core CPU. Determinism is enforced with `OMP_NUM_THREADS=1`.
+
+---
+
+## Documentation
+
+- [API Reference](docs/api.md)
+- [Dataset Guide & Licenses](docs/DATA.md)
+- [Theoretical Foundations](docs/THEORETICAL_FOUNDATIONS.md)
+- [Claims Audit & Ledger](REMEDIATION/CLAIMS_AUDIT.md)
+
+---
+
+## Citation
 
 ```bibtex
 @article{kundu2026inductive,
-  author       = {Akash Kundu},
-  title        = {Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes},
-  journal      = {Manuscript Submitted for Peer Review},
-  year         = {2026},
-  institution  = {Techno India University},
-  url          = {https://github.com/AkashKundu114/icc-clustering},
-  note         = {ORCID: 0009-0003-8246-7316}
+  author    = {Akash Kundu and Trinankur Guha and Rupankar Ghatak and Anubhab Naskar and Kalyan Kumar Das},
+  title     = {Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes},
+  journal   = {Preprint / Submitted for Peer Review},
+  year      = {2026},
+  url       = {https://github.com/AkashKundu114/icc-clustering}
 }
 ```
 
 ---
 
-## License
+## License & Contact
 
-This project is licensed under the [MIT License](LICENSE).
+- **License:** [MIT License](LICENSE)
+- **Corresponding Author:** Akash Kundu (`akash231001001449@technoindiaeducation.com`)
+- **Institution:** Department of Computer Science and Engineering, Techno India University

@@ -20,10 +20,14 @@ from .metrics import (
 )
 
 ICC = InvariantCoreConsensusV2
+ICCv2 = InvariantCoreConsensusV2
+ICCv1 = InvariantCoreConsensus
 
 __all__ = [
     "__version__",
     "ICC",
+    "ICCv1",
+    "ICCv2",
     "InvariantCoreConsensus",
     "InvariantCoreConsensusV2",
     "ASPPConfig",

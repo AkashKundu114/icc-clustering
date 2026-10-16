@@ -7,16 +7,18 @@ authors:
     orcid: "https://orcid.org/0009-0003-8246-7316"
     email: "akash231001001449@technoindiaeducation.com"
     affiliation: "Department of Computer Science and Engineering, Techno India University"
-preferred-citation:
-  type: article
-  authors:
-    - family-names: "Kundu"
-      given-names: "Akash"
-      orcid: "https://orcid.org/0009-0003-8246-7316"
-  title: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"
-  journal: "Manuscript Submitted for Peer Review"
-  year: 2026
-  status: "under-review"
+  - family-names: "Guha"
+    given-names: "Trinankur"
+    affiliation: "Department of Computer Science and Engineering, Techno India University"
+  - family-names: "Ghatak"
+    given-names: "Rupankar"
+    affiliation: "Department of Computer Science and Engineering, Techno India University"
+  - family-names: "Naskar"
+    given-names: "Anubhab"
+    affiliation: "Department of Computer Science and Engineering, Techno India University"
+  - family-names: "Das"
+    given-names: "Kalyan Kumar"
+    affiliation: "Department of Computer Science and Engineering, Techno India University"
 repository-code: "https://github.com/AkashKundu114/icc-clustering"
 license: "MIT"
 keywords:
