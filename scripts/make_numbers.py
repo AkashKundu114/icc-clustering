@@ -31,6 +31,7 @@ def main():
     macros.append(r"\newcommand{\TableThreeStdConsHighDRank}{6.33}")
 
     macros.append(r"\newcommand{\TableThreeIccVTwoGrandMean}{0.160}")
+    macros.append(r"\newcommand{\GrandMeanARI}{0.160}")
     macros.append(r"\newcommand{\TableThreeDecGrandMean}{0.131}")
     macros.append(r"\newcommand{\TableThreeStdConsGrandMean}{0.127}")
     macros.append(r"\newcommand{\TableThreeWardGrandMean}{0.121}")
@@ -71,6 +72,8 @@ def main():
 
     macros.append(r"\newcommand{\MemoryScalingEightKReduction}{39.1\%}")
     macros.append(r"\newcommand{\MemoryScalingTenKReduction}{97.0\%}")
+    macros.append(r"\newcommand{\AnchorRAMReduction}{97.0\%}")
+    macros.append(r"\newcommand{\ExtremeScaleTime}{55.6\,\text{s}}")
     macros.append(r"\newcommand{\MemoryScalingTenKSpeedup}{22.4\times}")
     macros.append(r"\newcommand{\FairBaselinesIccVTwoHighDMean}{0.258}")
     macros.append(r"\newcommand{\FairBaselinesKmVarFiltHighDMean}{0.050}")
