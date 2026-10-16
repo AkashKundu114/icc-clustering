@@ -15,8 +15,9 @@ Outputs:
 """
 
 from pathlib import Path
-import matplotlib.pyplot as plt
+
 import matplotlib.patches as patches
+import matplotlib.pyplot as plt
 import numpy as np
 from scipy.spatial.distance import pdist
 
@@ -124,7 +125,7 @@ def generate_conceptual_figure():
     ax_c.bar(dim_indices, bimodality, color=bar_cols, width=0.8, edgecolor="none")
     threshold = 0.28
     ax_c.axhline(threshold, color="#2ca02c", linestyle="--", linewidth=2.0,
-                 label=f"VSSG Candidate Pool Cutoff ($\\rho_{{\\text{{pool}}}}$)")
+                 label="VSSG Candidate Pool Cutoff ($\\rho_{\\text{pool}}$)")
 
     ax_c.annotate("True Signal $X_1$\n(Recovered)", xy=(0, 0.88), xytext=(8, 0.80),
                  arrowprops=dict(facecolor="black", arrowstyle="->", lw=1.2),
@@ -164,7 +165,6 @@ def generate_conceptual_figure():
 
     # Projection vectors to centroids
     for i, cnt in enumerate(centroids):
-        dist = np.linalg.norm(x_query - cnt)
         lw = 2.4 if i == 1 else 1.0
         ls = "-" if i == 1 else ":"
         alp = 0.9 if i == 1 else 0.4

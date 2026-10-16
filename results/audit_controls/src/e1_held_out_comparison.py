@@ -83,7 +83,7 @@ def load_dataset(name: str) -> Tuple[np.ndarray, np.ndarray, int]:
     path = CACHE_DIR / f"{name}.npz"
     if not path.exists():
         raise FileNotFoundError(f"Missing cached dataset: {path}")
-    data = np.load(path, allow_pickle=True)
+    data = np.load(path, allow_pickle=False)
     X = data["X"].astype(np.float64)
     y = data["y"].astype(int)
     K = len(np.unique(y))

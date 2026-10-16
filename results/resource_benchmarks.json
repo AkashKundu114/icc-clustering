@@ -1,0 +1,100 @@
+{
+  "n_scaling": [
+    {
+      "N": 100,
+      "D": 50,
+      "elapsed_sec": 2.3714,
+      "peak_ram_mb": 0.64
+    },
+    {
+      "N": 500,
+      "D": 50,
+      "elapsed_sec": 0.1974,
+      "peak_ram_mb": 1.01
+    },
+    {
+      "N": 1000,
+      "D": 50,
+      "elapsed_sec": 0.262,
+      "peak_ram_mb": 1.88
+    },
+    {
+      "N": 2500,
+      "D": 50,
+      "elapsed_sec": 0.5344,
+      "peak_ram_mb": 4.51
+    },
+    {
+      "N": 5000,
+      "D": 50,
+      "elapsed_sec": 0.7904,
+      "peak_ram_mb": 8.87
+    }
+  ],
+  "d_scaling": [
+    {
+      "N": 500,
+      "D": 20,
+      "elapsed_sec": 0.1965,
+      "peak_ram_mb": 0.74,
+      "features_selected": 20
+    },
+    {
+      "N": 500,
+      "D": 100,
+      "elapsed_sec": 0.2028,
+      "peak_ram_mb": 1.54,
+      "features_selected": 100
+    },
+    {
+      "N": 500,
+      "D": 500,
+      "elapsed_sec": 0.2214,
+      "peak_ram_mb": 7.67,
+      "features_selected": 100
+    },
+    {
+      "N": 500,
+      "D": 2000,
+      "elapsed_sec": 0.2735,
+      "peak_ram_mb": 15.36,
+      "features_selected": 300
+    },
+    {
+      "N": 500,
+      "D": 5000,
+      "elapsed_sec": 0.3974,
+      "peak_ram_mb": 19.75,
+      "features_selected": 750
+    }
+  ],
+  "query_throughput": [
+    {
+      "batch_size": 10,
+      "latency_ms": 0.03,
+      "throughput_sps": 320512.8
+    },
+    {
+      "batch_size": 100,
+      "latency_ms": 0.05,
+      "throughput_sps": 2141328.0
+    },
+    {
+      "batch_size": 1000,
+      "latency_ms": 0.24,
+      "throughput_sps": 4230118.5
+    },
+    {
+      "batch_size": 5000,
+      "latency_ms": 1.37,
+      "throughput_sps": 3650700.9
+    },
+    {
+      "batch_size": 20000,
+      "latency_ms": 6.07,
+      "throughput_sps": 3297391.8
+    }
+  ],
+  "baseline_rss_mb": 174.03,
+  "final_rss_mb": 188.6
+}

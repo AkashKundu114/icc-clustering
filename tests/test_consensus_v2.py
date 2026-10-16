@@ -116,3 +116,25 @@ def test_exp3_run_icc_v2_wrapper():
 def test_export_parity():
     assert RootICC2 is InvariantCoreConsensusV2
     assert Exp3ICC2 is InvariantCoreConsensusV2
+
+
+def test_modular_subpackage_exports():
+    from src.icc import algorithm as alg
+    from src.icc import configuration as cfg
+    from src.icc import evaluation as ev
+    from src.icc import preprocessing as prep
+    from src.icc_clustering import InvariantCoreConsensusV2 as AliasICC2
+
+    assert alg.InvariantCoreConsensusV2 is InvariantCoreConsensusV2
+    assert AliasICC2.__name__ == "InvariantCoreConsensusV2"
+    assert callable(prep.compute_bimodality_coefficient)
+    assert callable(ev.evaluate_all)
+    assert callable(cfg.load_dataset_config)
+
+    # Test standalone bimodality calculation
+    rng = np.random.default_rng(100)
+    X = rng.normal(size=(40, 5))
+    bc = prep.compute_bimodality_coefficient(X)
+    assert bc.shape == (5,)
+    assert np.all(bc >= 0.0)
+

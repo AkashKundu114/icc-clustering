@@ -282,12 +282,12 @@ class AnchorSpacePerturbationProfiler:
                     # Memory is strictly O(N_obs * L_obs), never O(N^2)
                     B_pert = np.zeros((N_obs, L_obs), dtype=np.float32)
                     pert_partitions = []
+                    col_map = {orig_c: loc_c for loc_c, orig_c in enumerate(obs_cols)}
 
                     for m in range(cfg.n_base_models):
                         seed_m = int(rng_run.integers(0, 1_000_000_000))
                         sub_feat = rng_run.choice(surviving_pool, size=sub_size, replace=False)
                         # Translate sub_feat to local column indices of X_pert
-                        col_map = {orig_c: loc_c for loc_c, orig_c in enumerate(obs_cols)}
                         local_sub_feat = np.array([col_map[c] for c in sub_feat])
 
                         X_sub = X_pert[:, local_sub_feat]
@@ -300,7 +300,7 @@ class AnchorSpacePerturbationProfiler:
 
                         # Accumulate rectangular bipartite co-association against anchors
                         anchor_labels_m = p_m[local_anchor_pos]
-                        B_pert += (p_m[:, None] == anchor_labels_m[None, :]).astype(np.float32)
+                        B_pert += (p_m[:, None] == anchor_labels_m[None, :])
 
                     B_pert /= max(1, cfg.n_base_models)
 
@@ -315,8 +315,8 @@ class AnchorSpacePerturbationProfiler:
                     d_inv_sqrt = 1.0 / np.sqrt(np.fmax(d_anchor, 1e-12))
                     L_anchor_norm = np.eye(L_obs) - (d_inv_sqrt[:, None] * W_anchor_pert * d_inv_sqrt[None, :])
 
-                    evals, evecs = sla.eigh(L_anchor_norm)
-                    V_pert = evecs[:, :K]
+                    evals, evecs = sla.eigh(L_anchor_norm, subset_by_index=[0, K - 1])
+                    V_pert = evecs
                     U_pert = B_norm @ V_pert
                     U_norm = np.linalg.norm(U_pert, axis=1, keepdims=True)
                     U_norm[U_norm < 1e-12] = 1.0
