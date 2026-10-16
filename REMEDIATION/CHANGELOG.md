@@ -17,3 +17,6 @@ All changes and milestone deliverables during the remediation process are logged
   - Verified `cns.npz` and `glioma.npz` byte-for-byte identity in `exp3_real_world_benchmarks/data/cache`.
   - Audited Madelon XOR structure: 0 features satisfy $b_d \ge 5/9$, actual Recall@50 is 0.40 vs claimed 0.95.
 - Executed Gate 0 Checkpoint review: Cleared to proceed with Phase 1 experiment reproduction.
+
+## [Phase 1: Reproduce and Freeze] - 2026-10-17
+- Subagent E1: Ran as-published test suite (`python -m pytest tests/ --cov=src/icc --cov-report=term`). Captured raw logs to `REMEDIATION/logs/test_suite.log`. Result: 76 passed, 0 failed, 14 warnings, 74% statement coverage across `src/icc`.

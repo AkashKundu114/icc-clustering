@@ -1,0 +1,47 @@
+........................................................................ [ 94%]
+....                                                                     [100%]
+============================== warnings summary ===============================
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\base.py:1403
+C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\base.py:1403
+  C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\base.py:1403: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+    return fit_method(estimator, *args, **kwargs)
+
+tests/test_aspp.py: 10 warnings
+tests/test_core_and_generators.py: 1 warning
+  C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\manifold\_spectral_embedding.py:325: UserWarning: Graph is not fully connected, spectral embedding may not work as expected.
+    warnings.warn(
+
+tests/test_consensus_v2.py::test_icc_v2_initialization
+  D:\Final Year Project\tests\test_consensus_v2.py:13: DeprecationWarning: `beta` is not used by ICC-v2 and is deprecated; it has no effect.
+    model = InvariantCoreConsensusV2(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.14.6-final-0 _______________
+
+Name                             Stmts   Miss  Cover
+----------------------------------------------------
+src\icc\__init__.py                  8      0   100%
+src\icc\aspp.py                    217     15    93%
+src\icc\baselines\__init__.py       50      2    96%
+src\icc\baselines\anchor.py        152     38    75%
+src\icc\baselines\classical.py      52      4    92%
+src\icc\baselines\consensus.py     113      4    96%
+src\icc\baselines\deep.py          197     53    73%
+src\icc\consensus.py               102      1    99%
+src\icc\consensus_v2.py            267     72    73%
+src\icc\core.py                    204     87    57%
+src\icc\datasets\__init__.py         2      0   100%
+src\icc\datasets\audio.py           38     18    53%
+src\icc\datasets\genomics.py        57     31    46%
+src\icc\datasets\image.py           64     39    39%
+src\icc\datasets\registry.py       100     13    87%
+src\icc\datasets\scrnaseq.py        85     56    34%
+src\icc\datasets\spectral.py        72     48    33%
+src\icc\datasets\text.py            38     15    61%
+src\icc\diagnostics.py              17     14    18%
+src\icc\metrics.py                 187     17    91%
+src\icc\viz_style.py                17      8    53%
+----------------------------------------------------
+TOTAL                             2039    535    74%
+76 passed, 14 warnings in 43.76s
