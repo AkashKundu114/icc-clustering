@@ -202,3 +202,18 @@ def test_scanpy_not_installed_error(monkeypatch):
     with pytest.raises(ImportError, match="scanpy is required for scRNA-seq datasets"):
         _check_scanpy()
 
+
+def test_registry_yaml_matches_dataset_metadata():
+    import yaml
+    from pathlib import Path
+    cfg_path = Path(__file__).resolve().parents[1] / "configs" / "datasets.yaml"
+    with open(cfg_path, "r", encoding="utf-8") as f:
+        data = yaml.safe_load(f)
+    datasets = data.get("datasets", {})
+    assert len(datasets) == 13
+    for name, entry in datasets.items():
+        info = get_dataset_info(name)
+        assert info.expected_N == entry["expected_N"]
+        assert info.expected_D == entry["expected_D"]
+        assert info.expected_K == entry["expected_K"]
+
