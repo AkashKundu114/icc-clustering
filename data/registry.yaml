@@ -1,0 +1,320 @@
+# ==============================================================================
+# ICC Benchmark Dataset Registry (Unified Single Source of Truth)
+# All D/N ratios computed programmatically: D_over_N = round(D / N, 2)
+# ==============================================================================
+
+metadata:
+  version: "2.0.0"
+  description: "Standardized benchmark registry for Inductive Consensus Clustering"
+  default_preprocessing:
+    impute_nan: true
+    standardize: true
+    log_transform: false
+    label_encoding: true
+
+datasets:
+  # ----------------------------------------------------------------------------
+  # Core High-Dimensional Cancer Microarrays & Mass Spectrometry (D/N > 20)
+  # ----------------------------------------------------------------------------
+  colon:
+    name: "colon"
+    domain: "genomics"
+    N: 62
+    D: 2000
+    K: 2
+    d_over_n: 32.26
+    source: "OpenML (ID: 1111)"
+    url: "https://www.openml.org/d/1111"
+    license: "Public Domain / CC0"
+    is_sparse: false
+    preprocessing: "mean_imputation, standard_scaler, label_encoder"
+    description: "Colon cancer gene expression microarray (tumor vs normal)"
+
+  srbct:
+    name: "srbct"
+    domain: "genomics"
+    N: 83
+    D: 2308
+    K: 4
+    d_over_n: 27.81
+    source: "OpenML (ID: 1158)"
+    url: "https://www.openml.org/d/1158"
+    license: "Public Domain / CC0"
+    is_sparse: false
+    preprocessing: "mean_imputation, standard_scaler, label_encoder"
+    description: "Small Round Blue Cell Tumors microarray (4 childhood cancer subtypes)"
+
+  cns:
+    name: "cns"
+    domain: "genomics"
+    N: 60
+    D: 7129
+    K: 2
+    d_over_n: 118.82
+    source: "OpenML (ID: 1128)"
+    url: "https://www.openml.org/d/1128"
+    license: "Public Domain / CC0"
+    is_sparse: false
+    preprocessing: "mean_imputation, standard_scaler, label_encoder"
+    description: "Central Nervous System embryonal tumors (survivors vs fatalities)"
+
+  leukemia:
+    name: "leukemia"
+    domain: "genomics"
+    N: 72
+    D: 7129
+    K: 2
+    d_over_n: 99.01
+    source: "OpenML (ID: 1104)"
+    url: "https://www.openml.org/d/1104"
+    license: "Public Domain / CC0"
+    is_sparse: false
+    preprocessing: "mean_imputation, standard_scaler, label_encoder"
+    description: "Golub et al. acute leukemia microarray (ALL vs AML)"
+
+  prostate:
+    name: "prostate"
+    domain: "genomics"
+    N: 102
+    D: 12600
+    K: 2
+    d_over_n: 123.53
+    source: "OpenML (ID: 1159)"
+    url: "https://www.openml.org/d/1159"
+    license: "Public Domain / CC0"
+    is_sparse: false
+    preprocessing: "mean_imputation, standard_scaler, label_encoder"
+    description: "Prostate cancer gene expression microarray (tumor vs normal)"
+
+  ovarian:
+    name: "ovarian"
+    domain: "mass_spectrometry"
+    N: 253
+    D: 15154
+    K: 2
+    d_over_n: 59.90
+    source: "OpenML (ID: 1142)"
+    url: "https://www.openml.org/d/1142"
+    license: "Public Domain / CC0"
+    is_sparse: false
+    preprocessing: "mean_imputation, standard_scaler, label_encoder"
+    description: "Ovarian cancer SELDI-TOF mass spectrometry profile"
+
+  glioma:
+    name: "glioma"
+    domain: "genomics"
+    N: 50
+    D: 4434
+    K: 4
+    d_over_n: 88.68
+    source: "OpenML (ID: 1120)"
+    url: "https://www.openml.org/d/1120"
+    license: "Public Domain / CC0"
+    is_sparse: false
+    preprocessing: "mean_imputation, standard_scaler, label_encoder"
+    description: "Glioma histological sub-type gene expression profiles"
+
+  lymphoma:
+    name: "lymphoma"
+    domain: "genomics"
+    N: 66
+    D: 4026
+    K: 3
+    d_over_n: 61.00
+    source: "OpenML (ID: 1140)"
+    url: "https://www.openml.org/d/1140"
+    license: "Public Domain / CC0"
+    is_sparse: false
+    preprocessing: "mean_imputation, standard_scaler, label_encoder"
+    description: "Diffuse large B-cell lymphoma microarray"
+
+  lung_cancer:
+    name: "lung_cancer"
+    domain: "genomics"
+    N: 197
+    D: 3312
+    K: 4
+    d_over_n: 16.81
+    source: "OpenML (ID: 1136)"
+    url: "https://www.openml.org/d/1136"
+    license: "Public Domain / CC0"
+    is_sparse: false
+    preprocessing: "mean_imputation, standard_scaler, label_encoder"
+    description: "Lung cancer classification microarray"
+
+  breast_cancer_genomic:
+    name: "breast_cancer_genomic"
+    domain: "genomics"
+    N: 97
+    D: 1213
+    K: 2
+    d_over_n: 12.51
+    source: "OpenML (ID: 1124)"
+    url: "https://www.openml.org/d/1124"
+    license: "Public Domain / CC0"
+    is_sparse: false
+    preprocessing: "mean_imputation, standard_scaler, label_encoder"
+    description: "van 't Veer breast cancer gene expression"
+
+  # ----------------------------------------------------------------------------
+  # Acoustic, Physical, and Synthetic Benchmark Datasets
+  # ----------------------------------------------------------------------------
+  sonar:
+    name: "sonar"
+    domain: "acoustic"
+    N: 208
+    D: 60
+    K: 2
+    d_over_n: 0.29
+    source: "OpenML (ID: 40)"
+    url: "https://www.openml.org/d/40"
+    license: "Public Domain / CC0"
+    is_sparse: false
+    preprocessing: "mean_imputation, standard_scaler, label_encoder"
+    description: "Sonar acoustic returns (mines vs rocks)"
+
+  madelon:
+    name: "madelon"
+    domain: "synthetic"
+    N: 500
+    D: 500
+    K: 2
+    d_over_n: 1.00
+    source: "OpenML (ID: 1485)"
+    url: "https://www.openml.org/d/1485"
+    license: "Public Domain / CC0"
+    is_sparse: false
+    preprocessing: "mean_imputation, standard_scaler, label_encoder"
+    description: "NIPS 2003 feature selection benchmark (20 XOR signal, 480 distractor noise)"
+
+  gisette:
+    name: "gisette"
+    domain: "digit_recognition"
+    N: 1000
+    D: 5000
+    K: 2
+    d_over_n: 5.00
+    source: "OpenML (ID: 41026)"
+    url: "https://www.openml.org/d/41026"
+    license: "Public Domain / CC0"
+    is_sparse: false
+    preprocessing: "standard_scaler, label_encoder"
+    description: "Handwritten digit recognition with distractor noise features (NIPS 2003)"
+
+  waveform:
+    name: "waveform"
+    domain: "physical"
+    N: 5000
+    D: 40
+    K: 3
+    d_over_n: 0.01
+    source: "OpenML (ID: 60)"
+    url: "https://www.openml.org/d/60"
+    license: "Public Domain / CC0"
+    is_sparse: false
+    preprocessing: "standard_scaler, label_encoder"
+    description: "Waveform generator with noise attributes"
+
+  har:
+    name: "har"
+    domain: "sensor"
+    N: 10299
+    D: 561
+    K: 6
+    d_over_n: 0.05
+    source: "UCI Machine Learning Repository"
+    url: "https://archive.ics.uci.edu/dataset/240/human+activity+recognition+using+smartphones"
+    license: "CC BY 4.0"
+    is_sparse: false
+    preprocessing: "standard_scaler, label_encoder"
+    description: "Human Activity Recognition smartphone accelerometer and gyroscope data"
+
+  # ----------------------------------------------------------------------------
+  # Speech, Vision, and Remote Sensing Datasets
+  # ----------------------------------------------------------------------------
+  isolet:
+    name: "isolet"
+    domain: "speech"
+    N: 7797
+    D: 617
+    K: 26
+    d_over_n: 0.08
+    source: "OpenML (ID: 300)"
+    url: "https://www.openml.org/d/300"
+    license: "Public Domain / CC0"
+    is_sparse: false
+    preprocessing: "mean_imputation, standard_scaler, label_encoder"
+    description: "Isolated letter spoken phoneme recognition"
+
+  yale_b:
+    name: "yale_b"
+    domain: "vision"
+    N: 2414
+    D: 1024
+    K: 38
+    d_over_n: 0.42
+    source: "Zhejiang University Deng Cai Mirror"
+    url: "http://www.cad.zju.edu.cn/home/dengcai/Data/YaleB/YaleB_32x32.mat"
+    license: "Academic Research Use"
+    is_sparse: false
+    preprocessing: "flatten_32x32, standard_scaler, label_encoder"
+    description: "Extended Yale Face Database B face illumination variations"
+
+  indian_pines:
+    name: "indian_pines"
+    domain: "hyperspectral"
+    N: 10249
+    D: 200
+    K: 16
+    d_over_n: 0.02
+    source: "AVIRIS Sensor / Purdue University"
+    url: "https://www.ehu.eus/ccwintco/index.php/Hyperspectral_Remote_Sensing_Scenes"
+    license: "Public Domain / Academic Use"
+    is_sparse: false
+    preprocessing: "filter_zero_background, standard_scaler, label_encoder"
+    description: "AVIRIS hyperspectral remote sensing agricultural land cover"
+
+  usps:
+    name: "usps"
+    domain: "vision"
+    N: 9298
+    D: 256
+    K: 10
+    d_over_n: 0.03
+    source: "OpenML (ID: 41080)"
+    url: "https://www.openml.org/d/41080"
+    license: "Public Domain / CC0"
+    is_sparse: false
+    preprocessing: "standard_scaler, label_encoder"
+    description: "US Postal Service handwritten digit image dataset"
+
+  # ----------------------------------------------------------------------------
+  # Text & Single-Cell RNA Sequencing Collections
+  # ----------------------------------------------------------------------------
+  newsgroups20:
+    name: "newsgroups20"
+    domain: "text"
+    N: 18846
+    D: 10000
+    K: 20
+    d_over_n: 0.53
+    source: "scikit-learn fetch_20newsgroups"
+    url: "https://scikit-learn.org/stable/datasets/real_world.html#newsgroups-dataset"
+    license: "Public Domain"
+    is_sparse: true
+    preprocessing: "strip_headers_footers_quotes, tfidf(min_df=5, sublinear_tf=True), densify"
+    description: "20 Newsgroups document collection with TF-IDF vectorization"
+
+  zheng68k:
+    name: "zheng68k"
+    domain: "scrnaseq"
+    N: 700
+    D: 765
+    K: 10
+    d_over_n: 1.09
+    source: "10x Genomics via Scanpy pbmc68k_reduced"
+    url: "https://scanpy.readthedocs.io/en/stable/generated/scanpy.datasets.pbmc68k_reduced.html"
+    license: "Creative Commons Attribution"
+    is_sparse: false
+    preprocessing: "total_count_normalize, log1p, highly_variable_genes, standard_scaler"
+    description: "Zheng et al. 68k PBMC single-cell transcriptomics (standard benchmark cohort)"

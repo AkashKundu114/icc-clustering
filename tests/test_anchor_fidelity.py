@@ -3,16 +3,13 @@ Unit tests for Experiment 4.3: Anchor Approximation Fidelity Suite.
 """
 
 import numpy as np
-import pytest
-from src.icc.core import build_dataset
-from src.icc.consensus_v2 import InvariantCoreConsensusV2
+
 from experiments.exp4_scalability_and_sensitivity.src.anchor_fidelity_benchmark import (
-    run_icc_v2_exact,
     run_fidelity_sweep,
+    run_icc_v2_exact,
 )
-from experiments.exp4_scalability_and_sensitivity.src.plot_anchor_fidelity import (
-    generate_all_plots,
-)
+from src.icc.consensus_v2 import InvariantCoreConsensusV2
+from src.icc.core import build_dataset
 
 
 def test_icc_v2_exact_output_shape_and_clustering():

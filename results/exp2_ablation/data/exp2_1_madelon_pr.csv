@@ -1,0 +1,6 @@
+test_case,trial,K_cutoff,precision,recall,true_positives,total_true,D_total
+Madelon,0,10,0.4,0.2,4,20,500
+Madelon,0,20,0.25,0.25,5,20,500
+Madelon,0,30,0.2,0.3,6,20,500
+Madelon,0,50,0.16,0.4,8,20,500
+Madelon,0,100,0.09,0.45,9,20,500

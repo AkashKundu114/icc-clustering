@@ -6,12 +6,11 @@ Specifically designed for D >> N regimes where distance concentration and
 spurious passenger variance induce hallucinated consensus stability.
 """
 
-from pathlib import Path
 import numpy as np
 import scipy.linalg as sla
 from scipy.spatial.distance import cdist
 
-from .core import run_clusterer, canonical, adjusted_rand_score
+from .core import run_clusterer
 
 
 class InvariantCoreConsensus:
@@ -152,8 +151,10 @@ class InvariantCoreConsensus:
         # -------------------------------------------------------------
         # 4. TOPOLOGICAL TAXONOMY IN (C_i, R_i) SPACE
         # -------------------------------------------------------------
-        # C_i: Local consensus determinacy over anchors
-        C = 1.0 - 4.0 * np.mean((B_star - 0.5)**2, axis=1)
+        # C_i: Local consensus determinacy over anchors in [0, 1].
+        # Highly determined instances have associations close to 0 or 1 (C -> 1),
+        # while ambiguous boundary points near 0.5 yield C -> 0.
+        C = 4.0 * np.mean((B_star - 0.5)**2, axis=1)
         self.stability_ = C
 
         # R_i: Residual noise fraction

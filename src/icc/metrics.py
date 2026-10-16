@@ -11,26 +11,26 @@ for external cluster validation metrics:
 - Composite evaluators with bootstrap confidence intervals
 """
 
-from typing import Dict, Any, Union
+from typing import Dict
+
 import numpy as np
 
 # Dual-backend detection: prefer scikit-learn for high-performance C/Cython execution
-_sk_ari = None
-_sk_nmi = None
-_sk_ami = None
-_sk_v_measure = None
-_sk_fm = None
-
 _SKLEARN_AVAILABLE = False
 try:
-    from sklearn.metrics import adjusted_rand_score as _sk_ari
-    from sklearn.metrics import normalized_mutual_info_score as _sk_nmi
     from sklearn.metrics import adjusted_mutual_info_score as _sk_ami
-    from sklearn.metrics import v_measure_score as _sk_v_measure
+    from sklearn.metrics import adjusted_rand_score as _sk_ari
     from sklearn.metrics import fowlkes_mallows_score as _sk_fm
+    from sklearn.metrics import normalized_mutual_info_score as _sk_nmi
+    from sklearn.metrics import v_measure_score as _sk_v_measure
     _test = _sk_ari([0, 1], [0, 1])
     _SKLEARN_AVAILABLE = True
 except (ImportError, Exception):
+    _sk_ari = None  # type: ignore[assignment]
+    _sk_nmi = None  # type: ignore[assignment]
+    _sk_ami = None  # type: ignore[assignment]
+    _sk_v_measure = None  # type: ignore[assignment]
+    _sk_fm = None  # type: ignore[assignment]
     _SKLEARN_AVAILABLE = False
 
 try:

@@ -2,20 +2,19 @@
 Unit tests for the ICC dataset registry and loaders (src/icc/datasets).
 """
 
-import pytest
 import numpy as np
+import pytest
+
 from src.icc.datasets import (
-    load_dataset,
-    list_datasets,
-    get_dataset_info,
     DatasetInfo,
+    get_dataset_info,
+    list_datasets,
+    load_dataset,
     preprocess_dataset,
 )
-from src.icc.datasets.text import load_20newsgroups, load_rcv1
-from src.icc.datasets.image import load_yale_b, load_coil20
-from src.icc.datasets.spectral import load_indian_pines
-from src.icc.datasets.audio import load_isolet
-from src.icc.datasets.scrnaseq import load_zheng68k, load_tabula_muris
+from src.icc.datasets.image import load_coil20
+from src.icc.datasets.scrnaseq import load_tabula_muris
+from src.icc.datasets.text import load_rcv1
 
 try:
     import scanpy  # noqa: F401

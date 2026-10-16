@@ -1,0 +1,6 @@
+test_case,trial,K_cutoff,precision,recall,true_positives,total_true,D_total
+Synthetic_10kD,0,25,1.0,0.5,25,50,10000
+Synthetic_10kD,0,50,0.94,0.94,47,50,10000
+Synthetic_10kD,0,75,0.6266666666666667,0.94,47,50,10000
+Synthetic_10kD,0,100,0.47,0.94,47,50,10000
+Synthetic_10kD,0,200,0.24,0.96,48,50,10000

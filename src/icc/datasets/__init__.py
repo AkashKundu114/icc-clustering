@@ -14,6 +14,6 @@ Usage:
     X, y, meta = load_dataset("leukemia")
 """
 
-from .registry import load_dataset, list_datasets, get_dataset_info, DatasetInfo, preprocess_dataset
+from .registry import DatasetInfo, get_dataset_info, list_datasets, load_dataset, preprocess_dataset
 
 __all__ = ["load_dataset", "list_datasets", "get_dataset_info", "DatasetInfo", "preprocess_dataset"]

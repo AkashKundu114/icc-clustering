@@ -15,10 +15,11 @@ Supports all 8 high-dimensional benchmark datasets:
 
 import os
 from pathlib import Path
-from typing import Dict, Any, Tuple
+from typing import Any, Dict, Optional, Tuple
+
 import numpy as np
 from sklearn.datasets import fetch_openml
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 
 # Project root resolution (3 levels up from src/icc/datasets/genomics.py)
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
@@ -86,7 +87,7 @@ DATASET_CONFIGS: Dict[str, Dict[str, Any]] = {
 }
 
 
-def get_cached_path(dataset_name: str, cache_dir: str = None) -> str:
+def get_cached_path(dataset_name: str, cache_dir: Optional[str] = None) -> str:
     """Return the absolute file path to the cached .npz file."""
     c_dir = cache_dir or CACHE_DIR
     return os.path.join(c_dir, f"{dataset_name}.npz")
@@ -94,7 +95,7 @@ def get_cached_path(dataset_name: str, cache_dir: str = None) -> str:
 
 def load_genomics_dataset(
     dataset_name: str,
-    cache_dir: str = None,
+    cache_dir: Optional[str] = None,
     force_download: bool = False,
 ) -> Tuple[np.ndarray, np.ndarray, Dict[str, Any]]:
     """
@@ -157,16 +158,16 @@ def load_genomics_dataset(
     # 3. Subsample if configured
     if "subsample_n" in cfg and cfg["subsample_n"] < raw_X.shape[0]:
         rng = np.random.default_rng(42)
-        indices = []
+        sampled_indices = []
         unique_classes = np.unique(raw_y)
         per_class = cfg["subsample_n"] // len(unique_classes)
         for c in unique_classes:
             c_idx = np.where(raw_y == c)[0]
             sampled = rng.choice(c_idx, size=min(per_class, len(c_idx)), replace=False)
-            indices.extend(sampled)
-        indices = np.array(indices)
-        raw_X = raw_X[indices]
-        raw_y = raw_y[indices]
+            sampled_indices.extend(sampled)
+        sub_indices = np.array(sampled_indices, dtype=np.int64)
+        raw_X = raw_X[sub_indices]
+        raw_y = raw_y[sub_indices]
 
     # 4. Impute NaNs if any
     if np.isnan(raw_X).any():
