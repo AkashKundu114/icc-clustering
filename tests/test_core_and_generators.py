@@ -11,8 +11,18 @@ Covers:
 import numpy as np
 import pytest
 
-from src.icc.core import build_dataset, run_clusterer, pairwise_coassoc, canonical
 from src.icc.consensus import InvariantCoreConsensus
+from src.icc.core import (
+    _fcm_like,
+    _gmm_numpy,
+    _kmeans_numpy,
+    _spectral_scipy,
+    build_dataset,
+    canonical,
+    make_noise,
+    pairwise_coassoc,
+    run_clusterer,
+)
 
 
 @pytest.mark.parametrize("noise_kind", ["gaussian", "student_t", "correlated", "scaled", "sparse"])
@@ -87,3 +97,50 @@ def test_icc_v1_legacy_consensus():
     assert set(np.unique(labels)) == {0, 1}
     assert hasattr(model, "core_mask_")
     assert model.core_mask_ is not None
+
+
+def test_core_numpy_fallback_clusterers():
+    rng = np.random.default_rng(42)
+    X = np.vstack([
+        rng.normal(loc=-4, size=(20, 3)),
+        rng.normal(loc=4, size=(20, 3)),
+    ])
+
+    # Test numpy kmeans
+    km_labels = _kmeans_numpy(X, k=2, seed=42)
+    assert km_labels.shape == (40,)
+    assert set(np.unique(km_labels)) == {0, 1}
+
+    # Test small n <= k branch in _kmeans_numpy
+    assert list(_kmeans_numpy(X[:2], k=3)) == [0, 1]
+
+    # Test numpy GMM
+    gmm_labels = _gmm_numpy(X, k=2, seed=42)
+    assert gmm_labels.shape == (40,)
+    assert set(np.unique(gmm_labels)) == {0, 1}
+
+    # Test scipy spectral
+    spec_labels = _spectral_scipy(X, k=2, seed=42)
+    assert spec_labels.shape == (40,)
+    assert set(np.unique(spec_labels)) == {0, 1}
+
+    # Test FCM
+    fcm_labels = _fcm_like(X, k=2, seed=42)
+    assert fcm_labels.shape == (40,)
+    assert set(np.unique(fcm_labels)) == {0, 1}
+
+
+def test_core_edge_cases_and_exceptions():
+    # Zero noise feature dimensions
+    noise_zero = make_noise(n=10, d_noise=0)
+    assert noise_zero.shape == (10, 0)
+
+    # Invalid noise kind
+    with pytest.raises(ValueError, match="Unknown noise kind"):
+        make_noise(n=10, d_noise=5, kind="invalid_noise")
+
+    # Invalid clusterer name
+    X = np.ones((10, 2))
+    with pytest.raises(ValueError, match="Unknown clusterer"):
+        run_clusterer("nonexistent_clusterer", X, k=2, seed=0)
+
