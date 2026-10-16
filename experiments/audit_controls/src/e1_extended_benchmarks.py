@@ -92,7 +92,7 @@ def load_or_fetch_dataset(spec):
     cache_file = CACHE_DIR / f"{name}.npz"
     
     if cache_file.exists():
-        d = np.load(cache_file, allow_pickle=True)
+        d = np.load(cache_file, allow_pickle=False)
         return d["X"].astype(np.float64), d["y"].astype(int)
         
     print(f"Fetching {name} from {spec['source']}...")
