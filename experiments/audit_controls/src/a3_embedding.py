@@ -5,8 +5,8 @@ warnings.filterwarnings("ignore")
 from scipy.linalg import subspace_angles
 from sklearn.cluster import KMeans
 from sklearn.metrics import adjusted_rand_score as ari
-from src.icc.core import build_dataset, pairwise_coassoc
-from src.icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
+from icc.core import build_dataset, pairwise_coassoc
+from icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
 
 def parts(X,k,seed,M=25,pool_mode='legacy'):
     m=ICC(n_clusters=k,n_base_models=M,n_anchors=30,random_state=seed,pool_mode=pool_mode); m.fit_predict(X); return m
@@ -29,7 +29,7 @@ for kind,seed in [("gaussian",0),("scaled",1),("student_t",2)]:
     rng=np.random.default_rng(seed)
     B=None
     # recompute partitions via model internals is not exposed -> approximate with co-association of fresh ensemble on model pool
-    from src.icc.core import run_clusterer
+    from icc.core import run_clusterer
     pool=m.selected_features_; parts_=[run_clusterer('kmeans',X[:,np.random.default_rng(s).choice(pool,size=max(2,int(len(pool)*0.3)),replace=False)],3,seed=s) for s in range(25)]
     Sx=pairwise_coassoc(parts_); anchors=m.anchor_indices_; B=Sx[:,anchors]
     cur,tc,dense=emb_variants(B,3)

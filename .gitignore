@@ -48,6 +48,7 @@ venv.bak/
 # Testing and coverage
 .pytest_cache/
 .ruff_cache/
+.mypy_cache/
 .coverage
 .coverage.*
 htmlcov/
@@ -63,7 +64,13 @@ htmlcov/
 .DS_Store
 Thumbs.db
 
-# Manuscript & Publication artifacts (embargoed / kept separate during peer review)
+# Remediation scratch and prompts
+REMEDIATION_USER_PROMPT_*.txt
+file_list_inventory.txt
+repo_file_tree.txt
+scripts/scratch/
+
+# Manuscript & Publication artifacts
 ieee_manuscript/
 *.aux
 *.bbl

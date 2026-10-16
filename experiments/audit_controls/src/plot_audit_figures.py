@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[3]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from src.icc.viz_style import set_academic_style, clean_spines
+from icc.viz_style import set_academic_style, clean_spines
 
 set_academic_style()
 

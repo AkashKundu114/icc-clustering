@@ -2,7 +2,7 @@ import glob, os, warnings, numpy as np, pandas as pd
 warnings.filterwarnings("ignore")
 from sklearn.cluster import KMeans
 from sklearn.metrics import adjusted_rand_score as ari
-from src.icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
+from icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
 rows=[]
 for f in sorted(glob.glob('experiments/exp3_real_world_benchmarks/data/cache/*.npz')):
     name=os.path.basename(f)[:-4]; d=np.load(f); X0,y=d['X'].astype(float),d['y']; k=len(np.unique(y))

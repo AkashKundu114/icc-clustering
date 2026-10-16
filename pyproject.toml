@@ -57,6 +57,26 @@ all = [
     "ruff",
 ]
 
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+
+[project.urls]
+Homepage = "https://github.com/AkashKundu114/icc-clustering"
+Repository = "https://github.com/AkashKundu114/icc-clustering.git"
+Issues = "https://github.com/AkashKundu114/icc-clustering/issues"
+
 [tool.setuptools.packages.find]
 where = ["src"]
 
@@ -69,11 +89,18 @@ exclude = [
     "ieee_manuscript",
     ".pytest_cache",
     ".ruff_cache",
+    ".mypy_cache",
 ]
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]
 ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+mypy_path = "src"
+ignore_missing_imports = true
+warn_unused_configs = true
 
 [tool.pytest.ini_options]
 minversion = "6.0"

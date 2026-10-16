@@ -13,23 +13,23 @@ _ROOT = Path(__file__).resolve().parents[3]
 if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 
-from src.icc.baselines import get_model, list_models  # noqa: E402
-from src.icc.baselines.anchor import run_fastmvc, run_fcag  # noqa: E402
-from src.icc.baselines.classical import (  # noqa: E402
+from icc.baselines import get_model, list_models  # noqa: E402
+from icc.baselines.anchor import run_fastmvc, run_fcag  # noqa: E402
+from icc.baselines.classical import (  # noqa: E402
     run_single_fcm,
     run_single_kmeans,
     run_single_spectral,
     run_single_ward,
 )
-from src.icc.baselines.consensus import (  # noqa: E402
+from icc.baselines.consensus import (  # noqa: E402
     run_icc_v1,
     run_icc_v2,
     run_li_et_al_2019,
     run_standard_consensus,
 )
-from src.icc.baselines.deep import run_dec  # noqa: E402
-from src.icc.consensus_v2 import InvariantCoreConsensusV2  # noqa: E402
-from src.icc.core import (  # noqa: E402
+from icc.baselines.deep import run_dec  # noqa: E402
+from icc.consensus_v2 import InvariantCoreConsensusV2  # noqa: E402
+from icc.core import (  # noqa: E402
     pairwise_coassoc,
     run_clusterer,
 )

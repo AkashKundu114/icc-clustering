@@ -9,12 +9,12 @@ standardized loading, metadata querying, and unified preprocessing:
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple, Any
-import yaml
-import numpy as np
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+from typing import Any, Dict, List, Optional, Tuple
 
-# Resolve project root (3 levels up from src/icc/datasets/registry.py)
+import numpy as np
+import yaml
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 _DEFAULT_CACHE = _PROJECT_ROOT / "data" / "cache"
 _DEFAULT_CACHE.mkdir(parents=True, exist_ok=True)
@@ -24,6 +24,7 @@ _CONFIG_PATH = _PROJECT_ROOT / "configs" / "datasets.yaml"
 @dataclass
 class DatasetInfo:
     """Metadata container for a benchmark dataset."""
+
     name: str
     domain: str
     expected_N: int
@@ -190,23 +191,23 @@ def load_dataset(
     metadata : dict
         Dataset descriptor properties.
     """
-    # Verify dataset exists in registry
+
     info = get_dataset_info(name)
 
-    # Resolve absolute cache directory
     if not os.path.isabs(cache_dir):
         c_dir = os.path.abspath(os.path.join(_PROJECT_ROOT, cache_dir))
     else:
         c_dir = cache_dir
     os.makedirs(c_dir, exist_ok=True)
 
-    # Route based on domain / module
     if info.domain in ("acoustic", "synthetic", "genomics"):
         from .genomics import load_genomics_dataset
+
         return load_genomics_dataset(name, cache_dir=c_dir, force_download=force_download)
 
     if info.domain == "text":
         from .text import load_20newsgroups, load_rcv1
+
         if name == "newsgroups20":
             n_features = info.expected_D if info.expected_D > 0 else 10000
             return load_20newsgroups(n_features=n_features, cache_dir=c_dir, force_download=force_download)
@@ -214,7 +215,8 @@ def load_dataset(
             return load_rcv1(cache_dir=c_dir, force_download=force_download)
 
     if info.domain == "image":
-        from .image import load_yale_b, load_coil20
+        from .image import load_coil20, load_yale_b
+
         if name == "yale_b":
             return load_yale_b(cache_dir=c_dir, force_download=force_download)
         elif name == "coil20":
@@ -222,22 +224,24 @@ def load_dataset(
 
     if info.domain == "hyperspectral":
         from .spectral import load_indian_pines
+
         if name == "indian_pines":
             return load_indian_pines(cache_dir=c_dir, force_download=force_download)
 
     if info.domain == "audio":
         from .audio import load_isolet
+
         if name == "isolet":
             return load_isolet(cache_dir=c_dir, force_download=force_download)
 
     if info.domain == "scrnaseq":
-        from .scrnaseq import load_zheng68k, load_tabula_muris
+        from .scrnaseq import load_tabula_muris, load_zheng68k
+
         if name == "zheng68k":
             return load_zheng68k(cache_dir=c_dir, force_download=force_download)
         elif name == "tabula_muris":
             return load_tabula_muris(cache_dir=c_dir, force_download=force_download)
 
     raise NotImplementedError(
-        f"Dataset '{name}' in domain '{info.domain}' is registered but has no active loader. "
-        f"Enable in Phase 4."
+        f"Dataset '{name}' in domain '{info.domain}' is registered but has no active loader. Enable in Phase 4."
     )

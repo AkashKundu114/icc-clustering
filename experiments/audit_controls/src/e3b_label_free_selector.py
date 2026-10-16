@@ -5,7 +5,7 @@ Compared with: fixed 15% (default), grid-mean, oracle-best (label-peeking UPPER 
 import glob, os, warnings, numpy as np, pandas as pd
 warnings.filterwarnings("ignore")
 from sklearn.metrics import adjusted_rand_score as ari, silhouette_score
-from src.icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
+from icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
 F=[0.02,0.05,0.10,0.15,0.25,0.40]; rows=[]
 for f in sorted(glob.glob('experiments/exp3_real_world_benchmarks/data/cache/*.npz')):
     name=os.path.basename(f)[:-4]; d=np.load(f); X,y=d['X'].astype(float),d['y']; k=len(np.unique(y))

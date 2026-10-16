@@ -3,7 +3,7 @@ warnings.filterwarnings("ignore")
 from scipy.stats import kurtosis, skew
 from sklearn.cluster import KMeans
 from sklearn.metrics import adjusted_rand_score as ari
-from src.icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
+from icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
 rows=[]
 for name in ['leukemia','srbct','colon','cns']:
     d=np.load(f'experiments/exp3_real_world_benchmarks/data/cache/{name}.npz'); X,y=d['X'].astype(float),d['y']; k=len(np.unique(y)); N,D=X.shape

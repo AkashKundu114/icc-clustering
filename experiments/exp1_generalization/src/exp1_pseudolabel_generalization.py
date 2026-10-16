@@ -36,7 +36,7 @@ if str(root_dir) not in sys.path:
 
 from exp0_core import build_dataset, run_clusterer, pairwise_coassoc
 from icc_v1 import InvariantCoreConsensus
-from src.icc.metrics import evaluate_all
+from icc.metrics import evaluate_all
 
 
 def align_labels_hungarian(y_true, y_pred):

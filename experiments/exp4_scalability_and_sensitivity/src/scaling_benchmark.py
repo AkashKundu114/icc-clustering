@@ -16,7 +16,7 @@ import pandas as pd
 root_dir = Path(__file__).resolve().parent.parent.parent.parent
 sys.path.insert(0, str(root_dir))
 
-from src.icc.core import run_clusterer, pairwise_coassoc, adjusted_rand_score
+from icc.core import run_clusterer, pairwise_coassoc, adjusted_rand_score
 from experiments.exp3_real_world_benchmarks.src.benchmark_models import (
     run_standard_consensus,
     run_li_et_al_2019,

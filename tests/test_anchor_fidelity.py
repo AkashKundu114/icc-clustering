@@ -4,8 +4,8 @@ Unit tests for Experiment 4.3: Anchor Approximation Fidelity Suite.
 
 import numpy as np
 import pytest
-from src.icc.core import build_dataset
-from src.icc.consensus_v2 import InvariantCoreConsensusV2
+from icc.core import build_dataset
+from icc.consensus_v2 import InvariantCoreConsensusV2
 from experiments.exp4_scalability_and_sensitivity.src.anchor_fidelity_benchmark import (
     run_icc_v2_exact,
     run_fidelity_sweep,
@@ -31,7 +31,7 @@ def test_icc_v2_exact_output_shape_and_clustering():
 def test_anchor_fidelity_gap_bounded():
     """Verify that Reduced and Exact have close clustering accuracy (small delta_ari)."""
     X, y = build_dataset(d_noise=50, signal_dim=2, n_per_cluster=40, k=3, noise_seed=42)
-    from src.icc.metrics import evaluate_all
+    from icc.metrics import evaluate_all
 
     model_red = InvariantCoreConsensusV2(n_clusters=3, n_base_models=10, n_anchors=20, random_state=42)
     labels_red = model_red.fit_predict(X)

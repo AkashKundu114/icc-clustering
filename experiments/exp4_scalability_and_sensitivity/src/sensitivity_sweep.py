@@ -18,8 +18,8 @@ import pandas as pd
 root_dir = Path(__file__).resolve().parent.parent.parent.parent
 sys.path.insert(0, str(root_dir))
 
-from src.icc.core import run_clusterer, pairwise_coassoc
-from src.icc.metrics import evaluate_all
+from icc.core import run_clusterer, pairwise_coassoc
+from icc.metrics import evaluate_all
 from experiments.exp3_real_world_benchmarks.src.dataset_loader import load_benchmark_dataset
 from experiments.exp4_scalability_and_sensitivity.src.scaling_benchmark import generate_benchmark_synthetic
 

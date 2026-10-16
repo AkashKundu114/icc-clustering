@@ -18,7 +18,7 @@ sys.path.insert(0, str(root_dir))
 
 from experiments.exp3_real_world_benchmarks.src.dataset_loader import load_benchmark_dataset
 from experiments.exp3_real_world_benchmarks.src.benchmark_models import run_icc_v2, pairwise_coassoc, run_clusterer
-from src.icc.core import adjusted_rand_score
+from icc.core import adjusted_rand_score
 
 OUTPUT_CSV = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "exp3_3_inductive_real_world.csv")
 FIG_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "figures", "fig16_inductive_generalization_real_world.png")

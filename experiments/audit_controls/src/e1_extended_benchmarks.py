@@ -46,9 +46,9 @@ from sklearn.metrics import (
 
 warnings.filterwarnings("ignore")
 
-from src.icc.consensus_v2 import InvariantCoreConsensusV2
-from src.icc.consensus import InvariantCoreConsensus as ICCv1
-from src.icc.core import run_clusterer
+from icc.consensus_v2 import InvariantCoreConsensusV2
+from icc.consensus import InvariantCoreConsensus as ICCv1
+from icc.core import run_clusterer
 
 CACHE_DIR = _ROOT / "experiments" / "exp3_real_world_benchmarks" / "data" / "cache"
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
@@ -114,7 +114,7 @@ def load_or_fetch_dataset(spec):
         return X, y
         
     elif spec["source"] == "registry":
-        from src.icc.datasets.registry import load_dataset
+        from icc.datasets.registry import load_dataset
         X, y, meta = load_dataset(name)
         if hasattr(X, "toarray"):
             X = X.toarray()
@@ -151,7 +151,7 @@ def run_single_model(model_name, X, k, seed):
         sub_d = max(2, int(0.3 * D))
         P = [run_clusterer("kmeans", X[:, rng.choice(D, size=sub_d, replace=False)], k, seed=int(rng.integers(1e6)))
              for _ in range(25)]
-        from src.icc.core import pairwise_coassoc
+        from icc.core import pairwise_coassoc
         S = pairwise_coassoc(P)
         from sklearn.cluster import SpectralClustering
         sc = SpectralClustering(n_clusters=k, affinity="precomputed", random_state=seed, assign_labels="kmeans")
@@ -160,13 +160,13 @@ def run_single_model(model_name, X, k, seed):
         # Co-association matrix with dense spectral clustering
         rng = np.random.default_rng(seed)
         P = [run_clusterer("kmeans", X, k, seed=int(rng.integers(1e6))) for _ in range(25)]
-        from src.icc.core import pairwise_coassoc
+        from icc.core import pairwise_coassoc
         S = pairwise_coassoc(P)
         from sklearn.cluster import SpectralClustering
         sc = SpectralClustering(n_clusters=k, affinity="precomputed", random_state=seed, assign_labels="kmeans")
         labels = sc.fit_predict(S)
     elif model_name == "FCAG":
-        from src.icc.baselines.anchor import FastConsensusAnchorGraph
+        from icc.baselines.anchor import FastConsensusAnchorGraph
         model = FastConsensusAnchorGraph(n_clusters=k, n_anchors=min(30, N), random_state=seed)
         labels = model.fit_predict(X)
     elif model_name == "ICC_v1":

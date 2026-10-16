@@ -1,8 +1,8 @@
 import warnings, numpy as np, pandas as pd, glob, os
 warnings.filterwarnings("ignore")
 from sklearn.metrics import adjusted_rand_score as ari
-from src.icc.core import build_dataset
-from src.icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
+from icc.core import build_dataset
+from icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
 print("== path equivalence: dense vs scalable branch (N=900, D=500, 4 seeds) ==")
 rows=[]
 for kind in ["gaussian","student_t"]:

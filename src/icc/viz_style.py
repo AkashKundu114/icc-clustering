@@ -12,50 +12,36 @@ Provides:
 
 import matplotlib.pyplot as plt
 
-# Canonical Color Palette for Benchmarked Models
 MODEL_PALETTE = {
-    # Proposed Hero Method
-    "ICC_v2": "#d62728",            # Vibrant Crimson / Hero
+    "ICC_v2": "#d62728",
     "ICC-v2": "#d62728",
     "ICC_v2 (Ours)": "#d62728",
-    "ICC_v2_exact": "#1f77b4",       # Muted Blue for Exact O(N^2) comparison
-
-    # Ablation / Predecessor
-    "ICC_v1": "#e377c2",            # Soft Raspberry / Magenta
+    "ICC_v2_exact": "#1f77b4",
+    "ICC_v1": "#e377c2",
     "ICC-v1": "#e377c2",
-
-    # Scalable Anchor Competitors
-    "FCAG": "#17becf",              # Deep Teal / Cyan
-    "FastMVC": "#bcbd22",           # Warm Olive Gold
-
-    # Deep Clustering
-    "DEC": "#9467bd",               # Royal Amethyst / Purple
+    "FCAG": "#17becf",
+    "FastMVC": "#bcbd22",
+    "DEC": "#9467bd",
     "IDEC": "#8c564b",
-
-    # Classical Consensus
-    "Standard_Consensus": "#ff7f0e", # Deep Amber Orange
+    "Standard_Consensus": "#ff7f0e",
     "Standard Consensus": "#ff7f0e",
-    "Li_et_al_2019": "#8c564b",      # Warm Sienna / Bronze
+    "Li_et_al_2019": "#8c564b",
     "Li et al. (2019)": "#8c564b",
     "Li et al.": "#8c564b",
-
-    # Classical Single Models
-    "K-Means": "#1f77b4",           # Classic Steel Blue
+    "K-Means": "#1f77b4",
     "kmeans": "#1f77b4",
-    "Spectral": "#2ca02c",          # Forest Green
+    "Spectral": "#2ca02c",
     "spectral": "#2ca02c",
-    "Ward": "#7f7f7f",              # Slate Gray
+    "Ward": "#7f7f7f",
     "ward": "#7f7f7f",
-    "FCM": "#393b79",               # Deep Indigo / Navy
+    "FCM": "#393b79",
     "fcm": "#393b79",
     "GMM": "#ffbb78",
     "gmm": "#ffbb78",
-
-    # Pooled
     "ALL_POOLED": "#222222",
 }
 
-# Distinct marker shapes for print and colorblind accessibility
+
 MODEL_MARKERS = {
     "ICC_v2": "*",
     "ICC-v2": "*",
@@ -112,53 +98,44 @@ def set_academic_style():
     meeting IEEE Transactions on Knowledge and Data Engineering (TKDE) requirements.
     """
     plt.style.use("default")
-    plt.rcParams.update({
-        # Typography: Serif with Computer Modern Math
-        "font.family": "serif",
-        "font.serif": ["Times New Roman", "DejaVu Serif", "Times", "Computer Modern Roman"],
-        "mathtext.fontset": "cm",
-        "font.size": 11.5,
-        "axes.labelsize": 13.0,
-        "axes.titlesize": 13.5,
-        "xtick.labelsize": 11.5,
-        "ytick.labelsize": 11.5,
-        "legend.fontsize": 11.0,
-        "figure.titlesize": 15.0,
-
-        # Line & Marker Aesthetics
-        "lines.linewidth": 2.4,
-        "lines.markersize": 7.0,
-        "lines.markeredgewidth": 1.0,
-
-        # Clean Spines & Background
-        "axes.facecolor": "#ffffff",
-        "figure.facecolor": "#ffffff",
-        "axes.edgecolor": "#333333",
-        "axes.linewidth": 0.9,
-        "axes.axisbelow": True,
-
-        # Subtle, Non-Intrusive Grid
-        "axes.grid": True,
-        "grid.color": "#e0e0e0",
-        "grid.linestyle": "--",
-        "grid.linewidth": 0.65,
-        "grid.alpha": 0.7,
-
-        # Elegant Legends
-        "legend.frameon": True,
-        "legend.framealpha": 0.92,
-        "legend.facecolor": "#ffffff",
-        "legend.edgecolor": "#d0d0d0",
-        "legend.fancybox": True,
-        "legend.borderaxespad": 0.6,
-        "legend.borderpad": 0.5,
-
-        # High-Resolution Output
-        "figure.dpi": 300,
-        "savefig.dpi": 300,
-        "savefig.bbox": "tight",
-        "savefig.pad_inches": 0.05,
-    })
+    plt.rcParams.update(
+        {
+            "font.family": "serif",
+            "font.serif": ["Times New Roman", "DejaVu Serif", "Times", "Computer Modern Roman"],
+            "mathtext.fontset": "cm",
+            "font.size": 11.5,
+            "axes.labelsize": 13.0,
+            "axes.titlesize": 13.5,
+            "xtick.labelsize": 11.5,
+            "ytick.labelsize": 11.5,
+            "legend.fontsize": 11.0,
+            "figure.titlesize": 15.0,
+            "lines.linewidth": 2.4,
+            "lines.markersize": 7.0,
+            "lines.markeredgewidth": 1.0,
+            "axes.facecolor": "#ffffff",
+            "figure.facecolor": "#ffffff",
+            "axes.edgecolor": "#333333",
+            "axes.linewidth": 0.9,
+            "axes.axisbelow": True,
+            "axes.grid": True,
+            "grid.color": "#e0e0e0",
+            "grid.linestyle": "--",
+            "grid.linewidth": 0.65,
+            "grid.alpha": 0.7,
+            "legend.frameon": True,
+            "legend.framealpha": 0.92,
+            "legend.facecolor": "#ffffff",
+            "legend.edgecolor": "#d0d0d0",
+            "legend.fancybox": True,
+            "legend.borderaxespad": 0.6,
+            "legend.borderpad": 0.5,
+            "figure.dpi": 300,
+            "savefig.dpi": 300,
+            "savefig.bbox": "tight",
+            "savefig.pad_inches": 0.05,
+        }
+    )
 
 
 def clean_spines(ax, keep=("left", "bottom")):
@@ -180,11 +157,13 @@ def add_subfig_label(ax, label: str, loc: str = "top_left", pad: float = 0.02):
     """
     if loc == "top_left":
         ax.text(
-            pad, 1.0 - pad, label,
+            pad,
+            1.0 - pad,
+            label,
             transform=ax.transAxes,
             fontsize=11.5,
             fontweight="bold",
             va="top",
             ha="left",
-            bbox=dict(boxstyle="square,pad=0.2", fc="white", ec="none", alpha=0.85)
+            bbox=dict(boxstyle="square,pad=0.2", fc="white", ec="none", alpha=0.85),
         )

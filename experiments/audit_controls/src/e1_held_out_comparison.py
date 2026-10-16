@@ -52,9 +52,9 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parents[3]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.icc.core import run_clusterer, pairwise_coassoc
-from src.icc.consensus import InvariantCoreConsensus as ICCv1
-from src.icc.consensus_v2 import InvariantCoreConsensusV2 as ICCv2
+from icc.core import run_clusterer, pairwise_coassoc
+from icc.consensus import InvariantCoreConsensus as ICCv1
+from icc.consensus_v2 import InvariantCoreConsensusV2 as ICCv2
 
 CACHE_DIR = REPO_ROOT / "experiments" / "exp3_real_world_benchmarks" / "data" / "cache"
 OUTPUT_DIR = REPO_ROOT / "experiments" / "audit_controls" / "data"

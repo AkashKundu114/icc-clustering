@@ -28,15 +28,15 @@ root_dir = Path(__file__).resolve().parents[3]
 if str(root_dir) not in sys.path:
     sys.path.insert(0, str(root_dir))
 
-from src.icc.baselines.classical import run_kmeans
-from src.icc.baselines.consensus import (
+from icc.baselines.classical import run_kmeans
+from icc.baselines.consensus import (
     run_icc_v1,
     run_icc_v2,
     run_li_et_al_2019,
     run_standard_consensus,
 )
-from src.icc.datasets.registry import load_dataset
-from src.icc.metrics import evaluate_all
+from icc.datasets.registry import load_dataset
+from icc.metrics import evaluate_all
 
 EXP_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = EXP_DIR / "data"

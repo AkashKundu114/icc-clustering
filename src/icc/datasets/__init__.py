@@ -10,10 +10,10 @@ Supports 13 benchmark datasets across 7 domains:
   - scRNA-seq (Zheng68k PBMC, Tabula Muris)
 
 Usage:
-    from src.icc.datasets import load_dataset, list_datasets
+    from icc.datasets import load_dataset, list_datasets
     X, y, meta = load_dataset("leukemia")
 """
 
-from .registry import load_dataset, list_datasets, get_dataset_info, DatasetInfo, preprocess_dataset
+from .registry import DatasetInfo, get_dataset_info, list_datasets, load_dataset, preprocess_dataset
 
 __all__ = ["load_dataset", "list_datasets", "get_dataset_info", "DatasetInfo", "preprocess_dataset"]

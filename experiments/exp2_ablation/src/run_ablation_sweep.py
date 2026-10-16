@@ -17,9 +17,9 @@ root_dir = curr_dir.parent.parent.parent
 if str(root_dir) not in sys.path:
     sys.path.insert(0, str(root_dir))
 
-from src.icc.core import build_dataset
-from src.icc.metrics import evaluate_all
-from src.icc.datasets.registry import load_dataset
+from icc.core import build_dataset
+from icc.metrics import evaluate_all
+from icc.datasets.registry import load_dataset
 from ablation_engine import run_icc_variant
 
 VARIANTS = [

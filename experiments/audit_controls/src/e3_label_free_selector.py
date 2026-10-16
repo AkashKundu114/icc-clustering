@@ -31,8 +31,8 @@ from sklearn.metrics import silhouette_score
 
 warnings.filterwarnings("ignore")
 
-from src.icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
-from src.icc.core import run_clusterer, pairwise_coassoc
+from icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
+from icc.core import run_clusterer, pairwise_coassoc
 
 def evaluate_pool_metrics(X, k, pool_frac, seed=42, n_base_models=25, n_anchors=30):
     N, D = X.shape

@@ -25,7 +25,7 @@ if str(root_dir) not in sys.path:
 src_dir = Path(__file__).resolve().parent / "experiment_0_suite" / "src"
 sys.path.insert(0, str(src_dir))
 from exp0_core import build_dataset, run_clusterer, pairwise_coassoc
-from src.icc.metrics import evaluate_all, adjusted_rand_score
+from icc.metrics import evaluate_all, adjusted_rand_score
 
 
 # ==============================================================================

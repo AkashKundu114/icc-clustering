@@ -10,8 +10,8 @@ except ImportError:
     import psutil
     def get_rss(): return psutil.Process().memory_info().rss / 1024 / 1024
 
-from src.icc.core import build_dataset
-from src.icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
+from icc.core import build_dataset
+from icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
 N=int(sys.argv[1]); D=int(sys.argv[2]); sz=[N//3,N//3,N-2*(N//3)]
 X,y=build_dataset(D-2,"gaussian",noise_seed=0,sizes=sz,k=3,signal_dim=2)
 base=get_rss()

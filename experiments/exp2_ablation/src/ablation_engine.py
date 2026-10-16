@@ -27,9 +27,9 @@ root_dir = Path(__file__).resolve().parent.parent.parent.parent
 if str(root_dir) not in sys.path:
     sys.path.insert(0, str(root_dir))
 
-from src.icc.core import run_clusterer, adjusted_rand_score
-from src.icc.baselines.consensus import run_standard_consensus, run_icc_v1
-from src.icc.consensus_v2 import InvariantCoreConsensusV2
+from icc.core import run_clusterer, adjusted_rand_score
+from icc.baselines.consensus import run_standard_consensus, run_icc_v1
+from icc.consensus_v2 import InvariantCoreConsensusV2
 
 
 def extract_vssg_candidate_features(X: np.ndarray, k: int, threshold: float = 5.0 / 9.0) -> np.ndarray:

@@ -5,8 +5,8 @@ warnings.filterwarnings("ignore")
 from scipy.stats import kurtosis, skew
 from sklearn.cluster import KMeans
 from sklearn.metrics import adjusted_rand_score as ari
-from src.icc.core import build_dataset
-from src.icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
+from icc.core import build_dataset
+from icc.consensus_v2 import InvariantCoreConsensusV2 as ICC
 
 def run(X,y,k,seed):
     out={}

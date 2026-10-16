@@ -16,7 +16,7 @@ if str(root_dir) not in sys.path:
     sys.path.insert(0, str(root_dir))
 
 from exp0_core import build_dataset, run_clusterer, pairwise_coassoc, adjusted_rand_score, CLUSTERERS
-from src.icc.metrics import evaluate_all
+from icc.metrics import evaluate_all
 
 M_RUNS = 20          # independent runs per (clusterer, condition)
 K = 3

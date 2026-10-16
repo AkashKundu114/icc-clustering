@@ -16,7 +16,7 @@ sys.path.insert(0, str(root_dir))
 
 from experiments.exp3_real_world_benchmarks.src.dataset_loader import load_benchmark_dataset, DATASET_CONFIGS
 from experiments.exp3_real_world_benchmarks.src.benchmark_models import MODELS
-from src.icc.core import adjusted_rand_score, normalized_mutual_info_score
+from icc.core import adjusted_rand_score, normalized_mutual_info_score
 
 OUTPUT_CSV = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "exp3_benchmark_results.csv")
 SEEDS = [42, 101, 202, 303, 404, 505, 606, 707, 808, 909]

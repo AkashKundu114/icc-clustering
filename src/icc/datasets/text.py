@@ -8,7 +8,8 @@ Datasets:
 
 import os
 from pathlib import Path
-from typing import Tuple, Dict, Any, Optional
+from typing import Any, Dict, Optional, Tuple
+
 import numpy as np
 from sklearn.datasets import fetch_20newsgroups
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -56,7 +57,6 @@ def load_20newsgroups(
     os.makedirs(c_dir, exist_ok=True)
     cache_path = os.path.join(c_dir, "newsgroups20.npz")
 
-    # 1. Check local cache
     if os.path.exists(cache_path) and not force_download:
         with np.load(cache_path) as data:
             X = data["X"]
@@ -72,7 +72,6 @@ def load_20newsgroups(
                 }
                 return X, y, metadata
 
-    # 2. Fetch raw dataset
     print("[*] Fetching 20 Newsgroups (subset='all', remove headers/footers/quotes)...")
     raw = fetch_20newsgroups(
         subset="all",
@@ -81,7 +80,6 @@ def load_20newsgroups(
     raw_texts = raw.data
     raw_y = np.asarray(raw.target, dtype=np.int64)
 
-    # 3. TF-IDF vectorization
     print(f"[*] Vectorizing {len(raw_texts)} documents (max_features={n_features}, sublinear_tf=True, min_df=5)...")
     vectorizer = TfidfVectorizer(
         max_features=n_features,
@@ -90,11 +88,9 @@ def load_20newsgroups(
     )
     X_sparse = vectorizer.fit_transform(raw_texts)
 
-    # 4. Convert sparse to dense numpy array (float32 to conserve RAM while preserving precision)
     X = X_sparse.toarray().astype(np.float32)
     y = raw_y
 
-    # 5. Cache as newsgroups20.npz
     np.savez_compressed(cache_path, X=X, y=y)
     print(f"[+] Cached 'newsgroups20' to {cache_path}: shape={X.shape}, K={len(np.unique(y))}")
 

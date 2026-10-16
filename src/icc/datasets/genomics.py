@@ -15,12 +15,12 @@ Supports all 8 high-dimensional benchmark datasets:
 
 import os
 from pathlib import Path
-from typing import Dict, Any, Tuple
+from typing import Any, Dict, Optional, Tuple
+
 import numpy as np
 from sklearn.datasets import fetch_openml
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 
-# Project root resolution (3 levels up from src/icc/datasets/genomics.py)
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 CACHE_DIR = os.path.abspath(os.path.join(_PROJECT_ROOT, "data", "cache"))
 os.makedirs(CACHE_DIR, exist_ok=True)
@@ -38,7 +38,7 @@ DATASET_CONFIGS: Dict[str, Dict[str, Any]] = {
         "openml_name": "madelon",
         "version": 1,
         "as_frame": False,
-        "subsample_n": 500,  # 500 stratified samples for fast multi-trial sweeps
+        "subsample_n": 500,
         "description": "Madelon XOR + distractor noise (N=500, D=500, K=2)",
     },
     "colon": {
@@ -86,7 +86,7 @@ DATASET_CONFIGS: Dict[str, Dict[str, Any]] = {
 }
 
 
-def get_cached_path(dataset_name: str, cache_dir: str = None) -> str:
+def get_cached_path(dataset_name: str, cache_dir: Optional[str] = None) -> str:
     """Return the absolute file path to the cached .npz file."""
     c_dir = cache_dir or CACHE_DIR
     return os.path.join(c_dir, f"{dataset_name}.npz")
@@ -94,19 +94,19 @@ def get_cached_path(dataset_name: str, cache_dir: str = None) -> str:
 
 def load_genomics_dataset(
     dataset_name: str,
-    cache_dir: str = None,
+    cache_dir: Optional[str] = None,
     force_download: bool = False,
 ) -> Tuple[np.ndarray, np.ndarray, Dict[str, Any]]:
     """
     Load a benchmark dataset, using local disk cache if available or OpenML if not.
-    
+
     Preprocessing Pipeline:
         1. Subsample points if subsample_n configured
         2. Impute NaNs with column-wise means
         3. Standardize features via StandardScaler (mean=0, var=1)
         4. Encode ground-truth labels into contiguous integer IDs [0, K-1]
         5. Cache preprocessed (X, y) to .npz file
-    
+
     Returns:
         X (np.ndarray): Standardized feature matrix (N, D)
         y (np.ndarray): Integer cluster ground-truth labels (N,)
@@ -114,8 +114,7 @@ def load_genomics_dataset(
     """
     if dataset_name not in DATASET_CONFIGS:
         raise KeyError(
-            f"Dataset '{dataset_name}' not recognized in genomics suite. "
-            f"Available: {list(DATASET_CONFIGS.keys())}"
+            f"Dataset '{dataset_name}' not recognized in genomics suite. Available: {list(DATASET_CONFIGS.keys())}"
         )
 
     cfg = DATASET_CONFIGS[dataset_name]
@@ -123,7 +122,6 @@ def load_genomics_dataset(
     os.makedirs(c_dir, exist_ok=True)
     cache_path = get_cached_path(dataset_name, cache_dir=c_dir)
 
-    # 1. Check local cache
     if os.path.exists(cache_path) and not force_download:
         data = np.load(cache_path)
         X = data["X"]
@@ -138,7 +136,6 @@ def load_genomics_dataset(
         }
         return X, y, metadata
 
-    # 2. Fetch raw dataset from OpenML
     print(f"[*] Downloading '{dataset_name}' from OpenML...")
     raw = fetch_openml(
         cfg["name"],
@@ -154,7 +151,6 @@ def load_genomics_dataset(
         raw_X = np.asarray(raw.data, dtype=np.float64)
         raw_y = np.asarray(raw.target)
 
-    # 3. Subsample if configured
     if "subsample_n" in cfg and cfg["subsample_n"] < raw_X.shape[0]:
         rng = np.random.default_rng(42)
         indices = []
@@ -164,21 +160,18 @@ def load_genomics_dataset(
             c_idx = np.where(raw_y == c)[0]
             sampled = rng.choice(c_idx, size=min(per_class, len(c_idx)), replace=False)
             indices.extend(sampled)
-        indices = np.array(indices)
-        raw_X = raw_X[indices]
-        raw_y = raw_y[indices]
+        sub_indices = np.array(indices)
+        raw_X = raw_X[sub_indices]
+        raw_y = raw_y[sub_indices]
 
-    # 4. Impute NaNs if any
     if np.isnan(raw_X).any():
         col_means = np.nanmean(raw_X, axis=0)
         inds = np.where(np.isnan(raw_X))
         raw_X[inds] = np.take(col_means, inds[1])
 
-    # 5. Standardize & Label Encode
     X = StandardScaler().fit_transform(raw_X)
     y = LabelEncoder().fit_transform(raw_y)
 
-    # 6. Save compressed cache
     np.savez_compressed(cache_path, X=X, y=y)
     print(f"[+] Cached '{dataset_name}': shape={X.shape}, classes={len(np.unique(y))}")
 

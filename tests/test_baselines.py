@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 
 from experiments.exp3_real_world_benchmarks.src.benchmark_models import MODELS
-from src.icc.baselines import ModelMetadata, get_model, list_models
+from icc.baselines import ModelMetadata, get_model, list_models
 
 try:
     import tensorflow  # noqa: F401
@@ -52,7 +52,7 @@ def test_stubs_raise_not_implemented():
 
 
 def test_run_fcag_direct():
-    from src.icc.baselines.anchor import run_fcag
+    from icc.baselines.anchor import run_fcag
     rng = np.random.default_rng(42)
     X = rng.normal(size=(50, 10))
     labels, elapsed, meta = run_fcag(X, k=2, n_anchors=20, seed=42)
@@ -66,7 +66,7 @@ def test_run_fcag_direct():
 
 
 def test_run_fastmvc_direct():
-    from src.icc.baselines.anchor import run_fastmvc
+    from icc.baselines.anchor import run_fastmvc
     rng = np.random.default_rng(42)
     X = rng.normal(size=(50, 10))
     labels, elapsed, meta = run_fastmvc(X, k=2, n_anchors=20, n_views=5, seed=42)
@@ -84,7 +84,7 @@ def test_run_fastmvc_direct():
 
 @pytest.mark.skipif(not HAS_DEEP, reason="tensorflow/keras not installed")
 def test_run_dec_direct():
-    from src.icc.baselines.deep import run_dec
+    from icc.baselines.deep import run_dec
     rng = np.random.default_rng(42)
     X = rng.normal(size=(40, 8)).astype(np.float32)
     labels, elapsed, meta = run_dec(
@@ -103,7 +103,7 @@ def test_dec_missing_tensorflow_error(monkeypatch):
     import sys
     monkeypatch.setitem(sys.modules, "tensorflow", None)
     monkeypatch.setitem(sys.modules, "keras", None)
-    from src.icc.baselines.deep import _check_tensorflow
+    from icc.baselines.deep import _check_tensorflow
     with pytest.raises(ImportError, match="TensorFlow and Keras are required for the DEC baseline"):
         _check_tensorflow()
 

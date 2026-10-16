@@ -39,11 +39,11 @@ from tqdm import tqdm
 root_dir = Path(__file__).resolve().parent.parent.parent.parent
 sys.path.insert(0, str(root_dir))
 
-from src.icc.viz_style import set_academic_style, clean_spines
+from icc.viz_style import set_academic_style, clean_spines
 
 from experiments.exp3_real_world_benchmarks.src.benchmark_models import MODELS
-from src.icc.datasets.registry import list_datasets, load_dataset
-from src.icc.metrics import evaluate_all
+from icc.datasets.registry import list_datasets, load_dataset
+from icc.metrics import evaluate_all
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
 FIG_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "figures")

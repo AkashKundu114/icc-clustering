@@ -15,9 +15,9 @@ import pandas as pd
 from scipy.stats import kurtosis, skew
 from sklearn.feature_selection import mutual_info_classif
 
-from src.icc.core import build_dataset
-from src.icc.consensus_v2 import InvariantCoreConsensusV2
-from src.icc.datasets import load_dataset
+from icc.core import build_dataset
+from icc.consensus_v2 import InvariantCoreConsensusV2
+from icc.datasets import load_dataset
 
 EXP_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = EXP_DIR / "data"

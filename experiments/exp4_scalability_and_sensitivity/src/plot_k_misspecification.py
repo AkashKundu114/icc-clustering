@@ -14,7 +14,7 @@ root_dir = Path(__file__).resolve().parents[3]
 if str(root_dir) not in sys.path:
     sys.path.insert(0, str(root_dir))
 
-from src.icc.viz_style import set_academic_style, clean_spines
+from icc.viz_style import set_academic_style, clean_spines
 
 set_academic_style()
 

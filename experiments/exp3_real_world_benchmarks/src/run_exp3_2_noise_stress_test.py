@@ -26,7 +26,7 @@ from experiments.exp3_real_world_benchmarks.src.benchmark_models import (
     run_icc_v1,
     run_icc_v2
 )
-from src.icc.core import adjusted_rand_score, normalized_mutual_info_score
+from icc.core import adjusted_rand_score, normalized_mutual_info_score
 
 OUTPUT_CSV = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "exp3_2_noise_stress_test.csv")
 FIG_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "figures", "fig15_noise_corruption_degradation.png")

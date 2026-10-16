@@ -4,18 +4,18 @@ Unit tests for the ICC dataset registry and loaders (src/icc/datasets).
 
 import pytest
 import numpy as np
-from src.icc.datasets import (
+from icc.datasets import (
     load_dataset,
     list_datasets,
     get_dataset_info,
     DatasetInfo,
     preprocess_dataset,
 )
-from src.icc.datasets.text import load_20newsgroups, load_rcv1
-from src.icc.datasets.image import load_yale_b, load_coil20
-from src.icc.datasets.spectral import load_indian_pines
-from src.icc.datasets.audio import load_isolet
-from src.icc.datasets.scrnaseq import load_zheng68k, load_tabula_muris
+from icc.datasets.text import load_20newsgroups, load_rcv1
+from icc.datasets.image import load_yale_b, load_coil20
+from icc.datasets.spectral import load_indian_pines
+from icc.datasets.audio import load_isolet
+from icc.datasets.scrnaseq import load_zheng68k, load_tabula_muris
 
 try:
     import scanpy  # noqa: F401
@@ -25,7 +25,7 @@ except (ImportError, Exception):
 
 
 def _is_zheng68k_cached():
-    from src.icc.datasets.scrnaseq import _DEFAULT_CACHE
+    from icc.datasets.scrnaseq import _DEFAULT_CACHE
     return (_DEFAULT_CACHE / "zheng68k.npz").exists()
 
 
@@ -198,7 +198,7 @@ def test_preprocess_dataset():
 def test_scanpy_not_installed_error(monkeypatch):
     import sys
     monkeypatch.setitem(sys.modules, "scanpy", None)
-    from src.icc.datasets.scrnaseq import _check_scanpy
+    from icc.datasets.scrnaseq import _check_scanpy
     with pytest.raises(ImportError, match="scanpy is required for scRNA-seq datasets"):
         _check_scanpy()
 

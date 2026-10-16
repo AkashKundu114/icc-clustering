@@ -251,16 +251,16 @@ python experiments/exp5_extreme_scale/run_exp5.py --reproduce-plots
 The package provides a scikit-learn-compatible estimator interface:
 
 ```python
-from src.icc import InvariantCoreConsensusV2
-from src.icc.datasets import load_dataset
-from src.icc.metrics import evaluate_all
+from icc import ICC
+from icc.datasets.registry import load_dataset
+from icc.metrics import evaluate_all
 
 # 1. Load benchmark dataset
 X, y_true, meta = load_dataset("leukemia")
 print(f"Loaded {meta['display_name']}: N={X.shape[0]}, D={X.shape[1]}")
 
 # 2. Initialize and fit the ICC-v2 estimator
-model = InvariantCoreConsensusV2(
+model = ICC(
     n_clusters=2,
     n_base_models=25,
     n_anchors=40,
@@ -280,10 +280,12 @@ print(f"  Adjusted Mutual Info (AMI):      {metrics['ami']:.4f}")
 print(f"  V-Measure:                       {metrics['v_measure']:.4f}")
 print(f"  Fowlkes-Mallows Index (FM):      {metrics['fm_index']:.4f}")
 
-# 4. Inductive out-of-sample prediction
+# 4. Inductive out-of-sample prediction and embedding coordinates
 out_of_sample_points = X[:5]
 predicted_clusters = model.predict(out_of_sample_points)
 print("Inductive predictions for query instances:", predicted_clusters)
+embedding = model.transform()
+print(f"Spectral embedding shape: {embedding.shape}")
 ```
 
 ---

@@ -13,9 +13,9 @@ import numpy as np
 import pytest
 from scipy.stats import entropy
 
-from src.icc.consensus_v2 import InvariantCoreConsensusV2
-from src.icc.core import build_dataset
-from src.icc.metrics import evaluate_all
+from icc.consensus_v2 import InvariantCoreConsensusV2
+from icc.core import build_dataset
+from icc.metrics import evaluate_all
 
 
 def test_fit_sets_inductive_centroids():

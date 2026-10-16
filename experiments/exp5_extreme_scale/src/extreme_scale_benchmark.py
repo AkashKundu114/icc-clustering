@@ -32,8 +32,8 @@ root_dir = Path(__file__).resolve().parents[3]
 if str(root_dir) not in sys.path:
     sys.path.insert(0, str(root_dir))
 
-from src.icc.consensus_v2 import InvariantCoreConsensusV2
-from src.icc.metrics import evaluate_all
+from icc.consensus_v2 import InvariantCoreConsensusV2
+from icc.metrics import evaluate_all
 
 EXP_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = EXP_DIR / "data"

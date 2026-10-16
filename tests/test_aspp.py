@@ -7,9 +7,9 @@ import pytest
 import numpy as np
 import pandas as pd
 
-from src.icc.consensus_v2 import InvariantCoreConsensusV2
-from src.icc.aspp import ASPPConfig, AnchorSpacePerturbationProfiler, ASPP_FAMILIES
-from src.icc import ASPPConfig as RootASPPConfig, AnchorSpacePerturbationProfiler as RootProfiler
+from icc.consensus_v2 import InvariantCoreConsensusV2
+from icc.aspp import ASPPConfig, AnchorSpacePerturbationProfiler, ASPP_FAMILIES
+from icc import ASPPConfig as RootASPPConfig, AnchorSpacePerturbationProfiler as RootProfiler
 
 
 def test_aspp_config_defaults_and_overrides():

@@ -20,11 +20,11 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from src.icc.core import build_dataset
-from src.icc.datasets import load_dataset
-from src.icc.metrics import evaluate_all
-from src.icc.baselines.classical import run_kmeans, run_ward, run_spectral, run_fcm
-from src.icc.baselines.consensus import (
+from icc.core import build_dataset
+from icc.datasets import load_dataset
+from icc.metrics import evaluate_all
+from icc.baselines.classical import run_kmeans, run_ward, run_spectral, run_fcm
+from icc.baselines.consensus import (
     run_standard_consensus,
     run_li_et_al_2019,
     run_icc_v1,

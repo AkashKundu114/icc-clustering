@@ -14,14 +14,14 @@ if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 
 try:
-    from src.icc.datasets.genomics import (
+    from icc.datasets.genomics import (
         DATASET_CONFIGS,
         CACHE_DIR,
         get_cached_path,
         load_benchmark_dataset,
         load_genomics_dataset,
     )
-    from src.icc.datasets import (
+    from icc.datasets import (
         load_dataset,
         list_datasets,
         get_dataset_info,
