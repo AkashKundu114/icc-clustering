@@ -6,7 +6,7 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Tests: Passing](https://img.shields.io/badge/pytest-113%2F113%20passed-brightgreen.svg)]()
+[![Tests: Passing](https://img.shields.io/badge/pytest-114%2F114%20passed-brightgreen.svg)]()
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![IEEE Compliance](https://img.shields.io/badge/IEEE%20TKDE-Compliant%20(Grade%20A%2B)-success.svg)]()
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0003--8246--7316-A6CE39?logo=orcid&logoColor=white)](https://orcid.org/0009-0003-8246-7316)
@@ -16,7 +16,7 @@
 **Contact:** `akash231001001449@technoindiaeducation.com` | `akashkundu11522@gmail.com`
 **ORCID:** [0009-0003-8246-7316](https://orcid.org/0009-0003-8246-7316)
 
-[**Paper Status**](#citation-and-academic-context) | [**Quickstart**](#environment-setup-and-installation) | [**Reproducibility Guide**](#reproduction-cli-guide) | [**Citation**](#citation-and-academic-context)
+[**Architecture**](docs/ARCHITECTURE.md) | [**Experiments**](docs/EXPERIMENTS.md) | [**Formulation**](docs/MATHEMATICAL_FORMULATION.md) | [**Reproducibility**](docs/REPRODUCIBILITY.md) | [**Quickstart**](#environment-setup-and-installation) | [**Citation**](#citation-and-academic-context)
 
 </div>
 
@@ -51,30 +51,36 @@ icc-clustering/
 ├── data/                                      # Benchmark data directories (cache ignored by Git)
 │   ├── cache/                                 # Preprocessed array storage (.npz)
 │   └── raw/                                   # Raw benchmark matrices and downloads
-├── src/                                       # Core implementation package (`icc`)
-│   └── icc/
-│       ├── __init__.py                        # Top-level API exports
-│       ├── aspp.py                            # Anchor-Space Perturbation Profiler (ASPP)
-│       ├── consensus.py                       # InvariantCoreConsensus (ICC-v1 anchor-only baseline)
-│       ├── consensus_v2.py                    # InvariantCoreConsensusV2 (ICC-v2 production framework)
-│       ├── core.py                            # Synthetic generators, clusterer wrappers, co-association
-│       ├── metrics.py                         # Multi-metric evaluation (ARI, NMI, AMI, V-Measure, FM-Index)
-│       ├── diagnostics.py                     # Canonical partition mapping and stability diagnostics
-│       ├── datasets/                          # Multi-domain dataset loaders
-│       │   ├── __init__.py                    # Unified loader entrypoint
-│       │   ├── registry.py                    # YAML-driven dataset discovery and caching engine
-│       │   ├── genomics.py                    # Cancer microarray and mass spectrometry loaders
-│       │   ├── text.py                        # 20 Newsgroups TF-IDF sparse text loader
-│       │   ├── audio.py                       # Isolet spoken alphabet phoneme loader
-│       │   ├── spectral.py                    # Indian Pines AVIRIS hyperspectral loader
-│       │   ├── image.py                       # Extended Yale B facial illumination loader
-│       │   └── scrnaseq.py                    # Zheng68k PBMC single-cell RNA-seq loader
-│       └── baselines/                         # Standardized baseline algorithm wrappers
-│           ├── __init__.py                    # Model registry and discovery factory
-│           ├── classical.py                   # Single-model baselines: K-Means, Ward, Spectral, FCM
-│           ├── consensus.py                   # Ensemble baselines: Standard Consensus, Li et al. (2019), ICC
-│           ├── deep.py                        # Deep clustering: DEC (Deep Embedded Clustering)
-│           └── anchor.py                      # Scalable anchor baselines: FCAG (TPAMI 2024), FastMVC (TKDE 2023)
+├── src/                                       # Core implementation packages
+│   ├── icc/                                   # Primary package (`import icc`)
+│   │   ├── __init__.py                        # Top-level API exports
+│   │   ├── algorithm/                         # Modular algorithm interfaces
+│   │   ├── preprocessing/                     # Subspace gating (VSSG) and dataset standardizers
+│   │   ├── evaluation/                        # Clustering metrics and stability diagnostics
+│   │   ├── configuration/                     # Declarative YAML configuration loaders
+│   │   ├── consensus_v2.py                    # InvariantCoreConsensusV2 (ICC-v2 production framework)
+│   │   ├── consensus.py                       # InvariantCoreConsensus (ICC-v1 anchor-only baseline)
+│   │   ├── aspp.py                            # Anchor-Space Perturbation Profiler (ASPP)
+│   │   ├── core.py                            # Synthetic generators, clusterer wrappers, co-association
+│   │   ├── metrics.py                         # Multi-metric evaluation (ARI, NMI, AMI, V-Measure, FM-Index)
+│   │   ├── diagnostics.py                     # Canonical partition mapping and stability diagnostics
+│   │   ├── viz_style.py                       # Publication styling and plotting palettes
+│   │   ├── datasets/                          # Multi-domain dataset loaders
+│   │   │   ├── __init__.py                    # Unified loader entrypoint
+│   │   │   ├── registry.py                    # YAML-driven dataset discovery and caching engine
+│   │   │   ├── genomics.py                    # Cancer microarray and mass spectrometry loaders
+│   │   │   ├── text.py                        # 20 Newsgroups TF-IDF sparse text loader
+│   │   │   ├── audio.py                       # Isolet spoken alphabet phoneme loader
+│   │   │   ├── spectral.py                    # Indian Pines AVIRIS hyperspectral loader
+│   │   │   ├── image.py                       # Extended Yale B facial illumination loader
+│   │   │   └── scrnaseq.py                    # Zheng68k PBMC single-cell RNA-seq loader
+│   │   └── baselines/                         # Standardized baseline algorithm wrappers
+│   │       ├── __init__.py                    # Model registry and discovery factory
+│   │       ├── classical.py                   # Single-model baselines: K-Means, Ward, Spectral, FCM
+│   │       ├── consensus.py                   # Ensemble baselines: Standard Consensus, Li et al. (2019), ICC
+│   │       ├── deep.py                        # Deep clustering: DEC (Deep Embedded Clustering)
+│   │       └── anchor.py                      # Scalable anchor baselines: FCAG (TPAMI 2024), FastMVC (TKDE 2023)
+│   └── icc_clustering/                        # Universal alias package (`import icc_clustering`)
 ├── experiments/                               # Empirical verification and benchmark suites
 │   ├── audit_controls/                        # Statistical audit controls: A2 subspace pool rules, A3 Transfer-Cut, E1 21-dataset benchmarks, E3 pool-size sensitivity
 │   │   ├── src/                               # Reproduction scripts (a2_controls, a3_embedding, e1_extended, e3_pool_curve, etc.)
@@ -85,9 +91,9 @@ icc-clustering/
 │   ├── exp3_real_world_benchmarks/            # Experiment 3: 13-dataset multi-domain benchmarks & missing data
 │   ├── exp4_scalability_and_sensitivity/      # Experiment 4: Scalability, sensitivity, and anchor fidelity
 │   └── exp5_extreme_scale/                    # Experiment 5: Asymptotic scaling stress testing
-├── tests/                                     # Automated test suite (113/113 tests passing)
+├── tests/                                     # Automated test suite (114/114 tests passing)
 │   ├── test_adversarial_inputs.py             # Boundary, NaN/Inf, and security hardening tests (33 tests)
-│   ├── test_consensus_v2.py                   # Core ICC-v2 algorithm tests
+│   ├── test_consensus_v2.py                   # Core ICC-v2 algorithm and modular subpackage tests (10 tests)
 │   ├── test_edge_cases.py                     # Constant feature, duplicate, and small-N edge cases
 │   ├── test_aspp.py                           # Anchor-Space Perturbation Profiling tests
 │   ├── test_datasets.py                       # Dataset loader validation tests
@@ -96,9 +102,13 @@ icc-clustering/
 │   ├── test_exp1_multiclassifier.py           # Multi-classifier pipeline tests
 │   ├── test_anchor_fidelity.py                # Bipartite approximation fidelity tests
 │   └── test_audit_a3.py                       # Transfer-Cut embedding and gating audit tests
-├── docs/                                      # Theoretical proofs, literature surveys, and reports
-│   ├── audit_reports/                         # Methodological & statistical audit reports (Reports 00-11, Remediation 01-12)
-│   └── THEORETICAL_FOUNDATIONS.md             # Formal theorems, propositions, and mathematical proofs
+├── docs/                                      # Comprehensive research documentation
+│   ├── ARCHITECTURE.md                        # Component boundaries, modular design, and data flow
+│   ├── EXPERIMENTS.md                         # Benchmark catalog, configs, and manuscript traceability matrix
+│   ├── MATHEMATICAL_FORMULATION.md            # Formal equations, proofs, and algorithmic code correspondence
+│   ├── REPRODUCIBILITY.md                     # Clean-environment replication guide & workflow commands
+│   ├── THEORETICAL_FOUNDATIONS.md             # Theoretical proofs and asymptotic bounds
+│   └── audit_reports/                         # 13 formal audit chapters & remediation reports
 ├── CONTRIBUTING.md                            # Contributor guidelines and environment setup
 ├── CODE_OF_CONDUCT.md                         # Contributor Covenant standard
 ├── SECURITY.md                                # Security policy and vulnerability disclosure protocol
