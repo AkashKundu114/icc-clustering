@@ -105,6 +105,7 @@ class InvariantCoreConsensusV2:
         embedding: str = "legacy",
         dense_threshold: int = 2000,
         pool_frac: float = 0.15,
+        low_memory: bool = False,
     ):
         if beta is not None:
             import warnings
@@ -117,6 +118,8 @@ class InvariantCoreConsensusV2:
         self.M = n_base_models  # Backward compatibility alias
         # Default anchor budget: max(40, 10*K) ensures K >= 20 is never under-anchored
         effective_anchors = n_anchors if n_anchors is not None else max(40, 10 * n_clusters)
+        if low_memory and n_anchors is None:
+            effective_anchors = min(effective_anchors, 30)
         self.n_anchors = effective_anchors
         self.L = effective_anchors  # Backward compatibility alias
         self.core_quantile = core_quantile
@@ -132,6 +135,20 @@ class InvariantCoreConsensusV2:
         self.pool_mode = pool_mode      # 'legacy' (>=15% floor) | 'robust' (median+c*MAD) | 'gauss' (Bonferroni Gaussian-null) | 'random' (control) | 'null_calibrated' (BC >= 5/9) | 'bc_frac' | 'random_frac'
         self.pool_mad_c = pool_mad_c
         self.pool_alpha = pool_alpha
+        self.low_memory = low_memory
+        if n_clusters < 2:
+            raise ValueError(f"n_clusters must be >= 2, got {n_clusters}")
+        if n_base_models < 1:
+            raise ValueError(f"n_base_models must be >= 1, got {n_base_models}")
+        if n_anchors is not None and n_anchors < 1:
+            raise ValueError(f"n_anchors must be >= 1, got {n_anchors}")
+        if not (0.0 < core_quantile <= 1.0):
+            raise ValueError(f"core_quantile must be in (0, 1], got {core_quantile}")
+        if not (0.0 < subspace_rate <= 1.0):
+            raise ValueError(f"subspace_rate must be in (0, 1], got {subspace_rate}")
+        valid_pool_modes = ("legacy", "bc_frac", "random_frac", "random", "robust", "gauss", "null_calibrated")
+        if pool_mode not in valid_pool_modes:
+            raise ValueError(f"Invalid pool_mode '{pool_mode}'. Must be one of {valid_pool_modes}")
 
         # Fitted attributes
         self.labels_: Optional[np.ndarray] = None
@@ -142,7 +159,9 @@ class InvariantCoreConsensusV2:
         self.feature_scores_: Optional[np.ndarray] = None
         self.selected_features_: Optional[np.ndarray] = None
         self.anchor_centroids_: Optional[np.ndarray] = None
+        self.anchor_centroids_sub_: Optional[np.ndarray] = None
         self.U_emb_: Optional[np.ndarray] = None
+        self.n_features_in_: Optional[int] = None
 
         # ASPP attributes
         self.fingerprints_: Optional[Any] = None
@@ -166,7 +185,16 @@ class InvariantCoreConsensusV2:
             Cluster label assignments in [0, K-1].
         """
         X = np.asarray(X, dtype=np.float64)
+        if X.ndim != 2:
+            raise ValueError(f"Expected 2D feature matrix (N, D), got array with {X.ndim} dimensions and shape {X.shape}.")
         N, D = X.shape
+        if N == 0 or D == 0:
+            raise ValueError(f"Input feature matrix cannot be empty, got shape ({N}, {D}).")
+        if N < self.n_clusters:
+            raise ValueError(f"n_samples={N} must be >= n_clusters={self.n_clusters}.")
+        if np.isnan(X).any() or np.isinf(X).any():
+            raise ValueError("Input feature matrix contains NaN or Inf values. Clean or impute missing data before clustering.")
+        self.n_features_in_ = D
         k = self.n_clusters
         rng = np.random.default_rng(self.random_state)
 
@@ -177,15 +205,17 @@ class InvariantCoreConsensusV2:
         var = np.var(X, axis=0)
         valid_mask = var > 1e-12
         if np.any(valid_mask):
-            X_valid = X[:, valid_mask]
-            kurt = kurtosis(X_valid, axis=0, bias=False) if N >= 4 else kurtosis(X_valid, axis=0)
-            sk = skew(X_valid, axis=0, bias=False) if N >= 3 else skew(X_valid, axis=0)
-            # Finite-sample Sarle Bimodality Coefficient:
-            # Fisher excess kurtosis converted to Pearson kurtosis with finite-sample null correction
+            valid_indices = np.where(valid_mask)[0]
+            n_valid = len(valid_indices)
             finite_corr = 3.0 * ((N - 1) ** 2) / ((N - 2) * (N - 3)) if N >= 4 else 3.0
-            denom = kurt + finite_corr + 1e-5
-            denom = np.fmax(denom, 1e-5)
-            bimodal[valid_mask] = (sk**2 + 1.0) / denom
+            chunk_size = 1000 if (n_valid > 1000 or self.low_memory) else n_valid
+            for ch_start in range(0, n_valid, chunk_size):
+                ch_idx = valid_indices[ch_start : min(ch_start + chunk_size, n_valid)]
+                X_chunk = X[:, ch_idx]
+                kurt = kurtosis(X_chunk, axis=0, bias=False) if N >= 4 else kurtosis(X_chunk, axis=0)
+                sk = skew(X_chunk, axis=0, bias=False) if N >= 3 else skew(X_chunk, axis=0)
+                denom = np.fmax(kurt + finite_corr + 1e-5, 1e-5)
+                bimodal[ch_idx] = (sk**2 + 1.0) / denom
         self.feature_scores_ = bimodal
 
         # ---------------------------------------------------------------------
@@ -272,13 +302,16 @@ class InvariantCoreConsensusV2:
 
         # Exact closed-form determinacy identity via Proposition 2:
         # sum_{j=1}^N S_{ij}^2 = 1/M^2 sum_{m1, m2} C_{m1, m2}(pi_{m1}(i), pi_{m2}(i))
-        # Evaluates exact co-association dispersion in O(M^2 N + M^2 K^2) linear memory without N x N matrix
+        # Evaluates exact co-association dispersion in O(M^2 N + M^2 K^2) linear memory without N x N matrix.
+        # Optimized via exact matrix symmetry: C_{m1, m2}(a, b) == C_{m2, m1}(b, a) reduces evaluations by ~2x.
         lin_sum_sq = np.zeros(N, dtype=np.float64)
         for m1 in range(self.n_base_models):
-            for m2 in range(self.n_base_models):
+            counts_diag = np.bincount(P_stack[m1], minlength=k)
+            lin_sum_sq += counts_diag[P_stack[m1]]
+            for m2 in range(m1 + 1, self.n_base_models):
                 joint = P_stack[m1] * k + P_stack[m2]
                 counts = np.bincount(joint, minlength=k * k)
-                lin_sum_sq += counts[joint]
+                lin_sum_sq += 2.0 * counts[joint]
 
         sample_stability = np.maximum(0.0, (lin_sum_sq / (self.n_base_models ** 2) - 1.0) / max(1, N - 1))
         self.stability_ = sample_stability
@@ -298,9 +331,10 @@ class InvariantCoreConsensusV2:
         self.anchor_indices_ = anchor_idx
 
         P_anchors = P_stack[:, anchor_idx]  # shape (M, L)
-        B = np.zeros((N, L), dtype=np.float64)
+        b_dtype = np.float32 if self.low_memory else np.float64
+        B = np.zeros((N, L), dtype=b_dtype)
         for m in range(self.n_base_models):
-            B += (P_stack[m, :, None] == P_anchors[m, None, :]).astype(np.float64)
+            B += (P_stack[m, :, None] == P_anchors[m, None, :])
         B /= self.n_base_models
 
         # ---------------------------------------------------------------------
@@ -315,8 +349,8 @@ class InvariantCoreConsensusV2:
         deg_inv_sqrt = 1.0 / np.sqrt(np.fmax(deg, 1e-12))
         L_norm = np.eye(L) - (deg_inv_sqrt[:, None] * W_anchor * deg_inv_sqrt[None, :])
 
-        evals, evecs = sla.eigh(L_norm)
-        V_core = evecs[:, :k]
+        evals, evecs = sla.eigh(L_norm, subset_by_index=[0, k - 1])
+        V_core = evecs
 
         if self.embedding == "transfer_cut":
             # Numerically protected Transfer-Cut embedding:
@@ -352,6 +386,12 @@ class InvariantCoreConsensusV2:
                     self.anchor_centroids_[c] = np.mean(X[mask_c], axis=0)
             else:
                 self.anchor_centroids_[c] = np.mean(X, axis=0)
+
+        # Cache pre-sliced subspace centroids for zero-overhead out-of-sample inference
+        if self.selected_features_ is not None:
+            self.anchor_centroids_sub_ = self.anchor_centroids_[:, self.selected_features_]
+        else:
+            self.anchor_centroids_sub_ = self.anchor_centroids_
 
         # ---------------------------------------------------------------------
         # 7. Optional Anchor-Space Perturbation Profiling (ASPP)
@@ -421,6 +461,51 @@ class InvariantCoreConsensusV2:
 
         return df_fingerprints
 
+    def _validate_X_new(self, X_new: np.ndarray) -> np.ndarray:
+        """Validate out-of-sample query matrix."""
+        if self.anchor_centroids_ is None:
+            raise RuntimeError("Model has not been fitted yet. Call fit() or fit_predict() first.")
+        X_new = np.asarray(X_new, dtype=np.float64)
+        if X_new.ndim != 2:
+            raise ValueError(f"Expected 2D feature matrix for X_new, got array with {X_new.ndim} dimensions and shape {X_new.shape}.")
+        if hasattr(self, "n_features_in_") and self.n_features_in_ is not None:
+            if X_new.shape[1] != self.n_features_in_:
+                raise ValueError(
+                    f"Feature dimension mismatch: X_new has {X_new.shape[1]} features, "
+                    f"but InvariantCoreConsensusV2 was fitted on {self.n_features_in_} features."
+                )
+        if np.isnan(X_new).any() or np.isinf(X_new).any():
+            raise ValueError("X_new contains NaN or Inf values. Preprocess missing values before prediction.")
+        return X_new
+
+    def transform(self, X_new: np.ndarray, subspace: bool = True) -> np.ndarray:
+        """
+        Transform X_new to cluster-distance space.
+
+        Parameters
+        ----------
+        X_new : np.ndarray of shape (N_new, D)
+            New data to transform.
+        subspace : bool, default=True
+            If True, computes distance in active subspace.
+
+        Returns
+        -------
+        X_dist : np.ndarray of shape (N_new, K)
+            Euclidean distance to each cluster centroid.
+        """
+        X_new = self._validate_X_new(X_new)
+        if X_new.shape[0] == 0:
+            return np.empty((0, self.n_clusters), dtype=np.float64)
+        if subspace and getattr(self, "anchor_centroids_sub_", None) is not None and self.selected_features_ is not None:
+            pool = self.selected_features_
+            return cdist(X_new[:, pool], self.anchor_centroids_sub_, metric="euclidean")
+        elif subspace and self.selected_features_ is not None:
+            pool = self.selected_features_
+            return cdist(X_new[:, pool], self.anchor_centroids_[:, pool], metric="euclidean")
+        else:
+            return cdist(X_new, self.anchor_centroids_, metric="euclidean")
+
     def predict(self, X_new: np.ndarray, subspace: bool = True) -> np.ndarray:
         """
         Inductive out-of-sample cluster assignment.
@@ -439,16 +524,10 @@ class InvariantCoreConsensusV2:
         preds : np.ndarray of shape (N_new,)
             Assigned cluster indices in [0, K-1].
         """
-        if self.anchor_centroids_ is None:
-            raise RuntimeError("Model has not been fitted yet. Call fit_predict() first.")
-        X_new = np.asarray(X_new, dtype=np.float64)
-
-        if subspace and self.selected_features_ is not None:
-            pool = self.selected_features_
-            dists = cdist(X_new[:, pool], self.anchor_centroids_[:, pool], metric="euclidean")
-        else:
-            dists = cdist(X_new, self.anchor_centroids_, metric="euclidean")
-
+        X_new = self._validate_X_new(X_new)
+        if X_new.shape[0] == 0:
+            return np.empty((0,), dtype=int)
+        dists = self.transform(X_new, subspace=subspace)
         return np.argmin(dists, axis=1)
 
     def predict_proba(self, X_new: np.ndarray, subspace: bool = True, temperature: float = 1.0) -> np.ndarray:
@@ -465,16 +544,10 @@ class InvariantCoreConsensusV2:
         -------
         proba : np.ndarray of shape (N_new, K)
         """
-        if self.anchor_centroids_ is None:
-            raise RuntimeError("Model has not been fitted yet. Call fit_predict() first.")
-        X_new = np.asarray(X_new, dtype=np.float64)
-
-        if subspace and self.selected_features_ is not None:
-            pool = self.selected_features_
-            dists = cdist(X_new[:, pool], self.anchor_centroids_[:, pool], metric="euclidean")
-        else:
-            dists = cdist(X_new, self.anchor_centroids_, metric="euclidean")
-
+        X_new = self._validate_X_new(X_new)
+        if X_new.shape[0] == 0:
+            return np.empty((0, self.n_clusters), dtype=np.float64)
+        dists = self.transform(X_new, subspace=subspace)
         # Softmax over negative distances
         logits = -dists / max(1e-6, temperature)
         exp_logits = np.exp(logits - np.max(logits, axis=1, keepdims=True))
@@ -507,16 +580,16 @@ class InvariantCoreConsensusV2:
             - 'psi': Optional[np.ndarray] of shape (N_new,), assigned cluster PSI values.
             - 'reliability': Optional[List[str]], categorical reliability labels for assigned clusters.
         """
-        if self.anchor_centroids_ is None:
-            raise RuntimeError("Model has not been fitted yet. Call fit_predict() first.")
-        X_new = np.asarray(X_new, dtype=np.float64)
-
-        if subspace and self.selected_features_ is not None:
-            pool = self.selected_features_
-            dists = cdist(X_new[:, pool], self.anchor_centroids_[:, pool], metric="euclidean")
-        else:
-            dists = cdist(X_new, self.anchor_centroids_, metric="euclidean")
-
+        X_new = self._validate_X_new(X_new)
+        if X_new.shape[0] == 0:
+            return {
+                "labels": np.empty((0,), dtype=int),
+                "confidence": np.empty((0,), dtype=np.float64),
+                "margin": np.empty((0,), dtype=np.float64),
+                "psi": None,
+                "reliability": None,
+            }
+        dists = self.transform(X_new, subspace=subspace)
         preds = np.argmin(dists, axis=1)
 
         if dists.shape[1] > 1:
