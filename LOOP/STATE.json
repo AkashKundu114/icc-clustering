@@ -1,0 +1,88 @@
+{
+  "iteration": 1,
+  "phase": "GATE_1_AND_GATE_2_READY",
+  "active_gate": "GATE_2",
+  "open_issues": [
+    {
+      "id": "ISSUE-01",
+      "severity": "BLOCKING",
+      "title": "Numbers mismatch across sections for Leukemia and SRBCT",
+      "status": "RESOLVED_VERIFIED",
+      "details": "Resolved via frozen single-source-of-truth macros in numbers.tex. Leukemia is 0.680, SRBCT is 0.538."
+    },
+    {
+      "id": "ISSUE-02",
+      "severity": "BLOCKING",
+      "title": "Dataset and method counts mismatch in text vs figures",
+      "status": "RESOLVED_VERIFIED",
+      "details": "Resolved. Text and Table 3 consistently state 13 multi-domain datasets x 11 candidate algorithms (1,430 fits). Figures 14 and 17 display 13 datasets."
+    },
+    {
+      "id": "ISSUE-03",
+      "severity": "BLOCKING",
+      "title": "Nemenyi CD calculation mismatch and overall ranking fifth",
+      "status": "RESOLVED_VERIFIED",
+      "details": "Resolved. Nemenyi CD is corrected to 4.21 (k=11, N=13). DEC is 1st (4.31), ICC-v2 is 5th (5.46) overall, and 1st (2.33) on exploratory D/N>20 subgroup with explicit post-hoc Holm adjustment caveats."
+    },
+    {
+      "id": "ISSUE-04",
+      "severity": "BLOCKING",
+      "title": "VSSG alone hurts clustering on Leukemia",
+      "status": "RESOLVED_VERIFIED",
+      "details": "Explicitly documented in Section 5.2. VSSG+KMeans achieves 0.019 vs 0.101 for raw KMeans. Gains require bipartite anchor consensus."
+    },
+    {
+      "id": "ISSUE-05",
+      "severity": "BLOCKING",
+      "title": "Uncalibrated ASPP and Inductive Step never evaluated directly",
+      "status": "RESOLVED_VERIFIED",
+      "details": "Documented in Table 1 taxonomy and Section 4.4. ASPP is framed strictly as an optional diagnostic tool with enable_aspp=False default."
+    },
+    {
+      "id": "ISSUE-06",
+      "severity": "BLOCKING",
+      "title": "Inconsistent mathematical definitions in manuscript",
+      "status": "RESOLVED_VERIFIED",
+      "details": "Harmonized Eq 2, Eq 9, Alg 1. Proposition 1 constant is proven as Delta/sigma > sqrt((3+sqrt(15))/2) = 1.854."
+    },
+    {
+      "id": "ISSUE-07",
+      "severity": "MAJOR",
+      "title": "H4 Confirmatory Decision Rule Failed on Tier-A",
+      "status": "RESOLVED_KILL_RULE",
+      "details": "NCG-BC failed downstream clustering gain vs G2 (mean diff -0.0035) and G4 (mean diff -0.0319). Downstream clustering claim withdrawn per Rule A7."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "DEC-01",
+      "date": "2026-10-17",
+      "summary": "Adopted Option (c) for Study 3': Restrict confirmatory claim to F1, F2, F5; report F3/F4 bounded support as boundary-bias scope limit."
+    },
+    {
+      "id": "DEC-02",
+      "date": "2026-10-17",
+      "summary": "Executed Kill Rule A7: Withdrew downstream clustering improvement claim for NCG after H4 failure across Tier-A."
+    },
+    {
+      "id": "DEC-03",
+      "date": "2026-10-17",
+      "summary": "Ported manuscript to Springer Nature sn-jnl template (sn-mathphys-num) in springer_manuscript/main.tex and successfully built main.pdf via Tectonic."
+    },
+    {
+      "id": "DEC-04",
+      "date": "2026-10-17",
+      "summary": "Recommended Pattern Analysis and Applications (PAAP) as primary target journal, with Data Mining and Knowledge Discovery (DAMI) as alternative."
+    }
+  ],
+  "next_actions": [
+    "Present Gate 1 and Gate 2 readiness report to human user",
+    "Await completion of background primary grid (task-2895)",
+    "Run confirmatory statistical analysis on primary grid results once finished",
+    "Obtain user approval on Springer venue selection and AI disclosure"
+  ],
+  "budget_used": {
+    "iterations": 1,
+    "max_iterations": 8
+  }
+}
