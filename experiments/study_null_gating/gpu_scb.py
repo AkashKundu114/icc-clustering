@@ -88,15 +88,14 @@ def compute_scb_bandwidths_torch(
 
 
 def get_safe_device() -> torch.device:
-    """Detects CUDA and verifies compiled kernel availability for the specific GPU architecture."""
-    if torch.cuda.is_available():
-        try:
-            t = torch.zeros(1, device="cuda:0")
-            _ = t + 1
-            return torch.device("cuda:0")
-        except Exception:
-            return torch.device("cpu")
-    return torch.device("cpu")
+    """Strictly enforces CUDA GPU device (RTX 5060) execution."""
+    if not torch.cuda.is_available():
+        raise RuntimeError("GPU acceleration requested ('use only gpu') but torch.cuda.is_available() is False!")
+    dev = torch.device("cuda:0")
+    # Quick probe to ensure CUDA memory and kernel launch work
+    t = torch.zeros(1, device=dev)
+    _ = t + 1
+    return dev
 
 
 def generate_scb_decoys_torch(

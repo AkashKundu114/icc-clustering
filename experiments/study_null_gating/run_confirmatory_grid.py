@@ -455,25 +455,61 @@ def main():
     print(f"Total Simulation Replicates: {total_tasks} ({cell_idx} cells x 300 seeds)")
 
     os.makedirs("results/study_null_gating/confirmatory_raw", exist_ok=True)
-    start_time = time.time()
+    out_file = "results/study_null_gating/confirmatory_raw/primary_grid_results.json"
+    checkpoint_file = "results/study_null_gating/confirmatory_raw/checkpoint_primary_grid.json"
 
-    # Execute with controlled worker count to prevent Windows memory/paging exhaustion
+    # Load existing results if checkpoint exists
+    completed_keys = set()
     results = []
+    if os.path.exists(checkpoint_file):
+        try:
+            with open(checkpoint_file, "r") as f:
+                results = json.load(f)
+            for r in results:
+                completed_keys.add((r["cell_id"], r["seed"]))
+            print(f"Resuming from checkpoint: {len(results)} replicates already completed!")
+        except Exception as e:
+            print(f"Warning: Failed to load checkpoint ({e}), starting fresh.")
+            results = []
+
+    # Filter out already completed tasks
+    remaining_tasks = [t for t in tasks if (t["cell_id"], t["seed"]) not in completed_keys]
+    print(f"Remaining tasks to compute: {len(remaining_tasks)} / {total_tasks}")
+
+    if len(remaining_tasks) == 0:
+        print("All tasks already completed!")
+        if not os.path.exists(out_file):
+            with open(out_file, "w") as f:
+                json.dump(results, f)
+        return
+
+    start_time = time.time()
     chunk_size = 200
     n_workers = min(8, mp.cpu_count())
-    print(f"Executing with {n_workers} worker processes...")
+    print(f"Executing with {n_workers} worker processes on GPU...")
+
+    initial_done = len(results)
     with mp.Pool(processes=n_workers) as pool:
-        for i, res in enumerate(pool.imap_unordered(run_single_cell_replicate, tasks, chunksize=10)):
+        for i, res in enumerate(pool.imap_unordered(run_single_cell_replicate, remaining_tasks, chunksize=10)):
             results.append(res)
-            if (i + 1) % chunk_size == 0 or (i + 1) == total_tasks:
+            total_done = initial_done + i + 1
+
+            # Incremental checkpoint save every 200 replicates
+            if (i + 1) % chunk_size == 0 or total_done == total_tasks:
                 elapsed = time.time() - start_time
                 rate = (i + 1) / max(1e-3, elapsed)
-                remaining = (total_tasks - (i + 1)) / max(1e-3, rate)
-                print(f"Progress: {i+1}/{total_tasks} ({((i+1)/total_tasks)*100:.1f}%) | "
+                remaining = (total_tasks - total_done) / max(1e-3, rate)
+                print(f"Progress: {total_done}/{total_tasks} ({(total_done/total_tasks)*100:.1f}%) | "
                       f"Elapsed: {elapsed/60:.1f}m | Rate: {rate:.1f} rep/s | ETA: {remaining/60:.1f}m")
+                # Save checkpoint atomically
+                tmp_ckpt = checkpoint_file + ".tmp"
+                with open(tmp_ckpt, "w") as f:
+                    json.dump(results, f)
+                if os.path.exists(checkpoint_file):
+                    os.remove(checkpoint_file)
+                os.rename(tmp_ckpt, checkpoint_file)
 
-    # Serialize raw confirmatory output
-    out_file = "results/study_null_gating/confirmatory_raw/primary_grid_results.json"
+    # Serialize final raw confirmatory output
     with open(out_file, "w") as f:
         json.dump(results, f)
     print(f"\nAll {total_tasks} confirmatory replicates saved to {out_file}")
