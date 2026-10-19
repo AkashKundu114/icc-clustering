@@ -17,7 +17,7 @@ def compute_scb_bandwidths_torch(
     tol: float = 0.02,
     max_iter: int = 12,
     n_grid: int = 80,
-    chunk_size: int = 2000,
+    chunk_size: int = 500,
 ) -> torch.Tensor:
     """
     Computes Silverman critical bandwidth for all D features in X_t (shape: [N, D]).

@@ -484,8 +484,8 @@ def main():
         return
 
     start_time = time.time()
-    chunk_size = 200
-    n_workers = min(8, mp.cpu_count())
+    chunk_size = 500
+    n_workers = 2  # Throttled to 2 workers to fit strictly in physical RAM and prevent SSD paging
     print(f"Executing with {n_workers} worker processes on GPU...")
 
     initial_done = len(results)
