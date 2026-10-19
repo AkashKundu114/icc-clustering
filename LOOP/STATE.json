@@ -1,7 +1,7 @@
 {
-  "iteration": 1,
-  "phase": "GATE_1_AND_GATE_2_READY",
-  "active_gate": "GATE_2",
+  "iteration": 2,
+  "phase": "GATE_4_READY",
+  "active_gate": "GATE_4",
   "open_issues": [
     {
       "id": "ISSUE-01",
@@ -51,6 +51,13 @@
       "title": "H4 Confirmatory Decision Rule Failed on Tier-A",
       "status": "RESOLVED_KILL_RULE",
       "details": "NCG-BC failed downstream clustering gain vs G2 (mean diff -0.0035) and G4 (mean diff -0.0319). Downstream clustering claim withdrawn per Rule A7."
+    },
+    {
+      "id": "ISSUE-08",
+      "severity": "MINOR",
+      "title": "Beyer reference ??? syntax artifact in BibTeX",
+      "status": "RESOLVED_VERIFIED",
+      "details": "Fixed closing brace and publisher address in references.bib; 0 undefined markers in compiled PDF."
     }
   ],
   "decisions": [
@@ -73,16 +80,19 @@
       "id": "DEC-04",
       "date": "2026-10-17",
       "summary": "Recommended Pattern Analysis and Applications (PAAP) as primary target journal, with Data Mining and Knowledge Discovery (DAMI) as alternative."
+    },
+    {
+      "id": "DEC-05",
+      "date": "2026-10-19",
+      "summary": "Completed full 18,000 replicate confirmatory synthetic grid (Study 3') on NVIDIA RTX 5060 GPU with 0% SSD thrashing and clean memory limits."
     }
   ],
   "next_actions": [
-    "Present Gate 1 and Gate 2 readiness report to human user",
-    "Await completion of background primary grid (task-2895)",
-    "Run confirmatory statistical analysis on primary grid results once finished",
-    "Obtain user approval on Springer venue selection and AI disclosure"
+    "Deliver Final Gate 4 Package to Human Author",
+    "Await user manual submission to Pattern Analysis and Applications"
   ],
   "budget_used": {
-    "iterations": 1,
+    "iterations": 2,
     "max_iterations": 8
   }
 }
