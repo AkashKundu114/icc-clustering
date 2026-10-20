@@ -1,49 +1,49 @@
 {
-  "iteration": 2,
-  "phase": "GATE_4_READY",
-  "active_gate": "GATE_4",
+  "iteration": 3,
+  "phase": "FIX_PASS_B",
+  "active_gate": "GATE_A",
   "open_issues": [
     {
       "id": "ISSUE-01",
-      "severity": "BLOCKING",
+      "severity": "MAJOR",
       "title": "Numbers mismatch across sections for Leukemia and SRBCT",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Resolved via frozen single-source-of-truth macros in numbers.tex. Leukemia is 0.680, SRBCT is 0.538."
+      "status": "REOPENED",
+      "details": "Reopened in Pass B: Subgroup arithmetic (0.258 claimed vs 0.238 max possible mean across 6 datasets), ablation discrepancy (0.680/0.538 benchmark vs 0.621/0.614 in ablation), and strongest baseline comparison (+0.388 over FastMVC vs +0.498 over Std Cons) require full reconciliation."
     },
     {
       "id": "ISSUE-02",
       "severity": "BLOCKING",
       "title": "Dataset and method counts mismatch in text vs figures",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Resolved. Text and Table 3 consistently state 13 multi-domain datasets x 11 candidate algorithms (1,430 fits). Figures 14 and 17 display 13 datasets."
+      "status": "REOPENED",
+      "details": "Reopened in Pass B: Table 3 overflows and truncates columns (hides Std Cons, Li, ICC-v2); dataset dimensions in Table 3 (18.8k, 68.6k) contradict Fig 6 panel titles (10,846 for 20 Newsgroups, 700 for Zheng68k)."
     },
     {
       "id": "ISSUE-03",
       "severity": "BLOCKING",
       "title": "Nemenyi CD calculation mismatch and overall ranking fifth",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Resolved. Nemenyi CD is corrected to 4.21 (k=11, N=13). DEC is 1st (4.31), ICC-v2 is 5th (5.46) overall, and 1st (2.33) on exploratory D/N>20 subgroup with explicit post-hoc Holm adjustment caveats."
+      "status": "REOPENED",
+      "details": "Reopened in Pass B: Nemenyi CD formula calculation is 4.19 (not 4.21); text still contains 'previously cited' remarks; subgroup CD (~6.16) is missing from Fig 7 and text."
     },
     {
       "id": "ISSUE-04",
       "severity": "BLOCKING",
       "title": "VSSG alone hurts clustering on Leukemia",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Explicitly documented in Section 5.2. VSSG+KMeans achieves 0.019 vs 0.101 for raw KMeans. Gains require bipartite anchor consensus."
+      "status": "REOPENED",
+      "details": "Reopened in Pass B: Claims that gains come from anchor/ensemble stages require full 2x2 ablation proof with CIs; V4 random anchors beat V5 certified anchors in existing data."
     },
     {
       "id": "ISSUE-05",
       "severity": "BLOCKING",
       "title": "Uncalibrated ASPP and Inductive Step never evaluated directly",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Documented in Table 1 taxonomy and Section 4.4. ASPP is framed strictly as an optional diagnostic tool with enable_aspp=False default."
+      "status": "REOPENED",
+      "details": "Reopened in Pass B: Direct evaluation of inductive step against Nystrom and direct projection lacks complete reporting; Fig 3 left panel is empty or missing; kNN claims unverified."
     },
     {
       "id": "ISSUE-06",
       "severity": "BLOCKING",
       "title": "Inconsistent mathematical definitions in manuscript",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Harmonized Eq 2, Eq 9, Alg 1. Proposition 1 constant is proven as Delta/sigma > sqrt((3+sqrt(15))/2) = 1.854."
+      "status": "REOPENED",
+      "details": "Reopened in Pass B: Eq 2, Eq 9, Alg 1 line 3 define BC inconsistently; anchor budget L definitions conflict across Fig 1, Alg 1, and text; degree matrices DR, DA clash with feature dimension D."
     },
     {
       "id": "ISSUE-07",
@@ -57,7 +57,91 @@
       "severity": "MINOR",
       "title": "Beyer reference ??? syntax artifact in BibTeX",
       "status": "RESOLVED_VERIFIED",
-      "details": "Fixed closing brace and publisher address in references.bib; 0 undefined markers in compiled PDF."
+      "details": "Fixed closing brace and publisher address in references.bib; 0 undefined markers for Beyer."
+    },
+    {
+      "id": "ISSUE-09",
+      "severity": "BLOCKING",
+      "title": "[B1] Missing citations in references.bib and [?] markers in compiled PDF",
+      "status": "OPEN",
+      "details": "PDF contains 10 '[?]' citation markers. Missing entries: U-SPEC/U-SENC (Huang et al. TKDE 2020), Nystrom/Bengio, sparse k-means (Witten & Tibshirani), Hartigan dip test, Pfister et al. (2013), Ellison (1987), SAS Sarle (1983), Fern & Brodley (2003); fix von Luxburg and verify Huang/Liu/Li metadata."
+    },
+    {
+      "id": "ISSUE-10",
+      "severity": "BLOCKING",
+      "title": "[B2] Fig. 7 and statistics: exact Nemenyi CD formula and subgroup CD",
+      "status": "OPEN",
+      "details": "Regenerate Fig 7: compute exact Nemenyi CD = 4.19 from formula, remove 'previously cited' text, compute and display subgroup CD (~6.16) for D/N>20 subgroup."
+    },
+    {
+      "id": "ISSUE-11",
+      "severity": "BLOCKING",
+      "title": "[B3] Subgroup arithmetic, fair-baseline claim removal, strongest baseline comparison",
+      "status": "OPEN",
+      "details": "D/N>20 subgroup mean ARI is at most 0.238 (not 0.258); report median; delete '<= 0.050 across fair feature-selection baselines' pending B8; compare against strongest baseline on SRBCT (FastMVC 0.150, gain +0.388, not +0.498)."
+    },
+    {
+      "id": "ISSUE-12",
+      "severity": "BLOCKING",
+      "title": "[B4] Table 3 column overflow and dataset size reconciliation",
+      "status": "OPEN",
+      "details": "Rebuild Table 3 so all 11 methods are visible; list actual post-subsampling (N, D, K) alongside full dimensions; reconcile 20 Newsgroups (10,846 vs 18.8k) and Zheng68k (700 vs 68.6k) with Fig 6."
+    },
+    {
+      "id": "ISSUE-13",
+      "severity": "BLOCKING",
+      "title": "[B5] Memory and runtime conflicting claims and unified re-measurement",
+      "status": "OPEN",
+      "details": "Resolve memory contradictions (1040.5 MB vs 45.8 MB vs 3.05 GB; Fig 8a/8b values; Fig 9a runtime overlap vs 22.4x speedup claim). Re-measure under single strict protocol across N in {200, 500, 1000, 2000, 5000, 8000, 10000}."
+    },
+    {
+      "id": "ISSUE-14",
+      "severity": "BLOCKING",
+      "title": "[B6] Pre-registered 2x2 + anchor selection ablation on 6 D/N>20 datasets",
+      "status": "OPEN",
+      "details": "Pre-register in LOOP/PREREG_B.md and run on 6 D/N>20 datasets (seeds 0-9): gate in {none, BGSS}, consensus in {KMeans, StdCons, BipartiteAnchor}, anchor selection in {certified, uniform random}. Bootstrap 95% CIs."
+    },
+    {
+      "id": "ISSUE-15",
+      "severity": "BLOCKING",
+      "title": "[B7] Failure modes of bimodality gate and finite-sample recovery analysis",
+      "status": "OPEN",
+      "details": "Rewrite Remark 1.1 and Limitation 2: skewed unimodal features do NOT inflate BC; supported failure modes are bounded (uniform, beta), discrete/zero-inflated, and XOR; report finite-sample recovery rates; test 1,522 gene claim."
+    },
+    {
+      "id": "ISSUE-16",
+      "severity": "BLOCKING",
+      "title": "[B8] Fair baselines table on 6 D/N>20 datasets",
+      "status": "OPEN",
+      "details": "Pre-register in LOOP/PREREG_B.md and evaluate variance top-k, PCA + KMeans, PCA + StdCons, dip-test + KMeans, dip-test + BipartiteAnchor, Laplacian score + KMeans, sparse k-means, U-SPEC/U-SENC on 6 D/N>20 datasets."
+    },
+    {
+      "id": "ISSUE-17",
+      "severity": "BLOCKING",
+      "title": "[B9] Discrepancies between figures and text",
+      "status": "OPEN",
+      "details": "Fix Fig 5 (Madelon PR-AUC vs Recall@50/Precision@50); Fig 3b annotation (+4.5% vs negative bars); Fig 3 left panel; Fig 1 label clipping; Fig 2 rho_sep validation; Fig 11 panels."
+    },
+    {
+      "id": "ISSUE-18",
+      "severity": "BLOCKING",
+      "title": "[B10] Naming and notation harmonization (BGSS vs VSSG, Eq 2/9, Alg 1)",
+      "status": "OPEN",
+      "details": "Harmonize to a single method name everywhere; make Eq 2, Eq 9, Alg 1 line 3 identical; clarify DR, DA vs D; unify anchor budget L definition and report exact value used."
+    },
+    {
+      "id": "ISSUE-19",
+      "severity": "MAJOR",
+      "title": "[B11] Declarations and AI disclosure options (Human Gate B)",
+      "status": "OPEN",
+      "details": "Formulate 3 factual AI disclosure options with evidence from run logs and journal policy quote; list corresponding author email and contribution details for author approval; mark approval as pending."
+    },
+    {
+      "id": "ISSUE-20",
+      "severity": "MAJOR",
+      "title": "[B12] Reproducibility tag v2.0.0, license checks, hardware/software hygiene",
+      "status": "OPEN",
+      "details": "Verify release tag v2.0.0, audit dataset licenses, record system hardware and software versions, add verification scripts to repo."
     }
   ],
   "decisions": [
@@ -85,14 +169,23 @@
       "id": "DEC-05",
       "date": "2026-10-19",
       "summary": "Completed full 18,000 replicate confirmatory synthetic grid (Study 3') on NVIDIA RTX 5060 GPU with 0% SSD thrashing and clean memory limits."
+    },
+    {
+      "id": "DEC-06",
+      "date": "2026-10-20",
+      "summary": "Initiated Fix Pass B: Reopened ISSUE-01..06 due to remaining text/figure/macro contradictions in main.pdf; added ISSUE-09 to ISSUE-20 covering B1 to B12; removed GATE_4_READY; set active gate to GATE_A (PREREG_B approval)."
     }
   ],
   "next_actions": [
-    "Deliver Final Gate 4 Package to Human Author",
-    "Await user manual submission to Pattern Analysis and Applications"
+    "Task B1: Fix all missing citations in references.bib and eliminate all 10 [?] markers from main.pdf",
+    "Task B10: Harmonize naming to BGSS and unify Eq 2, Eq 9, Alg 1 line 3 and anchor budget L definitions",
+    "Task B7: Correct failure modes in Remark 1.1 and Limitation 2 (unimodal skew does not inflate BC)",
+    "Task B3 & B2: Fix subgroup arithmetic, CD formulas (4.19 omnibus, ~6.16 subgroup), and baseline comparisons",
+    "Tasks B6 & B8: Draft LOOP/PREREG_B.md for Gate A human approval before experimental re-runs",
+    "Task B11: Formulate 3 factual AI disclosure options and author checklist for Gate B"
   ],
   "budget_used": {
-    "iterations": 2,
+    "iterations": 3,
     "max_iterations": 8
   }
 }

@@ -26,3 +26,25 @@ This log records every architectural, algorithmic, and statistical decision made
 ### [2026-10-17] DEC-03: Single Study Scope Enforcement (Reality Clause 4)
 - **Context:** The prompt mandates: *"One manuscript, one main claim (at most three contributions). Do not merge separate studies into one paper."*
 - **Decision:** Keep the ICC-v2 paper and Study 1' (Amortized Conformal Clustering Sets) strictly separated. Study 1' maintains its own pre-registration and repository harness, and will not be conflated with the ICC-v2 manuscript.
+
+---
+
+### [2026-10-17] DEC-04: Target Journal Selection
+- **Context:** Identified candidate Springer Nature venues for regular research article submission.
+- **Decision:** Selected *Pattern Analysis and Applications* (PAAP) as primary target venue, with *Data Mining and Knowledge Discovery* (DAMI) as alternative.
+
+---
+
+### [2026-10-19] DEC-05: Confirmatory Synthetic Grid Execution on GPU
+- **Context:** Ran 18,000 Monte Carlo replicates for Study 3' across 60 cells on RTX 5060 GPU with memory paging limits.
+- **Decision:** Results confirmed H3 (Power $\ge 0.80$ in 91.7% of separable cells) and identified H1 boundary limit under heavy tails (66.7% pass rate).
+
+---
+
+### [2026-10-20] DEC-06: Initiation of Fix Pass B
+- **Context:** Detailed audit of `springer_manuscript/main.pdf` revealed 10 unresolved citation markers (`[?]`), table column truncation, missing subgroup CD (~6.16), Nemenyi CD formula calculation mismatch (4.19 vs 4.21), contradictory memory/runtime statements, unverified ablation parity, and inaccurate statements regarding unimodal skewness inflating the bimodality coefficient.
+- **Decision:**
+  1. Reopened ISSUE-01..06 in `LOOP/STATE.json`.
+  2. Registered ISSUE-09 through ISSUE-20 covering tasks B1 to B12.
+  3. Removed `GATE_4_READY` status; set phase to `FIX_PASS_B` and active gate to `GATE_A`.
+  4. Work organized strictly under `LOOP/ITERATIONS/passB/`.
