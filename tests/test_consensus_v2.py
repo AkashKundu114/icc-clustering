@@ -2,11 +2,13 @@
 Unit tests for InvariantCoreConsensusV2 (src/icc/consensus_v2.py).
 """
 
-import pytest
 import numpy as np
-from icc.consensus_v2 import InvariantCoreConsensusV2
+import pytest
+
+from experiments.exp3_real_world_benchmarks.src.benchmark_models import InvariantCoreConsensusV2 as Exp3ICC2
+from experiments.exp3_real_world_benchmarks.src.benchmark_models import run_icc_v2
 from icc import InvariantCoreConsensusV2 as RootICC2
-from experiments.exp3_real_world_benchmarks.src.benchmark_models import run_icc_v2, InvariantCoreConsensusV2 as Exp3ICC2
+from icc.consensus_v2 import InvariantCoreConsensusV2
 
 
 def test_icc_v2_initialization():
@@ -33,7 +35,6 @@ def test_icc_v2_initialization():
 def test_icc_v2_fit_predict_and_attributes():
     rng = np.random.default_rng(42)
     # Synthetic cluster structure with signal + noise features
-    signal = rng.normal(loc=[-3, 3, 0], scale=0.8, size=(60, 3)).T  # 3 clusters of 20 pts
     X_signal = np.vstack([
         rng.normal(loc=[-4, 0], scale=0.5, size=(20, 2)),
         rng.normal(loc=[4, 0], scale=0.5, size=(20, 2)),

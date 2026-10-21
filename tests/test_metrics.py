@@ -4,16 +4,12 @@ Unit tests for the ICC metrics evaluation module (src/icc/metrics.py).
 
 import numpy as np
 import pytest
+
+import icc.metrics as metrics_mod
 from icc.metrics import (
-    adjusted_rand_score,
-    normalized_mutual_info_score,
-    adjusted_mutual_info_score,
-    v_measure_score,
-    fowlkes_mallows_score,
     evaluate_all,
     evaluate_all_with_ci,
 )
-import icc.metrics as metrics_mod
 
 
 def test_perfect_agreement():

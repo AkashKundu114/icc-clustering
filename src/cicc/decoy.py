@@ -6,7 +6,8 @@ with target-decoy / knockoff competition that provides rigorous finite-sample
 FDR guarantees for high-dimensional feature selection.
 """
 
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Optional
+
 import numpy as np
 
 

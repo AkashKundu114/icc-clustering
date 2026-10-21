@@ -7,7 +7,8 @@ Combines:
 3. Split-conformal calibration for out-of-sample guarantees.
 """
 
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Optional
+
 import numpy as np
 import scipy.linalg as sla
 from sklearn.cluster import KMeans
@@ -116,10 +117,10 @@ class InductiveConsensusClusterer:
         # 2. Bipartite affinity matrix B in R^(N_disc x m)
         B = np.zeros((N_disc, m))
         for b_preds in base_partitions:
-            for l in range(m):
-                a_idx = self.anchor_indices_[l]
+            for a_pos in range(m):
+                a_idx = self.anchor_indices_[a_pos]
                 a_cluster = b_preds[a_idx]
-                B[:, l] += (b_preds == a_cluster).astype(float)
+                B[:, a_pos] += (b_preds == a_cluster).astype(float)
         B /= float(self.n_base_models)
 
         # 3. Transfer-Cut spectral consensus

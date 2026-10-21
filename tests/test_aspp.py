@@ -3,13 +3,13 @@ Unit and integration tests for Anchor-Space Perturbation Profiling (ASPP)
 and its integration into InvariantCoreConsensusV2.
 """
 
-import pytest
 import numpy as np
 import pandas as pd
 
+from icc import AnchorSpacePerturbationProfiler as RootProfiler
+from icc import ASPPConfig as RootASPPConfig
+from icc.aspp import ASPP_FAMILIES, AnchorSpacePerturbationProfiler, ASPPConfig
 from icc.consensus_v2 import InvariantCoreConsensusV2
-from icc.aspp import ASPPConfig, AnchorSpacePerturbationProfiler, ASPP_FAMILIES
-from icc import ASPPConfig as RootASPPConfig, AnchorSpacePerturbationProfiler as RootProfiler
 
 
 def test_aspp_config_defaults_and_overrides():

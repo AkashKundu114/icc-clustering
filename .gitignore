@@ -71,8 +71,44 @@ file_list_inventory.txt
 repo_file_tree.txt
 scripts/scratch/
 
-# Manuscript & Publication artifacts
+# Manuscript & Publication artifacts (kept local on disk, documented via README for GitHub)
 ieee_manuscript/
+springer_manuscript/
+manuscript/
+paper.tex
+*.tex
+*.pdf
+*.zip
+*.tar.gz
+*.bib
+*.bst
+*.cls
+*.sty
+*.eps
+!paper/README.md
+!paper/figures/README.md
+!paper/figures/.gitkeep
+
+# Figures and visual binaries (kept local on disk, documented via README)
+**/figures/*
+!**/figures/README.md
+!**/figures/.gitkeep
+*.png
+*.jpg
+*.jpeg
+*.svg
+
+# Intermediate and processed datasets
+data/interim/*
+!data/interim/.gitkeep
+!data/interim/README.md
+data/processed/*
+!data/processed/.gitkeep
+!data/processed/README.md
+data/cache/*
+!data/cache/.gitkeep
+!data/cache/README.md
+
 *.aux
 *.bbl
 *.blg
@@ -82,4 +118,5 @@ ieee_manuscript/
 *.synctex.gz
 *.fls
 *.fdb_latexmk
+
 

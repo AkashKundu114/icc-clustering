@@ -7,7 +7,8 @@ novel cluster and out-of-distribution (OOD) discovery.
 """
 
 from dataclasses import dataclass
-from typing import List, Optional, Tuple, Union
+from typing import List, Optional
+
 import numpy as np
 
 

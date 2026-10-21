@@ -4,14 +4,14 @@ Unit tests for Experiment 1: Multi-Classifier Generalization Extension.
 
 import numpy as np
 import pytest
+
 HAS_EXPERIMENT1 = False
 try:
     from experiments.exp1_generalization.src.exp1_pseudolabel_generalization import (
-        get_classifier_instances,
         extract_core_subset,
+        get_classifier_instances,
         run_pseudolabel_generalization,
     )
-    from experiments.exp1_generalization.src.plot_exp1_figures import plot_exp1_figures
 
     _test_clfs = get_classifier_instances(seed=42)
     HAS_EXPERIMENT1 = True
