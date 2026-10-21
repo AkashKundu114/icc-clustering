@@ -76,8 +76,8 @@ def plot_figure_18():
         
     ax1.set_xscale("log")
     ax1.set_yscale("log")
-    ax1.set_xticks([200, 500, 1000, 2000, 5000, 8000])
-    ax1.set_xticklabels(["200", "500", "1k", "2k", "5k", "8k"], fontsize=11.0, fontweight="bold")
+    ax1.set_xticks([200, 500, 1000, 2000, 5000, 8000, 10000])
+    ax1.set_xticklabels(["200", "500", "1k", "2k", "5k", "8k", "10k"], fontsize=10.5, fontweight="bold")
     ax1.xaxis.set_minor_formatter(ticker.NullFormatter())
     ax1.tick_params(axis="y", labelsize=11.0)
     ax1.set_xlabel("Sample Size (N)", fontsize=12.0, fontweight="bold")
@@ -87,10 +87,10 @@ def plot_figure_18():
     ax1.legend(loc="upper left", fontsize=10.5, framealpha=0.92, facecolor="white", edgecolor="#cccccc")
     
     # Annotation on runtime
-    ax1.annotate("ICC-v2: 24% faster at N=5,000",
-                 xy=(5000, 2.67), xytext=(1100, 0.4),
+    ax1.annotate("ICC-v2: 2.9x speedup at N=10,000\n(10.3s vs. 30.0s)",
+                 xy=(10000, 10.35), xytext=(1400, 2.5),
                  arrowprops=dict(arrowstyle="->", color="#d62728", lw=1.3),
-                 fontsize=9.5, fontweight="bold", color="#d62728",
+                 fontsize=9.0, fontweight="bold", color="#d62728",
                  bbox=dict(boxstyle="round,pad=0.25", facecolor="#fff0f0", edgecolor="#d62728", alpha=0.9))
     
     # Subplot (b): Log-log Peak Memory vs N
@@ -109,8 +109,8 @@ def plot_figure_18():
         
     ax2.set_xscale("log")
     ax2.set_yscale("log")
-    ax2.set_xticks([200, 500, 1000, 2000, 5000, 8000])
-    ax2.set_xticklabels(["200", "500", "1k", "2k", "5k", "8k"], fontsize=11.0, fontweight="bold")
+    ax2.set_xticks([200, 500, 1000, 2000, 5000, 8000, 10000])
+    ax2.set_xticklabels(["200", "500", "1k", "2k", "5k", "8k", "10k"], fontsize=10.5, fontweight="bold")
     ax2.xaxis.set_minor_formatter(ticker.NullFormatter())
     ax2.tick_params(axis="y", labelsize=11.0)
     ax2.set_xlabel("Sample Size (N)", fontsize=12.0, fontweight="bold")
@@ -118,10 +118,10 @@ def plot_figure_18():
     ax2.set_title(r"(b) Memory Footprint Scaling $\mathcal{O}(N L_c)$ vs $\mathcal{O}(N^2)$", fontsize=13.0, fontweight="bold")
     ax2.grid(True, which="both", linestyle=":", alpha=0.5)
     # Annotation on memory savings
-    ax2.annotate("-39.1% Peak RAM at N=8,000\n(1,040 MB vs 1,710 MB)",
-                 xy=(8000, 1040), xytext=(1700, 250),
+    ax2.annotate("-97.4% Peak Memory at N=10,000\n(68.8 MB vs. 2,671 MB)",
+                 xy=(10000, 68.83), xytext=(1100, 8.0),
                  arrowprops=dict(arrowstyle="->", color="#d62728", lw=1.3),
-                 fontsize=9.5, fontweight="bold", color="#d62728",
+                 fontsize=9.0, fontweight="bold", color="#d62728",
                  bbox=dict(boxstyle="round,pad=0.25", facecolor="#fff0f0", edgecolor="#d62728", alpha=0.9))
     
     clean_spines(ax1)
@@ -130,6 +130,11 @@ def plot_figure_18():
     plt.tight_layout()
     save_path = os.path.join(FIG_DIR, "fig18_sample_complexity_scaling.png")
     plt.savefig(save_path, dpi=300, bbox_inches="tight")
+    for tdir in [root_dir / "springer_manuscript" / "figures",
+                 root_dir / "paper" / "figures",
+                 root_dir / "manuscript" / "figures"]:
+        if tdir.exists():
+            plt.savefig(tdir / "fig18_sample_complexity_scaling.png", dpi=300, bbox_inches="tight")
     plt.close()
     print(f"[+] Saved: {save_path}")
 

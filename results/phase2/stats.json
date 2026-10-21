@@ -202,37 +202,37 @@
   },
   "fair_baselines_analysis": {
     "mean_ari": {
-      "ICC_v2": 0.19586316956088615,
-      "K-Means_All": 0.17825773324094477,
-      "K-Means_LapScore": 0.10489410478721821,
-      "K-Means_PCA": 0.18394310030995575,
-      "K-Means_VarFilt": 0.1616608522967708,
-      "SparseKMeans": 0.15430415185291096,
-      "StdCons_All": 0.19347662060417437,
-      "StdCons_PCA": 0.19355994217406766,
-      "StdCons_VarFilt": 0.16450605063395474
+      "ICC_v2": 0.18281911127623027,
+      "K-Means_All": 0.16896884844982588,
+      "K-Means_LapScore": 0.10090752234471054,
+      "K-Means_PCA": 0.17418607469770528,
+      "K-Means_VarFilt": 0.1534049495329516,
+      "SparseKMeans": 0.14654010764090217,
+      "StdCons_All": 0.18316271560331263,
+      "StdCons_PCA": 0.18324008563249933,
+      "StdCons_VarFilt": 0.15626147205953728
     },
     "mean_ranks": {
-      "ICC_v2": 4.3076923076923075,
-      "K-Means_All": 5.038461538461538,
-      "K-Means_LapScore": 7.076923076923077,
-      "K-Means_PCA": 4.038461538461538,
-      "K-Means_VarFilt": 5.0,
-      "SparseKMeans": 6.230769230769231,
-      "StdCons_All": 4.423076923076923,
-      "StdCons_PCA": 3.576923076923077,
-      "StdCons_VarFilt": 5.3076923076923075
+      "ICC_v2": 4.642857142857143,
+      "K-Means_All": 5.035714285714286,
+      "K-Means_LapScore": 6.75,
+      "K-Means_PCA": 4.178571428571429,
+      "K-Means_VarFilt": 5.142857142857143,
+      "SparseKMeans": 6.357142857142857,
+      "StdCons_All": 4.285714285714286,
+      "StdCons_PCA": 3.5,
+      "StdCons_VarFilt": 5.107142857142857
     },
     "high_d_mean_ari": {
-      "ICC_v2": 0.25793294008875023,
-      "K-Means_All": 0.04432921363379767,
-      "K-Means_LapScore": 0.04136268486268034,
-      "K-Means_PCA": 0.04188961012998971,
-      "K-Means_VarFilt": 0.05018915786267304,
-      "SparseKMeans": 0.044475108194474235,
-      "StdCons_All": 0.038893599774558675,
-      "StdCons_PCA": 0.03630107080424322,
-      "StdCons_VarFilt": 0.03337559749158332
+      "ICC_v2": 0.21715184233657592,
+      "K-Means_All": 0.0449765690557114,
+      "K-Means_LapScore": 0.04264922915091873,
+      "K-Means_PCA": 0.042798798731399655,
+      "K-Means_VarFilt": 0.04950400048611125,
+      "SparseKMeans": 0.04466384564285988,
+      "StdCons_All": 0.04059165824415068,
+      "StdCons_PCA": 0.038431217435554464,
+      "StdCons_VarFilt": 0.03599332300833789
     }
   }
 }

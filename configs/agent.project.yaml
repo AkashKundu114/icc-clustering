@@ -1,0 +1,30 @@
+# Version-controlled project agent configuration.
+project:
+  name: "inductive-consensus-clustering"
+  type: "academic-research"
+  primary_language: "python"
+  target_venue: "Springer Nature (Data Mining and Knowledge Discovery)"
+  goals:
+    - "Geometry-calibrated ensemble distillation for high-dimensional noise regimes"
+    - "Inductive out-of-sample cluster projection with conformal coverage guarantees"
+    - "Reproducible single-source numeric reporting via paper/numbers.tex"
+  non_goals:
+    - "Do not commit raw datasets or paper PDFs to Git"
+    - "Do not claim results without a recorded experiment"
+
+quality:
+  require_tests_for_behavior_changes: true
+  require_docs_for_user_visible_changes: true
+  allow_unverified_claims: false
+
+research:
+  require_seed_recording: true
+  require_config_snapshot: true
+  require_environment_record: true
+  preserve_negative_results: true
+  prohibit_data_leakage: true
+
+privacy:
+  default_network_policy: "ask-before-use"
+  external_uploads: "explicit-approval-required"
+  private_data_in_git: false

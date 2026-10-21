@@ -2,7 +2,8 @@
 
 **Registrant:** Akash Kundu  
 **Date:** 2026-10-21  
-**Status:** PROPOSED FOR HUMAN APPROVAL (GATE A)  
+**Status:** APPROVED BY HUMAN AUTHOR (GATE A)  
+**Approval Date:** 2026-10-21  
 **Target Venue:** Springer Nature Pattern Analysis and Applications (`sn-jnl`)  
 **Label:** Pre-specified, not blind (empirical datasets and initial benchmarks are previously known).
 

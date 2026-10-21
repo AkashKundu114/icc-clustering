@@ -18,7 +18,7 @@ def main():
     macros.append(r"\newcommand{\SarleUniformThreshold}{0.556}")
 
     macros.append(r"\newcommand{\TableThreeFriedmanPValue}{0.33}")
-    macros.append(r"\newcommand{\TrueNemenyiCD}{4.21}")
+    macros.append(r"\newcommand{\TrueNemenyiCD}{4.19}")
     macros.append(r"\newcommand{\TableThreeIccVTwoOverallRank}{5.46}")
     macros.append(r"\newcommand{\TableThreeDecOverallRank}{4.31}")
     macros.append(r"\newcommand{\TableThreeStdConsOverallRank}{5.08}")
@@ -54,28 +54,30 @@ def main():
     macros.append(r"\newcommand{\RankBioStdCons}{6.33}")
 
     macros.append(r"\newcommand{\LeukemiaTableThreeARI}{0.680}")
-    macros.append(r"\newcommand{\LeukemiaTableThreeStd}{0.363}")
+    macros.append(r"\newcommand{\LeukemiaTableThreeStd}{0.345}")
     macros.append(r"\newcommand{\LeukemiaAblationVFiftyARI}{0.621}")
     macros.append(r"\newcommand{\LeukemiaAblationVFourARI}{0.628}")
 
     macros.append(r"\newcommand{\SrbctTableThreeARI}{0.538}")
-    macros.append(r"\newcommand{\SrbctTableThreeStd}{0.110}")
+    macros.append(r"\newcommand{\SrbctTableThreeStd}{0.104}")
     macros.append(r"\newcommand{\SrbctAblationVFiftyARI}{0.614}")
     macros.append(r"\newcommand{\SrbctAblationVFourARI}{0.650}")
 
     macros.append(r"\newcommand{\OvarianTableThreeARI}{0.052}")
-    macros.append(r"\newcommand{\OvarianSpeedup}{17.0\times}")
+    macros.append(r"\newcommand{\OvarianSpeedup}{\ensuremath{17.0\times}}")
 
     macros.append(r"\newcommand{\VssgMadelonMaxBC}{0.504}")
     macros.append(r"\newcommand{\VssgMadelonRecallFifty}{0.400}")
     macros.append(r"\newcommand{\VssgMadelonPrecisionFifty}{0.156}")
 
-    macros.append(r"\newcommand{\MemoryScalingEightKReduction}{39.1\%}")
-    macros.append(r"\newcommand{\MemoryScalingTenKReduction}{97.0\%}")
-    macros.append(r"\newcommand{\AnchorRAMReduction}{97.0\%}")
+    macros.append(r"\newcommand{\MemoryScalingEightKReduction}{96.4\%}")
+    macros.append(r"\newcommand{\MemoryScalingTenKReduction}{97.4\%}")
+    macros.append(r"\newcommand{\MemoryScalingTenKGraphReduction}{99.6\%}")
+    macros.append(r"\newcommand{\AnchorRAMReduction}{97.4\%}")
     macros.append(r"\newcommand{\ExtremeScaleTime}{55.6\,\text{s}}")
-    macros.append(r"\newcommand{\MemoryScalingTenKSpeedup}{22.4\times}")
-    macros.append(r"\newcommand{\FairBaselinesIccVTwoHighDMean}{0.258}")
+    macros.append(r"\newcommand{\MemoryScalingTenKSpeedup}{\ensuremath{2.9\times}}")
+    macros.append(r"\newcommand{\FairBaselinesIccVTwoHighDMean}{0.238}")
+    macros.append(r"\newcommand{\FairBaselinesIccVTwoHighDMedian}{0.057}")
     macros.append(r"\newcommand{\FairBaselinesKmVarFiltHighDMean}{0.050}")
     macros.append(r"\newcommand{\FairBaselinesKmPcaHighDMean}{0.042}")
     macros.append(r"\newcommand{\FairBaselinesSparseKmHighDMean}{0.044}")
@@ -85,6 +87,16 @@ def main():
     macros.append(r"\newcommand{\InductiveLeukemiaKmDirectARI}{0.172}")
     macros.append(r"\newcommand{\InductiveSrbctNystromARI}{0.455}")
     macros.append(r"\newcommand{\InductiveSrbctKmDirectARI}{0.083}")
+
+    macros.append(r"\newcommand{\AblationHighDSubgroupAmbientStdCons}{0.033}")
+    macros.append(r"\newcommand{\AblationHighDSubgroupAmbientAnchor}{0.046}")
+    macros.append(r"\newcommand{\AblationHighDSubgroupAmbientKMeans}{0.056}")
+    macros.append(r"\newcommand{\AblationHighDSubgroupBgssStdCons}{0.082}")
+    macros.append(r"\newcommand{\AblationHighDSubgroupBgssKMeans}{0.095}")
+    macros.append(r"\newcommand{\AblationHighDSubgroupBgssRandomAnchor}{0.216}")
+    macros.append(r"\newcommand{\AblationHighDSubgroupFullIccVTwo}{0.226}")
+    macros.append(r"\newcommand{\AblationLeukemiaMarkerFiftyCount}{27}")
+    macros.append(r"\newcommand{\AblationLeukemiaMarkerFiftyFraction}{54.0\%}")
 
     tex_content = "% Auto-generated LaTeX macros from frozen results. DO NOT EDIT BY HAND.\n" + "\n".join(macros) + "\n"
 

@@ -2,20 +2,19 @@
 Unit tests for the ICC dataset registry and loaders (src/icc/datasets).
 """
 
-import pytest
 import numpy as np
+import pytest
+
 from icc.datasets import (
-    load_dataset,
-    list_datasets,
-    get_dataset_info,
     DatasetInfo,
+    get_dataset_info,
+    list_datasets,
+    load_dataset,
     preprocess_dataset,
 )
-from icc.datasets.text import load_20newsgroups, load_rcv1
-from icc.datasets.image import load_yale_b, load_coil20
-from icc.datasets.spectral import load_indian_pines
-from icc.datasets.audio import load_isolet
-from icc.datasets.scrnaseq import load_zheng68k, load_tabula_muris
+from icc.datasets.image import load_coil20
+from icc.datasets.scrnaseq import load_tabula_muris
+from icc.datasets.text import load_rcv1
 
 try:
     import scanpy  # noqa: F401
@@ -204,8 +203,9 @@ def test_scanpy_not_installed_error(monkeypatch):
 
 
 def test_registry_yaml_matches_dataset_metadata():
-    import yaml
     from pathlib import Path
+
+    import yaml
     cfg_path = Path(__file__).resolve().parents[1] / "configs" / "datasets.yaml"
     with open(cfg_path, "r", encoding="utf-8") as f:
         data = yaml.safe_load(f)

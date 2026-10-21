@@ -48,3 +48,28 @@ This log records every architectural, algorithmic, and statistical decision made
   2. Registered ISSUE-09 through ISSUE-20 covering tasks B1 to B12.
   3. Removed `GATE_4_READY` status; set phase to `FIX_PASS_B` and active gate to `GATE_A`.
   4. Work organized strictly under `LOOP/ITERATIONS/passB/`.
+
+---
+
+### [2026-10-21] DEC-07: Progress on Fix Pass B Tasks B1-B5, B7, B9, B10
+- **Context:** Executed systematic remediation of manuscript defects B1–B5, B7, B9, and B10 under zero-hallucination and evidence-based traceability rules.
+- **Resolutions:**
+  1. **Task B1 (Citations):** Verified all 34 BibTeX references with DOIs; resolved 100% of `[?]` citation markers; Tectonic compilation confirmed zero undefined citations.
+  2. **Task B2 (Fig 7 & Stats):** Recalculated Nemenyi critical difference $CD = 3.219 \sqrt{11 \times 12 / (6 \times 13)} = 4.19$; synchronized Fig 17; removed legacy process notes.
+  3. **Task B3 (Subgroup Arithmetic & Baseline Claims):** Corrected biomedical subgroup ($D/N > 20$) mean ARI to 0.238 and median to 0.057; rewritten comparisons against strongest baseline (FastMVC, $+0.388$ gain on SRBCT).
+  4. **Task B4 (Table 3 Dimensions & Scaling):** Fully expanded Table 3 to show all 11 algorithms; reconciled subsampled dimensions ($N, D, K$) against Fig 6 and benchmark caches.
+  5. **Task B5 (Single-Protocol Memory & Runtime):** Re-measured sample scaling across $N \in [200, 10000]$ and 5 seeds under a unified protocol; explicitly decoupled raw data array storage ($800\text{ MB}$ double / $400\text{ MB}$ single at $N=10^6$) from auxiliary consensus graph memory ($3.06\text{ MB}$ at $N=10^4$, a $99.6\%$ reduction over $762.8\text{ MB}$ dense graph) and total process peak RSS ($292.1\text{ MB}$ vs. $2894.2\text{ MB}$, an $89.9\%$ reduction); synchronized all macros and Fig 18.
+  6. **Task B7 (BGSS Failure Modes & Simulation):** Quantified finite-sample detection power ($P=0.49$ at $N=60$ to $P=0.97$ at $N=1000$); updated empirical Leukemia gene count to verified 1,275.
+  7. **Task B9 (Figure Discrepancies Audit):** Reconstructed Fig 0/1 with BGSS nomenclature and tight bounding; corrected line 141 $\rho_{\text{sep}}$ reference; removed misleading annotation in Fig 10; aligned Exp 2.1 text and Fig 5 caption with exact Precision@K / Recall@K metrics.
+  8. **Task B10 (Naming & Notation):** Fully unified terminology to BGSS and notation $\hat{b}_d$ across text, algorithms, and figures.
+  9. **Pre-Registration (PREREG_B.md):** Fully drafted for Human Gate A sign-off before running computational jobs for Tasks B6 and B8.
+
+---
+
+### [2026-10-21] DEC-08: Human Gate A and Gate B Approvals
+- **Context:** Formal interactive human approval obtained for Gate A and Gate B.
+- **Approvals & Decisions:**
+  1. **Gate A Approved:** Pre-registration document `LOOP/PREREG_B.md` formally signed off by human lead author (Akash Kundu). Authorization granted to execute the pre-specified computational runs for Task B6 (2x2 factorial ablation across 6 high-D datasets) and Task B8 (fair baselines suite).
+  2. **Gate B Approved (AI Disclosure):** Option B ("AI-Assisted Research Workflow & Drafting with Human Verification") selected and integrated into line 547 of `springer_manuscript/main.tex`, satisfying Springer Nature AI editorial policy with full transparency.
+  3. **Gate B Approved (Author Metadata):** Author directory, affiliations, institutional emails, and CRediT contribution taxonomy confirmed in `LOOP/AUTHOR_CHECKLIST.md`.
+
