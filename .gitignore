@@ -76,7 +76,7 @@ tools/
 *.exe
 
 # Manuscript & Publication artifacts (kept local on disk, documented via README for GitHub)
-springer_manuscript/
+springer_manuscript/*
 manuscript/
 paper.tex
 *.tex
@@ -88,6 +88,8 @@ paper.tex
 *.cls
 *.sty
 *.eps
+!paper/numbers.tex
+!springer_manuscript/numbers.tex
 !paper/README.md
 !paper/figures/README.md
 !paper/figures/.gitkeep
