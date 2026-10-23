@@ -14,11 +14,12 @@ Run:
 """
 
 import time
+
 import numpy as np
 from tabulate import tabulate
 
-from icc.consensus_v2 import InvariantCoreConsensusV2
 from icc.baselines.classical import run_kmeans, run_spectral
+from icc.consensus_v2 import InvariantCoreConsensusV2
 from icc.core import build_dataset
 from icc.metrics import evaluate_all
 
@@ -26,7 +27,7 @@ from icc.metrics import evaluate_all
 def main():
     print("=" * 75)
     print("      INVARIANT CORE CONSENSUS (ICC-v2) -- INTERACTIVE DEMO")
-    print("      IEEE Transactions on Knowledge and Data Engineering (TKDE)")
+    print("      Springer Nature Data Mining and Knowledge Discovery (DAMI)")
     print("=" * 75)
 
     # 1. Generate High-D Data
@@ -37,7 +38,7 @@ def main():
     D_total = D_signal + D_noise
     K = 3
 
-    print(f"\n[*] 1. Synthesizing High-Dimensional Noisy Cohort:")
+    print("\n[*] 1. Synthesizing High-Dimensional Noisy Cohort:")
     print(f"    - Training Samples (N_train): {N_train}")
     print(f"    - Test Samples (N_test):     {N_test}")
     print(f"    - True Signal Dimensions:   {D_signal} (Features [0, 1])")
@@ -64,7 +65,7 @@ def main():
     )
 
     # 2. Train ICC-v2
-    print(f"\n[*] 2. Fitting ICC-v2 with Variance-Stabilized Subspace Gating (VSSG)...")
+    print("\n[*] 2. Fitting ICC-v2 with Variance-Stabilized Subspace Gating (VSSG)...")
     t0 = time.perf_counter()
     model = InvariantCoreConsensusV2(
         n_clusters=K,
@@ -82,12 +83,12 @@ def main():
     recall = len(signal_recovered) / D_signal
 
     print(f"    -> VSSG Active Pool:   {len(selected_features)} features retained from {D_total}")
-    print(f"    -> True Signals Found: {signal_recovered} (Recall = {recall * 100:.1f}%)")
+    print(f"    -> True Signals Found: {signal_recovered} (Precision = {precision * 100:.1f}%, Recall = {recall * 100:.1f}%)")
     core_pct = np.mean(model.core_mask_) * 100.0 if model.core_mask_ is not None else 50.0
     print(f"    -> Anchor Stability:   {core_pct:.1f}% samples certified as core anchors")
 
     # 4. Out-of-sample Inductive Prediction
-    print(f"\n[*] 3. Performing Inductive Out-of-Sample Prediction on Query Batch...")
+    print("\n[*] 3. Performing Inductive Out-of-Sample Prediction on Query Batch...")
     t0_pred = time.perf_counter()
     test_pred_sub = model.predict(X_test, subspace=True)
     pred_time = time.perf_counter() - t0_pred
@@ -102,7 +103,7 @@ def main():
     print(f"    -> Test ARI (No Gating): {scores_test_full['ari']:.4f} (Difference: {scores_test_sub['ari'] - scores_test_full['ari']:+.4f})")
 
     # 5. Benchmark Baselines on Training Set
-    print(f"\n[*] 4. Benchmarking Competitor Baselines on Training Cohort...")
+    print("\n[*] 4. Benchmarking Competitor Baselines on Training Cohort...")
     pred_km, t_km, _ = run_kmeans(X_train, k=K, seed=42)
     pred_sp, t_sp, _ = run_spectral(X_train, k=K, seed=42)
 
@@ -124,7 +125,7 @@ def main():
     print("=" * 75)
 
     # 5. Anchor-Space Perturbation Profiling (ASPP)
-    print(f"\n[*] 5. Executing Anchor-Space Perturbation Profiling (ASPP)...")
+    print("\n[*] 5. Executing Anchor-Space Perturbation Profiling (ASPP)...")
     t0_aspp = time.perf_counter()
     fp_df = model.profile_perturbations(X_train)
     aspp_time = time.perf_counter() - t0_aspp
@@ -138,7 +139,7 @@ def main():
     print(tabulate(aspp_display, headers="keys", floatfmt=".3f", tablefmt="github", showindex=False))
 
     # 6. Inductive Out-of-Sample Confidence Scoring
-    print(f"\n[*] 6. Inductive Prediction with Stability-Calibrated Confidence (First 5 queries):")
+    print("\n[*] 6. Inductive Prediction with Stability-Calibrated Confidence (First 5 queries):")
     res_stab = model.predict_with_stability(X_test[:5])
     query_table = []
     for idx in range(5):
