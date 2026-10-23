@@ -1,6 +1,6 @@
 # Scientific Remediation & Verification Dossier
 
-**Location:** `REMEDIATION/`  
+**Location:** `governance/remediation/`  
 **Purpose:** Comprehensive audit trail, root-cause analyses, and resolution verification for all 27 technical, numerical, and theoretical issues identified during peer review and empirical validation.  
 **Target Venue:** Springer Nature (*Data Mining and Knowledge Discovery* / DAMI)
 

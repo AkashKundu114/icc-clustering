@@ -1,6 +1,6 @@
 # Research Integrity & Preregistration Archive
 
-**Location:** `LOOP/`  
+**Location:** `governance/preregistration/`  
 **Purpose:** Comprehensive archive of preregistered experiment protocols, iterative manuscript development cycles (Passes A through F), bibliographic CrossRef audits, and submission governance.  
 **Target Venue:** Springer Nature (*Data Mining and Knowledge Discovery* / DAMI)
 

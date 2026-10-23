@@ -1,5 +1,5 @@
 """
-Update LOOP/REFS_AUDIT.csv and generate LOOP/REFS_AUDIT.md:
+Update governance/preregistration/REFS_AUDIT.csv and generate governance/preregistration/REFS_AUDIT.md:
 Documenting the 10 discrepancies between CrossRef and canonical .bib fields,
 verifying each against original publisher proceedings/archives.
 """
@@ -7,7 +7,7 @@ verifying each against original publisher proceedings/archives.
 import pandas as pd
 from pathlib import Path
 
-csv_path = Path("LOOP/REFS_AUDIT.csv")
+csv_path = Path("governance/preregistration/REFS_AUDIT.csv")
 df = pd.read_csv(csv_path)
 
 audit_notes = {
@@ -30,11 +30,11 @@ for k, note in audit_notes.items():
         df.loc[idx, "audit_verdict"] = "VERIFIED_CANONICAL_PROCEEDINGS"
         df.loc[idx, "discrepancies"] = note
 
-df.to_csv("LOOP/REFS_AUDIT.csv", index=False)
-print("Updated LOOP/REFS_AUDIT.csv with canonical verification verdicts.")
+df.to_csv("governance/preregistration/REFS_AUDIT.csv", index=False)
+print("Updated governance/preregistration/REFS_AUDIT.csv with canonical verification verdicts.")
 
 # Write markdown audit report
-md_content = """# Reference Metadata Audit Ledger (LOOP/REFS_AUDIT.md)
+md_content = """# Reference Metadata Audit Ledger (governance/preregistration/REFS_AUDIT.md)
 
 **Total References Audited:** 32  
 **Direct CrossRef Matches:** 22  
@@ -59,6 +59,6 @@ md_content = """# Reference Metadata Audit Ledger (LOOP/REFS_AUDIT.md)
 | `arthur2007k` | k-means++: The Advantages of Careful Seeding | SODA 2007, pp. 1027-1035 | 2006, pp. 144-153 | **Verified Canonical:** Official ACM-SIAM SODA 2007 proceedings. CrossRef points to 2006 Stanford technical report. |
 """
 
-with open("LOOP/REFS_AUDIT.md", "w", encoding="utf-8") as fp:
+with open("governance/preregistration/REFS_AUDIT.md", "w", encoding="utf-8") as fp:
     fp.write(md_content)
-print("Generated LOOP/REFS_AUDIT.md.")
+print("Generated governance/preregistration/REFS_AUDIT.md.")

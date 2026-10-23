@@ -22,7 +22,8 @@ df_exp2_real = pd.read_csv(p_exp2_real) if os.path.exists(p_exp2_real) else None
 p_mad = "experiments/exp2_ablation/data/exp2_1_madelon_pr.csv"
 df_mad = pd.read_csv(p_mad) if os.path.exists(p_mad) else None
 
-with open("REMEDIATION/CLAIMS.md", "r", encoding="utf-8") as f:
+claims_path = "governance/remediation/CLAIMS.md" if os.path.exists("governance/remediation/CLAIMS.md") else "REMEDIATION/CLAIMS.md"
+with open(claims_path, "r", encoding="utf-8") as f:
     lines = f.readlines()
 
 updated_lines = []
@@ -277,7 +278,7 @@ for line in lines:
     new_line = f"| **{cid}** | {source} | {context} | {metric_or_method} | {paper_val_str} | {script} | {repro_val or 'PENDING'} | {delta_str} | {status} |\n"
     updated_lines.append(new_line)
 
-with open("REMEDIATION/CLAIMS.md", "w", encoding="utf-8") as f:
+with open(claims_path, "w", encoding="utf-8") as f:
     f.writelines(updated_lines)
 
 print(f"Total claims evaluated: {scoreboard['TOTAL']}")

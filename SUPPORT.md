@@ -9,7 +9,7 @@ Thank you for your interest in the Inductive Consensus Clustering (`icc`) codeba
 - **Documentation:**
   - [API Reference](docs/api.md)
   - [Theoretical Foundations](docs/THEORETICAL_FOUNDATIONS.md)
-  - [Remediation & Empirical Audit Ledger](REMEDIATION/LEDGER.md)
+  - [Remediation & Empirical Audit Ledger](governance/remediation/LEDGER.md)
 
 - **Bug Reports & Issues:**
   If you find a bug, unexpected behaviour, or a numerical inconsistency:

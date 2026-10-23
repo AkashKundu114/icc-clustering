@@ -2,7 +2,7 @@
 Comprehensive CrossRef Reference Audit Script.
 Queries api.crossref.org for every entry in references.bib.
 Extracts raw CrossRef fields, compares with .bib fields, records match flags,
-and generates LOOP/REFS_AUDIT.csv.
+and generates governance/preregistration/REFS_AUDIT.csv.
 """
 
 import re
@@ -14,7 +14,7 @@ from pathlib import Path
 import pandas as pd
 
 BIB_PATH = Path("springer_manuscript/references.bib")
-OUT_CSV = Path("LOOP/REFS_AUDIT.csv")
+OUT_CSV = Path("governance/preregistration/REFS_AUDIT.csv")
 
 def parse_bib_entries(filename: str):
     with open(filename, 'r', encoding='utf-8') as f:

@@ -93,9 +93,9 @@ for entry_type, key, body in entries:
     })
     print(f"[{status[:8]}] {key}: bib={vol}({num}) pp.{pages} -> CR={crossref_volume}({crossref_issue}) pp.{crossref_page}")
 
-with open("LOOP/REFS_AUDIT.csv", "w", newline="", encoding="utf-8") as f:
+with open("governance/preregistration/REFS_AUDIT.csv", "w", newline="", encoding="utf-8") as f:
     writer = csv.DictWriter(f, fieldnames=list(audit_rows[0].keys()))
     writer.writeheader()
     writer.writerows(audit_rows)
 
-print("\nWrote LOOP/REFS_AUDIT.csv with complete metadata verification.")
+print("\nWrote governance/preregistration/REFS_AUDIT.csv with complete metadata verification.")

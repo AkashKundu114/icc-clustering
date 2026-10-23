@@ -1,6 +1,6 @@
 # Software Release Governance & Quality Assurance
 
-**Location:** `RELEASE/`  
+**Location:** `governance/release/`  
 **Purpose:** Release verification records, regression test baselines, licensing decisions, and GitHub lifecycle management for the `icc` Python package.  
 **Current Release Version:** `v2.0.0` / `v2.1.0`
 
