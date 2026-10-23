@@ -124,7 +124,7 @@ class DecoyFeatureGating:
             best_tau = float(positive_W[-1])
             n_neg = np.sum(self.W_ <= -best_tau)
             n_pos = np.sum(self.W_ >= best_tau)
-            best_fdr = float((1.0 + n_neg) / max(1, n_pos))
+            best_fdr = float((1.0 + float(n_neg)) / max(1.0, float(n_pos)))
 
         self.tau_ = best_tau
         self.selected_indices_ = np.where(self.W_ >= self.tau_)[0]

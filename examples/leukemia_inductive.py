@@ -1,7 +1,9 @@
 import numpy as np
+
 from icc import ICC
 from icc.datasets.registry import load_dataset
 from icc.metrics import evaluate_all
+
 
 def main():
     print("=" * 60)
