@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Invariant Core Consensus (ICC-v2) — 5-Second Interactive Walkthrough Demo.
+Invariant Core Consensus (ICC-v2): 5-Second Interactive Walkthrough Demo.
 
 Demonstrates:
 1. Generation of high-dimensional noisy data (D = 2,000, N = 300, K = 3, 99.9% noise features).

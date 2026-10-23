@@ -1,5 +1,5 @@
 """
-Unified dataset registry — YAML-driven loader for all ICC benchmark datasets.
+Unified dataset registry: YAML-driven loader for all ICC benchmark datasets.
 
 Discovers dataset configurations from configs/datasets.yaml and provides
 standardized loading, metadata querying, and unified preprocessing:
