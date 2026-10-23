@@ -79,7 +79,7 @@ docs/
 For reviewers, collaborators, and students reading this repository, the recommended navigation path is:
 
 ### Step 1: Scientific Vision & Research Proposal
-* Read [`proposal/IEEE_Research_Proposal_Inductive_Consensus_Clustering.md`](./proposal/IEEE_Research_Proposal_Inductive_Consensus_Clustering.md) (or [`proposal/IEEE_Research_Proposal_Cluster_Stability.md`](./proposal/IEEE_Research_Proposal_Cluster_Stability.md)) to understand the fundamental unsolved problem—the **"Hallucinated Stability" trap**—and how ICC-v2 was formulated to fulfill Prof. Kalyan Kumar Das's research directives (Points 1, 2, and 5).
+* Read [`proposal/IEEE_Research_Proposal_Inductive_Consensus_Clustering.md`](./proposal/IEEE_Research_Proposal_Inductive_Consensus_Clustering.md) (or [`proposal/IEEE_Research_Proposal_Cluster_Stability.md`](./proposal/IEEE_Research_Proposal_Cluster_Stability.md)) to understand the fundamental unsolved problem, the **"Hallucinated Stability" trap**, and how ICC-v2 was formulated to fulfill Prof. Kalyan Kumar Das's research directives (Points 1, 2, and 5).
 
 ### Step 2: Prior Art, Literature & Baselines
 * Read [`literature/papers.md`](./literature/papers.md) (or [`literature/literature_review.md`](./literature/literature_review.md)) for an exhaustive 20-paper annotated literature matrix, the comprehensive comparative analysis of the **10 baseline algorithms** (K-Means, Ward, Spectral, SEC, CSPA, MCLA, LWEA, LWGP, FastMICE, DEC), and the formal prior art taxonomy (Categories A through D).

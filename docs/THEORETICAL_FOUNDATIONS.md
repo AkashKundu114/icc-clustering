@@ -123,7 +123,7 @@ Let $N$ be the sample size, $D$ feature dimension, $M$ base models, $K$ clusters
    - Linear Determinacy Calculation: $\mathcal{O}(M^2 N + M^2 K^2)$.
    - Bipartite Graph Construction: $\mathcal{O}(M \cdot N \cdot L)$.
    - Reduced Spectral Decomposition: $\mathcal{O}(N L^2 + L^3)$.
-   - **Total Training Time:** $\mathcal{O}(N(D + M d_{\text{sub}} K + M^2 + M L) + L^3)$ — strictly linear in $N$.
+   - **Total Training Time:** $\mathcal{O}(N(D + M d_{\text{sub}} K + M^2 + M L) + L^3)$: strictly linear in $N$.
 2. **Space Complexity:**
    - Co-association storage: $\mathcal{O}(N \cdot L)$ auxiliary storage, compared to $\mathcal{O}(N^2)$ for standard consensus.
 3. **Inductive Query Latency:**

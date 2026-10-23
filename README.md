@@ -164,19 +164,19 @@ During the preparation of this manuscript and software repository, the authors u
 
 For academic mentors, peer reviewers, and reproducibility auditors inspecting the scientific lineage of this project, all audit trails, preregistrations, and quality assurance logs are consolidated under [`governance/`](governance/README.md):
 
-1. **[`governance/remediation/`](governance/remediation/README.md) — Scientific Remediation & Verification Dossier:**
+1. **[`governance/remediation/`](governance/remediation/README.md): Scientific Remediation & Verification Dossier:**
    - Catalog and resolution proofs for all 27 technical, numerical, and theoretical issues identified during internal audits.
    - Master issue matrix: [`governance/remediation/LEDGER.md`](governance/remediation/LEDGER.md).
    - Theoretical derivations and proofs: [`governance/remediation/THEORY_NOTES.md`](governance/remediation/THEORY_NOTES.md).
    - Granular manuscript claim audit: [`governance/remediation/CLAIMS_AUDIT.md`](governance/remediation/CLAIMS_AUDIT.md).
 
-2. **[`governance/preregistration/`](governance/preregistration/README.md) — Research Integrity & Preregistration Archive:**
+2. **[`governance/preregistration/`](governance/preregistration/README.md): Research Integrity & Preregistration Archive:**
    - Preregistration protocols freezing evaluation thresholds in advance ([`PREREG_B.md`](governance/preregistration/PREREG_B.md), [`PREREG_C.md`](governance/preregistration/PREREG_C.md), [`PREREG_F.md`](governance/preregistration/PREREG_F.md)).
    - 100% CrossRef API reference verification audit ([`REFS_AUDIT.md`](governance/preregistration/REFS_AUDIT.md), [`REFS_AUDIT.csv`](governance/preregistration/REFS_AUDIT.csv)).
    - Related work taxonomy and novelty matrix ([`LITERATURE_MATRIX.csv`](governance/preregistration/LITERATURE_MATRIX.csv)).
    - Submission cover letters and rebuttal frameworks ([`COVER_LETTER_DRAFT.md`](governance/preregistration/COVER_LETTER_DRAFT.md), [`RESPONSE_TO_REVIEWERS_OUTLINE.md`](governance/preregistration/RESPONSE_TO_REVIEWERS_OUTLINE.md)).
 
-3. **[`governance/release/`](governance/release/README.md) — Software Release Governance & Quality Assurance:**
+3. **[`governance/release/`](governance/release/README.md): Software Release Governance & Quality Assurance:**
    - Pre-release validation reports and sign-offs ([`RELEASE_REPORT.md`](governance/release/RELEASE_REPORT.md)).
    - MIT open-source license justification ([`LICENSE_DECISION.md`](governance/release/LICENSE_DECISION.md)).
    - Regression test output baselines ([`governance/release/baseline/`](governance/release/baseline/)).
