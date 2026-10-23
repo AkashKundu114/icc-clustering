@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0] - 2026-10-23
+
+### Added
+- **Conformal Inductive Consensus Clustering (src/cicc/):** Unified framework combining bipartite anchor consensus, target-decoy / knockoff feature gating with False Discovery Rate (FDR) control, and finite-sample split-conformal cluster assignment with guaranteed error coverage 1 - α.
+- **Real-World Application Scripts (examples/):** Standalone reproducible pipelines for clinical oncological diagnostic subtyping (clinical_cancer_subtyping.py evaluating Leukemia and SRBCT) and real-time held-out point-of-care patient projection (realtime_patient_projection.py achieving 22.6 μs per-query latency).
+- **Comprehensive Ablation Suite:** Component knockout benchmarks across 6 high-D datasets evaluating feature gating, bipartite anchor graph projection, base ensembling, and certified vs. random anchor selection.
+- **Publication Experimental Visualizations (paper/figures/):** Tracked 58 high-resolution publication benchmark figures and architecture schematics validating asymptotic scaling, noise robustness, critical difference rankings, and hyperparameter sensitivity.
+
+### Changed
+- **Pre-Publication Embargo Boundary:** Separated public algorithm source code, benchmarks, and figures from unpublished draft manuscript text and compilation binaries.
+- **Package Version Alignment:** Unified version declaration (2.1.0) across pyproject.toml and src/icc/__init__.py.
+
+### Removed
+- **Legacy Audit Artifacts:** Cleaned obsolete submission_audit/ records from repository tracking.
+
+---
+
 ## [2.0.0] - 2026-10-17
 
 ### Added
