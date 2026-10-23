@@ -253,13 +253,13 @@ class AnchorSpacePerturbationProfiler:
 
                     surviving_anchor_mask = np.isin(anchor_indices, obs_rows)
                     if not np.any(surviving_anchor_mask):
-                        local_anchor_pos = np.arange(min(L, N_obs))
+                        local_anchor_pos: np.ndarray = np.arange(min(L, N_obs))
                         surviving_anchors = obs_rows[local_anchor_pos]
                     else:
                         surviving_anchors = anchor_indices[surviving_anchor_mask]
 
                         obs_row_map = {orig_idx: local_idx for local_idx, orig_idx in enumerate(obs_rows)}
-                        local_anchor_pos = np.array([obs_row_map[idx] for idx in surviving_anchors])
+                        local_anchor_pos = np.array([obs_row_map[idx] for idx in surviving_anchors], dtype=int)
 
                     L_obs = len(local_anchor_pos)
 
