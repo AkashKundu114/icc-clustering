@@ -2,7 +2,7 @@
 Invariant Core Consensus (ICC): Algorithmic Package.
 """
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 
 from .aspp import ASPP_FAMILIES, AnchorSpacePerturbationProfiler, ASPPConfig
 from .consensus import InvariantCoreConsensus
