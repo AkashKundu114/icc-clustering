@@ -3,12 +3,16 @@ Compute Table 2 paired differences with dataset-level bootstrap CIs:
 - CentroidFull (Eq. 7) vs KMeans_Direct
 - CentroidFull vs NystromSubspace
 - CentroidFull vs Pseudo_RandomForest
+
+Usage:
+    python scripts/compute_inductive_bootstrap.py
 """
 
 import json
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
-from pathlib import Path
 
 OUT_DIR = Path("results/passF")
 OUT_DIR.mkdir(parents=True, exist_ok=True)

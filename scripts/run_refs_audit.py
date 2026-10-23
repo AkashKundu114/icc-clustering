@@ -1,8 +1,19 @@
-import re
-import json
-import urllib.request
-import urllib.error
+"""
+Live CrossRef Reference Metadata Audit.
+
+Parses all BibTeX entries from springer_manuscript/references.bib, queries the
+CrossRef REST API for verified volume, issue, pagination, and publication metadata,
+and exports the verification audit matrix to governance/preregistration/REFS_AUDIT.csv.
+
+Usage:
+    python scripts/run_refs_audit.py
+"""
+
 import csv
+import json
+import re
+import urllib.error
+import urllib.request
 from datetime import date
 
 with open("springer_manuscript/references.bib", "r", encoding="utf-8") as f:

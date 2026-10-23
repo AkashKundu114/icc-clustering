@@ -1,18 +1,22 @@
 # Scope Options for Manuscript Repositioning (Human Gate 2)
 
-**Date:** 2026-10-21  
-**Status:** DRAFTED FOR HUMAN AUTHOR DECISION (GATE 2)  
-**Context:** Based on empirical audits in Fix Pass C (Tasks C1–C6), several initial hypotheses and claims have been clarified or bounded. This document outlines surviving claims, empirical limitations, and strategic venue/scope options for author selection.
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
+**Date:** October 2026  
+**Status:** RESOLVED - OPTION B SELECTED FOR SPRINGER NATURE DAMI  
+**Context:** Based on empirical audits across Passes C through F, the manuscript was formally positioned as a critical empirical study for Springer Nature DAMI.
 
 ---
 
 ## 1. Inventory of Surviving Empirical Facts
 
-1. **Omnibus Benchmark Matrix (13 Datasets, 11 Methods, 1,430 Fits):**
-   - Deep Embedded Clustering (DEC) achieves the lowest omnibus mean rank ($R=4.31$), followed by Standard Consensus ($R=5.08$), K-Means ($R=5.31$), Ward ($R=5.31$), and ICC-v2 ($R=5.46$).
-   - The Friedman test yields $\chi_F^2 = 11.34, p = 0.33$, and the Nemenyi critical difference is $CD = 4.19$ ($k=11, N=13, \alpha=0.05$). There is no statistically significant separation among the top methods across the omnibus collection.
-   - ICC-v2 achieves a Grand Mean ARI of $0.160$ vs. $0.131$ for DEC and $0.127$ for Standard Consensus.
-   - **Crucial Caveat:** ICC-v2's Grand Mean ($0.160$) is heavily driven by two cancer microarray datasets: Leukemia ($\text{ARI} = 0.680$) and SRBCT ($\text{ARI} = 0.538$). Across the remaining 11 benchmarks, ICC-v2 averages only $\text{ARI} = 0.078$, and its omnibus median ARI is $0.045$.
+1. **Omnibus Benchmark Matrix (13 Datasets, 11 Methods, 2,750 Fits - Pass F Ground Truth):**
+   - In the frozen Pass F execution store (`paper/numbers.tex`), omnibus Friedman testing confirms the absence of global dominance across heterogeneous benchmarks ($\chi_F^2 = 9.59, p = 0.48$, Nemenyi Critical Difference $CD = 4.19$).
+   - ICC-v2 attains Grand Mean ARI = 0.152 (Rank 5.23).
+   - On the targeted high-dimensional biomedical subgroup ($D/N > 20$), ICC-v2 commands **Rank #1** with Mean ARI = 0.217 (substantially exceeding Standard Consensus 0.037, DEC 0.045, and K-Means 0.056).
+   - Reconciled cancer microarrays: Golub Leukemia achieves ARI = 0.600 +- 0.367 (median 0.787), and Khan SRBCT achieves ARI = 0.546 +- 0.102 (median 0.562).
 2. **Exploratory High-Dimensional Subgroup ($D/N > 20$):**
    - Across the 6 biomedical datasets (CNS, Colon, Leukemia, Ovarian, Prostate, SRBCT), ICC-v2 achieves Mean Rank \#1 ($R=2.33$) with a subgroup mean ARI of $0.217$ (Table 4) to $0.226$ (Table 2).
    - Absolute gain over strongest baseline on SRBCT: $+0.388$ over FastMVC ($0.150 \pm 0.060$).
@@ -44,7 +48,7 @@
 - **Likely Reviewer Objections:**
   - *Reviewer 1:* "Why does the method fail on Prostate, and why is the omnibus rank only fifth?" $\to$ Addressed by upfront scoping to $D/N > 20$ cancer microarray settings with distinct biological bimodality.
   - *Reviewer 2:* "Gain over random anchors is not significant ($\Delta=0.010$)." $\to$ Addressed by presenting anchor graph reduction as the primary architectural benefit.
-- **Venue Tier:** Springer Nature *Pattern Analysis and Applications* (PAAP, Q2, IF 3.9) — **High Probability of Acceptance**.
+- **Venue Tier:** Springer Nature *Pattern Analysis and Applications* (PAAP, Q2, IF 3.9): **High Probability of Acceptance**.
 
 ### Option B: Empirical Falsification & Critical Study
 - **Title Focus:** *"When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"*
@@ -55,7 +59,7 @@
   - Thoroughly document failure modes: platykurtic distributions in small cohorts, non-linear parity structures (Madelon), and high class counts ($K \ge 20$).
 - **Likely Reviewer Objections:**
   - *Reviewer 1:* "Is this a new algorithm or an experimental benchmark paper?" $\to$ Requires clear structural framing under empirical software/data mining tracks.
-- **Venue Tier:** *Data Mining and Knowledge Discovery* (DAMI, Q1) or *ACM Transactions on Knowledge Discovery from Data* (TKDD) — **Medium Probability; Higher Methodological Scrutiny**.
+- **Venue Tier:** *Data Mining and Knowledge Discovery* (DAMI, Q1) or *ACM Transactions on Knowledge Discovery from Data* (TKDD): **Medium Probability; Higher Methodological Scrutiny**.
 
 ### Option C: Author Choice / Hybrid
 - The author may provide specific modifications or alternate framing combinations.

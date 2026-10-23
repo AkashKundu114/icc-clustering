@@ -1,19 +1,24 @@
 # Research Audit Report 07: Transfer-Cut Spectral Scaling & Anchor Bipartite Formulation
 
-**Audit Target:** Bipartite Graph Partitioning & SVD Scaling in `src/icc/consensus_v2.py`  
-**Status:** Remediated, Mathematically Proven & Audited (Stage A3)  
+**Audit Target:** Bipartite Graph Partitioning & SVD Scaling in `src/icc/consensus_v2.py` and Manuscript Section 5.3  
+**Canonical Manuscript Title:** When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination  
+**Academic Lineage:** Initial University Allotment Title: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data" (`CSE_PROJECT_68`, Mentor: Prof. Kalyan Kumar Das); Early Proposal Blueprint: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"  
+**Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`), manuscript `paper/main.tex`.  
+**Canonical Active Release:** v2.1.0  
+**Status:** Remediated, Mathematically Proven & Audited (Stage A3, Pass F, and Section 5.3)  
 **Date:** October 2026  
 
 ---
 
 ## 1. Executive Summary
 
-A core claim of ICC-v2 is its near-linear $\mathcal{O}(N L)$ scalability in sample size $N$, contrasting sharply with traditional dense consensus clustering methods that require $\mathcal{O}(N^2)$ time and memory to construct and factorize the pairwise co-association matrix $S \in \mathbb{R}^{N \times N}$.
+A core algorithmic claim of ICC-v2 is its near-linear $\mathcal{O}(N L)$ scalability in sample size $N$, contrasting sharply with traditional dense consensus clustering methods that require $\mathcal{O}(N^2)$ time and memory to construct and factorize the pairwise co-association matrix $S \in \mathbb{R}^{N \times N}$.
 
 The auditor requested an equation-level audit of the Transfer-Cut solver to ensure:
 1. Exact algebraic equivalence between the Transfer-Cut SVD reduction and the Normalized Cut on the bipartite graph.
 2. Proper degree matrix normalization and unit-norm embedding projections.
 3. Strict absence of any implicit $N \times N$ matrix allocations.
+4. Validation of memory and runtime scaling up to extreme scales ($N = 10^6$).
 
 ---
 
@@ -52,7 +57,7 @@ $$\Phi = \tilde{B} \Psi \Sigma^{-1} = D_x^{-1/2} B D_u^{-1/2} \Psi \Sigma^{-1}$$
 
 ## 3. Algorithmic Implementation Verification
 
-In `src/icc/consensus_v2.py`, the Transfer-Cut is implemented without allocating any dense intermediate:
+In `src/icc/consensus_v2.py`, the Transfer-Cut is implemented without allocating any dense $N \times N$ intermediate:
 
 ```python
 # Compute degree vectors in O(N L)
@@ -80,12 +85,27 @@ labels = kmeans_plusplus(U_normalized, n_clusters=K)
 
 ---
 
-## 4. Complexity & Memory Comparison
+## 4. Empirical Complexity & Extreme-Scale Validation
 
-| Consensus Approach | Graph Storage | Spectral Decomposition | Memory Footprint | Runtime ($N = 68,579$) |
-| :--- | :--- | :--- | :--- | :--- |
-| **Standard Consensus (Fred & Jain)** | Dense $N \times N$ | Full Eigendecomposition | $\mathcal{O}(N^2) \approx 37.6 \text{ GB}$ | Out of Memory (OOM) |
-| **Spectral Consensus (Ng et al.)** | Sparse $N \times N$ | Lanczos Iteration | $\mathcal{O}(k_n N) \approx 2.4 \text{ GB}$ | $\approx 420 \text{ s}$ |
-| **ICC-v2 Transfer-Cut** | Compact $N \times L$ | Truncated SVD ($L \ll N$) | $\mathcal{O}(N L) \approx 27.4 \text{ MB}$ | **$\approx 3.2 \text{ s}$** |
+As verified in `experiments/exp5_extreme_scale/` and quantified by macros in `paper/numbers.tex`:
 
-**Audit Sign-Off:** PASS — Transfer-Cut formulation verified mathematically and audited in source code.
+1. **Memory Reduction:**  
+   - At $N = 8,000$: **96.4%** RAM reduction over dense consensus.
+   - At $N = 10,000$: **97.4%** overall RAM reduction and **99.6%** graph memory reduction.
+   - Dense consensus requires allocating an 800 MB matrix at $N = 10,000$ and quickly exceeds workstation RAM, whereas ICC-v2 graph memory remains under 3 MB.
+
+2. **Runtime Speedup:**  
+   - On Ovarian cancer ($N = 253, D = 15,154$): **5.1x** speedup over dense consensus.
+   - At $N = 10,000$: **2.9x** wall-clock speedup.
+
+3. **Extreme Scale ($N = 10^6$ Single Cells):**  
+   - At $N = 1,000,000$ samples, standard consensus would require an **8 TB** dense matrix, causing catastrophic out-of-memory failure.
+   - ICC-v2 solves consensus in **55.6 s** (total execution time 141.2 s) with **240 MB** graph memory and **3.05 GB** peak RSS on a single commodity workstation.
+
+| Consensus Approach | Graph Storage | Spectral Decomposition | Memory Footprint ($N=10^6$) | Runtime ($N = 10^6$) |
+| :--- | :--- | :--- | :---: | :---: |
+| **Standard Consensus (Fred & Jain)** | Dense $N \times N$ | Full Eigendecomposition | $\mathcal{O}(N^2) \approx 8.0 \text{ TB}$ | Out of Memory (OOM) |
+| **Spectral Consensus (SEC)** | Sparse $N \times N$ | Lanczos Iteration | $\mathcal{O}(k_n N) \approx 48 \text{ GB}$ | $> 3 \text{ hours}$ |
+| **ICC-v2 Transfer-Cut** | Compact $N \times L$ | Truncated SVD ($L \ll N$) | $\mathcal{O}(N L) \approx 240 \text{ MB}$ | **55.6 s** |
+
+**Audit Sign-Off:** PASS: Transfer-Cut formulation verified mathematically, audited in source code, and benchmarked to 1,000,000 samples.

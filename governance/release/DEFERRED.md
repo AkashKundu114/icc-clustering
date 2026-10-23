@@ -1,8 +1,11 @@
 # Deferred Code-Quality Findings (Phase C)
 
-**Date:** 2026-10-17  
-**Branch:** `release/public-cleanup`  
-**Auditor:** Subagent Q  
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
+**Date:** October 2026  
+**Auditor:** Senior Research Governance Auditor  
 
 Per project instructions:
 > "Fix all findings that do not change behaviour; for any finding that would change behaviour, log it in RELEASE/DEFERRED.md instead of changing it."

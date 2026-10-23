@@ -1,8 +1,11 @@
 # AI Use Disclosure and Verification Log
 
-**Date:** 2026-10-22  
-**Project:** ICC-v2 Manuscript & Codebase Evaluation (Springer Nature DAMI Submission Package)  
-**Status:** DRAFTED FOR HUMAN AUTHOR AUDIT (PASS E)  
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
+**Date:** October 2026  
+**Status:** DRAFTED FOR HUMAN AUTHOR AUDIT (PASS F & RELEASE v2.1.0)  
 **Guidelines Followed:** Springer Nature Policies on AI Authorship and Generative Tools.
 
 ---
@@ -33,17 +36,17 @@
 - **AI Action:** Implemented paired dataset-level cluster bootstrap resampling ($B=10{,}000$) and paired Wilcoxon signed-rank tests across the 6 high-D datasets.
 - **Key Findings:**
   - Certified anchors (V5) vs. uniform random anchors (V4) yield $\Delta = +0.010$, with a 95% cluster bootstrap CI of $[-0.051, +0.076]$ (spanning zero) and Wilcoxon $W = 8.0, p = 0.69$, proving that anchor certification provides no statistically significant advantage over random anchor selection.
-  - Computed Friedman $\chi_F^2 = 11.34, p = 0.33$ and Nemenyi $CD = 4.19$.
-  - Recomputed overall mean ranks both across all 13 benchmarks (ICC-v2 Rank #5, $R=5.46$) and excluding the PBMC68k-reduced demo subset (ICC-v2 Rank #2, $R=5.00$).
+  - Computed Friedman omnibus test ($\chi_F^2 = 9.59, p = 0.48$) and Nemenyi Critical Difference ($CD = 4.19$ for $k=11, N=13$) strictly matching `paper/numbers.tex`.
+  - Recomputed overall mean ranks in Pass F frozen store: ICC-v2 achieves Grand Mean ARI = 0.152 (Rank 5.23) and commands Rank #1 with Mean ARI = 0.217 on the targeted high-D subgroup ($D/N > 20$).
 
 ### Task 3: Bibliography Audit & CrossRef Querying
 - **AI Action:** Executed automated HTTP queries to CrossRef API (`https://api.crossref.org/works/`) for all bibtex citations in `springer_manuscript/references.bib` via `scripts/run_refs_audit.py`.
 - **Corrections Applied:**
-  - Corrected Topchy et al. [4] to IEEE TPAMI Vol. 27, Issue 12, pp. 1866–1881 (2005) (fixing erroneous Issue 11).
-  - Corrected Huang et al. [8] to IEEE TKDE Vol. 28, Issue 5, pp. 1312–1326 (2016) (fixing erroneous Issue 4).
-  - Corrected Liu et al. [9] to IEEE TKDE Vol. 29, Issue 5, pp. 1129–1143 (2017) with co-author Junjie Wu (fixing erroneous Issue 4).
-  - Corrected Huang et al. [15] to IEEE TKDE Vol. 35, Issue 11, pp. 11388–11402 (2023).
-  - Verified Huang et al. [16] (TKDE Vol. 32, Issue 6, pp. 1212–1226) and Hartigan & Hartigan [19] (Ann. Statist. Vol. 13, No. 1, pp. 70–84).
+  - Corrected Topchy et al. [4] to IEEE TPAMI Vol. 27, Issue 12, pp. 1866-1881 (2005) (fixing erroneous Issue 11).
+  - Corrected Huang et al. [8] to IEEE TKDE Vol. 28, Issue 5, pp. 1312-1326 (2016) (fixing erroneous Issue 4).
+  - Corrected Liu et al. [9] to IEEE TKDE Vol. 29, Issue 5, pp. 1129-1143 (2017) with co-author Junjie Wu (fixing erroneous Issue 4).
+  - Corrected Huang et al. [15] to IEEE TKDE Vol. 35, Issue 11, pp. 11388-11402 (2023).
+  - Verified Huang et al. [16] (TKDE Vol. 32, Issue 6, pp. 1212-1226) and Hartigan & Hartigan [19] (Ann. Statist. Vol. 13, No. 1, pp. 70-84).
   - Added baseline citation for Core-Halo Consensus (Li et al., TKDE 2018/2019) with algorithmic description in Section 5.1.
 
 ### Task 4: Figure Generation & Synchronization

@@ -1,6 +1,11 @@
 # Independent Research Audit & Adversarial Verification Reports
 
-This directory archives the complete, unvarnished documentation from the independent adversarial research audit of the **Invariant Core Consensus (ICC-v2)** codebase, conducted across remediation stages A1–A4, E1, and E3.
+**Canonical Manuscript Title:** When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination  
+**Academic Lineage:** Initial University Allotment Title: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data" (`CSE_PROJECT_68`, Faculty Mentor: Prof. Kalyan Kumar Das); Early Proposal Blueprint: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"  
+**Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`), manuscript `paper/main.tex`.  
+**Canonical Release Version:** v2.1.0  
+
+This directory archives the complete, unvarnished documentation from the independent adversarial research audit of the **Invariant Core Consensus (ICC-v2)** codebase, conducted across remediation stages A1 through A4, E1, E3, E5, E6, and Pass F.
 
 ---
 
@@ -13,8 +18,8 @@ This directory archives the complete, unvarnished documentation from the indepen
 | [`02_claim_evidence_matrix.md`](./02_claim_evidence_matrix.md) | Claim-Evidence Matrix | Systematic mapping of every theoretical and empirical claim in documentation to underlying evidence. |
 | [`03_mathematical_audit.md`](./03_mathematical_audit.md) | Mathematical Audit | Proof audit of finite-sample Sarle Bimodality Coefficient, Bipartite Transfer-Cut equivalence, and anchor bounds. |
 | [`04_algorithm_code_traceability.md`](./04_algorithm_code_traceability.md) | Code Traceability | Verification of algorithmic alignment between LaTeX equations and NumPy/SciPy implementations. |
-| [`05_novelty_and_related_work.md`](./05_novelty_and_related_work.md) | Prior Art & Novelty | Differentiation against LWEA/LWGP (Huang et al.), FastMICE (TKDE 2023), and bipartite spectral consensus. |
-| [`06_experiment_audit.md`](./06_experiment_audit.md) | Experiment Audit | Re-computation of benchmark matrices, detection of rank dynamics, and discovery of the 5%–15% pool window. |
+| [`05_novelty_and_related_work.md`](./05_novelty_and_related_work.md) | Prior Art & Novelty | Differentiation against LWEA/LWGP (Huang et al.), FastMICE (Huang et al.), and bipartite spectral consensus. |
+| [`06_experiment_audit.md`](./06_experiment_audit.md) | Experiment Audit | Re-computation of benchmark matrices, detection of rank dynamics, and discovery of the 5% to 15% pool window. |
 | [`07_red_flag_register.md`](./07_red_flag_register.md) | Defect Register | Systematic tracking and verification log of all identified empirical anomalies and resolution steps. |
 | [`08_experiment_plan.md`](./08_experiment_plan.md) | Remediation Plan | Formal specification of verification experiments: controls (A2), embedding checks (A3), baselines (A4), and pool curve (E3). |
 | [`09_remediation_roadmap.md`](./09_remediation_roadmap.md) | Remediation Roadmap | Chronological execution timeline, parameterization updates, and calibration of scientific claims. |

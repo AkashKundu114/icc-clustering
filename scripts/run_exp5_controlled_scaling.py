@@ -1,26 +1,33 @@
 """
-Exp 5 Controlled Scaling Benchmark for Pass E.
-Evaluates both configurations:
-  Config A (Default Exp 4): M=25, L=40, K=5, D=100
-  Config B (Optimized Exp 5): M=15, L=60, K=5, D=100
-Across N in {1e4, 1e5, 1e6} on synthetic Gaussian benchmark data (seeds 0, 1, 2).
-Measures runtime and peak memory, fits scaling exponent with 95% CI.
+Exp 5 Controlled Scaling Benchmark.
+
+Evaluates scaling performance across sample sizes N in {1e4, 1e5, 1e6} on synthetic
+Gaussian benchmark data (seeds 0, 1, 2) for two configurations:
+  Config A (Default Exp 4): M=25 base models, L=40 anchors, K=5, D=100
+  Config B (Optimized Exp 5): M=15 base models, L=60 anchors, K=5, D=100
+Measures wall-clock runtime and peak RAM, fitting the scaling exponent with 95% CI.
+
+Usage:
+    python scripts/run_exp5_controlled_scaling.py
 """
 
-import time
 import json
+import sys
+import time
 import tracemalloc
 from pathlib import Path
+
 import numpy as np
 import pandas as pd
 from scipy.stats import linregress
+from sklearn.metrics import adjusted_rand_score
 
-import sys
 _ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(_ROOT))
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
 
-from icc.consensus_v2 import InvariantCoreConsensusV2
-from experiments.exp5_extreme_scale.src.extreme_scale_benchmark import generate_synthetic_data
+from experiments.exp5_extreme_scale.src.extreme_scale_benchmark import generate_synthetic_data  # noqa: E402
+from icc.consensus_v2 import InvariantCoreConsensusV2  # noqa: E402
 
 OUT_DIR = Path("results/passE")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -60,7 +67,6 @@ def run_scaling():
                 _, peak_mem = tracemalloc.get_traced_memory()
                 tracemalloc.stop()
 
-                from sklearn.metrics import adjusted_rand_score
                 ari = adjusted_rand_score(y, pred)
                 mem_mb = peak_mem / (1024 * 1024)
                 print(f"    -> Time: {elap:.2f}s | Peak RAM: {mem_mb:.1f} MB | ARI: {ari:.4f}")

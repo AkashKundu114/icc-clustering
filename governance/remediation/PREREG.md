@@ -1,6 +1,9 @@
 # PHASE 2 PRE-REGISTRATION SPECIFICATION (PREREG.md)
 
-**Title**: Pre-Registration Protocol for Remediated Evaluation of Inductive Consensus Clustering (ICC-v2)  
+**Canonical Manuscript Title**: "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue**: Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version**: `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
 **Authors**: Antigravity Remediation Team (Pair Programming Orchestration)  
 **Date**: October 2026  
 **Status**: ACTIVE / PRE-REGISTERED  
@@ -107,7 +110,7 @@ All evaluations are conducted over the canonical 13 real-world benchmark dataset
 - For $k=11$ models and $N=13$ datasets at $\alpha=0.05$:
   - Studentized range critical value $q_{0.05} = 3.219$.
   - $\sqrt{\frac{11 \times 12}{6 \times 13}} = \sqrt{\frac{132}{78}} = \sqrt{1.6923} \approx 1.3009$.
-  - $\mathbf{\text{CD} = 3.219 \times 1.3009 = 4.188 \approx 4.21}$.
+  - $\mathbf{\text{CD} = 3.219 \times 1.3009 = 4.1876 \approx 4.19}$ (locked in `paper/numbers.tex` as `\TrueNemenyiCD{4.19}`).
 
 ---
 

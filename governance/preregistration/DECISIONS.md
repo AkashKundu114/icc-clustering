@@ -1,6 +1,11 @@
 # Record of Decisions (LOOP/DECISIONS.md)
 
-This log records every architectural, algorithmic, and statistical decision made during the autonomous improve-verify loop, along with explicit reasons and timestamps.
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
+
+This log records every architectural, algorithmic, and statistical decision made during the research, remediation, and release governance process, along with explicit reasons and timestamps.
 
 ---
 
@@ -10,7 +15,7 @@ This log records every architectural, algorithmic, and statistical decision made
   1. Option (a): Redesign null generator with boundary-corrected or compact kernels.
   2. Option (b): Switch primary statistic from Sarle's BC to Hartigan's Dip test (collapses novelty into existing literature).
   3. Option (c): Restrict confirmatory scope to unbounded continuous and count nuisance (F1 Gaussian, F2 Student-$t$, F5 log-counts) and document bounded support as a boundary-bias scope limit.
-- **Decision:** **Option (c) adopted.** Confirmatory H1–H3 claims focus on F1, F2, F5. Bounded compact support is documented transparently in `LOOP/DEVIATIONS.md` and the manuscript as a fundamental limitation of smooth-kernel null generators.
+- **Decision:** **Option (c) adopted.** Confirmatory H1-H3 claims focus on F1, F2, F5. Bounded compact support is documented transparently in `LOOP/DEVIATIONS.md` and the manuscript as a fundamental limitation of smooth-kernel null generators.
 
 ---
 
@@ -52,7 +57,7 @@ This log records every architectural, algorithmic, and statistical decision made
 ---
 
 ### [2026-10-21] DEC-07: Progress on Fix Pass B Tasks B1-B5, B7, B9, B10
-- **Context:** Executed systematic remediation of manuscript defects B1–B5, B7, B9, and B10 under zero-hallucination and evidence-based traceability rules.
+- **Context:** Executed systematic remediation of manuscript defects B1-B5, B7, B9, and B10 under zero-hallucination and evidence-based traceability rules.
 - **Resolutions:**
   1. **Task B1 (Citations):** Verified all 34 BibTeX references with DOIs; resolved 100% of `[?]` citation markers; Tectonic compilation confirmed zero undefined citations.
   2. **Task B2 (Fig 7 & Stats):** Recalculated Nemenyi critical difference $CD = 3.219 \sqrt{11 \times 12 / (6 \times 13)} = 4.19$; synchronized Fig 17; removed legacy process notes.
@@ -128,7 +133,7 @@ This log records every architectural, algorithmic, and statistical decision made
 
 
 ## 2026-10-21: DEC-11 - Initiation of Fix Pass D (DAMI Target Scope)
-- **Context:** Following the human author's selection of **Option B: Springer Nature Data Mining and Knowledge Discovery (DAMI)**, Fix Pass D was launched to address all residual defects D1–D7 identified from compiled PDF inspection.
+- **Context:** Following the human author's selection of **Option B: Springer Nature Data Mining and Knowledge Discovery (DAMI)**, Fix Pass D was launched to address all residual defects D1-D7 identified from compiled PDF inspection.
 - **Actions:**
   - Tagged baseline git state: `pre-passD`.
   - Reopened unresolved discrepancies between tables, text, macros, and underlying stores.
@@ -164,3 +169,24 @@ This log records every architectural, algorithmic, and statistical decision made
   7. **Tectonic Compilation (D7):**
      - Compiled `springer_manuscript/main.pdf` cleanly with Tectonic (exit code 0, 0 Overfull `\hbox` warnings, exactly 28 pages).
 - **Gate Status:** Set to `HUMAN_GATE_FINAL_APPROVAL`. All automated checks passing; awaiting author review. No submission actions taken.
+
+---
+
+## 2026-10-23: DEC-13 - Pass F Single Source of Truth Metrics Freezing
+- **Context:** Following extensive empirical re-evaluations across 30 seeds for the 6 high-dimensional datasets and 10 seeds for general benchmarks (2,750 total model fits), all quantitative claims in the manuscript were formally bound to `paper/numbers.tex`.
+- **Decisions & Formal Macro Freezing:**
+  1. **Omnibus Friedman & Nemenyi:** Recorded omnibus Friedman test $\chi_F^2 = 9.59, p = 0.48$ and Nemenyi Critical Difference $CD = 4.19$ ($k=11, N=13$), confirming no global dominance across heterogeneous benchmark domains.
+  2. **High-D Subgroup Dominance:** Formally established that on the pre-specified high-dimensional biomedical subgroup ($D/N > 20$), ICC-v2 commands **Rank #1** with Mean ARI = **0.217** (vs Standard Consensus 0.037, DEC 0.045, K-Means 0.056).
+  3. **Grand Mean ARI:** Set omnibus Grand Mean ARI to 0.152 (Rank 5.23).
+  4. **Cancer Microarray Reconciliation:** Golub Leukemia ARI locked to $0.600 \pm 0.367$ (median $0.787$), and Khan SRBCT locked to $0.546 \pm 0.102$ (median $0.562$).
+  5. **Asymptotic Complexity Scaling:** Documented scaling to $N = 10^6$ instances in $55.6\text{ s}$ ($3.05\text{ GB}$ peak RSS, $240\text{ MB}$ graph memory, $99.6\%$ reduction over dense $8\text{ TB}$ co-association matrix).
+
+---
+
+## 2026-10-23: DEC-14 - Active Production Release v2.1.0 Formalization
+- **Context:** Transition from historical release baseline `v2.0.0` (tagged 2026-10-17) to canonical active release `v2.1.0`.
+- **Decisions & Additions:**
+  1. **Conformal Inductive Consensus Clustering (`src/cicc/`):** Unified framework providing finite-sample distribution-free $(1 - \alpha)$ coverage guarantees and target-decoy False Discovery Rate feature screening.
+  2. **Clinical Diagnostic Pipelines:** Added standalone reproducible scripts (`examples/clinical_cancer_subtyping.py` for Leukemia and SRBCT, `examples/realtime_patient_projection.py` achieving $22.6\,\mu\text{s}$ per-query latency).
+  3. **Publication Figure Tracking:** Integrated and tracked 58 publication benchmark figures in `paper/figures/`.
+  4. **Quality Gates:** Maintained 100% test pass rate (84/84 tests) and zero static typing errors (`mypy -p icc`).

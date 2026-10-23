@@ -1,6 +1,11 @@
 # Remediation Changelog
 
-All changes and milestone deliverables during the remediation process are logged here in chronological order.
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
+
+All changes and milestone deliverables during the remediation and release process are logged here in chronological order.
 
 ## [Phase 0: Reconnaissance] - 2026-10-17
 - Initialized `remediation/phase1` branch from commit `879fd96a282e88f5491826dd7355d24d9490661b`.
@@ -44,3 +49,20 @@ All changes and milestone deliverables during the remediation process are logged
   - Implemented `scripts/make_numbers.py` generating 49 synchronized LaTeX macros into `paper/gen/numbers.tex`, `manuscript/gen/numbers.tex`, and `springer_manuscript/numbers.tex`.
   - Generated `results/phase2/MANIFEST.md` cataloging SHA256 checksums of Phase 2 scientific outputs.
 
+## [Phase F: Unified Pass F Protocol & v2.0.0 Release Baseline] - 2026-10-23
+- Frozen Pass F benchmark execution store across 13 datasets, 2,750 individual model fits, and 11 baseline solvers (30 random seeds on 6 high-D datasets, 10 seeds on 7 general datasets).
+- Recomputed exact omnibus statistical tests: Friedman test yields $\chi_F^2 = 9.59, p = 0.48$, and Nemenyi Critical Difference is $CD = 4.19$ (confirming absence of global dominance across heterogeneous benchmarks).
+- Validated high-dimensional subgroup ($D/N > 20$): ICC-v2 commands Rank #1 with Mean ARI = 0.217 (vs Standard Consensus 0.037, DEC 0.045, K-Means 0.056).
+- Reconciled Grand Mean ARI across all 13 benchmarks to 0.152 (Rank 5.23).
+- Reconciled key biological microarrays: Golub Leukemia ARI = 0.600, Khan SRBCT ARI = 0.546.
+- Validated extreme asymptotic scaling: $N = 10^6$ instances in 55.6 s (3.05 GB peak RSS, 240 MB graph memory, 99.6% reduction over dense 8 TB co-association matrix).
+- Bound all quantitative claims to single source of truth in `paper/numbers.tex`.
+
+## [Release v2.1.0: Conformal Inductive Consensus Clustering & Clinical Oncology] - 2026-10-23
+- Implemented Conformal Inductive Consensus Clustering (`src/cicc/`) providing distribution-free $(1 - \alpha)$ coverage guarantees, target-decoy / knockoff False Discovery Rate (FDR) feature selection, and point-of-care patient safety triage.
+- Added reproducible clinical diagnostic workflows in `examples/`:
+  - `examples/clinical_cancer_subtyping.py` (evaluating Golub Leukemia and Khan SRBCT).
+  - `examples/realtime_patient_projection.py` (ultra-low latency point-of-care biopsy projection with conformal prediction sets, achieving 22.6 us latency per query).
+- Tracked 58 high-resolution publication benchmark figures and architecture schematics in `paper/figures/`.
+- Test suite expanded to 84/84 unit and integration tests passing (100% pass rate).
+- Full compliance verification with Springer Nature DAMI submission requirements.

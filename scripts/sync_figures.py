@@ -1,3 +1,14 @@
+"""
+Manuscript Figure Synchronization Utility.
+
+Copies all generated experiment figure artifacts (*.png) from experiments/ and
+figures/ into the manuscript directories (paper/figures/, springer_manuscript/figures/,
+and manuscript/figures/).
+
+Usage:
+    python scripts/sync_figures.py
+"""
+
 import shutil
 from pathlib import Path
 

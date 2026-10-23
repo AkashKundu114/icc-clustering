@@ -16,8 +16,9 @@ Outputs:
 """
 
 from pathlib import Path
-import matplotlib.pyplot as plt
+
 import matplotlib.patches as patches
+import matplotlib.pyplot as plt
 import numpy as np
 from scipy.spatial.distance import pdist
 
@@ -154,7 +155,6 @@ def generate_conceptual_figure():
                  linewidths=1.5, label=r"Unseen Query $\mathbf{x}_{\text{new}}$", zorder=7)
 
     for i, cnt in enumerate(centroids):
-        dist = np.linalg.norm(x_query - cnt)
         lw = 2.4 if i == 1 else 1.0
         ls = "-" if i == 1 else ":"
         alp = 0.9 if i == 1 else 0.4

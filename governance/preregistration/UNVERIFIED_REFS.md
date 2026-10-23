@@ -1,10 +1,14 @@
 # Unverified References Log
-**Last Updated:** 2026-10-19  
-**Status:** All 41 bibliography entries in `springer_manuscript/references.bib` have been verified against CrossRef, DBLP, and publisher DOIs.
+
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
+**Status:** All bibliography entries in `paper/references.bib` verified against CrossRef, DBLP, and publisher DOIs.
 
 | Citation Key | Title | Venue / Year | Verification Status | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| `strehl2002cluster` | Cluster ensembles --- a knowledge reuse framework... | JMLR 2002 | VERIFIED | DOI: 10.1162/153244303321897735 |
+| `strehl2002cluster` | Cluster ensembles - a knowledge reuse framework... | JMLR 2002 | VERIFIED | DOI: 10.1162/153244303321897735 |
 | `fred2005combining` | Combining clusterings using evidence accumulation | IEEE TPAMI 2005 | VERIFIED | DOI: 10.1109/TPAMI.2005.113 |
 | `beyer1999nearest` | When is "nearest neighbor" meaningful? | ICDT 1999 | VERIFIED | DOI: 10.1007/3-540-49257-7_15; syntax updated, address added |
 | `sarle1983sas` | The Cubic Clustering Criterion | SAS Institute 1983 | VERIFIED | Standard SAS Technical Report A-108 |

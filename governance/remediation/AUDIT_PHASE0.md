@@ -1,7 +1,11 @@
 # REMEDIATION AUDIT REPORT: PHASE 0 (RECONNAISSANCE & CODE-VS-PAPER)
 
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
 **Auditors:** Subagents R2 (Code-vs-Paper Auditor) & R3 (Leakage and Data Auditor)  
-**Date:** October 17, 2026  
+**Date:** October 2026  
 **Scope:** Repository `github.com/AkashKundu114/icc-clustering` @ commit `879fd96a282e88f5491826dd7355d24d9490661b` vs Manuscript `paper/main.pdf`
 
 ---

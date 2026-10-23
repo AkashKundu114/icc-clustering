@@ -54,13 +54,12 @@ check-pdf:
 	$(PYTHON) tests/test_pdf_allowlist.py
 
 figures:
-	$(PYTHON) scripts/regenerate_figures_passF.py
+	$(PYTHON) scripts/sync_figures.py
 
 compile:
-	$(PYTHON) scripts/build_submission_package.py
+	@echo "Compiling Springer Nature manuscript..."
+	tectonic -X compile springer_manuscript/main.tex --outdir springer_manuscript || pdflatex -output-directory=springer_manuscript springer_manuscript/main.tex
 
-package:
-	$(PYTHON) scripts/build_submission_package.py
 
 clean:
 	rm -rf build/ dist/ *.egg-info .pytest_cache/ .ruff_cache/ .mypy_cache/ .coverage

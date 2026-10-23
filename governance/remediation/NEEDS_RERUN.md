@@ -1,9 +1,13 @@
 # EXPERIMENT RERUN SPECIFICATION REGISTRY (NEEDS_RERUN.md)
 
-**Project:** Inductive Consensus Clustering (ICC-v2) Remediation  
-**Stage:** Fix Pass A (Reconnaissance & Manuscript Hardening)  
-**Date:** October 17, 2026  
-**Policy:** Strict read-only audit. No new experimental runs were executed during this pass. Every empirical question requiring compute is cataloged here with a formal, reproducible execution specification.
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
+**Project:** Inductive Consensus Clustering (ICC-v2 & CICC)  
+**Date:** October 2026  
+**Status:** Completed under Pass F Protocol & Release v2.1.0  
+**Policy:** Strict audit trail. All empirical compute questions resolved in Pass F frozen stores.
 
 ---
 

@@ -1,7 +1,10 @@
 # PHASE 1 REMEDIATION REPORT: REPRODUCE AND FREEZE
 
 **Repository**: `github.com/AkashKundu114/icc-clustering`  
-**Manuscript**: *Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes* (ICC-v2)  
+**Canonical Manuscript Title**: "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue**: Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version**: `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
 **Branch**: `remediation/phase1`  
 **Git Tag**: `results-frozen`  
 **Date**: October 2026  

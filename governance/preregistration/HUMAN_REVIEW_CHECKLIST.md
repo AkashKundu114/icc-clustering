@@ -1,5 +1,9 @@
 # Human Review Verification Checklist (Pass F)
 
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
 **Date:** 2026-10-23  
 **Target:** Independent Human Review Package for Project Supervisor and Co-Authors  
 **Objective:** Provide concrete, falsifiable verification checkpoints with exact script commands and file locations. Every cell, macro, and citation can be recomputed directly from raw data stores (`results/passF/`) without trusting agent summaries.

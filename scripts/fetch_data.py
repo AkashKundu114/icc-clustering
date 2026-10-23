@@ -1,4 +1,15 @@
+"""
+Dataset Fetcher and Verifier.
+
+Downloads, unpacks, and validates all 13 benchmark datasets used across the manuscript.
+Checks expected sample count N, dimension D, and cluster count K.
+
+Usage:
+    python scripts/fetch_data.py
+"""
+
 from icc.datasets.registry import list_datasets, load_dataset
+
 
 def main():
     print("=" * 60)

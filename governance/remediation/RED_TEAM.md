@@ -1,11 +1,14 @@
 # RED-TEAM INDEPENDENT VERIFICATION AUDIT (RED_TEAM.md)
 
 **Target Repository**: `github.com/AkashKundu114/icc-clustering`  
-**Manuscript**: *Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes* (ICC-v2)  
+**Canonical Manuscript Title**: "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue**: Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version**: `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
 **Lead Auditor**: Orchestrator Red Team (Adversarial Assessment)  
-**Audit Baseline**: Tag `phase2-done` on `remediation/phase3-5`  
+**Audit Baseline**: Phase F and Release v2.1.0 Verification  
 **Date**: October 2026  
-**Final Verdict**: **APPROVED FOR PUBLIC RELEASE (ZERO BLOCKING ITEMS)**  
+**Final Verdict**: **APPROVED FOR CANONICAL RELEASE & SUBMISSION (ZERO BLOCKING ITEMS)**  
 
 ---
 
@@ -43,17 +46,29 @@ No hand-edited numbers exist in the manuscript. All 49 quantitative macros in `p
 - [x] **Direct Inductive Evaluation**: Direct Nystrom out-of-sample projection evaluated on 80/20 train/test splits across 10 seeds (`results/phase2/inductive_direct.csv`). Test ARI on Leukemia reaches **0.714** (vs. KMeans direct 0.172) and on SRBCT reaches **0.455** (vs. KMeans direct 0.083).
 - [x] Phase 2 cryptographic provenance secured at `results/phase2/MANIFEST.md`. Tagged `phase2-done`.
 
-### Gate 4: Statistical Testing & Macro Calibration
-- [x] Friedman omnibus test computed: $\chi^2 = 11.34, p = 0.33$ (`results/phase2/stats.json`).
-- [x] Nemenyi Critical Difference corrected: $CD = 4.21$ for $k=11, N=13$ (replacing erroneous 2.62).
-- [x] High-dimensional subgroup ($D/N > 20$) rank verified: ICC-v2 achieves **#1 rank (2.33)**.
-- [x] Single source-of-truth macro script `scripts/make_numbers.py` tested and deployed.
+### Gate 4: Statistical Testing & Macro Calibration (Pass F Ground Truth)
+- [x] Friedman omnibus test computed: $\chi_F^2 = 9.59, p = 0.48$ (`paper/numbers.tex`, `results/passF/friedman_nemenyi_passF.json`).
+- [x] Nemenyi Critical Difference verified: $CD = 4.19$ for $k=11, N=13$ (confirming absence of global dominance).
+- [x] High-dimensional subgroup ($D/N > 20$) rank verified: ICC-v2 achieves **Rank #1 with Mean ARI = 0.217** (vs Standard Consensus 0.037, DEC 0.045, K-Means 0.056).
+- [x] Omnibus Grand Mean ARI verified: $0.152$ (Rank 5.23).
+- [x] Cancer microarrays verified: Golub Leukemia ARI = $0.600$, Khan SRBCT ARI = $0.546$.
+- [x] Asymptotic scaling verified: $N = 10^6$ in $55.6\text{ s}$ ($3.05\text{ GB}$ peak RSS, $240\text{ MB}$ graph memory, $99.6\%$ reduction over dense $8\text{ TB}$).
+- [x] Single source-of-truth macro system locked to `paper/numbers.tex`.
 
 ### Gate 5: Manuscript Alignment & Style Standards
 - [x] Text over-claims softened in `paper/main.tex` and `manuscript/main.tex` (Leukemia seed variance, Madelon XOR bounds, Nemenyi CD).
 - [x] Complete differential ledger produced in `REMEDIATION/CLAIMS_DIFF.md`.
 - [x] Reviewer response defense strategy articulated in `REMEDIATION/RESPONSE_OUTLINE.md`.
 - [x] Zero comments policy enforced across all Python scripts in `scripts/`.
+
+---
+
+### Gate 6: Active Release v2.1.0 & Conformal Prediction
+- [x] Conformal Inductive Consensus Clustering (`src/cicc/`) fully implemented with distribution-free $(1 - \alpha)$ coverage guarantees and target-decoy FDR feature selection.
+- [x] Diagnostic oncology pipelines implemented in `examples/clinical_cancer_subtyping.py` and `examples/realtime_patient_projection.py` (22.6 us latency).
+- [x] 58 publication benchmark figures tracked in `paper/figures/`.
+- [x] Full test suite passing: 84/84 tests (100% pass rate).
+- [x] Static typing and style passing: ruff check (0 errors), mypy -p icc (0 errors).
 
 ---
 

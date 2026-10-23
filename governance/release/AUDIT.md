@@ -3,6 +3,10 @@
 **Date:** 2026-10-17  
 **Branch:** `release/public-cleanup`  
 **Commit:** `fd6ff53` (Baseline recorded)  
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Release Version Context:** `v2.1.0` active release (with `v2.0.0` documented as prior historical release baseline)  
 **Auditor:** Subagent R (Orchestrated Release Audit)
 
 ---
@@ -13,18 +17,18 @@
 - **Total tracked files:** 572
 - **Tracked files over 1 MB:** 26 files
 - **Tracked files over 5 MB:**
-  1. `manuscript/scripts/bin/tectonic.exe` (49.15 MB) — Standalone TeX binary engine.
-  2. `experiments/exp3_real_world_benchmarks/data/cache/ovarian.npz` (26.42 MB) — Preprocessed benchmark cache.
-  3. `springer_manuscript/springer_overleaf.zip` (21.75 MB) — Packaged submission zip.
-  4. `manuscript/tkde_overleaf.zip` (21.66 MB) — Packaged submission zip.
-  5. `manuscript/tkde_package.zip` (20.82 MB) — Packaged submission zip.
-  6. `manuscript/icde_package.zip` (20.82 MB) — Packaged submission zip.
-  7. `springer_manuscript/springer_nature_submission_package.zip` (20.80 MB) — Packaged submission zip.
-  8. `springer_manuscript/main.pdf` (7.50 MB) — Compiled manuscript PDF.
-  9. `paper/main.pdf` (7.44 MB) — Compiled manuscript PDF.
-  10. `manuscript/tkde.pdf` (7.44 MB) — Compiled manuscript PDF.
-  11. `manuscript/main.pdf` (7.44 MB) — Compiled manuscript PDF.
-  12. `experiments/exp3_real_world_benchmarks/data/cache/prostate.npz` (5.23 MB) — Preprocessed benchmark cache.
+  1. `manuscript/scripts/bin/tectonic.exe` (49.15 MB): Standalone TeX binary engine.
+  2. `experiments/exp3_real_world_benchmarks/data/cache/ovarian.npz` (26.42 MB): Preprocessed benchmark cache.
+  3. `springer_manuscript/springer_overleaf.zip` (21.75 MB): Packaged submission zip.
+  4. `manuscript/tkde_overleaf.zip` (21.66 MB): Historical package archive.
+  5. `manuscript/tkde_package.zip` (20.82 MB): Historical package archive.
+  6. `manuscript/icde_package.zip` (20.82 MB): Historical package archive.
+  7. `springer_manuscript/springer_nature_submission_package.zip` (20.80 MB): Packaged submission zip.
+  8. `springer_manuscript/main.pdf` (7.50 MB): Compiled manuscript PDF.
+  9. `paper/main.pdf` (7.44 MB): Compiled manuscript PDF.
+  10. `manuscript/tkde.pdf` (7.44 MB): Historical manuscript archive PDF.
+  11. `manuscript/main.pdf` (7.44 MB): Compiled manuscript PDF.
+  12. `experiments/exp3_real_world_benchmarks/data/cache/prostate.npz` (5.23 MB): Preprocessed benchmark cache.
 
 ### 1.2 Untracked Large Files
 - `experiments/exp3_real_world_benchmarks/data/cache/newsgroups20.npz` (61.48 MB)
@@ -67,15 +71,15 @@
 ## 3. Dependency Inventory
 
 ### 3.1 Declared Core Dependencies (`pyproject.toml` / `requirements.txt`)
-- `numpy>=1.23.0` (Used across 17 modules) — BSD-3-Clause
-- `scipy>=1.10.0` (Used across 9 modules: SVD, distance, sparse matrices) — BSD-3-Clause
-- `scikit-learn>=1.3.0` (Used across 11 modules: K-Means, metrics, preprocessing) — BSD-3-Clause
-- `pandas>=2.0.0` (Result aggregation and table formatting) — BSD-3-Clause
-- `matplotlib>=3.7.0` (Figure plotting) — PSF / Matplotlib
-- `seaborn>=0.12.0` (Visualization aesthetics) — BSD-3-Clause
-- `pyyaml>=6.0` (Dataset and baseline configuration loading) — MIT
-- `tqdm>=4.60.0` (CLI progress tracking) — MIT / MPL-2.0
-- `tabulate>=0.9.0` (Console summary formatting) — MIT
+- `numpy>=1.23.0` (Used across 17 modules): BSD-3-Clause
+- `scipy>=1.10.0` (Used across 9 modules: SVD, distance, sparse matrices): BSD-3-Clause
+- `scikit-learn>=1.3.0` (Used across 11 modules: K-Means, metrics, preprocessing): BSD-3-Clause
+- `pandas>=2.0.0` (Result aggregation and table formatting): BSD-3-Clause
+- `matplotlib>=3.7.0` (Figure plotting): PSF / Matplotlib
+- `seaborn>=0.12.0` (Visualization aesthetics): BSD-3-Clause
+- `pyyaml>=6.0` (Dataset and baseline configuration loading): MIT
+- `tqdm>=4.60.0` (CLI progress tracking): MIT / MPL-2.0
+- `tabulate>=0.9.0` (Console summary formatting): MIT
 
 ### 3.2 Optional Dependencies
 - `torch>=2.0.0`, `tensorflow>=2.12.0`, `keras>=3.0.0` (Deep clustering baselines: DEC, IDEC, SCAN)

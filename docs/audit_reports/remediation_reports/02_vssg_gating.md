@@ -1,7 +1,11 @@
 # Research Audit Report 02: VSSG Bimodality Gating & Boundary Analysis
 
-**Audit Target:** Variance-Stabilized Subspace Gating (VSSG) in `src/icc/consensus_v2.py`  
-**Status:** Remediated & Mathematically Grounded (Stage A2)  
+**Audit Target:** Variance-Stabilized Subspace Gating (VSSG / BGSS) in `src/icc/consensus_v2.py`  
+**Canonical Manuscript Title:** When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination  
+**Academic Lineage:** Initial University Allotment Title: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data" (`CSE_PROJECT_68`, Mentor: Prof. Kalyan Kumar Das); Early Proposal Blueprint: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"  
+**Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`), manuscript `paper/main.tex`.  
+**Canonical Active Release:** v2.1.0  
+**Status:** Remediated & Mathematically Grounded (Stage A2 & Pass F Verified)  
 **Date:** October 2026  
 
 ---
@@ -17,7 +21,7 @@ The auditor identified a critical mechanism flaw in the original VSSG implementa
 
 ## 2. Mathematical Foundation: Null-Calibrated Bimodality Threshold
 
-Sarle's Bimodality Coefficient for a feature vector $x \in \mathbb{R}^N$ with sample skewness $\gamma$ and sample kurtosis $\kappa$ is defined as:
+Sarle's Bimodality Coefficient for a feature vector $x \in \mathbb{R}^{N}$ with sample skewness $\gamma$ and sample kurtosis $\kappa$ is defined as:
 $$BC(x) = \frac{\gamma^2 + 1}{\kappa}$$
 
 ### Proposition 1 (Null Distribution Upper Bound)
@@ -64,4 +68,4 @@ We audited feature ranking and cluster recovery under five distinct noise regime
 1. **Why VSSG Excels in Microarrays:** Gene expression microarrays (Leukemia, SRBCT, CNS) are continuous, log-transformed, and normalized. Differentially expressed genes between cancer subtypes exhibit pronounced bimodal distributions ($BC \in [0.70, 0.95]$), whereas unexpressed genes exhibit unimodal background noise ($BC \le 0.40$). VSSG isolates the biological signal cleanly.
 2. **Why VSSG Fails on scRNA-seq & Bag-of-Words:** Count matrices with high sparsity exhibit extreme kurtosis at zero. For a feature with 90% zeros and 10% non-zeros, the marginal distribution creates an artificial two-spike shape with $BC > 0.60$. Consequently, uncalibrated VSSG cannot distinguish structural cluster separation from technical sparsity.
 
-**Audit Sign-Off:** PASS — Null-calibrated threshold mathematically proven and code verified.
+**Audit Sign-Off:** PASS: Null-calibrated threshold mathematically proven and code verified.

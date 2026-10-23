@@ -1,6 +1,9 @@
 # MATHEMATICAL & THEORETICAL FOUNDATIONS (THEORY_NOTES.md)
 
-**Manuscript Reference**: *Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes* (ICC-v2)  
+**Canonical Manuscript Title**: "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue**: Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version**: `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
 **Authors**: Antigravity Remediation Team (Subagent B - Theory & Method)  
 **Verification Script**: `scripts/verify_prop1.py`  
 **Execution Log**: `REMEDIATION/logs/verify_prop1.log`  

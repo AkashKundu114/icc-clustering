@@ -1,10 +1,12 @@
 # Pre-registration v1.0: ICC-v2 follow-up studies 3' and 1'
 
-**Registrant:** Akash Kundu.  
-**Drafted:** 2026-10-17.  
-**Status:** DRAFT / AMENDED WITH DEV CHECKS.  
-**Frozen commit target:** `loop/paper-improvement`  
-**Freeze date:** 2026-10-17  
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
+**Registrant:** Akash Kundu  
+**Drafted:** October 2026  
+**Status:** HISTORICAL FOUNDATIONAL PREREGISTRATION  
 
 ---
 
@@ -19,7 +21,7 @@
 4. Run confirmatory simulations.
 5. Run real-data analyses. Real-data results are not inspected before step 4 completes.
 
-**0.3 Seeds.** Synthetic replicate seeds 0–299 (Study 3′) and 0–99 (Study 1′); development seeds start at 10,000. Real-data clustering seeds 0–9 (3′); split seeds 0–199 (1′). A seed fixes every random draw (data, decoys, splits, initialisation).
+**0.3 Seeds.** Synthetic replicate seeds 0-299 (Study 3′) and 0-99 (Study 1′); development seeds start at 10,000. Real-data clustering seeds 0-9 (3′); split seeds 0-199 (1′). A seed fixes every random draw (data, decoys, splits, initialisation).
 
 **0.4 ICC-v2 configuration.** Defaults at the frozen commit (README example: $M=25$ base models, $L=40$ anchors, subspace rate $0.25$, core quantile $0.5$, $\beta=2.0$). The true $K$ is given to all methods. Nothing is tuned on evaluation data.
 
@@ -87,7 +89,7 @@ Each ranking-based comparator is evaluated (a) at its native rule and (b) at mat
 
 ### A5 Real data and downstream protocol
 - **Tier-A (confirmatory):** CNS, Colon, Leukemia, Ovarian, Prostate, SRBCT ($D/N > 20$), using the repo loaders and preprocessing at the frozen commit with no label-dependent step.
-- **Per (dataset, seed 0–9):** the gate is computed once on all samples (transductive, label-free); ICC-v2 (and K-Means and Ward as model-agnostic checks) then runs on the gated features. ARI is computed against the given class labels.
+- **Per (dataset, seed 0-9):** the gate is computed once on all samples (transductive, label-free); ICC-v2 (and K-Means and Ward as model-agnostic checks) then runs on the gated features. ARI is computed against the given class labels.
 
 ### A6 Outcomes and decision rules
 - **Real H4 Rule:** Paired ARI difference (NCG-BC minus comparator) per dataset, averaged over seeds, then over Tier-A datasets. H4 requires:
@@ -97,7 +99,7 @@ Each ranking-based comparator is evaluated (a) at its native rule and (b) at mat
   4. One-sided exact sign-flip test gives $p \le 0.025$.
 
 ### A7 Kill and pivot rules
-- **H1 fails in two or more of F1–F5:** the claim of an error-controlled gate is withdrawn; NCG is reported as a diagnostic with its measured FDP.
+- **H1 fails in two or more of F1-F5:** the claim of an error-controlled gate is withdrawn; NCG is reported as a diagnostic with its measured FDP.
 - **H4 fails against both comparators:** the claim of improved clustering is withdrawn. *(Activated: NCG-BC vs G2 mean diff $-0.0035, p=0.6875$; vs G4 mean diff $-0.0319, p=0.8281$)*.
 - **If SCB fails on F3/F4 and SN fails too:** report that smooth-unimodal null calibration is inadequate for bounded unimodal features due to boundary smoothing bias and state the scope limit.
 
@@ -115,7 +117,7 @@ Can ensemble vote frequencies from an ICC-style consensus serve as the stochasti
 
 | ID | Confirmatory hypothesis |
 | :--- | :--- |
-| **H1** | **Validity:** ACCS-W coverage has lower 95% bound $\ge 0.87$ ($\alpha=0.10$ minus $0.03$) in at least 80% of cells in S1–S4. |
+| **H1** | **Validity:** ACCS-W coverage has lower 95% bound $\ge 0.87$ ($\alpha=0.10$ minus $0.03$) in at least 80% of cells in S1-S4. |
 | **H2** | **Efficiency:** in cells where both pass H1, the paired mean log ratio of set size (ACCS-W / WCC) has upper 95% bound $\le \log(1.15)$. |
 | **H3** | **Cost:** median per-query latency of faithful WCC divided by ACCS-W is $\ge 10$ at $n_{\text{cal}} \ge 2000$. |
 | **H4** | **$D \gg N$:** in S5, ACCS-W coverage is non-inferior to WCC (paired difference lower bound $\ge -0.02$) with smaller set size (paired ratio upper bound $< 1$) in at least 70% of S5 cells. |

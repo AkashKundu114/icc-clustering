@@ -1,6 +1,18 @@
-import os
+"""
+Claims Check and Validation Script.
+
+Compares quantitative claims recorded in governance/remediation/CLAIMS.md against
+the frozen results registry in results/results.json and experimental artifacts.
+Outputs the scoreboard of matching vs mismatching claims and updates the claims table.
+
+Usage:
+    python scripts/claims_check.py
+"""
+
 import json
+import os
 import re
+
 import pandas as pd
 
 with open("results/results.json", "r", encoding="utf-8") as f:

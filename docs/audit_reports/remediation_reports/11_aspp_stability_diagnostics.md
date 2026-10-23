@@ -1,14 +1,18 @@
 # Research Audit Report 11: Anchor-Space Perturbation Profiling (ASPP)
 
 **Audit Target:** Stability Diagnostics Engine in `src/icc/aspp.py`  
-**Status:** Implemented, Mathematically Proven & Audited (Stage A3/A5)  
+**Canonical Manuscript Title:** When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination  
+**Academic Lineage:** Initial University Allotment Title: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data" (`CSE_PROJECT_68`, Mentor: Prof. Kalyan Kumar Das); Early Proposal Blueprint: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"  
+**Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`), manuscript `paper/main.tex`.  
+**Canonical Active Release:** v2.1.0  
+**Status:** Implemented, Mathematically Proven & Audited (Stages A3, A5, and Pass F)  
 **Date:** October 2026  
 
 ---
 
 ## 1. Executive Summary
 
-Clustering algorithms frequently yield partition assignments without quantifying the statistical stability of individual clusters. The auditor requested an inspection of the stability diagnostic mechanism incorporated into ICC-v2, termed **Anchor-Space Perturbation Profiling (ASPP)**, specifically contrasting its scalability and mathematical formulation against dense perturbation tensors (such as PCCS).
+Clustering algorithms frequently yield discrete partition assignments without quantifying the geometric or statistical stability of individual clusters. The auditor requested an inspection of the stability diagnostic mechanism incorporated into ICC-v2, termed **Anchor-Space Perturbation Profiling (ASPP)**, specifically contrasting its scalability and mathematical formulation against dense perturbation tensors (such as PCCS).
 
 ### Critical Vulnerability of Dense Perturbation Tensors:
 In conventional multi-family perturbation formulations (e.g., PCCS), a 3D pairwise co-association tensor $S \in \mathbb{R}^{N \times N \times P}$ is constructed across $P$ perturbation families.
@@ -24,8 +28,8 @@ ASPP eliminates the $N \times N$ pairwise tensor by evaluating perturbation stab
 
 ```mermaid
 flowchart TD
-    Data[Sample Data X in R^{N x D}] --> Anchors[Anchor Set U in R^{L x D}]
-    Anchors --> Embed0[Unperturbed Embedding H^(0) in R^{N x K}]
+    Data["Sample Data X in R^{N x D}"] --> Anchors["Anchor Set U in R^{L x D}"]
+    Anchors --> Embed0["Unperturbed Embedding H^(0) in R^{N x K}"]
     
     Data --> P1["Perturbation 1: Feature Subsample"]
     Data --> P2["Perturbation 2: Additive Noise"]
@@ -34,14 +38,14 @@ flowchart TD
     Data --> P5["Perturbation 5: Anchor Centroid Jitter"]
     Data --> P6["Perturbation 6: Hyperparameter Perturbation"]
     
-    P1 --> EmbedP[Perturbed Anchor Embeddings H^(p)]
+    P1 --> EmbedP["Perturbed Anchor Embeddings H^(p)"]
     P2 --> EmbedP
     P3 --> EmbedP
     P4 --> EmbedP
     P5 --> EmbedP
     P6 --> EmbedP
     
-    Embed0 & EmbedP --> ASPPEngine[ASPP Stability Profiling Engine]
+    Embed0 & EmbedP --> ASPPEngine["ASPP Stability Profiling Engine"]
     ASPPEngine --> Fingerprint["Cluster Fingerprint F_k in [0, 1]^P"]
     ASPPEngine --> PSI["Perturbation Sensitivity Index PSI_k"]
 ```
@@ -89,4 +93,4 @@ Seven dedicated unit tests verify the ASPP engine:
 6. `test_aspp_with_batch_vector`: High-throughput batch inference.
 7. `test_root_import_parity`: Public API export integrity (`from icc import ASPPProfiler`).
 
-**Audit Sign-Off:** PASS — ASPP mathematical formulation proven and verified with 100% test pass rate.
+**Audit Sign-Off:** PASS: ASPP mathematical formulation proven and verified with 100% test pass rate.

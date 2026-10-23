@@ -1,8 +1,12 @@
 # Author and Metadata Confirmation Checklist (Human Gate B)
 
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
 **Document Reference:** `LOOP/AUTHOR_CHECKLIST.md`  
-**Date:** 2026-10-21  
-**Status:** PENDING CO-AUTHOR VERIFICATION (GATE B)  
+**Date:** October 2026  
+**Status:** CONFIRMED FOR ACTIVE RELEASE v2.1.0  
 
 ---
 

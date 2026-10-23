@@ -1,18 +1,35 @@
+"""
+Direct Out-of-Sample Inductive Evaluation Script.
+
+Evaluates out-of-sample inductive cluster assignment across 9 benchmark datasets:
+- Direct Nystrom Subspace Projection (ICC-v2 Subspace)
+- Full-Space Centroid Projection (ICC-v2 Full Centroid, Eq. 7)
+- Pseudo-label Supervised NearestCentroid
+- Pseudo-label Supervised RandomForest
+- Direct Ambient K-Means Projection
+across 10 stratified train/test splits (80% train, 20% test).
+
+Usage:
+    python scripts/run_inductive_direct.py
+"""
+
 import sys
 from pathlib import Path
+
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import StratifiedShuffleSplit
-from sklearn.neighbors import NearestCentroid
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.cluster import KMeans
 from sklearn.decomposition import TruncatedSVD
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
+from sklearn.model_selection import StratifiedShuffleSplit
+from sklearn.neighbors import NearestCentroid
 
 root_dir = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(root_dir))
+if str(root_dir) not in sys.path:
+    sys.path.insert(0, str(root_dir))
 
-from icc.consensus_v2 import InvariantCoreConsensusV2
+from icc.consensus_v2 import InvariantCoreConsensusV2  # noqa: E402
 
 DATASETS = [
     "colon", "leukemia", "srbct", "cns", "lymphoma", "ovarian",
@@ -46,7 +63,7 @@ def main():
                 split_pt = int(0.80 * N)
                 train_idx, test_idx = perm[:split_pt], perm[split_pt:]
 
-            X_tr, y_tr = X[train_idx], y[train_idx]
+            X_tr = X[train_idx]
             X_te, y_te = X[test_idx], y[test_idx]
 
             icc = InvariantCoreConsensusV2(n_clusters=K, random_state=seed)

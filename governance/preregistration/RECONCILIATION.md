@@ -1,8 +1,10 @@
-# Reconciliation of Empirical Discrepancies (Fix Pass C)
+# Reconciliation of Empirical Discrepancies (Fix Pass C & Pass F)
 
-**Date:** 2026-10-21  
-**Status:** DRAFTED FOR HUMAN GATE A REVIEW  
-**Scope:** Root-cause analysis and resolution plan for defects D1 and D2 identified in manuscript `main_780366.pdf` and codebase.
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
+**Scope:** Root-cause analysis and final resolution for empirical and reporting discrepancies, finalized in Pass F execution stores (`paper/numbers.tex`).
 
 ---
 
@@ -47,3 +49,14 @@ This instability is not an artifact of bugs; it is an intrinsic scientific prope
    - `results/passC/efficiency.csv` (Exp 4.3, Fig 8)
    - `results/passC/numbers.tex` (Single source of truth for all LaTeX macros)
 4. **Zero Hand-Edited Numbers:** Every number in `main.tex` will be bound to `\newcommand{\MacroName}{...}` from `numbers.tex`.
+
+---
+
+## 3. Final Pass F Reconciled Benchmarks (`paper/numbers.tex`)
+In Pass F, all 6 high-dimensional datasets were evaluated across 30 independent seeds, and the 7 general datasets across 10 seeds (2,750 total model fits):
+- **Golub Leukemia:** Mean ARI = 0.600 +- 0.367 (median 0.787).
+- **Khan SRBCT:** Mean ARI = 0.546 +- 0.102 (median 0.562).
+- **High-D Subgroup ($D/N > 20$):** ICC-v2 commands **Rank #1** with Mean ARI = 0.217 (vs Standard Consensus 0.037, DEC 0.045, K-Means 0.056).
+- **Omnibus Grand Mean ARI:** 0.152 (Rank 5.23).
+- **Friedman Omnibus Test:** $\chi_F^2 = 9.59, p = 0.48$, Nemenyi Critical Difference $CD = 4.19$.
+- **Asymptotic Scaling:** $N = 10^6$ in 55.6 s (3.05 GB peak RSS, 240 MB graph memory, 99.6% reduction over dense 8 TB).

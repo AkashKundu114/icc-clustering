@@ -1,5 +1,10 @@
 # Novelty Verdicts (LOOP/NOVELTY_VERDICTS.md)
 
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*
+
 | Candidate Claim / Method | Closest Prior Literature | Novelty Status | Evidence & Verification Notes |
 | :--- | :--- | :---: | :--- |
 | **Claim 1: Marginal Bimodality Gating (VSSG / Sarle BC)** | - Dip-test screening (arXiv:1406.2240)<br>- Bimodality Index (Wang et al., 2009)<br>- 13-method comparison (Frontiers in Genetics, 2021)<br>- DIFS (bioRxiv, 2025) | **PRE-EMPTED / NARROWED** | Bimodality-based feature screening prior to clustering is established practice. The fixed $5/9$ cutoff is uncalibrated and misses $\sim 50\%$ of real signal at $N \le 100$. |

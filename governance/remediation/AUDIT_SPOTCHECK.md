@@ -1,5 +1,10 @@
 # AUDIT SPOT-CHECK REPORT (SUBAGENT E4)
 
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
+
 ## 1. Protocol & Sampling
 As mandated by the Phase 1 Orchestrator specification, four independent spot-checks were executed directly against the raw frozen benchmark runs in `results/results.json` and `experiments/exp3_real_world_benchmarks/data/exp3_1_benchmark_matrix_v2.csv`.
 - 3 randomly selected cells of Table 3:
@@ -66,4 +71,4 @@ As mandated by the Phase 1 Orchestrator specification, four independent spot-che
 
 ## 3. Conclusion & Audit Sign-Off
 1. The benchmark generation code in `run_exp3_1_benchmark_matrix.py` is authentic: its saved results faithfully match Table 3's values down to 4 decimal places across all 13 datasets.
-2. The discrepancy between Sec 5.2 and Table 3 is confirmed: Sec 5.2 reported an over-optimistic subset or unseeded variation. The manuscript must be remediated in Phase 4 to use the frozen 10-seed benchmark number (0.680) and explicitly discuss this bimodal seed variance.
+2. The discrepancy between early Sec 5.2 and Table 3 is confirmed: Sec 5.2 reported an over-optimistic subset or unseeded variation. In the Pass F frozen execution store (`paper/numbers.tex`), replicates were expanded to 30 independent seeds, establishing Golub Leukemia ARI = 0.600 +- 0.367 (median 0.787) and Khan SRBCT ARI = 0.546 +- 0.102 (median 0.562).

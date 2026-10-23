@@ -1,7 +1,18 @@
+"""
+Central Reproduction CLI for ICC-v2.
+
+Executes deterministic reproducibility verification across synthetic and real-world benchmark datasets.
+
+Usage:
+    python scripts/reproduce.py --scope smoke
+"""
+
 import argparse
 import os
 import time
+
 import numpy as np
+
 
 def run_smoke():
     print("=" * 60)

@@ -1,13 +1,27 @@
 # Benchmark Dataset Metadata & Verification Ledger (docs/DATA.md)
 
-**Manuscript Title:** Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data  
-**Target Venue:** Springer Nature *Data Mining and Knowledge Discovery* (DAMI)  
-**Date of Audit:** 2026-10-23 (Pass F Audit)  
-**Status:** All sources verified, HTTP 200 OK, SHA-256 arrays cryptographically anchored.
+**Canonical Manuscript Title:** When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination  
+**Academic Lineage:** Initial University Allotment Title: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data" (`CSE_PROJECT_68`, Mentor: Prof. Kalyan Kumar Das); Early Proposal Blueprint: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"  
+**Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`)  
+**Canonical Release Version:** v2.1.0  
+**Audit Verification:** Pass F Frozen Experimental Audit (2026-10-23)  
+**Status:** All 13 benchmark sources verified, HTTP 200 OK, SHA-256 arrays cryptographically anchored in `data/cache/`.
 
 ---
 
-## 1. Primary Benchmark Suite Overview (13 Datasets)
+## 1. Single Source of Truth Empirical Summary (from `paper/numbers.tex`)
+
+The benchmark evaluation comprises 13 benchmark datasets, 2,750 individual model fits, and 11 baseline solvers:
+- **Ultra-High-Dimensional Biological Cancer Subgroup ($D/N > 20$, 6 Datasets):** ICC-v2 commands **Rank #1** with Mean ARI = **0.217** (median 0.036), substantially outperforming Standard Consensus (0.037), DEC (0.045), and K-Means (0.056).
+  - **Golub Leukemia:** ARI = **0.600 +/- 0.367**, 54.0% oncogenic marker recovery (27 of top 50 known driver markers).
+  - **Khan SRBCT:** ARI = **0.546 +/- 0.102**, isolating 4 pediatric tumor malignancies.
+  - **Ovarian Proteomics:** ARI = **0.050**, with a **5.1x speedup** over dense consensus.
+- **Aggregate Multi-Domain Benchmark Suite (13 Datasets):** Grand Mean ARI across all 13 datasets is **0.152** (overall rank **5.23** of 11). Omnibus Friedman test: $\chi^2_F = 9.59, p = 0.48$, Nemenyi critical difference $\text{CD} = 4.19$ (no statistically significant difference globally across the heterogeneous multi-domain suite).
+- **Asymptotic Scalability:** $N = 10^6$ in **55.6 s** (3.05 GB peak RSS, 240 MB graph memory, **99.6% reduction** over dense 8 TB matrix).
+
+---
+
+## 2. Primary Benchmark Suite Overview (13 Datasets)
 
 | Dataset | Domain | Samples ($N$) | Features ($D$) | Clusters ($K$) | $D/N$ | Source | Identifier / URL | License | HTTP Status |
 |---|---|---|---|---|---|---|---|---|---|
@@ -27,7 +41,7 @@
 
 ---
 
-## 2. Cryptographic Checksums of Cached Local Arrays (`data/cache/`)
+## 3. Cryptographic Checksums of Cached Local Arrays (`data/cache/`)
 
 All raw benchmark datasets are preprocessed under strict deterministic pipelines (StandardScaler normalization and LabelEncoder ground truth mapping). The exact serialized numpy `.npz` files stored in `data/cache/` exhibit the following cryptographic signatures:
 
@@ -49,10 +63,10 @@ zheng68k.npz        : 4e3f0fea4d64087840bd6a896a2c4161dde9cee1fe8b1beef8620a5053
 
 ---
 
-## 3. Subsampling and Preprocessing Protocols
+## 4. Subsampling and Preprocessing Protocols
 
 1. **Madelon Subsampling Protocol:**  
    The full OpenML Madelon dataset contains $N=2{,}600$ points ($2{,}000$ train + $600$ test). In conformity with the benchmark design, the dataset is deterministically subsampled to $N=500$ instances (retaining the 20 informative XOR features and 480 distractor noise dimensions) using random seed 42.
 
 2. **PBMC68k-reduced Protocol:**  
-   The standard Scanpy demonstration dataset (\texttt{pbmc68k\_reduced}) was derived by the Scanpy core developers from Zheng et al. (2017) fresh 68k PBMCs. It contains $N=700$ individual cells across $K=10$ annotated cell populations, pre-filtered to $D=765$ highly variable genes via dispersion-based feature selection following total-count library size normalization (`scanpy.pp.normalize_total`) and logarithmic transformation (`scanpy.pp.log1p`).
+   The standard Scanpy demonstration dataset (`pbmc68k_reduced`) was derived by the Scanpy core developers from Zheng et al. (2017) fresh 68k PBMCs. It contains $N=700$ individual cells across $K=10$ annotated cell populations, pre-filtered to $D=765$ highly variable genes via dispersion-based feature selection following total-count library size normalization (`scanpy.pp.normalize_total`) and logarithmic transformation (`scanpy.pp.log1p`).

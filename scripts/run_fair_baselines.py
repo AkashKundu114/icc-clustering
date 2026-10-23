@@ -1,18 +1,35 @@
+"""
+Fair Baselines Evaluation Script.
+
+Evaluates high-dimensional feature selection baselines across benchmark datasets:
+- Variance Filter + K-Means
+- Truncated SVD / PCA + K-Means
+- Laplacian Score + K-Means
+- Sparse K-Means (Witten & Tibshirani, 2010)
+- Standard Consensus + Feature Filtering
+- Invariant Core Consensus (ICC-v2)
+
+Usage:
+    python scripts/run_fair_baselines.py
+"""
+
 import sys
 import time
 from pathlib import Path
+
 import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.decomposition import TruncatedSVD
-from sklearn.neighbors import kneighbors_graph
 from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
+from sklearn.neighbors import kneighbors_graph
 
 root_dir = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(root_dir))
+if str(root_dir) not in sys.path:
+    sys.path.insert(0, str(root_dir))
 
-from icc.consensus_v2 import InvariantCoreConsensusV2
-from icc.baselines.consensus import run_standard_consensus
+from icc.baselines.consensus import run_standard_consensus  # noqa: E402
+from icc.consensus_v2 import InvariantCoreConsensusV2  # noqa: E402
 
 DATASETS = [
     "colon", "leukemia", "srbct", "cns", "lymphoma", "ovarian",

@@ -45,8 +45,8 @@ experiments/exp5_extreme_scale/
 | **$N = 10,000$** | Runtime (sec)<br>Peak RAM (MB)<br>Mean ARI | 0.12s<br>6.67 MB<br>0.150 | 0.06s<br>7.66 MB<br>0.346 | **1.85s**<br>30.53 MB<br>**0.319** |
 | **$N = 50,000$** | Runtime (sec)<br>Peak RAM (MB)<br>Mean ARI | 0.14s<br>6.98 MB<br>0.139 | 0.20s<br>38.18 MB<br>0.356 | **3.41s**<br>152.60 MB<br>**0.333** |
 | **$N = 100,000$** | Runtime (sec)<br>Peak RAM (MB)<br>Mean ARI | 0.60s<br>7.36 MB<br>0.167 | 0.36s<br>76.33 MB<br>0.345 | **5.95s**<br>305.19 MB<br>**0.369** |
-| **$N = 500,000$** | Runtime (sec)<br>Peak RAM (MB)<br>Mean ARI | 2.81s<br>15.83 MB<br>0.257 | *Skipped $\mathcal{O}(N^2)$*<br>—<br>— | **28.83s**<br>1,525.89 MB<br>**0.378** |
-| **$N = 1,000,000$** | Runtime (sec)<br>Peak RAM (MB)<br>Mean ARI | 4.29s<br>29.19 MB<br>0.150 | *Skipped $\mathcal{O}(N^2)$*<br>—<br>— | **55.64s**<br>**3,051.77 MB (3.05 GB)**<br>**0.382** |
+| **$N = 500,000$** | Runtime (sec)<br>Peak RAM (MB)<br>Mean ARI | 2.81s<br>15.83 MB<br>0.257 | *Skipped $\mathcal{O}(N^2)$*<br>, <br>,  | **28.83s**<br>1,525.89 MB<br>**0.378** |
+| **$N = 1,000,000$** | Runtime (sec)<br>Peak RAM (MB)<br>Mean ARI | 4.29s<br>29.19 MB<br>0.150 | *Skipped $\mathcal{O}(N^2)$*<br>, <br>,  | **55.64s**<br>**3,051.77 MB (3.05 GB)**<br>**0.382** |
 
 #### Key Sample Complexity Insights:
 - **Feasible Million-Scale Consensus Clustering:** While classical consensus methods require $\approx 8\text{ TB}$ of memory at $N=1,000,000$, ICC-v2 completes execution in **$55.6\text{ seconds}$** requiring only **$3.05\text{ GB}$ peak RAM**.

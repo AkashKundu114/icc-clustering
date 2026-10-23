@@ -1,6 +1,17 @@
 # MANUSCRIPT QUANTITATIVE CLAIMS DIRECTORY
 
-Master register of all quantitative claims extracted from the manuscript (*Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes*).
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
+
+Master register of all quantitative claims extracted from the manuscript and verified against Pass F frozen execution stores (`paper/numbers.tex`, `results/passF/`):
+- **13 benchmark datasets, 2,750 individual model fits, 11 baseline solvers.**
+- **Omnibus Friedman test:** $\chi_F^2 = 9.59, p = 0.48$, Nemenyi $CD = 4.19$ (no global dominance).
+- **High-D subgroup ($D/N > 20$):** ICC-v2 Rank #1 with Mean ARI = 0.217 (vs Standard Consensus 0.037, DEC 0.045, K-Means 0.056).
+- **Grand Mean ARI:** 0.152 (Rank 5.23).
+- **Golub Leukemia:** ARI = 0.600, Khan SRBCT: ARI = 0.546.
+- **Asymptotic scaling:** $N = 10^6$ in 55.6 s (3.05 GB peak RSS, 240 MB graph memory, 99.6% reduction over dense 8 TB).
 
 Columns:
 - **Claim ID**: Unique identifier for tracking and script verification.

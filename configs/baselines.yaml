@@ -135,7 +135,7 @@ methods:
       venue: "IEEE TKDE Under Review"
 
   # ============================================================================
-  # NEW DEEP CLUSTERING BASELINES (Phase 4 — Enabled: false)
+  # NEW DEEP CLUSTERING BASELINES (Phase 4: Enabled: false)
   # ============================================================================
   dec:
     name: "dec"
@@ -198,7 +198,7 @@ methods:
       venue: "European Conference on Computer Vision (ECCV)"
 
   # ============================================================================
-  # NEW SCALABLE ANCHOR-BASED BASELINES (Phase 4 — Enabled: false)
+  # NEW SCALABLE ANCHOR-BASED BASELINES (Phase 4: Enabled: false)
   # ============================================================================
   fcag:
     name: "fcag"

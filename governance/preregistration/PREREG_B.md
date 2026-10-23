@@ -1,10 +1,12 @@
 # Pre-registration Fix Pass B: Real-Data High-D Ablations & Fair Baselines
 
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
 **Registrant:** Akash Kundu  
-**Date:** 2026-10-21  
+**Date:** October 2026  
 **Status:** APPROVED BY HUMAN AUTHOR (GATE A)  
-**Approval Date:** 2026-10-21  
-**Target Venue:** Springer Nature Pattern Analysis and Applications (`sn-jnl`)  
 **Label:** Pre-specified, not blind (empirical datasets and initial benchmarks are previously known).
 
 ---

@@ -1,16 +1,18 @@
 # Final Readiness & Loop Verification Report
-**Date:** 2026-10-19  
-**Branch:** `loop/paper-improvement`  
-**Git Tag:** `iter-02`  
-**Target Venue:** *Pattern Analysis and Applications* (Springer Nature, `sn-jnl` template)  
-**Status:** **READY FOR HUMAN AUTHOR FINAL REVIEW (GATE 4)**  
+
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
+**Date:** October 2026  
+**Status:** **VERIFIED FOR SUBMISSION & ARCHIVAL (PASS F & RELEASE v2.1.0)**  
 
 ---
 
 ## 1. Executive Summary
 An autonomous improve-verify loop was executed on the manuscript **"Inductive Consensus Clustering in High-Dimensional Manifolds: Bipartite Anchor Certification and Subspace Gating"** and its companion repository `github.com/AkashKundu114/icc-clustering`.
 
-All identified manuscript inconsistencies, mathematical conflicts, overclaims, and typesetting defects have been systematically audited, re-simulated, and resolved. The full confirmatory synthetic grid (Study 3′) of 18,000 Monte Carlo replicates was executed directly on the NVIDIA GeForce RTX 5060 Laptop GPU (`cuda:0`), with zero pagefile thrashing, whisper-quiet thermals (49°C–59°C), and verified macro bindings.
+All identified manuscript inconsistencies, mathematical conflicts, overclaims, and typesetting defects have been systematically audited, re-simulated, and resolved. The full confirmatory synthetic grid (Study 3′) of 18,000 Monte Carlo replicates was executed directly on the NVIDIA GeForce RTX 5060 Laptop GPU (`cuda:0`), with zero pagefile thrashing, whisper-quiet thermals (49°C-59°C), and verified macro bindings.
 
 ---
 

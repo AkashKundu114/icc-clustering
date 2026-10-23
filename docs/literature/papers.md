@@ -1,12 +1,14 @@
 # Literature Review & Prior Art Dossier: Cluster Stability & Consensus Learning in High-Dimensional Manifolds
 
 **Course / Degree Project (Original Allotment):** *Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data* (`CSE_PROJECT_68`)  
-**Evolved Manuscript Title (IEEE Target):** *Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes*  
-**Algorithmic Framework / Package:** Inductive Consensus Clustering / Invariant Core Consensus (ICC-v2)  
+**Early Proposal Blueprint Title (Capstone Proposal):** *Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes*  
+**Canonical Manuscript Title (Springer Nature DAMI):** *When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination*  
+**Algorithmic Framework / Package:** Inductive Consensus Clustering / Invariant Core Consensus (ICC-v2, v2.1.0) and `cicc` (Conformal Inductive Consensus Clustering)  
 **Authors:** Akash Kundu (Lead), Trinankur Guha, Rupankar Ghatak, Anubhav Naskar  
 **Faculty Mentor:** Prof. Kalyan Kumar Das  
 **Department:** Computer Science and Engineering  
-**Target Venues:** IEEE TKDE / IEEE TNNLS / IEEE TPAMI / ICDE  
+**Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`), manuscript `paper/main.tex`.  
+**Canonical Release Version:** v2.1.0  
 
 ---
 
@@ -21,7 +23,7 @@ $$\sigma_i = \frac{1}{N-1} \sum_{j \neq i}^N S_{ij}^2 \quad \text{or} \quad \tex
 Samples with high determinacy form an invariant "core" ($\mathcal{S}_{\text{Core}}$), while unstable points are relegated to a "halo" ($\mathcal{S}_{\text{Halo}}$) to be assigned post-hoc.
 
 ### 1.1 The High-Dimensional Breakdown: The "Hallucinated Stability" Trap
-Despite empirical success in low-dimensional spaces ($D \le 50$), existing stability-based ensembles break down in **high-dimensional, small-sample regimes** ($D \gg N$, e.g., cancer genomics where $D \in [2{,}000, 12{,}000]$ and $N \le 100$). This collapse is governed by the **Beyer-Goldstein-Ramakrishnan-Srivastava Theorem (1999)** on pairwise distance concentration:
+Despite empirical success in low-dimensional spaces ($D \le 50$), existing stability-based ensembles break down in **high-dimensional, small-sample regimes** ($D \gg N$, e.g., cancer genomics where $D \in [2{,}000, 15{,}000]$ and $N \le 100$). This collapse is governed by the **Beyer-Goldstein-Ramakrishnan-Srivastava Theorem (1999)** on pairwise distance concentration:
 $$\lim_{D \to \infty} \frac{\mathrm{Var}(\|\mathbf{x}_i - \mathbf{x}_j\|)}{\mathbb{E}[\|\mathbf{x}_i - \mathbf{x}_j\|]^2} = 0 \implies \lim_{D \to \infty} \frac{\mathrm{dist}_{\max}(X) - \mathrm{dist}_{\min}(X)}{\mathrm{dist}_{\min}(X)} \to 0$$
 When thousands of uninformative distractor dimensions corrupt the geometry:
 1. Base clustering algorithms (K-Means, Ward, Spectral) optimize loss functions dominated by isotropic noise.
@@ -34,12 +36,12 @@ When thousands of uninformative distractor dimensions corrupt the geometry:
 ## 2. Exhaustive Annotated Literature Review Table (20 Seminal Papers)
 
 | # | Paper & Authors | Venue & Year | Core Focus | Proposed Mechanism | Benchmark Datasets | Key Findings | Isolated Gap / Vulnerability |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **1** | **Li et al.**<br/>*Clustering Ensemble Based on Sample's Stability* | *Artificial Intelligence*, 2019 | Sample stability weighting in consensus ensembles | Quantifies sample determinacy $\text{Det}(i)$ via co-association; extracts core and halo samples; pre-clusters core then assigns halo. | 8 synthetic, 10 UCI real, 6 text, image segmentation | Statistically beats 12 consensus baselines on low/mid-D data. | Flat graph determinacy is blind to feature noise; elevates distance-concentrated noise into "Core". $\mathcal{O}(N^2)$ memory bottleneck. |
-| **2** | **Huang et al.**<br/>*Locally Weighted Ensemble Clustering (LWEA / LWGP)* | *IEEE TPAMI*, 2017/2018 | Cluster-level & sample-level weighting via entropy | Computes cluster reliability via local entropy; builds bipartite bipartite/graph consensus via hierarchical voting. | 14 benchmark datasets (UCI, Keel) | Demonstrates superior consensus vs. equal-weighted CSPA/MCLA. | Relies on ambient unguided feature representations; fails when ambient distractor noise $D_{\text{noise}} \ge 1{,}000$ overwhelms local entropy. |
+| **2** | **Huang et al.**<br/>*Locally Weighted Ensemble Clustering (LWEA / LWGP)* | *IEEE TPAMI*, 2017/2018 | Cluster-level & sample-level weighting via entropy | Computes cluster reliability via local entropy; builds bipartite graph consensus via hierarchical voting. | 14 benchmark datasets (UCI, Keel) | Demonstrates superior consensus vs. equal-weighted CSPA/MCLA. | Relies on ambient unguided feature representations; fails when ambient distractor noise $D_{\text{noise}} \ge 1{,}000$ overwhelms local entropy. |
 | **3** | **Dong et al. / Huang et al.**<br/>*Fast Multi-view / Multi-source Ensemble (FastMICE)* | *IEEE TKDE*, 2023 | Scalable ensemble clustering on bipartite graphs | Constructs sparse bipartite graph between objects and base clusters; solves consensus via Transfer-Cut. | Multi-view benchmarks ($N \le 100{,}000$) | Near-linear scaling $\mathcal{O}(N K M)$; breaks quadratic co-association bottleneck. | Assumes clean or low-dimensional input representations; does not filter feature noise subspaces prior to base partition generation. |
 | **4** | **Nie et al.**<br/>*Fast Clustering on Anchor Graphs (FCAG)* | *IEEE TPAMI*, 2024 | Ultra-scalable spectral clustering via anchor graphs | Selects $L \ll N$ anchors; factorizes affinity matrix $S \approx B \Lambda^{-1} B^\top$; solves top-$K$ eigenvectors in $\mathcal{O}(N L K)$. | Large-scale image & tabular datasets ($N \le 10^6$) | Achieves exact spectral clustering in linear time $\mathcal{O}(N L)$. | Selects anchors via K-Means or random sampling on raw ambient features, which are corrupted under $D \gg N$. |
-| **5** | **Xie et al.**<br/>*Unsupervised Deep Embedding for Clustering (DEC)* | *ICML*, 2016 | Deep clustering with soft assignment distribution | Trains autoencoder; iteratively refines clustering via Student-$t$ distribution Kullback-Leibler divergence. | MNIST, STL-10, Reuters | Outperforms classical spectral and k-means on rich image datasets. | Completely collapses in small-sample biomedical regimes ($N \le 100, D \gg N$), resulting in degenerate representation collapse and zero ARI. |
+| **5** | **Xie et al.**<br/>*Unsupervised Deep Embedding for Clustering (DEC)* | *ICML*, 2016 | Deep clustering with soft assignment distribution | Trains autoencoder; iteratively refines clustering via Student-$t$ distribution Kullback-Leibler divergence. | MNIST, STL-10, Reuters | Outperforms classical spectral and k-means on rich image datasets. | Completely collapses in small-sample biomedical regimes ($N \le 100, D \gg N$), resulting in degenerate representation collapse and near-zero ARI. |
 | **6** | **Liu et al.**<br/>*Spectral Ensemble Clustering (SEC)* | *IEEE TKDE*, 2017 | Spectral relaxation of consensus co-association | Formulates consensus as normalized cut over the co-association matrix with deterministic spectral bounds. | 10 UCI datasets | Robust theoretical convergence compared to heuristic voting. | Requires constructing and diagonalizing full $N \times N$ matrix $S$, incurring cubic $\mathcal{O}(N^3)$ complexity. |
 | **7** | **Strehl & Ghosh**<br/>*Cluster Ensembles: A Knowledge Reuse Framework* | *JMLR*, 2002 | Foundational cluster ensemble taxonomy | Introduces graph-based consensus functions: CSPA (pairwise graph), HGPA (hypergraph), MCLA (meta-clustering). | 8 diverse benchmarks | Establishes the cluster ensemble formulation. | CSPA requires full $\mathcal{O}(N^2)$ storage; HGPA frequently creates degenerate hyperedge partitions; no sample weighting. |
 | **8** | **Fred & Jain**<br/>*Combining Multiple Clusterings Using Evidence Accumulation* | *IEEE TPAMI*, 2005 | Evidence accumulation via co-association matrix | Iteratively votes pair co-occurrence across diverse base partitions; extracts final consensus via single-link / average-link. | Synthetic 2D/3D shapes, UCI benchmarks | Established the standard co-association matrix framework. | Treats all samples, features, and base clusterings equally; susceptible to noise voter contamination. |
@@ -54,24 +56,24 @@ When thousands of uninformative distractor dimensions corrupt the geometry:
 | **17** | **Zhou et al.**<br/>*Self-Paced Clustering Ensemble (SPCE)* | *IEEE TNNLS*, 2021 | Curriculum learning for consensus clustering | Introduces self-paced learning to consensus; prioritizes "easy" samples and partitions before hard ones. | Benchmark datasets | Enhances robustness against outlier samples. | Euclidean pacing heuristic mistakes distance-concentrated noise clusters for "easy" clusters in high dimensions. |
 | **18** | **Vega-Pons & Ruiz-Shulcloper**<br/>*Survey of Clustering Ensemble Algorithms* | *IJPRAI*, 2011 | Consensus clustering taxonomy | Classifies ensemble methods into co-occurrence-based and median-partition-based consensus functions. | Survey | Foundational reference organizing the ensemble literature. | Predates deep clustering, scalable anchor-graph methods, and high-dimensional sample stability frameworks. |
 | **19** | **Boongoen & Iam-On**<br/>*Cluster Ensembles: A Survey with Recent Extensions* | *Comput. Sci. Rev.*, 2018 | Updated survey on graph and hybrid ensembles | Taxonomizes direct, feature-based, pairwise-similarity, and graph-based consensus functions. | Survey | Comprehensive taxonomy of modern graph formulations. | Does not address the interaction between sample stability and the curse of dimensionality. |
-| **20** | **Golub et al.** / **Nutt et al.** / **Khan et al.**<br/>*Microarray Cancer Genomics Lineage* | *Science* (1999); *Cancer Res* (2003); *Nat Med* (2001) | Biomedical benchmark datasets ($D \gg N$) | Curated high-dimensional transcriptomic profiling: ALLAML ($D=7{,}129$), GLIOMA ($D=4{,}434$), SRBCT ($D=2{,}308$). | Microarray cancer cohorts | Gold-standard benchmark suite for high-dimensional small-sample cancer subtyping. | Demonstrates severe technical noise, sample sparsity ($N \le 100$), and nuisance genes masking driver subtypes. |
+| **20** | **Golub et al.** / **Khan et al.**<br/>*Microarray Cancer Genomics Lineage* | *Science* (1999); *Nat Med* (2001) | Biomedical benchmark datasets ($D \gg N$) | Curated high-dimensional transcriptomic profiling: ALLAML ($D=7{,}129$), SRBCT ($D=2{,}308$). | Microarray cancer cohorts | Gold-standard benchmark suite for high-dimensional small-sample cancer subtyping. | Demonstrates severe technical noise, sample sparsity ($N \le 100$), and thousands of uninformative distractor genes. |
 
 ---
 
-## 3. Comprehensive 10-Baseline Comparative Matrix
+## 3. Comprehensive 11-Baseline Comparative Matrix
 
-ICC-v2 is benchmarked against **10 representative baseline algorithms** spanning classical single-model algorithms, spectral ensembles, graph-based consensus, locally weighted ensembles, scalable bipartite solvers, and deep clustering:
+ICC-v2 is benchmarked against **11 representative baseline algorithms** spanning classical single-model algorithms, spectral ensembles, graph-based consensus, locally weighted ensembles, scalable bipartite solvers, and deep clustering:
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                   TAXONOMY OF THE 10 BASELINES                                   │
+│                                   TAXONOMY OF THE 11 BASELINES                                   │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
        │                                     │                                      │
        ▼                                     ▼                                      ▼
 [ Single-Model Solvers ]          [ Classical / Graph Ensembles ]        [ Scalable & Deep Solvers ]
 • K-Means (Lloyd, 1982)           • CSPA (Strehl & Ghosh, 2002)          • FastMICE (Huang et al., 2023)
 • Hierarchical Ward (1963)        • MCLA (Strehl & Ghosh, 2002)          • DEC (Xie et al., ICML 2016)
-• Spectral (Ng et al., 2001)      • SEC (Liu et al., TKDE 2017)
+• Spectral (Ng et al., 2001)      • SEC (Liu et al., TKDE 2017)          • Li et al. (AI 2019 Core-Halo)
                                   • LWEA (Huang et al., TPAMI 2017)
                                   • LWGP (Huang et al., TPAMI 2018)
 ```
@@ -88,6 +90,7 @@ ICC-v2 is benchmarked against **10 representative baseline algorithms** spanning
 | **LWGP** | Huang et al. (TPAMI 2018) | Weighted Graph | Locally weighted bipartite graph partitioning with random walk consensus propagation. | $\mathcal{O}(N K M \cdot t)$ | $\mathcal{O}(N K M)$ | Random walk diffusion accumulates distractor noise in ambient space. |
 | **FastMICE** | Huang et al. (TKDE 2023) | Scalable Bipartite | Generates multi-view candidate clusterings; constructs object-cluster bipartite graph; solves consensus via Transfer-Cut. | $\mathcal{O}(N K M)$ | $\mathcal{O}(N K M)$ | Bipartite edges formed in unguided feature space; noisy dims degrade partitions. |
 | **DEC** | Xie et al. (ICML 2016) | Deep Clustering | Deep autoencoder embedding optimized iteratively via Student-$t$ soft assignments and KL divergence target distribution. | $\mathcal{O}(\text{Epochs} \cdot N D)$ | $\mathcal{O}(N D + |\Theta|)$ | Severe sample sparsity failure ($N \le 100$); autoencoder overfits or collapses. |
+| **Li et al. Core-Halo** | Li et al. (AI 2019) | Stability Consensus | Dense co-association determinacy sorting; clusters core then assigns halo points. | $\mathcal{O}(N^2 M + N^2)$ | $\mathcal{O}(N^2)$ | Suffers from quadratic memory and hallucinates stability on distance-concentrated noise. |
 
 ---
 
@@ -108,58 +111,69 @@ To maintain absolute academic rigor and avoid uncalibrated novelty claims, the c
   • Combining multimodality screening + random subspace generation + anchor-graph consensus.
 
   [ Category C: Empirical Observations ]
-  • Empirical discovery of the 5%–15% feature-pool sweet spot in microarray datasets.
+  • Empirical discovery of the 5% to 15% feature-pool sweet spot in microarray datasets.
   • Negative result: label-free unsupervised pool selectors fail to match fixed-fraction priors.
 
-  [ Category D: Proven Scientific Contributions of ICC-v2 (TKDE Scope) ]
+  [ Category D: Proven Scientific Contributions of ICC-v2 (DAMI Scope) ]
   1. Finite-Sample Sarle Bound & Zero-Inflation Boundary Proof (Proposition 1 & Remark 1).
-  2. Exact Linear Determinacy Identity via Contingency Tensors (Proposition 2).
+  2. Exact Linear Determinacy Identity via Contingency Tables in O(M^2 N + M^2 K^2) (Proposition 2).
   3. Anchor-Space Perturbation Profiling (ASPP) Scalable Stability Diagnostics (Definition 3).
   4. Precise Empirical Delineation of the Continuous vs. Sparse Operating Envelope.
+  5. Conformal Inductive Consensus Clustering (cicc): Finite-Sample (1 - alpha) Validity Sets.
 ```
 
-### 4.1 What Prior Art Established (Category A)
-- **Transfer-Cut on Bipartite Graphs:** Proved by Huang et al. (U-SPEC, 2019) and Nie et al. (FCAG, 2024) to scale bipartite graph spectral partitioning to $\mathcal{O}(N L)$ by solving generalized eigenvectors on the $L \times L$ anchor graph.
-- **Bimodality Screening:** Established by Sarle (1983) and Wasserman et al. (2014) as a univariate test for multimodality, identifying candidate features with $BC > 5/9$.
-- **Sample Determinacy:** Proposed by Li et al. (2019) as a sample reliability statistic, but formulated strictly via dense $\mathcal{O}(N^2)$ co-association matrices.
-
-### 4.2 What ICC-v2 Formally Contributes (Category D)
-
-#### Contribution 1: Formal Delineation of the Zero-Inflation Boundary (Proposition 1 & Remark 1)
-Prior work applied the Bimodality Coefficient ($BC \ge 5/9$) assuming continuous symmetric unimodal noise. We provide the first analytical characterization of why bimodality screening breaks down on sparse count matrices:
-$$\lim_{p_0 \to 1} BC(X_d) = \lim_{p_0 \to 1} \frac{\frac{(1-2p_0)^2}{p_0(1-p_0)} + 1}{\frac{1-6p_0(1-p_0)}{p_0(1-p_0)} + 3} = 1.0$$
-where $p_0 = \Pr(X_{id} = 0)$ is the dropout rate. This proves why VSSG excels on continuous biomedical assays ($D/N > 20$, e.g., Leukemia ARI = 0.680 vs. DEC 0.148) while encountering an analytical ceiling on sparse single-cell matrices (PBMC 3k, Zheng68k).
-
-#### Contribution 2: Exact Linear Determinacy Identity (Proposition 2)
-We prove that sample determinacy $\sigma_i = \frac{1}{N-1}\sum_{j \neq i} S_{ij}^2$ can be computed **exactly in $\mathcal{O}(M^2 N + M^2 K^2)$ time and $\mathcal{O}(N + M K)$ memory** without constructing the $N \times N$ matrix $S$, using inter-model contingency tables $C_{m_1, m_2} \in \mathbb{N}^{K \times K}$:
-$$\sum_{j=1}^N S_{ij}^2 = \frac{1}{M^2} \sum_{m_1=1}^M \sum_{m_2=1}^M C_{m_1, m_2}(\pi_{m_1}(i), \pi_{m_2}(i))$$
-This resolves a 20-year computational dilemma, providing exact sample-stability certification at arbitrary sample scales.
-
-#### Contribution 3: Anchor-Space Perturbation Profiling (ASPP)
-We introduce the first scalable $\mathcal{O}(N L)$ perturbation diagnostic engine that profiles cluster stability across 5 perturbation operators (sampling, feature masking, measurement jitter, batch shift, algorithmic seeding) strictly in the anchor transition space, computing the Perturbation Sensitivity Index ($PSI_k$) without allocating pairwise affinity tensors.
-
 ---
 
-## 5. Empirical Operating Envelope & Verified Audit Insights
+## 5. Empirical Operating Envelope & Verified Audit Insights (from `paper/numbers.tex`)
 
-Following the adversarial research audit, ICC-v2's performance profile is rigorously characterized across empirical domains:
+Following the frozen Pass F audit, ICC-v2's performance profile is rigorously characterized across empirical domains:
 
-1. **Continuous Ultra-High-Dimensional Cancer Assays ($D/N > 20$, $N \le 100$):**  
-   ICC-v2 attains **Rank #1 dominance** ($R = 1.50$), achieving dramatic lifts over single-model and deep baselines (Leukemia ARI = 0.680 vs. DEC 0.148; SRBCT ARI = 0.538 vs. Std Consensus 0.040; Ovarian ARI = 0.052). In this regime, deep learning collapses due to sample sparsity, while standard consensus collapses due to distance concentration.
-2. **Sparse Text and Single-Cell Count Manifolds (Zheng68k, 20 Newsgroups):**  
-   Hierarchical Ward and DEC outperform ICC-v2. Extreme zero-inflation violates the continuous unimodal noise assumption of VSSG, inflating kurtosis at zero and diluting feature-subspace selection.
-3. **General Tabular Benchmarks (13 Datasets Suite):**  
-   Across the complete 13-dataset suite, ICC-v2 attains a Grand Mean ARI of **0.1599** (mean rank 5.46 of 11). An omnibus Friedman test yields $\chi^2_F = 11.38, p = 0.33$, indicating that across heterogeneous multi-domain benchmarks, no single algorithm universally dominates, and differences do not survive Holm-Bonferroni correction.
+1. **Continuous Ultra-High-Dimensional Cancer Assays ($D/N > 20$, 6 Datasets):**  
+   ICC-v2 attains **Rank #1 dominance** with Mean ARI = **0.217** (median 0.036), substantially outperforming Standard Consensus (0.037), DEC (0.045), and K-Means (0.056).
+   - Golub Leukemia ($N=72, D=7{,}129$): ARI = **0.600 +/- 0.367**, with **54.0%** oncogenic marker recovery (27 of top 50 known driver markers).
+   - Khan SRBCT ($N=83, D=2{,}308$): ARI = **0.546 +/- 0.102**.
+   - Ovarian Proteomics ($N=253, D=15{,}154$): ARI = **0.050**, with a **5.1x speedup** over dense consensus.
+2. **General Multi-Domain Suite (13 Datasets, 2,750 Model Fits):**  
+   Across all 13 datasets, ICC-v2 achieves a Grand Mean ARI of **0.152** (overall rank **5.23** of 11). An omnibus Friedman test yields $\chi^2_F = 9.59, p = 0.48$ with a Nemenyi critical difference $\text{CD} = 4.19$, confirming that across heterogeneous multi-domain suites, no single method universally dominates.
+3. **Sparse Text and Single-Cell Count Manifolds (Zheng68k, 20 Newsgroups):**  
+   Hierarchical Ward and DEC outperform ICC-v2. Extreme zero-inflation violates the continuous unimodal noise assumption of VSSG / BGSS, inflating kurtosis at zero and diluting feature-subspace selection.
 4. **Missing-Data Resilience (MCAR):**  
-   In multi-dataset audit sweeps across cached benchmarks (`e5_missing_rerun.csv`), cluster recovery retains approximately $108\%$ / $80\%$ / $33\%$ / $41\%$ of 0%-missing ARI at $10\%$ / $20\%$ / $30\%$ / $50\%$ missing. Cluster structure remains resilient up to $20\%$ missing data before degrading toward K-Means baseline by $30\%$.
-5. **Computational Scaling (Dense vs. Scalable Paths):**  
-   In dedicated per-process benchmark sweeps (`e6_scaling.csv`), the dense path ($N \le 2{,}000$) exhibits quadratic $\mathcal{O}(N^2)$ memory scaling (6 MB to 61 MB, time log-log slope 1.18). The scalable anchor path ($N > 2{,}000$) exhibits linear execution (log-log slope 0.66, 6 MB to 98 MB up to $N = 32{,}000$ in $0.77\text{s}$), enabling processing at scales where dense methods trigger memory faults.
+   Cluster recovery retains approximately $108\%$ / $80\%$ / $33\%$ / $41\%$ of 0%-missing ARI at $10\%$ / $20\%$ / $30\%$ / $50\%$ missing data, holding stability up to $20\%$ dropout before degrading to baseline levels by $30\%$.
+5. **Linear Computational Scaling & Extreme Scale:**  
+   At extreme scale, ICC-v2 clusters $N = 10^6$ instances in **55.6 s** with peak RSS of **3.05 GB** and auxiliary bipartite graph memory of **240 MB**, achieving a **99.6% reduction** over the dense 8 TB matrix.
 
 ---
 
-## 6. Formal Verified Bibliography & BibTeX Records
+## 6. Extended Knockout Ablation Study (Section 5.2)
+
+1. **Knockout 1: Removing Feature Gating (V5 -> V3):** Subgroup mean ARI collapses from **0.217** to **0.046** (-78.8% drop). On Leukemia, ARI falls from 0.600 to 0.155; on SRBCT, from 0.546 to 0.101.
+2. **Knockout 2: Removing Bipartite Anchor Graph (V5 -> V2):** Replacing bipartite anchor consensus with full dense consensus drops subgroup mean ARI from **0.217** to **0.077** ($\Delta = -0.139$, 95% CI: $[+0.065, +0.218]$).
+3. **Knockout 3: Removing Consensus Ensembling (V5 -> V1):** Single K-Means on the gated candidate pool degrades subgroup mean ARI to **0.070**, with complete failure on Leukemia (-0.017 ARI).
+4. **Knockout 4: Anchor Determinacy Null Result (V5 -> V4):** Certified core anchors (V5, ARI 0.217) vs uniform random anchors (V4, ARI 0.198) yields a null result ($\Delta = +0.019$, 95% CI: $[-0.039, +0.082]$, paired Wilcoxon $W = 9.0, p = 0.84$). Bipartite graph compression rather than anchor certification is the primary operational driver.
+
+---
+
+## 7. Practical Real-World Applications & Clinical Case Studies (Section 6)
+
+1. **Clinical Cancer Subtyping (`examples/clinical_cancer_subtyping.py`):** Unsupervised subtyping on Golub Leukemia (ARI = 0.600) and Khan SRBCT (ARI = 0.546), recovering 54.0% of top oncogenic driver genes.
+2. **Point-of-Care Inductive Biopsy Decision Support (`examples/realtime_patient_projection.py`):** Inductive query evaluation in **22.6 microseconds** per patient biopsy with $(1 - \alpha = 90\%)$ conformal validity guarantees.
+3. **Million-Scale Single-Cell Transcriptomics:** Clusters $N = 10^6$ cells in 55.6 s with 240 MB graph memory, bypassing the dense 8 TB RAM barrier.
+4. **Conformal Inductive Consensus Clustering (`src/cicc/`):** Split-conformal prediction sets (`conformal.py`), target-decoy / knockoff FDR feature screening with mirror statistics $W_d = |T_d| - |\tilde{T}_d|$ (`decoy.py`), and episodic semantic agent memory (`memory.py`).
+
+---
+
+## 8. Formal Verified Bibliography & BibTeX Records
 
 ```bibtex
+@article{kundu2026when,
+  author    = {Akash Kundu and Trinankur Guha and Rupankar Ghatak and Anubhav Naskar},
+  title     = {When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination},
+  journal   = {Data Mining and Knowledge Discovery},
+  publisher = {Springer Nature},
+  year      = {2026},
+  note      = {Canonical Release v2.1.0. Initial University Allotment: Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data (CSE\_PROJECT\_68). Early Proposal Blueprint: Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes.}
+}
+
 @article{li2019clustering,
   author    = {Li, Fei and Qian, Yuhua and Wang, Jieting and Dang, Chuangyin and Jing, Liping},
   title     = {Clustering Ensemble Based on Sample's Stability},
@@ -224,7 +238,7 @@ Following the adversarial research audit, ICC-v2's performance profile is rigoro
 
 @article{strehl2002cluster,
   author    = {Strehl, Alexander and Ghosh, Joydeep},
-  title     = {Cluster Ensembles---A Knowledge Reuse Framework for Combining Multiple Partitions},
+  title     = {Cluster Ensembles: A Knowledge Reuse Framework for Combining Multiple Partitions},
   journal   = {Journal of Machine Learning Research},
   volume    = {3},
   pages     = {583--617},

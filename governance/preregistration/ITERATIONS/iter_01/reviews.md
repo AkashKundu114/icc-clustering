@@ -1,6 +1,6 @@
 # Simulated Hostile Peer Review Report: Iteration 01
 **Date:** 2026-10-17  
-**Manuscript:** Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes (`springer_manuscript/main.tex`, `main.pdf`)  
+**Manuscript:** Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes (Early allotment title for "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination", target venue: Springer Nature DAMI) (`springer_manuscript/main.tex`, `main.pdf`)  
 **Target Venue:** Pattern Analysis and Applications (Springer Nature `sn-jnl` template)  
 **Roles:** R8 Independent Triad (Clustering Methodologist, Statistician/Reproducibility Reviewer, Associate Editor) + R9 Integrity Auditor.
 

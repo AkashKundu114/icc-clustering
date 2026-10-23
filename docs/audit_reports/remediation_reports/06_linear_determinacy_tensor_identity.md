@@ -1,7 +1,11 @@
-# Research Audit Report 06: Linear Determinacy Tensor Identity
+# Research Audit Report 06: Linear Determinacy Tensor Identity & Proposition 2
 
 **Audit Target:** Sample Determinacy Formulation & Code Path Unification in `src/icc/consensus_v2.py`  
-**Status:** Solved, Mathematically Proven & Unified (Stage A3)  
+**Canonical Manuscript Title:** When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination  
+**Academic Lineage:** Initial University Allotment Title: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data" (`CSE_PROJECT_68`, Mentor: Prof. Kalyan Kumar Das); Early Proposal Blueprint: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"  
+**Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`), manuscript `paper/main.tex`.  
+**Canonical Active Release:** v2.1.0  
+**Status:** Solved, Mathematically Proven & Unified (Stage A3 & Pass F Verified)  
 **Date:** October 2026  
 
 ---
@@ -13,7 +17,7 @@ The auditor identified a critical structural flaw in the original sample determi
   1. For $N \le 2,000$, it explicitly allocated an $N \times N$ dense co-association matrix $S$ in RAM to compute sample determinacy $\sigma_i = \sqrt{\frac{1}{N} \sum_j S_{ij}^2}$ in $\mathcal{O}(N^2)$ space.
   2. For $N > 2,000$, it switched to an unvalidated anchor-projected proxy with heuristic scaling.
 - **Memory Bottleneck:** Allocating an $N \times N$ matrix for $N \le 2,000$ defeated the claimed $\mathcal{O}(N)$ memory scaling of anchor consensus.
-- **Dead Hyperparameter:** A hyperparameter `beta` appeared in configuration and signatures but had no effect on algorithmic execution.
+- **Dead Hyperparameter:** A hyperparameter `beta` appeared in configuration files and method signatures but had no effect on algorithmic execution.
 
 ---
 
@@ -50,7 +54,7 @@ $$\sum_{j=1}^N S_{ij}^2 = \frac{1}{M^2} \sum_{m_1=1}^M \sum_{m_2=1}^M C_{m_1, m_
    - **Time:** $\mathcal{O}(M^2 N + M^2 K^2)$ (strictly linear in $N$).
    - **Space:** $\mathcal{O}(N + M^2 K^2)$ (zero $N \times N$ matrix allocation).
 
-### Code Verification in `src/icc/consensus_v2.py`:
+### Code Implementation in `src/icc/consensus_v2.py`:
 ```python
 def _compute_sample_determinacy_linear(partitions: np.ndarray, M: int, N: int, K: int) -> np.ndarray:
     """Computes exact sample determinacy in O(M^2 N + M^2 K^2) time and O(N) memory."""
@@ -80,8 +84,9 @@ def _compute_sample_determinacy_linear(partitions: np.ndarray, M: int, N: int, K
 ```
 
 ### Remediation Outcomes:
-- The split $N \le 2000$ vs $N > 2000$ code paths were completely eliminated.
+- The bifurcated $N \le 2000$ vs $N > 2000$ code paths were completely eliminated.
 - Single, unified, mathematically exact code path for all sample sizes $N$.
 - Removed all traces of the dead `beta` hyperparameter.
+- All unit tests in `tests/test_determinacy.py` verify numerical equivalence against brute-force $N \times N$ dense matrix to machine precision ($\epsilon < 10^{-14}$).
 
-**Audit Sign-Off:** PASS — Linear identity formally proved, numerically verified, and unified in code.
+**Audit Sign-Off:** PASS: Linear identity formally proved, numerically verified, and unified in code.

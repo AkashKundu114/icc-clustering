@@ -1147,7 +1147,7 @@ cal derivations, experimental designs, empirical analyses, scientific conclusion
 manuscript drafting. All intellectual work and manuscript content were produced
 and verified exclusively by the authors.
 References
-[1] Strehl, A., Ghosh, J.: Cluster ensembles—a knowledge reuse framework for com-
+[1] Strehl, A., Ghosh, J.: Cluster ensembles, a knowledge reuse framework for com-
 bining multiple partitions. Journal of Machine Learning Research 3, 583–617
 (2002)
 [2] Fred, A.L.N., Jain, A.K.: Combining multiple clusterings using evidence accumu-

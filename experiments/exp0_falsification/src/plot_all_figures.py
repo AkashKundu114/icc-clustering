@@ -224,7 +224,7 @@ def plot_fig5_and_fig6_scaled(scaled_agg_csv, out_dir):
                  color=PALETTE.get(clus, "#000"), linewidth=1.8, markersize=6)
 
     ax.axhline(0, color="black", linestyle="--", linewidth=1.0)
-    ax.set_title("Stability–Accuracy Gap — N=72, D/N up to ~278\n(ALLAML-scale)", fontsize=12)
+    ax.set_title("Stability–Accuracy Gap: N=72, D/N up to ~278\n(ALLAML-scale)", fontsize=12)
     ax.set_xlabel("Noise dimensions (D_noise)", fontsize=11)
     ax.set_ylabel("Gap = Stability − ARI", fontsize=11)
     ax.set_xscale("symlog", linthresh=10)

@@ -1,17 +1,20 @@
 # Pre-Registration Document: Pass F Statistical & Empirical Protocol (PREREG_F.md)
 
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
 **Date:** 2026-10-23  
 **Status:** Pre-Specified Prior to Pass F Benchmark Execution  
-**Target Venue:** Springer Nature *Data Mining and Knowledge Discovery* (DAMI)  
 
 ---
 
 ## 1. Scope & Objective
 
 This document pre-specifies the exact experimental protocol, random seed schedule, statistical formulas, and reporting conventions for Pass F of the manuscript:
-*"Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data"*.
+*"Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data"* (early project allotment title that evolved into the canonical Springer Nature manuscript *"When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"*).
 
-All subsequent empirical claims, tables, macro values, and prose in Sections 5–6 and the abstract must strictly conform to the execution of this protocol.
+All subsequent empirical claims, tables, macro values, and prose in Sections 5-6 and the abstract must strictly conform to the execution of this protocol.
 
 ---
 

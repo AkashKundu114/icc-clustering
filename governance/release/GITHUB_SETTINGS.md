@@ -1,17 +1,21 @@
 # GitHub Repository Settings & Metadata Recommendations
 
 **Repository:** `AkashKundu114/icc-clustering`  
-**Auditor:** Subagent G (Phase E)  
+**Canonical Manuscript Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"  
+*(Historical Project Allotment Titles: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data", "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes")*  
+**Canonical Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
+**Active Release Version:** `v2.1.0` *(with `v2.0.0` documented as prior historical release baseline)*  
+**Auditor:** Senior Research Governance Auditor
 
 ---
 
 ## 1. Repository Metadata
 - **Description:**  
-  `Official implementation of Inductive Consensus Clustering (ICC-v2): geometry-calibrated ensemble distillation for high-dimensional noise regimes.`
+  `Official implementation of "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination" (ICC-v2 & CICC).`
 - **Website Link:**  
-  `https://github.com/AkashKundu114/icc-clustering` (or Zenodo DOI once reserved)
+  `https://github.com/AkashKundu114/icc-clustering` (and permanent Zenodo DOI upon archiving)
 - **Repository Topics:**  
-  `clustering`, `consensus-clustering`, `cluster-ensemble`, `high-dimensional-data`, `bipartite-graph`, `anchor-graph`, `spectral-clustering`, `bioinformatics`, `machine-learning`, `python`
+  `clustering`, `consensus-clustering`, `cluster-ensemble`, `high-dimensional-data`, `bipartite-graph`, `anchor-graph`, `spectral-clustering`, `conformal-prediction`, `bioinformatics`, `machine-learning`, `python`
 
 ---
 
@@ -43,11 +47,11 @@
 ---
 
 ## 5. Applying Settings via GitHub CLI (`gh`)
-Once approved by user (Gate 3), run:
+Once approved by user, run:
 ```bash
 gh repo edit AkashKundu114/icc-clustering \
-  --description "Official implementation of Inductive Consensus Clustering (ICC-v2): geometry-calibrated ensemble distillation for high-dimensional noise regimes." \
-  --add-topic "clustering,consensus-clustering,cluster-ensemble,high-dimensional-data,bipartite-graph,anchor-graph,spectral-clustering,bioinformatics,machine-learning,python" \
+  --description "Official implementation of 'When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination' (ICC-v2 & CICC)." \
+  --add-topic "clustering,consensus-clustering,cluster-ensemble,high-dimensional-data,bipartite-graph,anchor-graph,spectral-clustering,conformal-prediction,bioinformatics,machine-learning,python" \
   --enable-squash-merge \
   --delete-branch-on-merge
 ```
