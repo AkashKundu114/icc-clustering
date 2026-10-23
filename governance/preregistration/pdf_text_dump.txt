@@ -13,7 +13,7 @@ Contributing authors:
 trinankur231001001450@technoindiaeducation.com;
 rupankar231001001438@technoindiaeducation.com;
 anubhab231001001443@technoindiaeducation.com;
-kalyankumar.das@technoindiaeducation.com;
+kalyan.biltu@gmail.com;
 Abstract
 Consensus clustering synthesizes base partitions to discover robust data group-
 ings. However, existing methods face two primary challenges: (1) a transductive

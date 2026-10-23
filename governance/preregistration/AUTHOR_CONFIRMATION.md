@@ -19,7 +19,7 @@ All co-authors listed below must verify their contributions, official institutio
 | **Trinankur Guha** | Contributing Author | Department of Computer Science and Engineering, Techno India University, Kolkata, West Bengal, India | `trinankur231001001450@technoindiaeducation.com` | Pending Co-Author Audit | PENDING FINAL REVIEW |
 | **Rupankar Ghatak** | Contributing Author | Department of Computer Science and Engineering, Techno India University, Kolkata, West Bengal, India | `rupankar231001001438@technoindiaeducation.com` | Pending Co-Author Audit | PENDING FINAL REVIEW |
 | **Anubhab Naskar** | Contributing Author | Department of Computer Science and Engineering, Techno India University, Kolkata, West Bengal, India | `anubhab231001001443@technoindiaeducation.com` | Pending Co-Author Audit | PENDING FINAL REVIEW |
-| **Kalyan Kumar Das** | Faculty Supervisor & Senior Investigator | Department of Computer Science and Engineering, Techno India University, Kolkata, West Bengal, India | `kalyankumar.das@technoindiaeducation.com` | Pending Supervisory Sign-Off | PENDING FINAL REVIEW |
+| **Kalyan Kumar Das** | Faculty Supervisor & Senior Investigator | Department of Computer Science and Engineering, Techno India University, Kolkata, West Bengal, India | `kalyan.biltu@gmail.com` | Pending Supervisory Sign-Off | PENDING FINAL REVIEW |
 
 ---
 

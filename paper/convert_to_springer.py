@@ -80,7 +80,7 @@ preamble = r'''\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}
 
 \author[1]{\fnm{Anubhab} \sur{Naskar}}\email{anubhab231001001443@technoindiaeducation.com}
 
-\author[1]{\fnm{Kalyan Kumar} \sur{Das}}\email{kalyankumar.das@technoindiaeducation.com}
+\author[1]{\fnm{Kalyan Kumar} \sur{Das}}\email{kalyan.biltu@gmail.com}
 
 \affil*[1]{\orgdiv{Department of Computer Science and Engineering}, \orgname{Techno India University}, \orgaddress{\street{EM-4, Sector V, Bidhannagar}, \city{Kolkata}, \postcode{700091}, \state{West Bengal}, \country{India}}}
 
