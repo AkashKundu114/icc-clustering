@@ -179,6 +179,7 @@ class InductiveConsensusClusterer:
         )
 
         # Assign full dataset labels for reference
+        assert self.conformal_calibrator_.centroids_ is not None
         full_cos = X_norm @ self.conformal_calibrator_.centroids_.T
         self.labels_ = np.argmax(full_cos, axis=1)
 

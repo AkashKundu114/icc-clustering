@@ -159,6 +159,9 @@ class ConformalClusterer:
         norms[norms == 0] = 1.0
         X_norm = X_test / norms
 
+        if self.centroids_ is None or self.n_clusters_ is None or self.q_hat_ is None:
+            raise RuntimeError("Calibrator must be fitted before predicting.")
+
         cos_sim = np.clip(X_norm @ self.centroids_.T, -1.0, 1.0)
         logits = cos_sim * self.temperature
         exp_logits = np.exp(logits - np.max(logits, axis=1, keepdims=True))

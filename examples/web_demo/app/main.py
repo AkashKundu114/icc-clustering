@@ -5,20 +5,15 @@ FastAPI backend and embedded interactive web interface for
 Conformal Inductive Consensus Clustering (CICC).
 """
 
-import io
-import json
 import os
-from typing import Any, Dict, List, Optional
 
 import numpy as np
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import FastAPI, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse
 from sklearn.decomposition import PCA, TruncatedSVD
 from sklearn.model_selection import train_test_split
 
-from src.cicc.conformal import ConformalClusterer
-from src.cicc.decoy import DecoyFeatureGating
 from src.cicc.inductive import InductiveConsensusClusterer
 from src.cicc.memory import InductiveConsensusMemory
 
