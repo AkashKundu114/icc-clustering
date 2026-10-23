@@ -9,8 +9,8 @@ from experiments.exp3_real_world_benchmarks.src.benchmark_models import MODELS
 from icc.baselines import ModelMetadata, get_model, list_models
 
 try:
-    import tensorflow  # noqa: F401
     import keras  # noqa: F401
+    import tensorflow  # noqa: F401
     HAS_DEEP = True
 except (ImportError, Exception):
     HAS_DEEP = False

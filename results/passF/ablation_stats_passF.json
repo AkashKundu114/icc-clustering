@@ -1,0 +1,20 @@
+{
+  "means": {
+    "Ambient_AnchorConsensus": 0.04626461455897531,
+    "Ambient_KMeans": 0.05085318109279718,
+    "Ambient_StdConsensus": 0.037254719039852745,
+    "BGSS_KMeans": 0.06988693775145202,
+    "BGSS_RandomAnchors": 0.1980173678522764,
+    "BGSS_StdConsensus": 0.07732284735136774,
+    "Full_ICC_v2": 0.21677362957429605
+  },
+  "v5_vs_v4": {
+    "mean_diff": 0.01875626172201966,
+    "ci_95": [
+      -0.03889164843457843,
+      0.0824411241968361
+    ],
+    "wilcoxon_w": 9.0,
+    "wilcoxon_p": 0.84375
+  }
+}

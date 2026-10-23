@@ -1,0 +1,27 @@
+# Copy to configs/agent.local.yaml. This file is ignored by Git.
+# Advisory settings for local AI coding agents.
+runtime:
+  prefer_local_models: true
+  offline_by_default: true
+  max_parallel_jobs: 2
+  max_cpu_workers: 4
+  max_memory_gb: 16
+  max_gpu_memory_fraction: 0.85
+  command_timeout_seconds: 1800
+
+permissions:
+  read_repository: true
+  edit_repository: true
+  install_dependencies: "ask"
+  network_access: "ask"
+  access_outside_repository: "ask"
+  delete_files: "ask"
+  git_commit: "ask"
+  git_push: "ask"
+  publish_or_deploy: "ask"
+
+paths:
+  data_root: "./data"
+  cache_root: "./data/cache"
+  artifact_root: "./results"
+  paper_root: "./paper"

@@ -1,0 +1,8 @@
+# Novelty Verdicts (LOOP/NOVELTY_VERDICTS.md)
+
+| Candidate Claim / Method | Closest Prior Literature | Novelty Status | Evidence & Verification Notes |
+| :--- | :--- | :---: | :--- |
+| **Claim 1: Marginal Bimodality Gating (VSSG / Sarle BC)** | - Dip-test screening (arXiv:1406.2240)<br>- Bimodality Index (Wang et al., 2009)<br>- 13-method comparison (Frontiers in Genetics, 2021)<br>- DIFS (bioRxiv, 2025) | **PRE-EMPTED / NARROWED** | Bimodality-based feature screening prior to clustering is established practice. The fixed $5/9$ cutoff is uncalibrated and misses $\sim 50\%$ of real signal at $N \le 100$. |
+| **Claim 2: Null-Calibrated Gating (NCG)** | - ClusterDE (synthetic single-cluster null for post-clustering)<br>- Data splitting FDR after clustering (arXiv:2410.06451)<br>- Knockoffs (Barber & Candes) | **NARROWED** | Pre-clustering FDR control via unimodal decoys is novel in formulation, but fails on bounded support and fails to improve downstream clustering over simple Dip test (H4 rejected). Must be framed as a diagnostic filter. |
+| **Claim 3: Inductive Anchor Consensus (ICC-v2)** | - U-SPEC / U-SENC (Huang et al., IEEE TKDE 2020)<br>- LSC (Chen & Cai, 2011)<br>- KASP (Yan et al., 2009)<br>- Nystrom spectral clustering | **NARROWED** | Bipartite anchor graph consensus is extensively explored in U-SPEC and U-SENC. ICC-v2's distinct contribution is the subspace projection + core-sample consensus weighting, not anchor consensus itself. |
+| **Claim 4: ASPP (Adaptive Stability-Preserving Projection)** | - Ensemble vote margin confidence<br>- Transductive cluster stability | **UNCLEAR / UNCALIBRATED** | ASPP confidence scores lack empirical calibration or coverage guarantees, and were never directly evaluated in the manuscript. |

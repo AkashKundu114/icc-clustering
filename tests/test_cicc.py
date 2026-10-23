@@ -9,7 +9,6 @@ Tests:
 """
 
 import numpy as np
-import pytest
 
 from src.cicc.conformal import ConformalClusterer, ConformalResult
 from src.cicc.decoy import DecoyFeatureGating
@@ -138,7 +137,7 @@ def test_inductive_consensus_memory():
     v_distant = np.random.randn(dim)
     # Ensure it's nearly orthogonal
     v_distant = v_distant - np.dot(v_distant, m1.embedding) * m1.embedding
-    m3 = mem_engine.add_memory("The weather in Tokyo is sunny", v_distant)
+    mem_engine.add_memory("The weather in Tokyo is sunny", v_distant)
     assert len(mem_engine.centroids) >= 2
 
     # 4. Two-stage retrieval test

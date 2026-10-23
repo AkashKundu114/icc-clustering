@@ -181,18 +181,16 @@ def plot_exp1_figures():
         ax2.set_ylim(-12, 7.0)
         ax2.grid(True, linestyle=":", alpha=0.5, axis="y")
 
-        # Callout on noise robustness flip
-        ax2.annotate("Noise Resilience Crossover:\n+4.5% Accuracy Gain at D=3,000",
-                     xy=(4, 4.5), xytext=(0.9, 4.8),
-                     arrowprops=dict(arrowstyle="->", color="#2ca02c", lw=1.2),
-                     fontsize=9.5, fontweight="bold", color="#207420",
-                     bbox=dict(boxstyle="round,pad=0.3", facecolor="#f0fff0", edgecolor="#2ca02c", alpha=0.9))
-
         plt.suptitle("Downstream Generalization from Unsupervised Pseudo-Labels",
                      fontweight="bold", fontsize=14.0, y=0.995)
         plt.tight_layout()
         fig10_path = fig_dir / "fig10_pseudolabel_generalization.png"
         plt.savefig(fig10_path, dpi=300, bbox_inches="tight")
+        for target_dir in [base_dir.parents[1] / "springer_manuscript" / "figures",
+                           base_dir.parents[1] / "paper" / "figures",
+                           base_dir.parents[1] / "manuscript" / "figures"]:
+            if target_dir.exists():
+                plt.savefig(target_dir / "fig10_pseudolabel_generalization.png", dpi=300, bbox_inches="tight")
         plt.close()
         print(f"  [Saved] {fig10_path}")
 

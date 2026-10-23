@@ -19,8 +19,8 @@ from icc.metrics import evaluate_all
 HAS_IMPUTE = False
 try:
     from experiments.exp3_real_world_benchmarks.src.missing_data_experiment import (
-        inject_mcar_noise,
         impute_data,
+        inject_mcar_noise,
     )
     HAS_IMPUTE = True
 except (ImportError, Exception):

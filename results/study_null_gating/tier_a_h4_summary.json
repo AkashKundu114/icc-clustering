@@ -1,0 +1,18 @@
+{
+  "h4_supported_vs_g2": false,
+  "h4_supported_vs_g4": false,
+  "mean_diff_vs_g2": -0.0035087859795031678,
+  "ci_vs_g2": [
+    -0.016935967869025344,
+    0.010131651326581106
+  ],
+  "non_neg_vs_g2": 2,
+  "p_sign_vs_g2": 0.6875,
+  "mean_diff_vs_dip": -0.03191586184127592,
+  "ci_vs_dip": [
+    -0.08102246150759082,
+    0.004436621705945294
+  ],
+  "non_neg_vs_dip": 3,
+  "p_sign_vs_dip": 0.828125
+}
