@@ -639,19 +639,21 @@ To evaluate the complexity bounds of Theorem~\ref{thm:complexity}, Experiment~4 
 \caption{Controlled Scalability Evaluation Across Sample Sizes ($D=100, K=5$, 3 Random Seeds, Mean $\pm$ Standard Deviation)}
 \label{tab:exp5_controlled}
 \centering
-\small
+\footnotesize
 \setlength{\tabcolsep}{3.0pt}
 \begin{tabular}{@{}lccccc@{}}
 \toprule
-\textbf{Configuration} & $\mathbf{N}$ & \textbf{Time (s)} & \textbf{RAM (MB)} & \textbf{ARI} & \textbf{Scaling Exp. $\beta$ (95\% CI)} \\
+\textbf{Configuration} & $\mathbf{N}$ & \textbf{Time (s)} & \textbf{RAM (MB)} & \textbf{ARI} & \shortstack{\textbf{Scaling Exp. $\beta$}\\\textbf{(95\% CI)}} \\
 \midrule
-Default ($M=25, L=40$, f64) & $10^4$ & $5.58 \pm 1.29$   & $64.6$    & $0.275 \pm 0.128$ & \multirow{3}{*}{$0.755 \pm 0.084 \; [0.590, 0.921]$} \\
-Default ($M=25, L=40$, f64) & $10^5$ & $14.92 \pm 4.03$  & $393.2$   & $0.368 \pm 0.202$ & \\
-Default ($M=25, L=40$, f64) & $10^6$ & $182.64 \pm 51.01$& $3{,}836.8$ & $0.371 \pm 0.205$ & \\
+\multirow{3}{*}{\shortstack[l]{Default\\($M{=}25, L{=}40$, f64)}} 
+ & $10^4$ & $5.58 \pm 1.29$   & $64.6$    & $0.275 \pm 0.128$ & \multirow{3}{*}{\shortstack{$0.755 \pm 0.084$\\$[0.590, 0.921]$}} \\
+ & $10^5$ & $14.92 \pm 4.03$  & $393.2$   & $0.368 \pm 0.202$ & \\
+ & $10^6$ & $182.64 \pm 51.01$& $3{,}836.8$ & $0.371 \pm 0.205$ & \\
 \midrule
-Reduced ($M=15, L=60$, f32) & $10^4$ & $2.48 \pm 0.18$   & $57.1$    & $0.208 \pm 0.067$ & \multirow{3}{*}{$0.873 \pm 0.076 \; [0.724, 1.023]$} \\
-Reduced ($M=15, L=60$, f32) & $10^5$ & $8.77 \pm 0.89$   & $397.7$   & $0.345 \pm 0.181$ & \\
-Reduced ($M=15, L=60$, f32) & $10^6$ & $141.22 \pm 34.87$& $3{,}909.9$ & $0.361 \pm 0.197$ & \\
+\multirow{3}{*}{\shortstack[l]{Reduced\\($M{=}15, L{=}60$, f32)}} 
+ & $10^4$ & $2.48 \pm 0.18$   & $57.1$    & $0.208 \pm 0.067$ & \multirow{3}{*}{\shortstack{$0.873 \pm 0.076$\\$[0.724, 1.023]$}} \\
+ & $10^5$ & $8.77 \pm 0.89$   & $397.7$   & $0.345 \pm 0.181$ & \\
+ & $10^6$ & $141.22 \pm 34.87$& $3{,}909.9$ & $0.361 \pm 0.197$ & \\
 \bottomrule
 \end{tabular}
 \end{table}
