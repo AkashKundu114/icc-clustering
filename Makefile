@@ -51,5 +51,8 @@ check-macros:
 check-pdf:
 	$(PYTHON) tests/test_pdf_allowlist.py
 
+figures:
+	$(PYTHON) scripts/regenerate_figures_passF.py
+
 clean:
 	rm -rf build/ dist/ *.egg-info .pytest_cache/ .ruff_cache/ .mypy_cache/ .coverage

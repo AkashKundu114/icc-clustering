@@ -1,8 +1,6 @@
 import argparse
 import os
-import sys
 import time
-import subprocess
 import numpy as np
 
 def run_smoke():

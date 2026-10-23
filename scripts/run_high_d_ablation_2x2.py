@@ -1,7 +1,5 @@
 import time
-import json
 from pathlib import Path
-import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
@@ -11,7 +9,6 @@ root_dir = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(root_dir))
 
 from icc.datasets.registry import load_dataset
-from icc.core import run_clusterer
 from icc.baselines.consensus import run_standard_consensus, run_icc_v1
 from icc.consensus_v2 import InvariantCoreConsensusV2
 from experiments.exp2_ablation.src.ablation_engine import extract_vssg_candidate_features

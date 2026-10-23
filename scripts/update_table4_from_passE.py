@@ -3,11 +3,10 @@ Updates Table 4 (Omnibus Benchmark Matrix) and numbers.tex from results/passE/be
 Ensures zero numerical discrepancy between text, tables, and macros.
 """
 
-import json
 from pathlib import Path
 import numpy as np
 import pandas as pd
-from scipy.stats import friedmanchisquare, wilcoxon
+from scipy.stats import friedmanchisquare
 
 CSV_PATH = Path("results/passE/benchmark_matrix_seeds0_9.csv")
 MAIN_TEX = Path("springer_manuscript/main.tex")

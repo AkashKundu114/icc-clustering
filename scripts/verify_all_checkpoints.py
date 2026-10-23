@@ -5,7 +5,6 @@ numbers.tex and main.tex macros and text.
 Outputs PASS/FAIL for each checkpoint.
 """
 
-import os
 import sys
 import json
 import numpy as np

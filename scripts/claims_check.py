@@ -2,7 +2,6 @@ import os
 import json
 import re
 import pandas as pd
-import numpy as np
 
 with open("results/results.json", "r", encoding="utf-8") as f:
     recs = json.load(f)

@@ -1,7 +1,3 @@
-import os
-import sys
-import hashlib
-from pathlib import Path
 from icc.datasets.registry import list_datasets, load_dataset
 
 def main():

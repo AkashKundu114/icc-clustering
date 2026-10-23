@@ -8,13 +8,12 @@ Executes canonical seeds 0-9 across:
 Saves all outputs into results/passE/ with complete config hashes.
 """
 
-import os
 import sys
 import time
 import json
 import hashlib
 from pathlib import Path
-from typing import Dict, List, Any, Tuple
+from typing import Dict, Any, Tuple
 
 import numpy as np
 import pandas as pd
@@ -24,7 +23,6 @@ from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
 from sklearn.neighbors import NearestCentroid
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import StratifiedShuffleSplit
-from scipy.stats import friedmanchisquare, wilcoxon
 
 # Ensure project root is available
 _ROOT = Path(__file__).resolve().parent.parent

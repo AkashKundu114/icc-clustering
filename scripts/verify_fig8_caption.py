@@ -11,7 +11,6 @@ and verifies every quantitative claim in the Figure 8 caption of springer_manusc
 
 import sys
 from pathlib import Path
-import numpy as np
 import pandas as pd
 
 def verify_fig8():
