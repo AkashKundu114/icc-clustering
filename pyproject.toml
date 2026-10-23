@@ -58,6 +58,7 @@ dev = [
     "black",
     "ruff",
     "mypy>=1.0.0",
+    "pymupdf>=1.23.0",
 ]
 # All optional dependencies combined
 all = [
@@ -71,6 +72,7 @@ all = [
     "black",
     "ruff",
     "mypy>=1.0.0",
+    "pymupdf>=1.23.0",
 ]
 
 [project.urls]
