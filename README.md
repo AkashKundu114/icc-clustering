@@ -149,7 +149,30 @@ Expected smoke runtime: < 3 seconds on modern CPU. Determinism is enforced with 
 
 ## AI Assistance Disclosure
 
-During the preparation of this manuscript and software repository, the authors utilized an agentic AI coding assistant (Google Antigravity, utilizing Gemini models including experimental flash/pro checkpoints) to assist with iterative drafting and textual refactoring (including revision of title, abstract, and conclusion framing), automated script execution, bibliographic checking against CrossRef APIs, figure plotting, LaTeX table formatting, and proofreading text. All conceptual formulations, empirical designs, and theoretical derivations were directed by the human authors. The authors have conducted extensive cross-checks of the generated text, tables, figures, and code, and take full responsibility for the scientific integrity and reproducibility of all reported findings.
+During the preparation of this manuscript and software repository, the authors utilized an agentic AI coding assistant solely for assistive technical tasks, specifically code quality audits, static analysis, unit test suite verification, bibliographic cross-checking against CrossRef APIs, figure plotting, LaTeX table and manuscript formatting, and typographical proofreading. No artificial intelligence tools were used for scientific ideation, research conceptualization, empirical design, theoretical derivations, or the formulation of substantive claims. All conceptual formulations, empirical designs, and mathematical derivations were conceived and directed exclusively by the human authors. The authors conducted independent cross-checks of all generated code, tables, figures, and formatting, and assume full responsibility for the scientific integrity, accuracy, and reproducibility of all reported findings.
+
+---
+
+## Research Provenance & Governance Dossiers
+
+For academic mentors, peer reviewers, and reproducibility auditors inspecting the scientific lineage of this project, the repository maintains three specialized dossiers:
+
+1. **[`REMEDIATION/`](REMEDIATION/README.md) — Scientific Remediation & Verification Dossier:**
+   - Catalog and resolution proofs for all 27 technical, numerical, and theoretical issues identified during internal audits.
+   - Master issue matrix: [`REMEDIATION/LEDGER.md`](REMEDIATION/LEDGER.md).
+   - Theoretical derivations and proofs: [`REMEDIATION/THEORY_NOTES.md`](REMEDIATION/THEORY_NOTES.md).
+   - Granular manuscript claim audit: [`REMEDIATION/CLAIMS_AUDIT.md`](REMEDIATION/CLAIMS_AUDIT.md).
+
+2. **[`LOOP/`](LOOP/README.md) — Research Integrity & Preregistration Archive:**
+   - Preregistration protocols freezing evaluation thresholds in advance ([`PREREG_B.md`](LOOP/PREREG_B.md), [`PREREG_C.md`](LOOP/PREREG_C.md), [`PREREG_F.md`](LOOP/PREREG_F.md)).
+   - 100% CrossRef API reference verification audit ([`REFS_AUDIT.md`](LOOP/REFS_AUDIT.md), [`REFS_AUDIT.csv`](LOOP/REFS_AUDIT.csv)).
+   - Related work taxonomy and novelty matrix ([`LITERATURE_MATRIX.csv`](LOOP/LITERATURE_MATRIX.csv)).
+   - Submission cover letters and rebuttal frameworks ([`COVER_LETTER_DRAFT.md`](LOOP/COVER_LETTER_DRAFT.md), [`RESPONSE_TO_REVIEWERS_OUTLINE.md`](LOOP/RESPONSE_TO_REVIEWERS_OUTLINE.md)).
+
+3. **[`RELEASE/`](RELEASE/README.md) — Software Release Governance & Quality Assurance:**
+   - Pre-release validation reports and sign-offs ([`RELEASE_REPORT.md`](RELEASE/RELEASE_REPORT.md)).
+   - MIT open-source license justification ([`LICENSE_DECISION.md`](RELEASE/LICENSE_DECISION.md)).
+   - Regression test output baselines ([`RELEASE/baseline/`](RELEASE/baseline/)).
 
 ---
 
