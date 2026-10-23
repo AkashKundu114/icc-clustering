@@ -1,6 +1,8 @@
 cff-version: 1.2.0
 message: "If you use this software or benchmark suite in your research, please cite our manuscript as follows."
-title: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"
+title: "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"
+version: 2.1.0
+date-released: "2026-10-23"
 authors:
   - family-names: "Kundu"
     given-names: "Akash"

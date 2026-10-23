@@ -1,5 +1,8 @@
 # Fix Pass B: Comprehensive Execution & Verification Summary
 
+> [!WARNING]
+> **DISCLAIMER: Agent-authored review and execution summary - internal agent notes, NOT independent human evaluation.**
+
 **Document Reference:** `LOOP/ITERATIONS/passB/SUMMARY.md`  
 **Completion Date:** 2026-10-21  
 **Target Manuscript:** `springer_manuscript/main.pdf` (compiled via Tectonic from `springer_manuscript/main.tex`)  

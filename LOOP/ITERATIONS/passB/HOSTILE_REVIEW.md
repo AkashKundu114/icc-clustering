@@ -1,5 +1,8 @@
 # Hostile Multi-Persona Peer Review: Fix Pass B Audit
 
+> [!WARNING]
+> **DISCLAIMER: Agent-authored review - internal agent notes, NOT independent human evaluation.**
+
 **Target Manuscript:** `springer_manuscript/main.pdf` (`springer_manuscript/main.tex`)  
 **Target Venue:** Springer Nature *Pattern Analysis and Applications* (`sn-jnl` / `sn-mathphys-num`)  
 **Evaluation Date:** 2026-10-21  

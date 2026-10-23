@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "icc"
-version = "2.0.0"
-description = "Invariant Core Consensus: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"
+version = "2.1.0"
+description = "Reference implementation: When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"
 readme = "README.md"
 authors = [
     {name = "Akash Kundu", email = "akash231001001449@technoindiaeducation.com"}
@@ -57,6 +57,7 @@ dev = [
     "pytest-cov>=4.0.0",
     "black",
     "ruff",
+    "mypy>=1.0.0",
 ]
 # All optional dependencies combined
 all = [
@@ -69,6 +70,7 @@ all = [
     "pytest-cov>=4.0.0",
     "black",
     "ruff",
+    "mypy>=1.0.0",
 ]
 
 [project.urls]

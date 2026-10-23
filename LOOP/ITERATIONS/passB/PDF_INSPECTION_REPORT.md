@@ -1,5 +1,8 @@
 # PDF Inspection Report: Fix Pass B Verification
 
+> [!WARNING]
+> **DISCLAIMER: Agent-authored review - internal agent notes, NOT independent human evaluation.**
+
 **Target File:** `springer_manuscript/main.pdf` (compiled via Tectonic from `springer_manuscript/main.tex`)  
 **Inspection Date:** 2026-10-21  
 **Total Pages:** 26  

@@ -94,12 +94,12 @@ MODEL_LABELS = [
     "Spectral",
     "FCM",
     "Std Consensus",
-    "Li et al. (2019)",
+    "Core-Halo Cons.",
     "DEC (ICML 2016)",
     "FCAG (TPAMI 2024)",
     "FastMVC (TKDE 2023)",
     "ICC-v1 (Anchor)",
-    "ICC-v2 (VSSG+Anchor)",
+    "ICC-v2 (BGSS+Anchor)",
 ]
 
 CSV_COLUMNS = [
@@ -279,7 +279,8 @@ def plot_fig14_13datasets(df: pd.DataFrame, metric: str = "ari", save_path: Opti
                     color="#a00000" if "ICC_v2" in available_models[j] else "#222222",
                 )
 
-            d_title = f"({chr(97 + i)}) {dname.upper()} (N={meta_n}, D={meta_d}, K={meta_k})"
+            disp_name = "PBMC68K-REDUCED" if dname == "zheng68k" else dname.upper()
+            d_title = f"({chr(97 + i)}) {disp_name} (N={meta_n}, D={meta_d}, K={meta_k})"
             ax.set_title(d_title, fontweight="bold", pad=4)
             ax.axvline(0, color="black", linestyle="-", linewidth=0.8, alpha=0.8)
             ax.grid(axis="x", linestyle=":", alpha=0.5)

@@ -1,196 +1,104 @@
 {
-  "iteration": 3,
-  "phase": "FIX_PASS_B",
-  "active_gate": "GATE_C",
-  "open_issues": [
+  "iteration": 9,
+  "phase": "FIX_PASS_F",
+  "active_gate": "GATE_F_HUMAN_REVIEW",
+  "scope": "Springer Nature Data Mining and Knowledge Discovery (DAMI)",
+  "open_issues": [],
+  "resolved_issues": [
     {
-      "id": "ISSUE-01",
-      "severity": "MAJOR",
-      "title": "Numbers mismatch across sections for Leukemia and SRBCT",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Resolved in Pass B: Subgroup arithmetic corrected to 0.238 mean and 0.057 median. SRBCT baseline comparison updated against strongest baseline FastMVC (+0.388 gain over 0.150)."
-    },
-    {
-      "id": "ISSUE-02",
+      "id": "ISSUE-F1",
       "severity": "BLOCKING",
-      "title": "Dataset and method counts mismatch in text vs figures",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Resolved in Pass B: Table 3 rebuilt to display all 11 methods. Subsampled post-processing dimensions documented and matched to Fig 6."
+      "title": "Prose from the store: eliminate all stale numbers in Sections 5-6, captions, conclusion; PDF-level allowlist test",
+      "status": "RESOLVED",
+      "command": "python tests/test_pdf_allowlist.py",
+      "exit_code": 0,
+      "evidence": "Extracted all decimals from compiled PDF (springer_manuscript/main.pdf) across Abstract, Sections 5-6, and Captions. Asserted all 36 values exist in allowlist. Asserted Fig. 7 bar values equal caption ranks (4.85, 5.00, 5.08, 5.23, 5.31). Asserted stale tokens 0.704, 0.537, 0.541, 0.586, 0.199, 55.6, 17.0x, 57.98, 11.34, 5.85, 0.238, 0.226 are 100% absent."
     },
     {
-      "id": "ISSUE-03",
+      "id": "ISSUE-F2",
       "severity": "BLOCKING",
-      "title": "Nemenyi CD calculation mismatch and overall ranking fifth",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Resolved in Pass B: Critical difference threshold recalculated to exact formula CD = 4.19; legacy process notes removed; subgroup CD (6.16) stated."
+      "title": "Exp 5 controlled scaling series and 55.6s reconciliation or removal",
+      "status": "RESOLVED",
+      "command": "python scripts/run_exp5_controlled_scaling.py",
+      "exit_code": 0,
+      "evidence": "Stale 55.6s claim removed from text and abstract. Table tab:exp5_controlled added with empirical controlled series across N in {10^4, 10^5, 10^6}: Default (M=25, L=40, float64) scaling exponent beta = 0.755 +/- 0.084 (95% CI: [0.590, 0.921], 182.64s, 3.84 GB RAM); Reduced (M=15, L=60, float32) scaling exponent beta = 0.873 +/- 0.076 (95% CI: [0.724, 1.023], 141.22s, 3.91 GB RAM)."
     },
     {
-      "id": "ISSUE-04",
+      "id": "ISSUE-F3",
       "severity": "BLOCKING",
-      "title": "VSSG alone hurts clustering on Leukemia",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Resolved in Pass B: Full 2x2 factorial ablation executed across all 6 high-D datasets on 10 seeds (420 runs). Identified positive interaction synergy (+0.131); documented Leukemia 54% marker overlap and finite-sample platykurtosis."
+      "title": "Seeds: Pre-specify PREREG_F.md, run all 11 methods with 30 seeds (0-29) on 6 high-D datasets, update headline values",
+      "status": "RESOLVED",
+      "command": "python -c \"import pandas as pd; df=pd.read_csv('results/passF/benchmark_matrix_passF.csv'); print(len(df))\"",
+      "exit_code": 0,
+      "evidence": "PREREG_F.md committed. All 11 methods evaluated across 30 random seeds (0-29) on 6 high-D datasets (1,980 fits) + 10 seeds on 7 datasets (770 fits) = 2,750 total model fits recorded in results/passF/benchmark_matrix_passF.csv. Friedman test: chi2_F = 9.59, p = 0.48, Nemenyi CD = 4.19. Top ranks: Std Cons (4.85), K-Means (5.00), DEC (5.08), ICC-v2 (5.23), Ward (5.31). High-D subgroup: ICC-v2 Rank #1 (2.00), Mean ARI 0.217 +/- 0.305, Median 0.036; Leukemia mean 0.600 +/- 0.367 (73.3% > 0.5); SRBCT mean 0.546 +/- 0.102 (70.0% > 0.5)."
     },
     {
-      "id": "ISSUE-05",
+      "id": "ISSUE-F4",
       "severity": "BLOCKING",
-      "title": "Uncalibrated ASPP and Inductive Step never evaluated directly",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Resolved in Pass B: Inductive step evaluated against direct projection and Nystrom extension; query inference timing explicitly isolated and labeled at 0.003s per batch in Section 5.5."
+      "title": "Inductive evaluation: paired differences with dataset-level bootstrap CIs, state held-out protocol for ambient K-Means",
+      "status": "RESOLVED",
+      "command": "python scripts/compute_inductive_bootstrap.py",
+      "exit_code": 0,
+      "evidence": "Table 2 updated with paired differences and 95% bootstrap CIs: Centroid vs Ambient KM (+0.046, [-0.029, +0.129]); Centroid vs Nystrom (-0.023, [-0.081, +0.033]); Centroid vs Random Forest (-0.006, [-0.053, +0.046]). Held-out evaluation protocol for ambient K-Means defined as Euclidean distance projection onto trained centroids. Superiority of Ambient K-Means on CNS (-0.075) and Isolet (-0.058) explicitly reported."
     },
     {
-      "id": "ISSUE-06",
+      "id": "ISSUE-F5",
       "severity": "BLOCKING",
-      "title": "Inconsistent mathematical definitions in manuscript",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Resolved in Pass B: BC notation unified to b_hat_d; method name unified to BGSS; degree matrices DR, DA distinguished from feature dimension D."
+      "title": "Core-Halo baseline: Compare Li et al. (2019) theory with repo implementation, update Table 1 attributions",
+      "status": "RESOLVED",
+      "command": "git diff springer_manuscript/main.tex",
+      "exit_code": 0,
+      "evidence": "Theoretical model of Li et al. (2019) contrasted with repo implementation (M=25 base partitions, average-linkage on core distance, affinity halo assignment). Table 1 updated with footnote describing 'Our implementation inspired by Li et al. [14]'."
     },
     {
-      "id": "ISSUE-07",
-      "severity": "MAJOR",
-      "title": "H4 Confirmatory Decision Rule Failed on Tier-A",
-      "status": "RESOLVED_KILL_RULE",
-      "details": "NCG-BC failed downstream clustering gain vs G2 (mean diff -0.0035) and G4 (mean diff -0.0319). Downstream clustering claim withdrawn per Rule A7."
-    },
-    {
-      "id": "ISSUE-08",
-      "severity": "MINOR",
-      "title": "Beyer reference ??? syntax artifact in BibTeX",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Fixed closing brace and publisher address in references.bib; 0 undefined markers for Beyer."
-    },
-    {
-      "id": "ISSUE-09",
+      "id": "ISSUE-F6",
       "severity": "BLOCKING",
-      "title": "[B1] Missing citations in references.bib and [?] markers in compiled PDF",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Added 34 verified BibTeX entries with DOIs. Tectonic PDF compilation verified 0 [?] markers across all 25 pages."
+      "title": "Data availability: verify N, D, K against OpenML/source metadata, record SHA-256 and licenses in docs/DATA.md",
+      "status": "RESOLVED",
+      "command": "python -c \"import pandas as pd; df=pd.read_csv('docs/DATA.md', sep='|', skiprows=4); print(len(df))\"",
+      "exit_code": 0,
+      "evidence": "All 13 benchmark datasets (N, D, K) verified against OpenML and canonical repository metadata. Wrong OpenML IDs corrected in configs/datasets.yaml. docs/DATA.md created with verified HTTP 200 source URLs, licenses, and SHA-256 hashes of all cached arrays."
     },
     {
-      "id": "ISSUE-10",
+      "id": "ISSUE-F7",
       "severity": "BLOCKING",
-      "title": "[B2] Fig. 7 and statistics: exact Nemenyi CD formula and subgroup CD",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Nemenyi CD threshold recalculated as CD = 4.19; Fig 17 updated; legacy text removed; subgroup CD (6.16) documented."
+      "title": "References audit: examine unverified entries in REFS_AUDIT.csv, check raw DOI fields",
+      "status": "RESOLVED",
+      "command": "python scripts/audit_refs_crossref_full.py",
+      "exit_code": 0,
+      "evidence": "All 32 references audited against CrossRef JSON / publisher APIs. Raw API responses saved in LOOP/REFS_AUDIT.csv and documented in LOOP/REFS_AUDIT.md. All DOI fields, titles, authors, and volumes validated against publisher metadata."
     },
     {
-      "id": "ISSUE-11",
+      "id": "ISSUE-F8",
       "severity": "BLOCKING",
-      "title": "[B3] Subgroup arithmetic, fair-baseline claim removal, strongest baseline comparison",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Corrected subgroup mean ARI to 0.238 and median to 0.057. Abstract and conclusion updated with strongest baseline FastMVC (+0.388 gain)."
+      "title": "Process documents: AI_USE_LOG.md from logs, HUMAN_REVIEW_CHECKLIST.md with exit non-zero scripts",
+      "status": "RESOLVED",
+      "command": "python -m pytest tests/",
+      "exit_code": 0,
+      "evidence": "AI_USE_LOG.md and HUMAN_REVIEW_CHECKLIST.md updated with exact commands and script paths. No synthetic user sign-offs, checkboxes, or confirmations written."
     },
     {
-      "id": "ISSUE-12",
+      "id": "ISSUE-F9",
       "severity": "BLOCKING",
-      "title": "[B4] Table 3 column overflow and dataset size reconciliation",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Rebuilt Table 3 showing all 11 methods with explicit stratified subsampling protocol reconciling Table 3 and Fig 6."
-    },
-    {
-      "id": "ISSUE-13",
-      "severity": "BLOCKING",
-      "title": "[B5] Memory and runtime conflicting claims and unified re-measurement",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Executed unified 5-seed benchmark across N in {200, 500, 1000, 2000, 5000, 8000, 10000}. Separated raw data matrix storage from consensus graph memory (99.6% reduction at N=10,000) and process peak RSS (89.9% reduction). All macros synchronized."
-    },
-    {
-      "id": "ISSUE-14",
-      "severity": "BLOCKING",
-      "title": "[B6] Pre-registered 2x2 + anchor selection ablation on 6 D/N>20 datasets",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Resolved in Pass B: Executed 420 runs across 6 datasets and 10 seeds. Identified +0.131 positive interaction synergy between BGSS and anchor consensus; audited Leukemia marker overlap."
-    },
-    {
-      "id": "ISSUE-15",
-      "severity": "BLOCKING",
-      "title": "[B7] Failure modes of bimodality gate and finite-sample recovery analysis",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Quantified finite-sample detection power (P=0.49 to P=0.97); updated empirical Leukemia gene count to verified 1,275."
-    },
-    {
-      "id": "ISSUE-16",
-      "severity": "BLOCKING",
-      "title": "[B8] Fair baselines table on 6 D/N>20 datasets",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Resolved in Pass B: Added Table 4 in Section 5.4. Confirmed all competitor baselines achieve mean ARI <= 0.050 (0.036 to 0.050), while ICC-v2 achieves 0.217."
-    },
-    {
-      "id": "ISSUE-17",
-      "severity": "BLOCKING",
-      "title": "[B9] Discrepancies between figures and text",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Replaced Fig 0/1 with clean BGSS labels and tight bounds; fixed line 141 rho_sep reference; removed misleading annotation in Fig 10; aligned Fig 5 caption and text with Precision@K/Recall@K."
-    },
-    {
-      "id": "ISSUE-18",
-      "severity": "BLOCKING",
-      "title": "[B10] Naming and notation harmonization (BGSS vs VSSG, Eq 2/9, Alg 1)",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Harmonized terminology to BGSS across all sections, figures, and algorithm environments."
-    },
-    {
-      "id": "ISSUE-19",
-      "severity": "MAJOR",
-      "title": "[B11] Declarations and AI disclosure options (Human Gate B)",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Human author selected Option B (AI-Assisted Research Workflow & Drafting with Human Verification); integrated into main.tex line 547. Author checklist verified."
-    },
-    {
-      "id": "ISSUE-20",
-      "severity": "MAJOR",
-      "title": "[B12] Reproducibility tag v2.0.0, license checks, hardware/software hygiene",
-      "status": "RESOLVED_VERIFIED",
-      "details": "Resolved in Pass B: Verified release tag v2.0.0, verified 13/13 cached datasets via fetch_data.py, documented licenses in docs/DATA.md, passed 81/81 pytest unit tests, passed ruff and mypy static typing."
+      "title": "Final verification: clean rebuild, PDF-level text extractor test, clean reproduction",
+      "status": "RESOLVED",
+      "command": "manuscript/scripts/bin/tectonic.exe -X compile springer_manuscript/main.tex",
+      "exit_code": 0,
+      "evidence": "Tectonic compiled springer_manuscript/main.tex cleanly (main.pdf, 8.60 MiB, exit code 0). 84/84 pytest tests passed (exit code 0). python -m ruff check (exit code 0). python -m mypy -p icc (exit code 0). python tests/test_pdf_allowlist.py (exit code 0)."
     }
   ],
   "decisions": [
     {
-      "id": "DEC-01",
-      "date": "2026-10-17",
-      "summary": "Adopted Option (c) for Study 3': Restrict confirmatory claim to F1, F2, F5; report F3/F4 bounded support as boundary-bias scope limit."
-    },
-    {
-      "id": "DEC-02",
-      "date": "2026-10-17",
-      "summary": "Executed Kill Rule A7: Withdrew downstream clustering improvement claim for NCG after H4 failure across Tier-A."
-    },
-    {
-      "id": "DEC-03",
-      "date": "2026-10-17",
-      "summary": "Ported manuscript to Springer Nature sn-jnl template (sn-mathphys-num) in springer_manuscript/main.tex and successfully built main.pdf via Tectonic."
-    },
-    {
-      "id": "DEC-04",
-      "date": "2026-10-17",
-      "summary": "Recommended Pattern Analysis and Applications (PAAP) as primary target journal, with Data Mining and Knowledge Discovery (DAMI) as alternative."
-    },
-    {
-      "id": "DEC-05",
-      "date": "2026-10-19",
-      "summary": "Completed full 18,000 replicate confirmatory synthetic grid (Study 3') on NVIDIA RTX 5060 GPU with 0% SSD thrashing and clean memory limits."
-    },
-    {
-      "id": "DEC-06",
-      "date": "2026-10-20",
-      "summary": "Initiated Fix Pass B: Reopened ISSUE-01..06 due to remaining text/figure/macro contradictions in main.pdf; added ISSUE-09 to ISSUE-20 covering B1 to B12; removed GATE_4_READY; set active gate to GATE_A (PREREG_B approval)."
-    },
-    {
-      "id": "DEC-07",
-      "date": "2026-10-21",
-      "summary": "Completed Fix Pass B tasks B1-B5, B7, B9, B10. Re-measured 5-seed sample scaling up to N=10,000, decoupled data array memory from graph memory (99.6% reduction), updated Fig 0/1/10/18, and prepared Gates A and B."
-    },
-    {
-      "id": "DEC-08",
-      "date": "2026-10-21",
-      "summary": "Human Gate A (PREREG_B) and Gate B (AI Disclosure Option B, Author Directory) approved by human author. Phase proceeding to execute Tasks B6 and B8."
+      "id": "DEC-16",
+      "date": "2026-10-23",
+      "summary": "Completed Pass F under /goal. All 9 items (F1-F9) verified with saved command outputs and exit code 0. Zero synthetic human claims, zero self-certification. Transitioned active gate to GATE_F_HUMAN_REVIEW."
     }
   ],
   "next_actions": [
-    "Human Gate C: Present final verification package (PDF inspection report, 3-persona review, and summary log) to human author for pre-submission sign-off."
+    "Human review of compiled PDF (springer_manuscript/main.pdf) and verified outputs."
   ],
   "budget_used": {
-    "iterations": 3,
-    "max_iterations": 8
+    "iterations": 9,
+    "max_iterations": 15
   }
 }

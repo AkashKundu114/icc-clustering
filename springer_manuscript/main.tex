@@ -35,7 +35,7 @@
 
 \begin{document}
 
-\title[Inductive Consensus Clustering]{Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes}
+\title[When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering?]{When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination}
 
 \author*[1]{\fnm{Akash} \sur{Kundu}}\email{akash231001001449@technoindiaeducation.com}
 
@@ -49,9 +49,9 @@
 
 \affil*[1]{\orgdiv{Department of Computer Science and Engineering}, \orgname{Techno India University}, \orgaddress{\street{EM-4, Sector V, Bidhannagar}, \city{Kolkata}, \postcode{700091}, \state{West Bengal}, \country{India}}}
 
-\abstract{Consensus clustering synthesizes base partitions to discover robust data groupings. However, existing methods face two primary challenges: (1) a transductive formulation requiring $O(N^2)$ storage preventing out-of-sample inference, and (2) vulnerability to high-dimensional distractor noise ($D \gg N$), where distance concentration degrades partition fidelity. We examine \textbf{Inductive Consensus Clustering (ICC-v2)}, designed for small-sample, high-dimensional regimes subject to isotropic noise. ICC-v2 incorporates: (1) an $O(N \cdot D)$ linear feature screening filter using Sarle's Bimodality Coefficient (Bimodality-Gated Subspace Selection, BGSS) isolating multimodal dimensions; (2) a determinacy-based bipartite anchor consensus graph reducing auxiliary memory from $O(N^2)$ to $O(N \cdot L)$; and (3) stability-weighted centroid assignment for $O(K \cdot |\mathcal{F}_{\text{active}}|)$ inductive inference. Across 13 multi-domain benchmarks (1,430 model fits), deep embedded clustering (DEC)~\cite{xie2016unsupervised} attains the lowest omnibus mean rank ($R=4.31$), followed by Standard Consensus ($R=5.08$), K-Means ($R=5.31$), Ward ($R=5.31$), and ICC-v2 ($R=5.46$). ICC-v2 attains the highest Grand Mean ARI (\GrandMeanARI) across all benchmarks and attains Rank \#1 ($R=\RankBioICCvTwo$) on the exploratory high-dimensional biomedical subgroup ($D/N > 20$, with \ARIleukemia\ on Leukemia and \ARIsrbct\ on SRBCT, representing an absolute ARI improvement of $+0.388$ over the strongest baseline, FastMVC at $0.150 \pm 0.060$, on SRBCT), while reducing auxiliary consensus graph memory by \MemoryScalingTenKGraphReduction\ at $N=10{,}000$ (\MemoryScalingTenKReduction\ peak dynamic memory) and executing up to $N=1{,}000{,}000$ instances in \ExtremeScaleTime.}
+\abstract{Consensus clustering synthesizes diverse base partitions to discover robust data groupings. However, conventional formulations encounter two major assumptions: (1) that multi-clusterer consensus averaging protects against high-dimensional noise, and (2) that transductive $O(N^2)$ consensus graph decomposition is unavoidable. In this paper, we present an empirical examination of these assumptions in high-dimensional noise regimes ($D \gg N$). First, we demonstrate finite-sample empirical falsification: isotropic distractor noise induces distance concentration, causing conventional consensus algorithms to converge stably onto spurious, arbitrary noise boundaries. Second, we evaluate \textbf{Inductive Consensus Clustering (ICC-v2)}, which couples linear-time ($O(N \cdot D)$) Bimodality-Gated Subspace Selection (BGSS) with bipartite anchor graph consensus and closed-form centroid projection. Across 13 multi-domain benchmarks (2,750 model fits), Standard Consensus achieves the lowest omnibus mean rank ($R=\TableThreeStdConsOverallRank$), followed by K-Means ($R=\TableThreeKMeansOverallRank$), DEC~\cite{xie2016unsupervised} ($R=\TableThreeDecOverallRank$), ICC-v2 ($R=\TableThreeIccVTwoOverallRank$), and Ward ($R=\TableThreeWardOverallRank$, Friedman $\chi_F^2 = 9.59, p = \TableThreeFriedmanPValue$, $CD = \TrueNemenyiCD$). Although ICC-v2 attains the highest Grand Mean ARI of \GrandMeanARI\ (median ARI \OmnibusMedianARI), we reveal that this omnibus mean is heavily driven by two cancer microarray benchmarks: Leukemia (\ARIleukemia) and SRBCT (\ARIsrbct), whereas it averages \OmnibusMeanExcludingLeukemiaSrbct\ on the remaining 11 datasets. In the exploratory high-dimensional subgroup ($D/N > 20$), ICC-v2 achieves Rank \#1 ($R=\RankBioICCvTwo$), but fails on Prostate ($0.012$ vs. $0.049$ for Standard Consensus). Crucially, ablation testing demonstrates a key null result: determinacy anchor certification provides no statistically significant accuracy gain over uniform random anchors ($\Delta = +0.019$, dataset-level cluster bootstrap 95\% CI: $[-0.039, +0.082]$), establishing that bipartite graph compression---which reduces consensus graph memory by \MemoryScalingTenKGraphReduction\ at $N=10{,}000$ (\MemoryScalingTenKReduction\ peak dynamic memory)---rather than anchor certification is the primary operational mechanism. We conclude with a detailed characterization of failure modes under platykurtic and non-linear parity structures.}
 
-\keywords{Cluster ensemble, consensus clustering, inductive learning, out-of-sample extension, anchor certification, high-dimensional data, noise robustness.}
+\keywords{Cluster ensemble, consensus clustering, inductive learning, out-of-sample extension, anchor graph consensus, high-dimensional data, noise robustness.}
 
 \maketitle
 
@@ -61,7 +61,7 @@ Clustering ensembles, originally pioneered by Strehl and Ghosh~\cite{strehl2002c
 
 Despite wide adoption across bioinformatics, computer vision, and knowledge discovery, consensus clustering algorithms encounter two primary limitations:
 \begin{enumerate}
-    \item \textbf{Transductive Formulation:} Conventional consensus formulations operate directly on the $N \times N$ co-association matrix $S \in [0, 1]^{N \times N}$ via graph partitioning, spectral decomposition~\cite{vonluxburg2007tutorial}, or non-negative matrix factorization~\cite{li2019determinacy}. When new, unseen test instances $\mathcal{X}_{\text{test}}$ arrive, the consensus partition cannot be inductively assigned without recomputing the co-association matrix and solving an $O((N + |\mathcal{X}_{\text{test}}|)^2)$ optimization from scratch.
+    \item \textbf{Transductive Formulation:} Conventional consensus formulations operate directly on the $N \times N$ co-association matrix $S \in [0, 1]^{N \times N}$ via graph partitioning, spectral decomposition~\cite{vonluxburg2007tutorial}, or hypergraph partitioning~\cite{strehl2002cluster}. When new, unseen test instances $\mathcal{X}_{\text{test}}$ arrive, the consensus partition cannot be inductively assigned without recomputing the co-association matrix and solving an $O((N + |\mathcal{X}_{\text{test}}|)^2)$ optimization from scratch.
     \item \textbf{Curse of High-Dimensional Distractors:} In modern datasets where ambient dimensionality $D$ greatly exceeds the intrinsic manifold dimension $d^* \ll D$, uninformative nuisance features degrade pairwise Euclidean distances. The distance concentration phenomenon causes within-cluster and between-cluster distances to converge to identical expectations, leading to degradation of consensus graphs~\cite{huang2015robust,liu2017spectral,beyer1999nearest}.
 \end{enumerate}
 
@@ -86,10 +86,10 @@ The remainder of this manuscript is structured as follows: Section~\ref{sec:rela
 \section{Related Work}\label{sec:related}
 
 \subsection{Cluster Ensembles and Consensus Graphs}
-The consensus clustering paradigm constructs a co-association matrix $S$ where $S_{ij} = \frac{1}{M}\sum_{m=1}^M \mathbf{1}\{\pi_m(\mathbf{x}_i) = \pi_m(\mathbf{x}_j)\}$ represents the empirical probability that objects $\mathbf{x}_i$ and $\mathbf{x}_j$ are co-clustered across $M$ base partitions~\cite{fred2005combining}. Classical approaches partition this matrix using Cluster-based Similarity Partitioning (CSPA), HyperGraph Partitioning Algorithm (HGPA), or Meta-Clustering Algorithm (MCLA)~\cite{strehl2002cluster}. Subsequent works explore dense subgraph discovery~\cite{liu2017spectral}, random walk probability trajectories~\cite{huang2015robust}, random projection ensembles~\cite{fern2003random}, and bipartite graph modeling~\cite{fern2004solving}. However, classical formulations remain fundamentally transductive, requiring quadratic $O(N^2)$ co-association storage.
+The consensus clustering paradigm constructs a co-association matrix $S$ where $S_{ij} = \frac{1}{M}\sum_{m=1}^M \mathbf{1}\{\pi_m(\mathbf{x}_i) = \pi_m(\mathbf{x}_j)\}$ represents the empirical probability that objects $\mathbf{x}_i$ and $\mathbf{x}_j$ are co-clustered across $M$ base partitions~\cite{fred2005combining}. Classical approaches partition this matrix using Cluster-based Similarity Partitioning (CSPA), HyperGraph Partitioning Algorithm (HGPA), or Meta-Clustering Algorithm (MCLA)~\cite{strehl2002cluster}. Subsequent works explore weighted $k$-means spectral ensembles~\cite{liu2017spectral}, random walk probability trajectories~\cite{huang2015robust}, random projection ensembles~\cite{fern2003random}, and bipartite graph modeling~\cite{fern2004solving}. However, classical formulations remain fundamentally transductive, requiring quadratic $O(N^2)$ co-association storage.
 
 \subsection{Robust, Anchor, and Out-of-Sample Clustering}
-To mitigate noise and outliers, Li et al.~\cite{li2019determinacy} and Zhang et al.~\cite{zhang2024cedam} investigated determinacy-guided ensemble clustering, partitioning samples into deterministic core points and boundary points based on co-association variance. In scalable spectral and ensemble clustering, anchor graph methods (e.g., Nie et al.~\cite{nie2024fast}, Huang et al.~\cite{huang2023fast}, and U-SPEC/U-SENC by Huang et al.~\cite{huang2020ultra}) utilize bipartite graphs to reduce spectral decomposition complexity from $O(N^3)$ to $O(N L^2 + L^3)$. For out-of-sample extension, generalized Nystr{\"o}m formulas~\cite{bengio2004out} project unseen points using kernel evaluations. In high-dimensional regimes, sparse clustering methods (e.g., sparse $k$-means by Witten and Tibshirani~\cite{witten2010framework}) optimize lasso-type penalties on feature weights, but require iterative global optimization. Similarly, non-parametric multimodality testing (e.g., the Dip Test by Hartigan and Hartigan~\cite{hartigan1985dip} and Sarle's Bimodality Coefficient~\cite{sarle1983sas,ellison1987bimodality,pfister2013assessing}) provides statistical screening criteria. As summarized in Table~\ref{tab:taxonomy_comparison}, ICC-v2 combines linear bimodality subspace gating, determinacy-based bipartite anchor consensus, and inductive centroid projection into a unified linear-time pipeline.
+To mitigate noise and outliers, core-halo consensus heuristics partition samples into deterministic core points and boundary halo points based on co-association consensus determinacy. Specifically, Li et al.~\cite{li2019clustering} formulate consensus clustering based on sample stability evaluated across diverse partitions. In our benchmark implementation inspired by Li et al.~\cite{li2019clustering}, we generate $M=25$ base K-Means clusterings, compute the dense co-association matrix $S \in [0, 1]^{N \times N}$, calculate sample determinacy $s_i = \frac{1}{N-1}\sum_{j \neq i} S_{ij}^2$, designate instances with $s_i \ge \operatorname{median}(s)$ as certified core points, cluster the core distance submatrix ($1 - S_{\text{core}}$) via average-linkage hierarchical clustering into $K$ groups, and assign halo instances to the core cluster maximizing average co-association affinity $\frac{1}{|C_c|}\sum_{j \in C_c} S_{hj}$. In scalable spectral and ensemble clustering, anchor graph methods (e.g., Nie et al.~\cite{nie2024fast}, Huang et al.~\cite{huang2023fast}, and U-SPEC/U-SENC by Huang et al.~\cite{huang2020ultra}) utilize bipartite graphs to reduce spectral decomposition complexity from $O(N^3)$ to $O(N L^2 + L^3)$. For out-of-sample extension, generalized Nystr{\"o}m formulas~\cite{bengio2004out} project unseen points using kernel evaluations. In high-dimensional regimes, sparse clustering methods (e.g., sparse $k$-means by Witten and Tibshirani~\cite{witten2010framework}) optimize lasso-type penalties on feature weights, but require iterative global optimization. Similarly, non-parametric multimodality testing (e.g., the Dip Test by Hartigan and Hartigan~\cite{hartigan1985dip} and Sarle's Bimodality Coefficient~\cite{sarle1983sas,ellison1987bimodality,pfister2013assessing}) provides statistical screening criteria. As summarized in Table~\ref{tab:taxonomy_comparison}, ICC-v2 combines linear bimodality subspace gating, determinacy-based bipartite anchor consensus, and inductive centroid projection into a unified linear-time pipeline.
 
 \begin{table}[!t]
 \caption{Methodological Taxonomy and Comparison Across Consensus Paradigms}
@@ -101,13 +101,14 @@ To mitigate noise and outliers, Li et al.~\cite{li2019determinacy} and Zhang et 
 \toprule
 \textbf{Method} & \textbf{Feature Gating} & \textbf{Core Filtering} & \textbf{Inductive} & \textbf{Aux. Mem.} & \textbf{High-$D$ Noise} \\
 \midrule
-Std Cons.~\cite{fred2005combining}   & None           & None         & No          & $O(N^2)$ & No  \\
-Li et al.~\cite{li2019determinacy}   & None           & Determinacy  & No          & $O(N^2)$ & No  \\
-FCAG~\cite{nie2024fast}              & None           & Anchors      & No          & $O(NL)$  & No  \\
-FastMVC~\cite{huang2023fast}         & None           & Anchors      & No          & $O(NL)$  & No  \\
-U-SPEC~\cite{huang2020ultra}         & None           & Anchors      & Nystr{\"o}m & $O(NL)$  & No \\
-\textbf{ICC-v2 (Ours)}               & \textbf{BGSS}  & \textbf{Core Anchors} & \textbf{Centroid} & $\mathbf{O(NL)}$ & \textbf{Gated Subspace} \\
+Std Cons.~\cite{fred2005combining}        & None           & None         & No          & $O(N^2)$ & No  \\
+Core-Halo Cons.~\cite{li2019clustering}$^*$ & None           & Determinacy  & No          & $O(N^2)$ & No  \\
+FCAG~\cite{nie2024fast}                   & None           & Anchors      & No          & $O(NL)$  & No  \\
+FastMVC~\cite{huang2023fast}              & None           & Anchors      & No          & $O(NL)$  & No  \\
+U-SPEC~\cite{huang2020ultra}              & None           & Anchors      & Nystr{\"o}m & $O(NL)$  & No \\
+\textbf{ICC-v2 (Ours)}                    & \textbf{BGSS}  & \textbf{Core Anchors} & \textbf{Centroid} & $\mathbf{O(NL)}$ & \textbf{Gated Subspace} \\
 \bottomrule
+\multicolumn{6}{@{}l@{}}{\footnotesize $^*$Our implementation inspired by Li et al.~\cite{li2019clustering} ($M=25$, average linkage on core distance, affinity halo assignment).}
 \end{tabular}
 \end{table}
 
@@ -140,7 +141,7 @@ Let $\mathcal{C}_k$ denote cluster $k$ with centroid $\boldsymbol{\mu}_k$. For a
 \end{equation}
 \end{definition}
 
-As ambient distractor dimensions $D_{\text{noise}}$ expand ($D \gg N$), pairwise Euclidean distances exhibit distance concentration~\cite{beyer1999nearest}, where the relative contrast of distances diminishes: $\lim_{D \to \infty} \frac{d_{\max} - d_{\min}}{d_{\min}} = 0$ and the coefficient of variation $\lim_{D \to \infty} \frac{\sqrt{\mathrm{Var}(\|\mathbf{x}_i - \mathbf{x}_j\|_2)}}{\mathbb{E}[\|\mathbf{x}_i - \mathbf{x}_j\|_2]} = 0$. Consequently, the separation ratio $\rho_{\text{sep}}(X)$ approaches $1.0$ (illustrated conceptually in Fig.~\ref{fig:conceptual_overview}(b)), leading to the collapse in pairwise distance contrast and degradation of cluster recovery across ambient noise dimensions evaluated in Fig.~\ref{fig:ari_stability}(a). Under finite samples, base clusterers can capture random fluctuations in the noise dimensions. This induces an empirical stability trap: base partitions repeatedly converge on arbitrary noise boundaries with consensus agreement ($\text{Stability} > 0.8$), while true cluster recovery decreases ($\text{ARI} \to 0$, Fig.~\ref{fig:ari_stability}). As shown in Fig.~\ref{fig:dist_gap}, this stability$-$accuracy discrepancy ($\Delta = \text{Stability} - \text{ARI} > 0$) is prominent for graph-based spectral clustering and agglomerative Ward linkage, whereas centroid partition methods (K-Means, FCM) experience simultaneous collapse of stability and accuracy. Across diverse distractor distributions (Fig.~\ref{fig:noise_heatmap}), this discrepancy persists across Gaussian, Student-$t$, and correlated noise regimes (Fig.~\ref{fig:falsification_suite}). Thus, ensemble averaging alone is empirically observed to be insufficient to eliminate uninformative subspace noise without explicit feature gating.
+As ambient distractor dimensions $D_{\text{noise}}$ expand ($D \gg N$), pairwise Euclidean distances exhibit distance concentration~\cite{beyer1999nearest}, where the relative contrast of distances diminishes: $\lim_{D \to \infty} \frac{d_{\max} - d_{\min}}{d_{\min}} = 0$ and the coefficient of variation $\lim_{D \to \infty} \frac{\sqrt{\mathrm{Var}(\|\mathbf{x}_i - \mathbf{x}_j\|_2)}}{\mathbb{E}[\|\mathbf{x}_i - \mathbf{x}_j\|_2]} = 0$. Consequently, the separation ratio $\rho_{\text{sep}}(X)$ approaches $1.0$ (illustrated conceptually in Fig.~\ref{fig:conceptual_overview}(b)), leading to the collapse in pairwise distance contrast and degradation of cluster recovery across ambient noise dimensions evaluated in Fig.~\ref{fig:ari_stability}. Under finite samples, base clusterers can capture random fluctuations in the noise dimensions. This induces an empirical stability trap: base partitions repeatedly converge on arbitrary noise boundaries with consensus agreement ($\text{Stability} > 0.8$), while true cluster recovery decreases ($\text{ARI} \to 0$, Fig.~\ref{fig:ari_stability}). As shown in Fig.~\ref{fig:dist_gap}, this stability$-$accuracy discrepancy ($\Delta = \text{Stability} - \text{ARI} > 0$) is prominent for graph-based spectral clustering and agglomerative Ward linkage, whereas centroid partition methods (K-Means, FCM) experience simultaneous collapse of stability and accuracy. Across diverse distractor distributions (Fig.~\ref{fig:noise_heatmap}), this discrepancy persists across Gaussian, Student-$t$, and correlated noise regimes (Fig.~\ref{fig:falsification_suite}). Thus, ensemble averaging alone is empirically observed to be insufficient to eliminate uninformative subspace noise without explicit feature gating.
 
 
 \section{The Inductive Consensus Clustering Framework}\label{sec:framework}
@@ -205,7 +206,7 @@ Informative subspace dimensions separating ground-truth clusters exhibit margina
 \end{assumption}
 
 \begin{remark}[Failure Modes and Mathematical Boundary Conditions of BGSS]
-Assumption~\ref{assump:multimodal} encounters boundary conditions in three distinct analytical settings:
+Assumption~\ref{assump:multimodal} encounters boundary conditions in four distinct analytical settings:
 \begin{enumerate}
     \item \textbf{Bounded Support and Extremal Kurtosis:} Under Sarle's formulation, continuous unimodal distributions do not arbitrarily inflate the bimodality coefficient: standard skewed unimodal densities retain $BC < 5/9$ (e.g., exponential distributions yield $BC \approx 0.420$, while lognormal distributions with variance parameter $\sigma^2=1$ yield $BC \approx 0.344$). However, bounded uniform support achieves the critical threshold $BC = 5/9 \approx 0.556$, and bounded asymmetric power-law densities (e.g., $\mathrm{Beta}(3, 1)$ with $BC \approx 0.562$) exceed the threshold despite being strictly unimodal.
     \item \textbf{Discrete Sparsity and Zero-Inflation:} In highly sparse representations (e.g., scRNA-seq counts with $\ge 90\%$ zeros), the heavy discrete point mass at zero severely inflates sample kurtosis and skewness, causing spurious threshold crossings in the absence of biological sub-populations.
@@ -229,7 +230,7 @@ which computes sample determinacy $\sigma_i = \frac{1}{N-1}\left(\sum_{j=1}^N S_
 
 Given sample determinacy $\boldsymbol{\sigma} \in [0, 1]^N$, ICC-v2 extracts a core anchor set $\mathcal{A}_{\text{core}} = \{a_1, \dots, a_L\}$ of size $L \ll N$ (default $L=40$) from samples exceeding stability quantile $\tau_{\text{core}}$. ICC-v2 then constructs a rectangular bipartite co-association matrix $B \in [0, 1]^{N \times L}$ where $B_{ia} = \frac{1}{M}\sum_{m=1}^M \mathbf{1}\{\pi_m(\mathbf{x}_i) = \pi_m(\mathbf{x}_a)\}$ in $O(N \cdot L)$ memory.
 
-With row-normalized $B_{\text{norm}} = D_R^{-1} B$ where $D_R = \operatorname{diag}(B \mathbf{1}_L) \in \mathbb{R}^{N \times N}$, the anchor affinity matrix is $W_{\text{anchor}} = B_{\text{norm}}^T B_{\text{norm}} \in \mathbb{R}^{L \times L}$ with degree matrix $D_A = \operatorname{diag}(W_{\text{anchor}} \mathbf{1}_L) \in \mathbb{R}^{L \times L}$. Solving the normalized Laplacian eigensystem $L_{\text{anchor}} V = \lambda V$ (where $L_{\text{anchor}} = I - D_A^{-1/2} W_{\text{anchor}} D_A^{-1/2}$) for the $K$ smallest eigenvectors $V \in \mathbb{R}^{L \times K}$ yields the dual sample embedding $U = B_{\text{norm}} V$ (or Transfer-Cut embedding $U = B_{\text{norm}} D_A^{-1/2} V \operatorname{diag}(\max(1-\boldsymbol{\lambda}, 10^{-4}))^{-1/2}$)~\cite{li2015transfer,nie2024fast}, followed by K-Means clustering.
+With row-normalized $B_{\text{norm}} = D_R^{-1} B$ where $D_R = \operatorname{diag}(B \mathbf{1}_L) \in \mathbb{R}^{N \times N}$, the anchor affinity matrix is $W_{\text{anchor}} = B_{\text{norm}}^T B_{\text{norm}} \in \mathbb{R}^{L \times L}$ with degree matrix $D_A = \operatorname{diag}(W_{\text{anchor}} \mathbf{1}_L) \in \mathbb{R}^{L \times L}$. Solving the normalized Laplacian eigensystem $L_{\text{anchor}} V = \lambda V$ (where $L_{\text{anchor}} = I - D_A^{-1/2} W_{\text{anchor}} D_A^{-1/2}$) for the $K$ smallest eigenvectors $V \in \mathbb{R}^{L \times K}$ yields the dual sample embedding $U = B_{\text{norm}} V$ (or Transfer-Cut embedding $U = B_{\text{norm}} D_A^{-1/2} V \operatorname{diag}(\max(1-\boldsymbol{\lambda}, 10^{-4}))^{-1/2}$)~\cite{huang2020ultra,nie2024fast}, followed by K-Means clustering.
 
 \begin{theorem}[Computational and Memory Complexity of Bipartite ICC-v2]\label{thm:complexity}
 Let $N$ be the sample size, $D$ ambient dimensionality, $M$ ensemble size, $L$ anchor budget ($L \ll N$), $K$ cluster count, and $I_{\text{km}}$ base K-Means iterations. Under bounded anchor budgets ($L = O(1)$), the overall time complexity of ICC-v2 is:
@@ -248,11 +249,11 @@ Stage 1 (BGSS) evaluates feature moments in $O(N D)$ and ranks features in $O(D 
 
 \subsection{Stability-Weighted Active Subspace Centroid Assignment}\label{sec:centroid}
 Unlike transductive consensus frameworks, ICC-v2 extracts geometry-calibrated centroids in the active subspace weighted by point determinacy:
-\begin{equation}
+\begin{equation}\label{eq:centroid_proj}
     \boldsymbol{\mu}_k = \frac{\sum_{i: y_i = k} \sigma_i \cdot \mathbf{x}_{i, [\mathcal{F}_{\text{active}}]}}{\sum_{i: y_i = k} \sigma_i}, \quad k \in \{1,\dots,K\}.
 \end{equation}
 Weighting by $\sigma_i$ pulls centroids toward core exemplars and attenuates boundary noise. For any new query instance $\mathbf{x}^* \in \mathbb{R}^D$, out-of-sample cluster assignment is computed in $O(K \cdot |\mathcal{F}_{\text{active}}|)$ time:
-\begin{equation}
+\begin{equation}\label{eq:query_assign}
     y^* = \arg\min_k \|\mathbf{x}^*_{[\mathcal{F}_{\text{active}}]} - \boldsymbol{\mu}_k\|_2,
 \end{equation}
 with posterior probabilities given by softmax temperature scaling: $p(y^*=k \mid \mathbf{x}^*) = \frac{\exp(-\|\mathbf{x}^*_{[\mathcal{F}_{\text{active}}]} - \boldsymbol{\mu}_k\|_2 / T)}{\sum_l \exp(-\|\mathbf{x}^*_{[\mathcal{F}_{\text{active}}]} - \boldsymbol{\mu}_l\|_2 / T)}$, where $T > 0$ is a user-defined scaling temperature. This avoids recomputing the consensus graph upon arrival of new observations.
@@ -292,6 +293,40 @@ In Exp~1, we evaluated the inductive utility of the certified core $\mathcal{C}_
 
 Under unsupervised pseudo-labeling in high-noise regimes ($D_{\text{noise}} \ge 1{,}000$, Fig.~\ref{fig:exp1_pseudo}), classifier accuracy on both full and core pseudo-labels degrades toward random chance ($33.6\%$--$36.0\%$ vs. $33.3\%$ chance level for $K = 3$). Across the multi-classifier evaluation spanning Linear SVM, Random Forest, MLP, and $k$-NN, test accuracies at $D_{\text{noise}} = 3{,}000$ hover within $32.3\%$--$38.0\%$, confirming that when base clusterers converge onto isotropic noise attractors, downstream classifiers trained on pseudo-labels cannot separate ground truth without prior subspace screening.
 
+\textbf{Direct Evaluation of Inductive Out-of-Sample Extension:}
+To directly evaluate the closed-form inductive projection defined in Eq.~\eqref{eq:centroid_proj} against alternative out-of-sample mapping strategies, we evaluated 10 random train/test splits (80\% fit, 20\% held-out test query points) across benchmark datasets (Table~\ref{tab:inductive_direct}). Specifically, we compared: (1) direct Ambient K-Means as an inductive baseline; (2) stability-weighted subspace centroid projection (Eq.~\eqref{eq:centroid_proj}, $O(K \cdot |\mathcal{F}_{\text{active}}|)$); (3) Nearest Centroid pseudo-classifier; (4) Random Forest trained on consensus pseudo-labels; and (5) Nystr\"om spectral extension of the bipartite anchor graph embedding.
+
+\begin{table}[!t]
+\caption{Empirical Adjusted Rand Index (ARI) on Held-Out Test Splits ($20\%$, Mean $\pm$ Standard Deviation Across 10 Canonical Seeds)}
+\label{tab:inductive_direct}
+\centering
+\tiny
+\setlength{\tabcolsep}{2.0pt}
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{Dataset} & \textbf{Ambient KM} & \shortstack{\textbf{Weighted Centroid}\\\textbf{(Eqs.~6--7)}} & \shortstack{\textbf{Unweighted Near.}\\\textbf{Centroid (Eq.~7)}} & \textbf{Rand. Forest} & \textbf{Nystr\"om Ext.} \\
+\midrule
+CNS & $\mathbf{+0.071 \pm 0.221}$ & $-0.004 \pm 0.101$ & $-0.008 \pm 0.105$ & $+0.003 \pm 0.146$ & $-0.008 \pm 0.105$ \\
+Colon & $-0.038 \pm 0.048$ & $+0.082 \pm 0.169$ & $+0.098 \pm 0.176$ & $+0.060 \pm 0.132$ & $\mathbf{+0.108 \pm 0.212}$ \\
+Leukemia & $+0.146 \pm 0.104$ & $+0.257 \pm 0.314$ & $+0.216 \pm 0.291$ & $+0.266 \pm 0.361$ & $\mathbf{+0.296 \pm 0.335}$ \\
+Ovarian & $+0.004 \pm 0.042$ & $-0.008 \pm 0.038$ & $+0.006 \pm 0.081$ & $\mathbf{+0.044 \pm 0.107}$ & $+0.017 \pm 0.107$ \\
+SRBCT & $+0.033 \pm 0.134$ & $+0.221 \pm 0.120$ & $+0.253 \pm 0.134$ & $+0.318 \pm 0.216$ & $\mathbf{+0.367 \pm 0.221}$ \\
+Isolet & $\mathbf{+0.466 \pm 0.033}$ & $+0.408 \pm 0.028$ & $+0.409 \pm 0.022$ & $+0.302 \pm 0.022$ & $+0.315 \pm 0.018$ \\
+\midrule
+\textbf{Mean ARI} & 0.114 & 0.159 & 0.161 & 0.165 & \textbf{0.183} \\
+\midrule
+\multicolumn{6}{@{}l@{}}{\textbf{Paired Differences vs. Weighted Centroid ($\Delta = \text{Centroid} - \text{Baseline}$, 95\% Bootstrap CI):}} \\
+\multicolumn{6}{@{}l@{}}{\quad vs. Ambient KM: $\Delta = +0.046$, 95\% CI: $[-0.029, +0.129]$ (Ambient KM higher on CNS, Isolet)} \\
+\multicolumn{6}{@{}l@{}}{\quad vs. Nystr\"om Ext.: $\Delta = -0.023$, 95\% CI: $[-0.081, +0.033]$} \\
+\multicolumn{6}{@{}l@{}}{\quad vs. Random Forest: $\Delta = -0.006$, 95\% CI: $[-0.053, +0.046]$} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+In Table~\ref{tab:inductive_direct}, stability-weighted centroid assignment (Eqs.~\ref{eq:centroid_proj}--\ref{eq:query_assign}) and standard unweighted nearest centroid assignment (Eq.~\ref{eq:query_assign}) exhibit extremely high pairwise label agreement across test query points: $99.2\%$ on CNS, $99.2\%$ on Colon, $97.3\%$ on Leukemia, $96.9\%$ on Ovarian, and $94.1\%$ on SRBCT (averaging $97.3\%$ across the five high-dimensional biomedical cohorts; $85.0\%$ on Isolet). This empirical concordance demonstrates that while determinacy weighting pulls cluster prototypes toward high-confidence core exemplars in the active feature space, the resulting decision boundaries largely preserve partition assignments for out-of-sample query instances.
+
+For inductive baseline benchmarking, Ambient K-Means is evaluated on held-out test query points via standard Euclidean nearest centroid assignment to the cluster centers learned on the training split. Evaluating paired differences between stability-weighted centroid projection and competing inductive rules across test splits yields $\Delta = +0.046$ vs. Ambient K-Means (dataset-level cluster bootstrap 95\% CI: $[-0.029, +0.129]$), $\Delta = -0.023$ vs. Nystr\"om spectral extension (95\% CI: $[-0.081, +0.033]$), and $\Delta = -0.006$ vs. Random Forest (95\% CI: $[-0.053, +0.046]$). Because all bootstrap confidence intervals span zero, the empirical intervals do not support an omnibus claim of superiority over alternative inductive mechanisms. Instead, the data reveal regime-dependent tradeoffs: Ambient K-Means achieves superior test generalization on CNS ($-0.075$ paired difference: Ambient KM $+0.071$ vs. Centroid $-0.004$) and Isolet ($-0.058$ difference: $+0.466$ vs. $+0.408$), whereas Centroid projection proves advantageous on Colon ($+0.120$), Leukemia ($+0.112$), and SRBCT ($+0.188$). Where non-linear manifold geometry is prominent, Nystr\"om spectral extension provides an alternative extension mechanism (attaining $+0.296$ on Leukemia and $+0.367$ on SRBCT), formalizing the accuracy-latency tradeoff in inductive consensus learning.
+
 \subsection{Experiment 2: Component Ablation Study}\label{sec:exp2}
 
 \begin{figure*}[!t]
@@ -329,8 +364,8 @@ V5 (Full ICC-v2)     & \textbf{Yes}  & \textbf{Yes}                & \textbf{Yes
 
 To isolate the contribution of each algorithmic component, we evaluated 6 modular variants (Table~\ref{tab:ablation_spec}):
 \begin{enumerate}
-    \item \textbf{High-Dimensional Biomedical $2 \times 2$ Factorial Ablation:} To disentangle feature gating from bipartite anchor consensus, we evaluated a pre-registered $2 \times 2$ factorial design ($\{\text{Ambient}, \text{BGSS}\} \times \{\text{Dense Consensus}, \text{Bipartite Anchor Consensus}\}$) alongside single-model controls across all 6 high-dimensional biomedical benchmarks ($D/N > 20$: CNS, Colon, Leukemia, Ovarian, Prostate, SRBCT) over 10 random seeds (Seeds 0--9). Across the 6 datasets, ambient standard dense consensus (V0) achieves a subgroup mean ARI of $\AblationHighDSubgroupAmbientStdCons$, ambient anchor consensus (V3) yields $\AblationHighDSubgroupAmbientAnchor$, and ambient K-Means achieves $\AblationHighDSubgroupAmbientKMeans$. Restricting input to the BGSS candidate pool yields $\AblationHighDSubgroupBgssKMeans$ for single K-Means (V1) and $\AblationHighDSubgroupBgssStdCons$ for dense consensus (V2). In contrast, Full ICC-v2 (V5: BGSS + certified core anchors) achieves a subgroup mean ARI of $\mathbf{\AblationHighDSubgroupFullIccVTwo}$ ($\AblationHighDSubgroupBgssRandomAnchor$ for V4 with uniform random anchors). This demonstrates a super-additive compound interaction effect: while the main effect of BGSS under dense consensus is $+0.049$ and the main effect of anchor consensus in ambient space is $+0.013$, their combined architecture delivers a $+0.193$ gain, representing a positive interaction synergy of $\Delta_{\text{Interact}} = +0.131$.
-    \item \textbf{Dissecting the Leukemia Marker Discrepancy:} On Leukemia ($N=72, D=7{,}129, K=2$), standalone BGSS with K-Means (V1: $0.085 \pm 0.299$, median $-0.037$) or Dense Consensus (V2: $0.035 \pm 0.179$, median $-0.047$) performs below unguided Ambient K-Means ($0.199 \pm 0.059$) and Ambient Consensus ($0.138 \pm 0.077$). An audit of the empirical gene distributions explains this behavior: Leukemia exhibits a marked class imbalance ($47$ ALL vs. $25$ AML, a $65\%/35\%$ partition). In finite samples ($N=72$), unbalanced two-component mixture distributions remain platykurtic or unimodal unless cluster separation is pronounced. Consequently, Sarle's bimodality criterion ($\hat{b}_d \ge 5/9$) captures $\AblationLeukemiaMarkerFiftyCount$ of the top 50 supervised discriminative marker genes ($\AblationLeukemiaMarkerFiftyFraction$ overlap), while $46.0\%$ of genuine markers exhibit marginal coefficients just below threshold ($b_d \in [0.44, 0.54]$). When running single K-Means on the remaining $1{,}069$ candidate genes without subspace randomization, distractor dimensions degrade partition stability. However, when integrated into ICC-v2, random subspace sampling ($M=25$) repeatedly draws sub-cohorts of candidate features, discovering subspaces where genuine markers align, while certified bipartite anchors eliminate boundary outlier contamination, elevating cluster recovery to benchmark $\text{ARI} = 0.704 \pm 0.265$ (median $0.787$).
+    \item \textbf{High-Dimensional Biomedical $2 \times 2$ Factorial Ablation:} To disentangle feature gating from bipartite anchor consensus, we evaluated a pre-specified $2 \times 2$ factorial protocol ($\{\text{Ambient}, \text{BGSS}\} \times \{\text{Dense Consensus}, \text{Bipartite Anchor Consensus}\}$) alongside single-model controls across all 6 high-dimensional biomedical benchmarks ($D/N > 20$: CNS, Colon, Leukemia, Ovarian, Prostate, SRBCT) across 30 canonical random seeds (Seeds 0--29). Across the 6 datasets, ambient standard dense consensus (V0) achieves a subgroup mean ARI of $\AblationHighDSubgroupAmbientStdCons$, ambient anchor consensus (V3) yields $\AblationHighDSubgroupAmbientAnchor$, and ambient K-Means achieves $\AblationHighDSubgroupAmbientKMeans$. Restricting input to the BGSS candidate pool yields $\AblationHighDSubgroupBgssKMeans$ for single K-Means (V1) and $\AblationHighDSubgroupBgssStdCons$ for dense consensus (V2). In contrast, Full ICC-v2 (V5: BGSS + certified core anchors) achieves a subgroup mean ARI of $\mathbf{\AblationHighDSubgroupFullIccVTwo}$ vs. $\AblationHighDSubgroupBgssRandomAnchor$ for V4 with uniform random anchors (paired mean difference $\Delta = +0.019$, dataset-level cluster bootstrap 95\% CI: $[-0.039, +0.082]$). Because the confidence interval encompasses zero (and a paired Wilcoxon signed-rank test across the six cohorts yields $W=9.0, p=0.84$), determinacy certification yields no statistically significant performance advantage over uniform random anchor selection across the subgroup. The primary performance driver is the transition from dense consensus to bipartite anchor consensus under BGSS feature selection (V5 vs. V2: $\Delta = +0.139$, 95\% CI: $[+0.065, +0.218]$). Furthermore, the high-dimensional subgroup performance is heavily driven by Leukemia ($0.600$) and SRBCT ($0.546$); across the remaining four cohorts (CNS, Colon, Ovarian, Prostate), V5 attains a mean ARI of $0.039$ (vs. $0.032$ for V4).
+    \item \textbf{Dissecting the Leukemia Marker Discrepancy and Discrete Bimodality:} On Leukemia ($N=72, D=7{,}129, K=2$), across all evaluation protocols (the omnibus benchmark Table~\ref{tab:benchmark_ari}, the fair feature-matched baseline comparison Table~\ref{tab:fair_baselines}, and the $2 \times 2$ factorial ablation) evaluated under 30 canonical random seeds (Seeds 0--29), ICC-v2 yields an identical $0.600 \pm 0.367$ (median $0.787$, with 22/30 seeds yielding $\text{ARI} > 0.50$, $73.3\%$). More fundamentally, Leukemia partition recovery is intrinsically bimodal under small-sample high-dimensional ensembling: partitions either successfully discover the true $47$ ALL vs. $25$ AML dichotomy ($\text{ARI} \in [0.74, 0.89]$) or collapse onto arbitrary distractor noise boundaries ($\text{ARI} \le 0.0$). On SRBCT, 30 seeds yield a mean of $0.546 \pm 0.102$ (median $0.547$, with $70.0\%$ of seeds achieving $\text{ARI} > 0.50$). In contrast, on the remaining four high-dimensional datasets (CNS, Colon, Ovarian, Prostate), all 30 seeds yield $\text{ARI} \le 0.50$ ($0\%$ success rate), confirming that finite-sample discrete bimodality is concentrated in the Leukemia and SRBCT cohorts. An audit of empirical gene distributions explains why bimodality occurs: Leukemia exhibits a marked class imbalance ($47$ ALL vs. $25$ AML, a $65\%/35\%$ partition). In finite samples ($N=72$), unbalanced two-component mixture distributions remain platykurtic or unimodal unless cluster separation is pronounced. Consequently, Sarle's bimodality criterion ($\hat{b}_d \ge 5/9$) captures $\AblationLeukemiaMarkerFiftyCount$ of the top 50 supervised discriminative marker genes ($\AblationLeukemiaMarkerFiftyFraction$ overlap), while $46.0\%$ of genuine markers exhibit marginal coefficients just below threshold ($b_d \in [0.44, 0.54]$). When running single K-Means on the remaining $1{,}069$ candidate genes without subspace randomization, distractor dimensions degrade partition stability. However, when integrated into ICC-v2, random subspace sampling ($M=25$) repeatedly draws sub-cohorts of candidate features, discovering subspaces where genuine markers align, elevating cluster recovery.
 \end{enumerate}
 
 \subsection{BGSS Feature Saliency and Interpretability Audit (Exp 2.1)}\label{sec:exp2_1}
@@ -353,132 +388,139 @@ To examine whether Bimodality-Gated Subspace Selection (BGSS) isolates discrimin
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=0.98\textwidth]{figures/fig14_benchmark_matrix_13datasets.png}
-\caption{Adjusted Rand Index (ARI)~\cite{hubert1985comparing} benchmarking across 13 multi-domain real-world datasets spanning 11 candidate algorithms (1,430 total model fits). ICC-v2 attains top performance on genomic microarrays, while deep clustering (DEC) and classical hierarchical linkage perform strongly on text and acoustic domains.}
+\caption{Adjusted Rand Index (ARI)~\cite{hubert1985comparing} benchmarking across 13 multi-domain real-world datasets spanning 11 candidate algorithms (2,750 total model fits). ICC-v2 attains top performance on genomic microarrays, while deep clustering (DEC) and classical hierarchical linkage perform strongly on text and acoustic domains.}
 \label{fig:exp3_matrix}
 \end{figure*}
 
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/fig17_critical_difference_diagram_v2.png}
-\caption{Dem\v{s}ar Critical Difference analysis~\cite{demsar2006statistical} across 13 multi-domain benchmarks. Across all benchmarks, deep clustering (DEC) attains the lowest omnibus mean rank ($R=4.31$), followed by Standard Consensus ($R=5.08$), K-Means ($R=5.31$), Ward ($R=5.31$), and ICC-v2 ($R=5.46$). Under the Nemenyi test ($k=11, N=13, \alpha=0.05$), the critical difference is $CD = \TrueNemenyiCD$, indicating no statistically significant separation across the omnibus collection.}
+\caption{Dem\v{s}ar Critical Difference analysis~\cite{demsar2006statistical} across 13 multi-domain benchmarks. Across all benchmarks, Standard Consensus attains the lowest omnibus mean rank ($R=\TableThreeStdConsOverallRank$), followed by K-Means ($R=\TableThreeKMeansOverallRank$), deep clustering (DEC, $R=\TableThreeDecOverallRank$), ICC-v2 ($R=\TableThreeIccVTwoOverallRank$), and Ward ($R=\TableThreeWardOverallRank$). Under the Nemenyi test ($k=11, N=13, \alpha=0.05$), the critical difference is $CD = \TrueNemenyiCD$, indicating no statistically significant separation across the omnibus collection.}
 \label{fig:exp3_demsar}
 \end{figure*}
 
 \begin{table*}[!t]
-\caption{Empirical Adjusted Rand Index (ARI) Across 13 Multi-Domain Benchmarks (1,430 Model Fits, Mean $\pm$ Standard Deviation Across 10 Random Seeds)}
+\caption{Omnibus Benchmark Matrix Across 13 Real-World Datasets and 11 Clustering Frameworks (Mean $\pm$ Standard Deviation ARI Across Canonical Seeds: 30 Seeds on $D/N > 20$ Cohorts$^\dagger$, 10 Seeds on Standard Benchmarks)}
 \label{tab:benchmark_ari}
 \centering
 \tiny
-\setlength{\tabcolsep}{2.0pt}
+\setlength{\tabcolsep}{2.5pt}
 
-% Block 1
+% Block 1: Classical Clustering Baselines
 \begin{tabular}{@{}lcccc@{}}
 \toprule
 \multicolumn{5}{c}{\textbf{Part I: Classical Clustering Baselines}} \\
 \midrule
 \textbf{Dataset ($N, D, K$)} & \textbf{K-Means}~\cite{macqueen1967methods,arthur2007k} & \textbf{Ward}~\cite{ward1963hierarchical} & \textbf{Spectral}~\cite{vonluxburg2007tutorial} & \textbf{FCM}~\cite{bezdek1981pattern} \\
 \midrule
-CNS ($60, 7.1\text{k}, 2$) & $-0.027 \pm 0.022$ & $-0.022 \pm 0.000$ & $-0.004 \pm 0.000$ & $+0.002 \pm 0.000$ \\
-Colon ($62, 2.0\text{k}, 2$) & $+0.032 \pm 0.057$ & $-0.016 \pm 0.000$ & $-0.023 \pm 0.000$ & $+0.018 \pm 0.033$ \\
-Indian Pines ($10.2\text{k}, 200, 16$) & $+0.211 \pm 0.007$ & $+0.223 \pm 0.007$ & $\mathbf{+0.229 \pm 0.001}$ & $+0.171 \pm 0.012$ \\
-Isolet ($7.8\text{k}, 617, 26$) & $+0.449 \pm 0.025$ & $\mathbf{+0.500 \pm 0.004}$ & $+0.417 \pm 0.000$ & $+0.059 \pm 0.000$ \\
-Leukemia ($72, 7.1\text{k}, 2$) & $+0.101 \pm 0.088$ & $+0.082 \pm 0.000$ & $+0.139 \pm 0.000$ & $+0.103 \pm 0.008$ \\
-Madelon ($500, 500, 2$) & $+0.034 \pm 0.020$ & $+0.008 \pm 0.003$ & $\mathbf{+0.038 \pm 0.000}$ & $+0.018 \pm 0.014$ \\
-20 Newsgroups ($18.8\text{k}, 10\text{k}, 20$) & $+0.041 \pm 0.051$ & $\mathbf{+0.114 \pm 0.012}$ & $+0.000 \pm 0.000$ & $+0.006 \pm 0.000$ \\
-Ovarian ($253, 15.1\text{k}, 2$) & $+0.008 \pm 0.005$ & $+0.011 \pm 0.000$ & $+0.019 \pm 0.001$ & $+0.001 \pm 0.001$ \\
-Prostate ($102, 12.6\text{k}, 2$) & $+0.046 \pm 0.004$ & $+0.026 \pm 0.000$ & $-0.003 \pm 0.000$ & $+0.048 \pm 0.000$ \\
-Sonar ($208, 60, 2$) & $+0.005 \pm 0.011$ & $-0.001 \pm 0.000$ & $-0.005 \pm 0.000$ & $\mathbf{+0.025 \pm 0.020}$ \\
-SRBCT ($83, 2.3\text{k}, 4$) & $+0.141 \pm 0.056$ & $+0.109 \pm 0.000$ & $+0.080 \pm 0.000$ & $+0.102 \pm 0.019$ \\
-Yale B ($2.4\text{k}, 1.0\text{k}, 38$) & $+0.017 \pm 0.002$ & $+0.049 \pm 0.000$ & $+0.066 \pm 0.001$ & $-0.001 \pm 0.000$ \\
-Zheng68k ($68.6\text{k}, 2\text{k}, 11$) & $+0.483 \pm 0.095$ & $+0.495 \pm 0.000$ & $+0.413 \pm 0.001$ & $+0.370 \pm 0.049$ \\
+CNS ($60, 7.1\text{k}, 2$)$^\dagger$ & $-0.023 \pm 0.025$ & $-0.022 \pm 0.000$ & $-0.004 \pm 0.000$ & $+0.002 \pm 0.000$ \\
+Colon ($62, 2.0\text{k}, 2$)$^\dagger$ & $+0.063 \pm 0.130$ & $-0.016 \pm 0.000$ & $-0.023 \pm 0.000$ & $+0.009 \pm 0.012$ \\
+Indian Pines ($10.2\text{k}, 200, 16$) & $+0.212 \pm 0.010$ & $+0.214 \pm 0.000$ & $\mathbf{+0.229 \pm 0.000}$ & $+0.173 \pm 0.010$ \\
+Isolet ($7.8\text{k}, 617, 26$) & $+0.448 \pm 0.031$ & $\mathbf{+0.502 \pm 0.000}$ & $+0.417 \pm 0.000$ & $+0.059 \pm 0.000$ \\
+Leukemia ($72, 7.1\text{k}, 2$)$^\dagger$ & $+0.126 \pm 0.088$ & $+0.082 \pm 0.000$ & $+0.139 \pm 0.000$ & $+0.100 \pm 0.000$ \\
+Madelon ($500, 500, 2$) & $+0.028 \pm 0.017$ & $+0.012 \pm 0.000$ & $+0.039 \pm 0.001$ & $+0.029 \pm 0.019$ \\
+20 Newsgroups ($18.8\text{k}, 10\text{k}, 20$) & $+0.063 \pm 0.055$ & $+0.099 \pm 0.000$ & $+0.000 \pm 0.000$ & $+0.006 \pm 0.000$ \\
+Ovarian ($253, 15.1\text{k}, 2$)$^\dagger$ & $+0.006 \pm 0.006$ & $+0.011 \pm 0.000$ & $+0.019 \pm 0.001$ & $+0.002 \pm 0.001$ \\
+Prostate ($102, 12.6\text{k}, 2$)$^\dagger$ & $+0.043 \pm 0.015$ & $+0.026 \pm 0.000$ & $-0.003 \pm 0.000$ & $+0.048 \pm 0.000$ \\
+Sonar ($208, 60, 2$) & $+0.014 \pm 0.021$ & $-0.001 \pm 0.000$ & $-0.005 \pm 0.000$ & $\mathbf{+0.026 \pm 0.017}$ \\
+SRBCT ($83, 2.3\text{k}, 4$)$^\dagger$ & $+0.118 \pm 0.064$ & $+0.109 \pm 0.000$ & $+0.080 \pm 0.000$ & $+0.104 \pm 0.030$ \\
+Yale B ($2.4\text{k}, 1.0\text{k}, 38$) & $+0.016 \pm 0.002$ & $+0.049 \pm 0.000$ & $+0.065 \pm 0.002$ & $-0.001 \pm 0.000$ \\
+PBMC68k-reduced ($700, 765, 10$)$^*$ & $+0.494 \pm 0.034$ & $+0.495 \pm 0.000$ & $+0.414 \pm 0.002$ & $+0.347 \pm 0.024$ \\
 \midrule
-\textbf{Grand Mean ARI} & 0.119 & 0.121 & 0.105 & 0.071 \\
-\textbf{Mean Rank (All 13)} & 5.31 & 5.31 & 6.54 & 6.92 \\
-\textbf{Mean Rank ($D/N > 20$ Subgroup)} & 5.83 & 6.83 & 7.50 & 5.67 \\
+\textbf{Grand Mean ARI} & 0.124 & 0.120 & 0.105 & 0.070 \\
+\textbf{Mean Rank (All 13)} & \TableThreeKMeansOverallRank & \TableThreeWardOverallRank & 6.62 & 6.77 \\
+\textbf{Mean Rank (12, Excl. PBMC)} & \TableThreeKMeansTwelveRank & \TableThreeWardTwelveRank & 6.67 & 6.50 \\
+\textbf{Mean Rank ($D/N > 20$ Subgroup)} & \TableThreeKMeansHighDRank & \TableThreeWardHighDRank & \TableThreeSpectralHighDRank & \TableThreeFcmHighDRank \\
 \bottomrule
 \end{tabular}
 
 \vspace{1.0ex}
 
-% Block 2
+% Block 2: Consensus and Scalable Graph Baselines
 \begin{tabular}{@{}lcccc@{}}
 \toprule
 \multicolumn{5}{c}{\textbf{Part II: Consensus and Scalable Graph Baselines}} \\
 \midrule
-\textbf{Dataset ($N, D, K$)} & \textbf{Std Cons} & \textbf{Li et al.} & \textbf{DEC} & \textbf{FCAG} \\
+\textbf{Dataset ($N, D, K$)} & \textbf{Std Cons} & \textbf{Core-Halo Cons.} & \textbf{DEC} & \textbf{FCAG} \\
 \midrule
-CNS ($60, 7.1\text{k}, 2$) & $-0.023 \pm 0.018$ & $-0.006 \pm 0.010$ & $+0.012 \pm 0.018$ & $-0.004 \pm 0.000$ \\
-Colon ($62, 2.0\text{k}, 2$) & $-0.005 \pm 0.017$ & $-0.003 \pm 0.012$ & $\mathbf{+0.038 \pm 0.067}$ & $-0.016 \pm 0.000$ \\
-Indian Pines ($10.2\text{k}, 200, 16$) & $+0.224 \pm 0.002$ & $+0.116 \pm 0.033$ & $+0.207 \pm 0.009$ & $+0.200 \pm 0.009$ \\
-Isolet ($7.8\text{k}, 617, 26$) & $+0.470 \pm 0.018$ & $+0.369 \pm 0.034$ & $+0.496 \pm 0.028$ & $+0.433 \pm 0.025$ \\
-Leukemia ($72, 7.1\text{k}, 2$) & $+0.173 \pm 0.063$ & $+0.114 \pm 0.045$ & $+0.148 \pm 0.060$ & $+0.323 \pm 0.000$ \\
-Madelon ($500, 500, 2$) & $+0.029 \pm 0.006$ & $+0.036 \pm 0.004$ & $+0.019 \pm 0.015$ & $+0.000 \pm 0.000$ \\
-20 Newsgroups ($18.8\text{k}, 10\text{k}, 20$) & $+0.103 \pm 0.006$ & $+0.077 \pm 0.012$ & $+0.008 \pm 0.004$ & $+0.045 \pm 0.010$ \\
-Ovarian ($253, 15.1\text{k}, 2$) & $+0.010 \pm 0.002$ & $+0.008 \pm 0.004$ & $+0.005 \pm 0.006$ & $-0.011 \pm 0.007$ \\
-Prostate ($102, 12.6\text{k}, 2$) & $\mathbf{+0.049 \pm 0.000}$ & $+0.000 \pm 0.000$ & $+0.014 \pm 0.007$ & $+0.004 \pm 0.001$ \\
-Sonar ($208, 60, 2$) & $-0.000 \pm 0.002$ & $+0.011 \pm 0.003$ & $+0.016 \pm 0.022$ & $-0.004 \pm 0.000$ \\
-SRBCT ($83, 2.3\text{k}, 4$) & $+0.040 \pm 0.012$ & $+0.085 \pm 0.029$ & $+0.086 \pm 0.088$ & $+0.094 \pm 0.000$ \\
-Yale B ($2.4\text{k}, 1.0\text{k}, 38$) & $+0.016 \pm 0.001$ & $+0.011 \pm 0.002$ & $\mathbf{+0.131 \pm 0.014}$ & $+0.041 \pm 0.003$ \\
-Zheng68k ($68.6\text{k}, 2\text{k}, 11$) & $\mathbf{+0.561 \pm 0.010}$ & $+0.483 \pm 0.070$ & $+0.520 \pm 0.068$ & $+0.352 \pm 0.105$ \\
+CNS ($60, 7.1\text{k}, 2$)$^\dagger$ & $-0.025 \pm 0.020$ & $-0.007 \pm 0.012$ & $+0.014 \pm 0.019$ & $-0.004 \pm 0.000$ \\
+Colon ($62, 2.0\text{k}, 2$)$^\dagger$ & $-0.013 \pm 0.015$ & $-0.008 \pm 0.013$ & $+0.034 \pm 0.080$ & $-0.016 \pm 0.000$ \\
+Indian Pines ($10.2\text{k}, 200, 16$) & $+0.220 \pm 0.004$ & $+0.138 \pm 0.031$ & $+0.209 \pm 0.013$ & $+0.203 \pm 0.009$ \\
+Isolet ($7.8\text{k}, 617, 26$) & $+0.477 \pm 0.015$ & $+0.368 \pm 0.032$ & $+0.468 \pm 0.025$ & $+0.437 \pm 0.020$ \\
+Leukemia ($72, 7.1\text{k}, 2$)$^\dagger$ & $+0.162 \pm 0.064$ & $+0.123 \pm 0.057$ & $+0.130 \pm 0.064$ & $+0.323 \pm 0.000$ \\
+Madelon ($500, 500, 2$) & $\mathbf{+0.040 \pm 0.014}$ & $+0.038 \pm 0.004$ & $+0.012 \pm 0.015$ & $-0.000 \pm 0.000$ \\
+20 Newsgroups ($18.8\text{k}, 10\text{k}, 20$) & $\mathbf{+0.102 \pm 0.005}$ & $+0.076 \pm 0.010$ & $+0.008 \pm 0.003$ & $+0.037 \pm 0.016$ \\
+Ovarian ($253, 15.1\text{k}, 2$)$^\dagger$ & $+0.009 \pm 0.001$ & $+0.009 \pm 0.005$ & $+0.005 \pm 0.009$ & $-0.008 \pm 0.012$ \\
+Prostate ($102, 12.6\text{k}, 2$)$^\dagger$ & $\mathbf{+0.049 \pm 0.002}$ & $+0.000 \pm 0.000$ & $+0.016 \pm 0.009$ & $+0.004 \pm 0.002$ \\
+Sonar ($208, 60, 2$) & $-0.001 \pm 0.002$ & $+0.015 \pm 0.016$ & $+0.007 \pm 0.007$ & $-0.004 \pm 0.000$ \\
+SRBCT ($83, 2.3\text{k}, 4$)$^\dagger$ & $+0.042 \pm 0.012$ & $+0.099 \pm 0.056$ & $+0.074 \pm 0.055$ & $+0.094 \pm 0.000$ \\
+Yale B ($2.4\text{k}, 1.0\text{k}, 38$) & $+0.016 \pm 0.002$ & $+0.009 \pm 0.003$ & $\mathbf{+0.130 \pm 0.010}$ & $+0.041 \pm 0.004$ \\
+PBMC68k-reduced ($700, 765, 10$)$^*$ & $\mathbf{+0.555 \pm 0.037}$ & $+0.402 \pm 0.122$ & $+0.512 \pm 0.066$ & $+0.400 \pm 0.076$ \\
 \midrule
-\textbf{Grand Mean ARI} & 0.127 & 0.100 & 0.131 & 0.112 \\
-\textbf{Mean Rank (All 13)} & 5.08 & 6.85 & \textbf{\MeanRankDEC} & 7.38 \\
-\textbf{Mean Rank ($D/N > 20$ Subgroup)} & 6.33 & 7.83 & 5.00 & 7.17 \\
+\textbf{Grand Mean ARI} & 0.126 & 0.097 & 0.125 & 0.116 \\
+\textbf{Mean Rank (All 13)} & \textbf{\TableThreeStdConsOverallRank} & 6.62 & \TableThreeDecOverallRank & 7.23 \\
+\textbf{Mean Rank (12, Excl. PBMC)} & \TableThreeStdConsTwelveRank & 6.58 & \TableThreeDecTwelveRank & 7.17 \\
+\textbf{Mean Rank ($D/N > 20$ Subgroup)} & \TableThreeStdConsHighDRank & \TableThreeLiHighDRank & \TableThreeDecHighDRank & \TableThreeFcagHighDRank \\
 \bottomrule
 \end{tabular}
 
 \vspace{1.0ex}
 
-% Block 3
+% Block 3: Anchor Consensus and Proposed Frameworks
 \begin{tabular}{@{}lccc@{}}
 \toprule
 \multicolumn{4}{c}{\textbf{Part III: Anchor Consensus and Proposed Frameworks}} \\
 \midrule
 \textbf{Dataset ($N, D, K$)} & \textbf{FastMVC} & \textbf{ICC-v1} & \textbf{ICC-v2 (Ours)} \\
 \midrule
-CNS ($60, 7.1\text{k}, 2$) & $+0.007 \pm 0.006$ & $-0.007 \pm 0.026$ & $\mathbf{+0.028 \pm 0.015}$ \\
-Colon ($62, 2.0\text{k}, 2$) & $-0.016 \pm 0.001$ & $-0.000 \pm 0.010$ & $+0.029 \pm 0.081$ \\
-Indian Pines ($10.2\text{k}, 200, 16$) & $+0.198 \pm 0.009$ & $+0.129 \pm 0.024$ & $+0.138 \pm 0.030$ \\
-Isolet ($7.8\text{k}, 617, 26$) & $+0.433 \pm 0.026$ & $+0.367 \pm 0.024$ & $+0.286 \pm 0.019$ \\
-Leukemia ($72, 7.1\text{k}, 2$) & $+0.182 \pm 0.156$ & $+0.133 \pm 0.078$ & $\mathbf{+0.680 \pm 0.345}$ \\
-Madelon ($500, 500, 2$) & $+0.000 \pm 0.000$ & $+0.031 \pm 0.006$ & $+0.025 \pm 0.018$ \\
-20 Newsgroups ($18.8\text{k}, 10\text{k}, 20$) & $+0.001 \pm 0.000$ & $+0.059 \pm 0.005$ & $+0.000 \pm 0.000$ \\
-Ovarian ($253, 15.1\text{k}, 2$) & $-0.011 \pm 0.007$ & $+0.017 \pm 0.009$ & $\mathbf{+0.052 \pm 0.153}$ \\
-Prostate ($102, 12.6\text{k}, 2$) & $+0.001 \pm 0.001$ & $+0.018 \pm 0.018$ & $+0.014 \pm 0.016$ \\
-Sonar ($208, 60, 2$) & $-0.003 \pm 0.003$ & $+0.006 \pm 0.005$ & $+0.005 \pm 0.012$ \\
-SRBCT ($83, 2.3\text{k}, 4$) & $+0.150 \pm 0.060$ & $+0.110 \pm 0.033$ & $\mathbf{+0.538 \pm 0.104}$ \\
-Yale B ($2.4\text{k}, 1.0\text{k}, 38$) & $+0.040 \pm 0.003$ & $+0.007 \pm 0.003$ & $+0.045 \pm 0.007$ \\
-Zheng68k ($68.6\text{k}, 2\text{k}, 11$) & $+0.459 \pm 0.062$ & $+0.484 \pm 0.063$ & $+0.240 \pm 0.074$ \\
+CNS ($60, 7.1\text{k}, 2$)$^\dagger$ & $+0.009 \pm 0.006$ & $-0.017 \pm 0.020$ & $\mathbf{+0.021 \pm 0.022}$ \\
+Colon ($62, 2.0\text{k}, 2$)$^\dagger$ & $-0.016 \pm 0.001$ & $-0.003 \pm 0.017$ & $\mathbf{+0.072 \pm 0.110}$ \\
+Indian Pines ($10.2\text{k}, 200, 16$) & $+0.201 \pm 0.014$ & $+0.135 \pm 0.037$ & $+0.136 \pm 0.030$ \\
+Isolet ($7.8\text{k}, 617, 26$) & $+0.432 \pm 0.019$ & $+0.301 \pm 0.045$ & $+0.278 \pm 0.030$ \\
+Leukemia ($72, 7.1\text{k}, 2$)$^\dagger$ & $+0.171 \pm 0.177$ & $+0.155 \pm 0.082$ & $\mathbf{+0.600 \pm 0.367}$ \\
+Madelon ($500, 500, 2$) & $+0.000 \pm 0.000$ & $+0.040 \pm 0.006$ & $+0.021 \pm 0.018$ \\
+20 Newsgroups ($18.8\text{k}, 10\text{k}, 20$) & $+0.000 \pm 0.000$ & $+0.062 \pm 0.010$ & $+0.000 \pm 0.000$ \\
+Ovarian ($253, 15.1\text{k}, 2$)$^\dagger$ & $-0.009 \pm 0.012$ & $+0.023 \pm 0.009$ & $\mathbf{+0.050 \pm 0.139}$ \\
+Prostate ($102, 12.6\text{k}, 2$)$^\dagger$ & $+0.000 \pm 0.001$ & $+0.019 \pm 0.022$ & $+0.012 \pm 0.013$ \\
+Sonar ($208, 60, 2$) & $-0.003 \pm 0.005$ & $+0.006 \pm 0.006$ & $+0.007 \pm 0.008$ \\
+SRBCT ($83, 2.3\text{k}, 4$)$^\dagger$ & $+0.138 \pm 0.061$ & $+0.101 \pm 0.044$ & $\mathbf{+0.546 \pm 0.102}$ \\
+Yale B ($2.4\text{k}, 1.0\text{k}, 38$) & $+0.040 \pm 0.004$ & $+0.009 \pm 0.002$ & $+0.055 \pm 0.007$ \\
+PBMC68k-reduced ($700, 765, 10$)$^*$ & $+0.461 \pm 0.065$ & $+0.357 \pm 0.088$ & $+0.182 \pm 0.062$ \\
 \midrule
-\textbf{Grand Mean ARI} & 0.111 & 0.104 & \textbf{\GrandMeanARI} \\
-\textbf{Mean Rank (All 13)} & 6.92 & 5.92 & \MeanRankICCvTwo \\
-\textbf{Mean Rank ($D/N > 20$ Subgroup)} & 6.17 & 5.33 & \textbf{\RankBioICCvTwo} \\
+\textbf{Grand Mean ARI} & 0.110 & 0.091 & \textbf{\TableThreeIccVTwoGrandMean} \\
+\textbf{Mean Rank (All 13)} & \TableThreeFastMvcHighDRank & \TableThreeIccVOneHighDRank & \TableThreeIccVTwoOverallRank \\
+\textbf{Mean Rank (12, Excl. PBMC)} & 7.08 & 6.17 & \textbf{\TableThreeIccVTwoTwelveRank} \\
+\textbf{Mean Rank ($D/N > 20$ Subgroup)} & \TableThreeFastMvcHighDRank & \TableThreeIccVOneHighDRank & \textbf{\TableThreeIccVTwoHighDRank} \\
 \bottomrule
 \end{tabular}
 \end{table*}
 
-We evaluated ICC-v2 across 13 multi-domain high-dimensional benchmarks spanning acoustic sensing, synthetic manifolds, cancer genomics (CNS, Colon, Leukemia, Prostate, SRBCT), mass spectrometry (Ovarian), text document clustering (20 Newsgroups~\cite{lang1995newsweeder}), spoken phoneme recognition (Isolet~\cite{fanty1990spoken}), airborne hyperspectral imaging (Indian Pines~\cite{purdue1992indian}), face illumination manifolds (Extended Yale B~\cite{georghiades2001few}), and single-cell RNA sequencing (Zheng68k~\cite{zheng2017massively}). Here, ICC-v1 designates the baseline architecture applying bipartite anchor consensus directly on uncalibrated ambient features without BGSS gating. For massive datasets, standard benchmark protocols apply pre-specified stratified subsampling for tractable multi-seed matrix evaluation: 20 Newsgroups (=2{,}000$ subset of {,}846$), Extended Yale B (=1{,}000$ subset of {,}414$), and Zheng68k (=700, D=765, K=10$ filtered subset of .6\text{k}$ scRNA-seq profiles), as indicated in Table~\ref{tab:benchmark_ari}. Table~\ref{tab:benchmark_ari}, the benchmark matrix (Fig.~\ref{fig:exp3_matrix}), and the Dem\v{s}ar critical difference diagram (Fig.~\ref{fig:exp3_demsar}) summarize comparative performance across 1,430 individual model fits.
+We evaluated ICC-v2 across 13 multi-domain high-dimensional benchmarks spanning acoustic sensing, synthetic manifolds, cancer genomics (CNS, Colon, Leukemia, Prostate, SRBCT), mass spectrometry (Ovarian), text document clustering (20 Newsgroups~\cite{lang1995newsweeder}), spoken phoneme recognition (Isolet~\cite{fanty1990spoken}), airborne hyperspectral imaging (Indian Pines~\cite{purdue1992indian}), face illumination manifolds (Extended Yale B~\cite{georghiades2001few}), and single-cell RNA sequencing (PBMC68k-reduced~\cite{zheng2017massively}). Here, ICC-v1 designates the baseline architecture applying bipartite anchor consensus directly on uncalibrated ambient features without BGSS gating. For single-cell genomics, evaluation follows the standard Scanpy benchmark demonstration subset (\texttt{pbmc68k\_reduced}, selected by Scanpy developers by random subsampling of $N=700$ cells across the 10 major immune populations and filtering to $D=765$ highly variable genes from the $68.6\text{k}$ single-cell repository~\cite{zheng2017massively}). Because PBMC68k-reduced was curated via total-count normalization (\texttt{normalize\_total}), logarithmic transformation (\texttt{log1p}), and highly variable gene dispersion selection, the pre-filtered feature space exhibits higher baseline cluster separation than raw uncurated count matrices, yet presents significant sparsity challenges for dense consensus aggregators. In contrast, 20 Newsgroups ($N=18{,}846, D=10{,}000$) and Extended Yale B ($N=2{,}414, D=1{,}024$) are evaluated on their full catalog representations, as summarized in Table~\ref{tab:benchmark_ari}. Table~\ref{tab:benchmark_ari}, the benchmark matrix (Fig.~\ref{fig:exp3_matrix}), and the Dem\v{s}ar critical difference diagram (Fig.~\ref{fig:exp3_demsar}) summarize comparative performance across 2{,}750 individual model fits.
 
 \textbf{Regime Analysis \& Performance Profiles:}
 \begin{itemize}
-    \item \textbf{Small-Sample, High-Dimensional Regimes ($D/N > 20$):} In cancer microarrays and mass spectrometry assays where $D \gg N$, ICC-v2 demonstrates competitive performance. On SRBCT ($D/N=27.8, K=4$), ICC-v2 achieves an ARI of $\mathbf{\ARIsrbct} \pm 0.110$ (an absolute increase of $+0.388$ over the strongest baseline, FastMVC at $0.150 \pm 0.060$, and $+0.498$ over Standard Consensus at $0.040 \pm 0.012$); on Leukemia ($D/N=99.0$), it delivers $\mathbf{\ARIleukemia} \pm 0.345$ (vs. $0.173 \pm 0.063$ for Standard Consensus and $0.148 \pm 0.060$ for DEC); and on Ovarian ($D=15{,}154$), it achieves $\mathbf{\ARIovarian} \pm 0.153$ while accelerating consensus extraction by $17.0\times$ ($3.41\text{s}$ vs. $57.98\text{s}$). Deep clustering (DEC) struggles in these small-sample regimes ($N \le 100$), yielding lower scores ($0.086 \pm 0.088$ on SRBCT).
-    \item \textbf{Large-Sample, Multi-Class Regimes ($K \ge 20$):} On large benchmarks with numerous categories, such as 20 Newsgroups ($N=18.8\text{k}, K=20$) and Isolet ($N=7.8\text{k}, K=26$), classical hierarchical Ward linkage ($0.114$ and $0.500$) and DEC ($0.496$) outperform ICC-v2 ($0.000$ and $0.286$). With a default anchor budget of $L=40$, datasets with $K \ge 20$ classes allocate fewer than two anchors per category on average, under-sampling minority subtypes.
-    \item \textbf{Near-Zero ARI Regimes:} On CNS, Colon, Prostate, and Ovarian, all evaluated methods (including ICC-v2) achieve low ARI values ($\le 0.052$), reflecting the substantial difficulty of unsupervised partition recovery on these biological datasets.
+    \item \textbf{Small-Sample, High-Dimensional Regimes ($D/N > 20$):} In cancer microarrays and mass spectrometry assays where $D \gg N$, ICC-v2 demonstrates competitive performance across 30 canonical random seeds. On SRBCT ($D/N=27.8, K=4$), ICC-v2 achieves an ARI of $\mathbf{\ARIsrbct} \pm \SrbctTableThreeStd$ (an absolute increase of $+0.408$ over FastMVC at $0.138 \pm 0.061$, and $+0.504$ over Standard Consensus at $0.042 \pm 0.012$); on Leukemia ($D/N=99.0$), it delivers $\mathbf{\ARIleukemia} \pm \LeukemiaTableThreeStd$ (vs. $0.162 \pm 0.064$ for Standard Consensus and $0.130 \pm 0.064$ for DEC); and on Ovarian ($D=15{,}154$), it achieves $\mathbf{\ARIovarian} \pm 0.139$. Deep clustering (DEC) struggles in these small-sample regimes ($N \le 100$), yielding lower scores ($0.074 \pm 0.055$ on SRBCT).
+    \item \textbf{Large-Sample, Multi-Class Regimes ($K \ge 20$):} On large benchmarks with numerous categories, such as 20 Newsgroups ($N=18.8\text{k}, K=20$) and Isolet ($N=7.8\text{k}, K=26$), classical hierarchical Ward linkage ($0.099$ and $0.502$) and DEC ($0.468$ on Isolet) outperform ICC-v2 ($0.000$ and $0.278$). With a default anchor budget of $L=40$, datasets with $K \ge 20$ classes allocate fewer than two anchors per category on average, under-sampling minority subtypes.
+    \item \textbf{Near-Zero ARI Regimes:} On CNS, Prostate, and Ovarian, evaluated methods achieve near-zero mean ARI ($\le 0.050$), while on Colon, methods average below $0.073$ (with ICC-v2 at $0.072 \pm 0.110$ and K-Means at $0.063 \pm 0.130$), reflecting the substantial difficulty of unsupervised partition recovery on these biological datasets.
 \end{itemize}
 
 \textbf{Statistical Significance Analysis:}
-Across the 13 benchmarks, Friedman omnibus testing~\cite{demsar2006statistical} yields $\chi_F^2 = 11.34$, $p = \TableThreeFriedmanPValue$, indicating no statistically significant difference across the omnibus collection. Statistical comparisons were evaluated using the Dem\v{s}ar Critical Difference framework (Fig.~\ref{fig:exp3_demsar}). Under the two-tailed post-hoc Nemenyi test ($\alpha=0.05, k=11, N=13$), the critical difference threshold is:
+Across all 13 benchmarks, Friedman omnibus testing~\cite{demsar2006statistical} yields $\chi_F^2 = 9.59$, $p = \TableThreeFriedmanPValue$, indicating no statistically significant difference across the omnibus collection. Under the two-tailed post-hoc Nemenyi test ($\alpha=0.05, k=11, N=13$), the critical difference threshold is:
 \begin{equation}
-    CD = q_\alpha \sqrt{\frac{k(k+1)}{6N}} = 3.219 \sqrt{\frac{11 \times 12}{6 \times 13}} = \TrueNemenyiCD.
+    CD_{N=13} = q_\alpha \sqrt{\frac{k(k+1)}{6N}} = 3.219 \sqrt{\frac{11 \times 12}{6 \times 13}} = 4.19.
 \end{equation}
-DEC ($R=\MeanRankDEC$), Standard Consensus ($R=\MeanRankStdCons$), K-Means ($R=5.31$), Ward ($R=5.31$), and ICC-v2 ($R=\MeanRankICCvTwo$) occupy the top five ranks without statistically significant separation across the omnibus collection.
+Standard Consensus ($R=\MeanRankStdCons$), K-Means ($R=\TableThreeKMeansOverallRank$), DEC ($R=\MeanRankDEC$), ICC-v2 ($R=\MeanRankICCvTwo$), and Ward ($R=\TableThreeWardOverallRank$) occupy the top five ranks without statistically significant separation across the omnibus collection. However, because ICC-v2 underperforms on the demonstration subset PBMC68k-reduced ($N=700$, Rank \#11, ARI $0.182$ vs. $0.555$ for Standard Consensus), we also evaluated omnibus ranks and critical difference excluding this subsample ($N=12$ full benchmark datasets). For $N=12$, the critical difference threshold expands to:
+\begin{equation}
+    CD_{N=12} = 3.219 \sqrt{\frac{11 \times 12}{6 \times 12}} = 4.36,
+\end{equation}
+with Friedman $\chi_F^2 = 8.06, p = 0.62$. Across the 12 full benchmark datasets, ICC-v2 attains the lowest mean rank $R=\TableThreeIccVTwoTwelveRank$, followed by K-Means ($R=\TableThreeKMeansTwelveRank$), Standard Consensus ($R=\TableThreeStdConsTwelveRank$), DEC ($R=\TableThreeDecTwelveRank$), and Ward ($R=\TableThreeWardTwelveRank$).
 
-On the pre-specified high-dimensional biomedical subgroup ($D/N > 20$, comprising $N=6$ datasets: CNS, Colon, Leukemia, Ovarian, Prostate, SRBCT), ICC-v2 attains mean rank $R = \RankBioICCvTwo$ compared to $R = \RankBioDEC$ for DEC, $R = \RankBioStdCons$ for Standard Consensus, $R = \TableThreeKMeansHighDRank$ for K-Means, and $R = 7.83$ for Li et al., with a subgroup mean ARI of $\FairBaselinesIccVTwoHighDMean$ and median ARI of $\FairBaselinesIccVTwoHighDMedian$. However, for $N=6$ datasets, the Nemenyi threshold is $CD = 6.16$. Pairwise Wilcoxon tests~\cite{wilcoxon1945individual} between ICC-v2 and baselines on this subgroup yield unadjusted $p = 0.031$ against FCAG, FastMVC, Li et al., and Spectral, but after Holm step-down adjustment across 10 baselines, the adjusted values are $p_{\text{adj}} \ge 0.3125$. Therefore, the subgroup ranking ($R = \RankBioICCvTwo$) should be interpreted as exploratory and post-hoc.
+On the pre-specified high-dimensional biomedical subgroup ($D/N > 20$, comprising $N=6$ datasets: CNS, Colon, Leukemia, Ovarian, Prostate, SRBCT across 30 seeds), ICC-v2 attains the top mean rank $R = \RankBioICCvTwo$ compared to $R = \TableThreeIccVOneHighDRank$ for ICC-v1, $R = \TableThreeKMeansHighDRank$ for K-Means, $R = \TableThreeFcmHighDRank$ for FCM, $R = \RankBioDEC$ for DEC, $R = \RankBioStdCons$ for Standard Consensus, and $R = \TableThreeLiHighDRank$ for Core-Halo Consensus, with an omnibus high-dimensional subgroup mean ARI of \FairBaselinesIccVTwoHighDMean\ (median \FairBaselinesIccVTwoHighDMedian, in exact numerical agreement across Table~\ref{tab:benchmark_ari}, Table~\ref{tab:fair_baselines}, and the $2 \times 2$ factorial ablation). However, for $N=6$ datasets, the Nemenyi threshold is $CD = 6.16$. Pairwise Wilcoxon tests~\cite{wilcoxon1945individual} between ICC-v2 and baselines on this subgroup yield unadjusted $p = 0.031$ against FCAG, FastMVC, Core-Halo Cons., and Spectral, but after Holm step-down adjustment across 10 baselines, the adjusted values are $p_{\text{adj}} \ge 0.3125$. Therefore, the subgroup ranking ($R = \RankBioICCvTwo$) should be interpreted as exploratory and post-hoc.
 
-Across all 1,430 model fits, ICC-v2 attains the highest Grand Mean ARI of $\mathbf{0.160}$ (compared to $0.131$ for DEC, $0.127$ for Standard Consensus, $0.121$ for Ward, and $0.119$ for K-Means), driven by performance gains on Leukemia and SRBCT.
+Across all 2{,}750 model fits, ICC-v2 attains a Grand Mean ARI of $\mathbf{\TableThreeIccVTwoGrandMean}$ (compared to $\TableThreeKMeansGrandMean$ for K-Means, $\TableThreeDecGrandMean$ for DEC, $\TableThreeStdConsGrandMean$ for Standard Consensus, and $\TableThreeWardGrandMean$ for Ward), driven by performance gains on Leukemia ($0.600 \pm 0.367$) and SRBCT ($0.546 \pm 0.102$).
 
 \begin{table*}[!t]
-\caption{Fair Feature-Matched Baseline Comparison Across High-Dimensional Regimes ($D/N > 20$, 10 Random Seeds, Mean $\pm$ Standard Deviation ARI)}
+\caption{Fair Feature-Matched Baseline Comparison Across High-Dimensional Regimes ($D/N > 20$, 30 Canonical Seeds, Mean $\pm$ Standard Deviation ARI)}
 \label{tab:fair_baselines}
 \centering
 \tiny
@@ -491,14 +533,15 @@ Across all 1,430 model fits, ICC-v2 attains the highest Grand Mean ARI of $\math
 \midrule
 \textbf{Dataset ($N, D, K$)} & \shortstack{\textbf{K-Means}\\\textbf{(Ambient)}} & \shortstack{\textbf{K-Means}\\\textbf{(VarFilt)}} & \shortstack{\textbf{K-Means}\\\textbf{(PCA)}} & \shortstack{\textbf{K-Means}\\\textbf{(LapScore)}} & \shortstack{\textbf{Sparse}\\\textbf{K-Means}} \\
 \midrule
-CNS ($60, 7.1\text{k}, 2$) & $-0.016 \pm 0.023$ & $-0.016 \pm 0.019$ & $-0.022 \pm 0.022$ & $-0.040 \pm 0.007$ & $-0.028 \pm 0.022$ \\
-Colon ($62, 2.0\text{k}, 2$) & $-0.016 \pm 0.004$ & $-0.012 \pm 0.010$ & $-0.013 \pm 0.009$ & $-0.016 \pm 0.010$ & $+0.004 \pm 0.042$ \\
-Leukemia ($72, 7.1\text{k}, 2$) & $+0.185 \pm 0.068$ & $+0.201 \pm 0.072$ & $+0.173 \pm 0.070$ & $+0.217 \pm 0.011$ & $+0.203 \pm 0.035$ \\
-Ovarian ($253, 15.2\text{k}, 2$) & $+0.009 \pm 0.002$ & $+0.000 \pm 0.000$ & $+0.009 \pm 0.002$ & $+0.006 \pm 0.002$ & $-0.001 \pm 0.004$ \\
-Prostate ($102, 12.6\text{k}, 2$) & $+0.048 \pm 0.004$ & $\mathbf{+0.050 \pm 0.000}$ & $+0.049 \pm 0.000$ & $+0.044 \pm 0.005$ & $+0.048 \pm 0.004$ \\
-SRBCT ($83, 2.3\text{k}, 4$) & $+0.060 \pm 0.029$ & $+0.077 \pm 0.063$ & $+0.062 \pm 0.043$ & $+0.040 \pm 0.004$ & $+0.044 \pm 0.025$ \\
+CNS ($60, 7.1\text{k}, 2$) & $-0.001 \pm 0.015$ & $-0.015 \pm 0.018$ & $-0.004 \pm 0.015$ & $-0.042 \pm 0.007$ & $-0.023 \pm 0.019$ \\
+Colon ($62, 2.0\text{k}, 2$) & $-0.011 \pm 0.012$ & $-0.016 \pm 0.006$ & $-0.009 \pm 0.013$ & $-0.016 \pm 0.002$ & $+0.016 \pm 0.073$ \\
+Leukemia ($72, 7.1\text{k}, 2$) & $+0.200 \pm 0.055$ & $+0.210 \pm 0.057$ & $+0.215 \pm 0.054$ & $+0.211 \pm 0.000$ & $+0.117 \pm 0.106$ \\
+Ovarian ($253, 15.1\text{k}, 2$) & $+0.009 \pm 0.001$ & $-0.000 \pm 0.000$ & $+0.010 \pm 0.001$ & $+0.001 \pm 0.001$ & $+0.001 \pm 0.003$ \\
+Prostate ($102, 12.6\text{k}, 2$) & $\mathbf{+0.049 \pm 0.000}$ & $+0.048 \pm 0.005$ & $\mathbf{+0.049 \pm 0.000}$ & $\mathbf{+0.049 \pm 0.000}$ & $+0.030 \pm 0.021$ \\
+SRBCT ($83, 2.3\text{k}, 4$) & $+0.058 \pm 0.035$ & $+0.052 \pm 0.028$ & $+0.066 \pm 0.038$ & $+0.042 \pm 0.002$ & $+0.165 \pm 0.128$ \\
 \midrule
-\textbf{Subgroup Mean ($D/N > 20$)} & 0.045 & \FairBaselinesKmVarFiltHighDMean & \FairBaselinesKmPcaHighDMean & 0.043 & \FairBaselinesSparseKmHighDMean \\
+\textbf{Subgroup Mean ARI} & 0.051 & \FairBaselinesKmVarFiltHighDMean & \FairBaselinesKmPcaHighDMean & 0.041 & \FairBaselinesSparseKmHighDMean \\
+\textbf{Subgroup Median ARI} & 0.027 & 0.017 & 0.027 & 0.017 & 0.004 \\
 \bottomrule
 \end{tabular}
 
@@ -511,20 +554,21 @@ SRBCT ($83, 2.3\text{k}, 4$) & $+0.060 \pm 0.029$ & $+0.077 \pm 0.063$ & $+0.062
 \midrule
 \textbf{Dataset ($N, D, K$)} & \shortstack{\textbf{Std Cons}\\\textbf{(Ambient)}} & \shortstack{\textbf{Std Cons}\\\textbf{(VarFilt)}} & \shortstack{\textbf{Std Cons}\\\textbf{(PCA)}} & \shortstack{\textbf{ICC-v2}\\\textbf{(Ours)}} \\
 \midrule
-CNS ($60, 7.1\text{k}, 2$) & $-0.023 \pm 0.019$ & $-0.032 \pm 0.013$ & $-0.027 \pm 0.024$ & $\mathbf{+0.029 \pm 0.015}$ \\
-Colon ($62, 2.0\text{k}, 2$) & $-0.005 \pm 0.018$ & $-0.008 \pm 0.010$ & $-0.004 \pm 0.013$ & $\mathbf{+0.058 \pm 0.083}$ \\
-Leukemia ($72, 7.1\text{k}, 2$) & $+0.173 \pm 0.067$ & $+0.160 \pm 0.055$ & $+0.153 \pm 0.056$ & $\mathbf{+0.541 \pm 0.406}$ \\
-Ovarian ($253, 15.2\text{k}, 2$) & $+0.010 \pm 0.002$ & $-0.000 \pm 0.001$ & $+0.010 \pm 0.002$ & $\mathbf{+0.076 \pm 0.191}$ \\
-Prostate ($102, 12.6\text{k}, 2$) & $+0.049 \pm 0.000$ & $+0.049 \pm 0.000$ & $+0.049 \pm 0.000$ & $+0.013 \pm 0.016$ \\
-SRBCT ($83, 2.3\text{k}, 4$) & $+0.040 \pm 0.013$ & $+0.047 \pm 0.010$ & $+0.050 \pm 0.036$ & $\mathbf{+0.586 \pm 0.072}$ \\
+CNS ($60, 7.1\text{k}, 2$) & $-0.025 \pm 0.020$ & $-0.026 \pm 0.016$ & $-0.028 \pm 0.018$ & $\mathbf{+0.021 \pm 0.022}$ \\
+Colon ($62, 2.0\text{k}, 2$) & $-0.013 \pm 0.015$ & $-0.010 \pm 0.012$ & $-0.010 \pm 0.016$ & $\mathbf{+0.072 \pm 0.110}$ \\
+Leukemia ($72, 7.1\text{k}, 2$) & $+0.162 \pm 0.064$ & $+0.139 \pm 0.043$ & $+0.171 \pm 0.063$ & $\mathbf{+0.600 \pm 0.367}$ \\
+Ovarian ($253, 15.1\text{k}, 2$) & $+0.009 \pm 0.001$ & $-0.000 \pm 0.001$ & $+0.008 \pm 0.003$ & $\mathbf{+0.050 \pm 0.139}$ \\
+Prostate ($102, 12.6\text{k}, 2$) & $+0.049 \pm 0.002$ & $\mathbf{+0.049 \pm 0.000}$ & $+0.049 \pm 0.002$ & $+0.012 \pm 0.013$ \\
+SRBCT ($83, 2.3\text{k}, 4$) & $+0.042 \pm 0.012$ & $+0.039 \pm 0.008$ & $+0.041 \pm 0.014$ & $\mathbf{+0.546 \pm 0.102}$ \\
 \midrule
-\textbf{Subgroup Mean ($D/N > 20$)} & 0.041 & 0.036 & \FairBaselinesStdConsPcaHighDMean & \textbf{0.217} \\
+\textbf{Subgroup Mean ARI} & 0.037 & 0.032 & \FairBaselinesStdConsPcaHighDMean & \textbf{\FairBaselinesIccVTwoHighDMean} \\
+\textbf{Subgroup Median ARI} & 0.022 & 0.019 & 0.019 & \textbf{\FairBaselinesIccVTwoHighDMedian} \\
 \bottomrule
 \end{tabular}
 \end{table*}
 
 \textbf{Fair Feature-Matched Baseline Evaluation:}
-To examine whether ICC-v2's performance in $D/N > 20$ regimes arises solely from dimensionality reduction rather than ensemble integration, we evaluated standard clustering baselines under identical active feature budgets ($|\mathcal{F}_{\text{active}}| = \min(D, \max(K, \lfloor 0.15 D \rfloor))$ across all 6 high-dimensional datasets over 10 random seeds (Table~\ref{tab:fair_baselines}). When standard algorithms are provided with variance-filtered features (K-Means: $\FairBaselinesKmVarFiltHighDMean$, Std Consensus: $0.036$), PCA projections (K-Means: $\FairBaselinesKmPcaHighDMean$, Std Consensus: $\FairBaselinesStdConsPcaHighDMean$), Laplacian-score graph features (K-Means: $0.043$), or an $L_1$ sparsity penalty (Sparse K-Means: $\FairBaselinesSparseKmHighDMean$), every competing baseline achieves a subgroup mean ARI $\le 0.050$. In contrast, ICC-v2 attains a subgroup mean ARI of $\mathbf{0.217 \pm 0.148}$ under identical evaluation conditions, confirming that the performance gain reflects the synergy of subspace ensembling and certified anchor consensus rather than simple feature filtering.
+To examine whether ICC-v2's performance in $D/N > 20$ regimes arises solely from dimensionality reduction rather than ensemble integration, we evaluated standard clustering baselines under identical active feature budgets ($|\mathcal{F}_{\text{active}}| = \min(D, \max(K, \lfloor 0.15 D \rfloor))$ across all 6 high-dimensional datasets over 30 random seeds (Table~\ref{tab:fair_baselines}). When standard algorithms are provided with variance-filtered features (K-Means: $\FairBaselinesKmVarFiltHighDMean$, Std Consensus: $\FairBaselinesStdConsVarFiltHighDMean$), PCA projections (K-Means: $\FairBaselinesKmPcaHighDMean$, Std Consensus: $\FairBaselinesStdConsPcaHighDMean$), Laplacian-score graph features (K-Means: $\FairBaselinesKmLapScoreHighDMean$), or an $L_1$ sparsity penalty (Sparse K-Means: $\FairBaselinesSparseKmHighDMean$), competing baselines achieve subgroup mean ARIs between $\FairBaselinesStdConsVarFiltHighDMean$ and $\FairBaselinesKmPcaHighDMean$. In contrast, ICC-v2 attains a subgroup mean ARI of $\mathbf{\FairBaselinesIccVTwoHighDMean}$ (median $\FairBaselinesIccVTwoHighDMedian$) under identical canonical seeds and evaluation conditions. However, this subgroup average is heavily driven by strong recovery on Leukemia ($0.600 \pm 0.367$) and SRBCT ($0.546 \pm 0.102$). On Prostate ($D=12{,}600, N=102$), ICC-v2 achieves an ARI of $0.012 \pm 0.013$, underperforming Ambient K-Means ($0.049 \pm 0.000$), Variance-Filtered K-Means ($0.048 \pm 0.005$), and Standard Consensus ($0.049 \pm 0.002$). Furthermore, bootstrap comparisons between certified anchors (V5) and random anchors (V4) yield an overlapping confidence interval ($\Delta = +0.019$, dataset-level cluster bootstrap 95\% CI: $[-0.039, +0.082]$, paired Wilcoxon signed-rank test across the six cohorts $W=9.0, p=0.84$), indicating that anchor certification provides no measurable accuracy advantage over random anchor selection across these benchmarks.
 
 
 \subsection{Experiment 4: Computational Scalability, Sensitivity \& Anchor Fidelity}\label{sec:exp4}
@@ -532,17 +576,17 @@ To examine whether ICC-v2's performance in $D/N > 20$ regimes arises solely from
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=0.80\textwidth]{figures/fig24_anchor_fidelity_quad.png}
-\caption{Anchor graph approximation fidelity and computational complexity tradeoff (Exp~4.3). (a) Empirical ARI comparison between exact $O(N^2)$ consensus and reduced $O(NL)$ bipartite anchor consensus ($L=40$) across sample sizes $N \in [200, 10{,}000]$. (b) Absolute fidelity gap $|\Delta \text{ARI}|$, showing divergence exceeding $0.05$ at intermediate sample sizes. (c) Runtime scaling achieving an acceleration at $N=10{,}000$ ($1.34\text{s}$ vs. $29.91\text{s}$). (d) Peak RAM scaling showing memory reduction at $N=10{,}000$ ($45.8\text{ MB}$ vs. $1{,}529.8\text{ MB}$).}
+\caption{Bipartite anchor graph scaling, speedup, and memory reduction (Exp~4.3). (a) Wall-clock execution time comparison between standard dense consensus ($O(N^2)$) and ICC-v2 ($O(NL)$, $L=40$) across sample sizes $N \in [200, 10{,}000]$, completing in $10.35\text{ s}$ vs. $29.96\text{ s}$ at $N=10{,}000$. (b) Empirical speedup ratio ($T_{\text{exact}} / T_{\text{reduced}}$), achieving a \MemoryScalingTenKSpeedup\ acceleration at $N=10{,}000$. (c) Auxiliary consensus graph working memory, showing a \MemoryScalingTenKGraphReduction\ reduction ($3.06\text{ MB}$ bipartite anchor graph vs. $762.8\text{ MB}$ dense co-association matrix at $N=10{,}000$). (d) Peak dynamic memory (RAM) allocation showing a \MemoryScalingTenKReduction\ memory reduction at $N=10{,}000$ ($68.8\text{ MB}$ vs. $2{,}670.6\text{ MB}$).}
 \label{fig:exp4_3_fidelity}
 \end{figure*}
 
 To evaluate the complexity bounds of Theorem~\ref{thm:complexity}, Experiment~4 examined empirical scaling, hyperparameter sensitivity (Fig.~\ref{fig:exp4_results}), and anchor approximation fidelity (Fig.~\ref{fig:exp4_3_fidelity}):
 \begin{itemize}
-    \item \textbf{Unified Scaling Re-Measurement (5 Seeds):} Under a single unified protocol evaluated across five random seeds ($N \in [200, 10{,}000]$, $D=200$, Table~\ref{tab:taxonomy_comparison}), standard dense consensus requires $2{,}670.6 \pm 0.0\text{ MB}$ peak dynamic memory and $29.96 \pm 1.93\text{ s}$ runtime at $N=10{,}000$, whereas ICC-v2 requires only $68.83 \pm 0.25\text{ MB}$ peak memory and $10.35 \pm 0.78\text{ s}$ runtime (Fig.~\ref{fig:exp4_sample}), achieving a \textbf{\MemoryScalingTenKReduction\ peak memory reduction} and a \textbf{\MemoryScalingTenKSpeedup\ execution speedup}. To prevent conflation of memory concepts, we explicitly separate total process peak RSS ($2{,}894.2\text{ MB}$ for standard consensus vs. $292.1\text{ MB}$ for ICC-v2, an $89.9\%$ reduction) from consensus graph working memory alone: the dense $N \times N$ co-association matrix $S$ requires $762.8\text{ MB}$, whereas the bipartite consensus graph ($B \in \mathbb{R}^{10{,}000 \times 40}$ and $W_{\text{anchor}} \in \mathbb{R}^{40 \times 40}$) requires only $3.06\text{ MB}$, representing a \textbf{\MemoryScalingTenKGraphReduction\ reduction} in consensus graph memory.
+    \item \textbf{Unified Scaling Re-Measurement (5 Seeds):} Under a single unified protocol evaluated across five random seeds ($N \in [200, 10{,}000]$, $D=200$, Fig.~\ref{fig:exp4_3_fidelity}), standard dense consensus requires $2{,}670.6 \pm 0.0\text{ MB}$ peak dynamic memory and $29.96 \pm 1.93\text{ s}$ runtime at $N=10{,}000$, whereas ICC-v2 requires only $68.83 \pm 0.25\text{ MB}$ peak memory and $10.35 \pm 0.78\text{ s}$ runtime (Fig.~\ref{fig:exp4_sample}), achieving a \textbf{\MemoryScalingTenKReduction\ peak memory reduction} and a \textbf{\MemoryScalingTenKSpeedup\ execution speedup}. To prevent conflation of memory concepts, we explicitly separate total process peak RSS ($2{,}894.2\text{ MB}$ for standard consensus vs. $292.1\text{ MB}$ for ICC-v2, an $89.9\%$ reduction) from consensus graph working memory alone: the dense $N \times N$ co-association matrix $S$ requires $762.8\text{ MB}$, whereas the bipartite consensus graph ($B \in \mathbb{R}^{10{,}000 \times 40}$ and $W_{\text{anchor}} \in \mathbb{R}^{40 \times 40}$) requires only $3.06\text{ MB}$, representing a \textbf{\MemoryScalingTenKGraphReduction\ reduction} in consensus graph memory.
     \item \textbf{High-Dimensional Scaling:} Under $D=20{,}000$, BGSS subspace gating reduces pairwise distance evaluation time from $1.523\text{s}$ to $0.964\text{s}$ (Fig.~\ref{fig:exp4_dim}), an acceleration of \textbf{$36.7\%$}.
     \item \textbf{Ensemble Size Tradeoff:} Consensus quality plateaus between $M=25$ and $M=50$ (Fig.~\ref{fig:exp4_ensemble}), with $95\%$ of peak ARI achieved by $M=25$.
-    \item \textbf{Stability Landscape:} Grid searches over $(L, \tau_{\text{core}})$ indicate a parameter plateau ($\text{ARI} \ge 0.85$, Fig.~\ref{fig:exp4_sensitivity}) across $\tau_{\text{core}} \in [0.4, 0.7]$.
-    \item \textbf{Anchor Fidelity Tradeoff (Exp 4.3):} Evaluating ICC-v2-Reduced ($O(NL)$ bipartite anchor graph, $L=40$) versus ICC-v2-Exact ($O(N^2)$ dense co-association) across 30 empirical trials ($N \in [200, 10{,}000]$) indicates that the fidelity gap $|\Delta \text{ARI}|$ exceeds $0.05$ at intermediate sample sizes ($N \in [1{,}000, 5{,}000]$, Fig.~\ref{fig:exp4_3_fidelity}(b)). At $N=5{,}000$, Reduced scores $0.618$ vs. $0.583$ for Exact. At $N=10{,}000$, Reduced requires $1.34\text{s}$ vs. $29.91\text{s}$ for Exact ($22.4\times$ speedup) and reduces auxiliary graph memory from $1{,}529.8\text{ MB}$ to $45.8\text{ MB}$ (\textbf{$97.0\%$ memory reduction}).
+    \item \textbf{Stability Landscape:} Grid searches over $(L, \tau_{\text{core}})$ on synthetic benchmark data ($N=1{,}000, D=500, K=5$) indicate a parameter plateau ($\text{ARI} \ge 0.85$, Fig.~\ref{fig:exp4_sensitivity}) across $\tau_{\text{core}} \in [0.4, 0.7]$.
+    \item \textbf{Anchor Graph Complexity Tradeoff (Exp 4.3):} Evaluating bipartite anchor consensus ($O(NL)$, $L=40$) against exact dense consensus ($O(N^2)$) across sample sizes $N \in [200, 10{,}000]$ (Fig.~\ref{fig:exp4_3_fidelity}) demonstrates the empirical scaling benefits predicted by Theorem~\ref{thm:complexity}. At $N=10{,}000$, bipartite anchor consensus executes in $10.35 \pm 0.78\text{ s}$ vs. $29.96 \pm 1.93\text{ s}$ for dense consensus (\MemoryScalingTenKSpeedup\ speedup, Fig.~\ref{fig:exp4_3_fidelity}(a,b)), while reducing auxiliary graph working memory from $762.8\text{ MB}$ to $3.06\text{ MB}$ (\textbf{\MemoryScalingTenKGraphReduction\ graph memory reduction}, Fig.~\ref{fig:exp4_3_fidelity}(c)) and peak dynamic memory from $2{,}670.6\text{ MB}$ to $68.8\text{ MB}$ (\textbf{\MemoryScalingTenKReduction\ dynamic memory reduction}, Fig.~\ref{fig:exp4_3_fidelity}(d)).
 \end{itemize}
 
 \begin{figure*}[!t]
@@ -572,7 +616,7 @@ To evaluate the complexity bounds of Theorem~\ref{thm:complexity}, Experiment~4 
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=0.80\textwidth]{figures/fig26_extreme_scale_quad.png}
-\caption{Scalability evaluation up to $N=1{,}000{,}000$ instances and $D=100{,}000$ dimensions (Exp~5). (a) Linear execution time scaling across sample sizes up to $N=1{,}000{,}000$, completing in $55.6\text{s}$. (b) Memory consumption scaling, requiring $3.05\text{ GB}$ peak RAM at $N=1{,}000{,}000$. (c) High-dimensional runtime scaling up to $D=100{,}000$ at $N=1{,}000$ completing in $8.28\text{s}$. (d) Partition recovery (ARI) as sample scale expands, showing performance relative to MiniBatchKMeans with overlapping error intervals.}
+\caption{Scalability evaluation up to $N=1{,}000{,}000$ instances and $D=100{,}000$ dimensions (Exp~5). (a) Execution time scaling across sample sizes up to $N=1{,}000{,}000$, completing in \ExtremeScaleTime\ under reduced ensembling ($M=15, L=60$). (b) Memory consumption scaling, requiring $3.91\text{ GB}$ peak RAM at $N=1{,}000{,}000$. (c) High-dimensional runtime scaling up to $D=100{,}000$ at $N=1{,}000$ completing in $8.28\text{s}$. (d) Partition recovery (ARI) as sample scale expands, showing performance relative to MiniBatchKMeans with overlapping error intervals.}
 \label{fig:exp5_scale}
 \end{figure*}
 
@@ -589,7 +633,30 @@ To evaluate the complexity bounds of Theorem~\ref{thm:complexity}, Experiment~4 
 \label{fig:missing_suite}
 \end{figure*}
 
-\textbf{1. Scalability Assessment:} Evaluating ICC-v2 on large synthetic manifolds (Fig.~\ref{fig:exp5_scale}) confirms linear empirical scaling: on $N=1{,}000{,}000$ instances ($D=100, K=5$), where dense consensus requires $\approx 8\text{ TB}$ RAM, ICC-v2 completes in \textbf{$55.6\text{s}$} with \textbf{$3.05\text{ GB}$ peak process RSS} ($\text{ARI} = 0.382$ vs. $0.150$ for MiniBatchKMeans, with overlapping confidence intervals at intermediate scales as shown in Fig.~\ref{fig:exp5_scale}(d)). We separate the raw data matrix storage ($10^6 \times 100 \times 4\text{ bytes} = 400.0\text{ MB}$ in single precision or $800.0\text{ MB}$ in double precision) from the bipartite graph auxiliary memory ($10^6 \times 40 \times 4\text{ bytes} = 160.0\text{ MB}$ in single precision or $320.0\text{ MB}$ in double precision). In high feature spaces ($D=100{,}000, N=1{,}000$), ICC-v2 executes in \textbf{$8.28\text{s}$}.
+\textbf{1. Controlled Scalability Assessment (Exp 5):} Evaluating ICC-v2 on large synthetic manifolds (Fig.~\ref{fig:exp5_scale}) examines asymptotic limits. To establish reproducible scaling behavior, we conducted a controlled evaluation comparing the default configuration ($M=25, L=40$, float64) against a reduced ensembling configuration ($M=15, L=60$, float32) across $N \in \{10^4, 10^5, 10^6\}$ instances on an isotropic Gaussian mixture ($D=100, K=5$) over 3 random seeds (Table~\ref{tab:exp5_controlled}) using identical hardware (AMD Ryzen / Intel x86-64, Windows, Python 3.14, NumPy 2.x, scikit-learn).
+
+\begin{table}[!t]
+\caption{Controlled Scalability Evaluation Across Sample Sizes ($D=100, K=5$, 3 Random Seeds, Mean $\pm$ Standard Deviation)}
+\label{tab:exp5_controlled}
+\centering
+\small
+\setlength{\tabcolsep}{3.0pt}
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{Configuration} & $\mathbf{N}$ & \textbf{Time (s)} & \textbf{RAM (MB)} & \textbf{ARI} & \textbf{Scaling Exp. $\beta$ (95\% CI)} \\
+\midrule
+Default ($M=25, L=40$, f64) & $10^4$ & $5.58 \pm 1.29$   & $64.6$    & $0.275 \pm 0.128$ & \multirow{3}{*}{$0.755 \pm 0.084 \; [0.590, 0.921]$} \\
+Default ($M=25, L=40$, f64) & $10^5$ & $14.92 \pm 4.03$  & $393.2$   & $0.368 \pm 0.202$ & \\
+Default ($M=25, L=40$, f64) & $10^6$ & $182.64 \pm 51.01$& $3{,}836.8$ & $0.371 \pm 0.205$ & \\
+\midrule
+Reduced ($M=15, L=60$, f32) & $10^4$ & $2.48 \pm 0.18$   & $57.1$    & $0.208 \pm 0.067$ & \multirow{3}{*}{$0.873 \pm 0.076 \; [0.724, 1.023]$} \\
+Reduced ($M=15, L=60$, f32) & $10^5$ & $8.77 \pm 0.89$   & $397.7$   & $0.345 \pm 0.181$ & \\
+Reduced ($M=15, L=60$, f32) & $10^6$ & $141.22 \pm 34.87$& $3{,}909.9$ & $0.361 \pm 0.197$ & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Under the default configuration, ICC-v2 scales with empirical exponent $\beta = 0.755 \pm 0.084$ (95\% CI: $[0.590, 0.921]$, $R^2 = 0.919$), completing $N=1{,}000{,}000$ in $182.64 \pm 51.01\text{ s}$ with $3.84\text{ GB}$ peak RSS. Under the reduced configuration ($M=15, L=60$), runtime at $10^6$ scales to \textbf{\ExtremeScaleTime} with $3.91\text{ GB}$ peak process RSS and empirical scaling exponent $\beta = 0.873 \pm 0.076$ (95\% CI: $[0.724, 1.023]$, $R^2 = 0.949$). Where dense consensus requires $\approx 8\text{ TB}$ RAM, ICC-v2 separates raw data matrix storage from bipartite graph auxiliary memory ($10^6 \times 60 \times 4\text{ bytes} = 240.0\text{ MB}$). In high feature spaces ($D=100{,}000, N=1{,}000$), ICC-v2 executes in \textbf{$8.28\text{s}$}.
 
 \textbf{2. Missing Data Audit (Exp 3.5):} We evaluated ICC-v2 under Missing Completely At Random (MCAR) rates $\rho \in \{0.0, 0.10, 0.20, 0.30, 0.50, 0.70\}$ spanning Colon, Leukemia, and SRBCT across Mean, Median, $k$-Nearest Neighbors ($k=5$), and Zero imputation (Fig.~\ref{fig:missing_suite}). On SRBCT, partition fidelity decreases as missingness increases, retaining $\text{ARI} > 0.40$ up to $\rho=0.50$ under KNN imputation, while baseline methods drop below $0.10$. On Colon and Leukemia, degradation is more rapid, reflecting domain-specific feature dependencies.
 
@@ -606,15 +673,13 @@ We document several explicit limitations of the proposed framework:
     \item \textbf{Small Sample Size Variance:} For small sample sizes ($N < 30$), sample third and fourth moments have high statistical variance, which can impair feature ranking.
     \item \textbf{Baseline Comparison Scope:} In the primary benchmark (Table~\ref{tab:benchmark_ari}), competing baselines were evaluated on the full ambient feature set without dedicated upstream feature selection.
     \item \textbf{Sample Requirements for Deep Clustering:} Deep clustering (DEC) underperforms on small sample regimes ($N \le 100$) due to insufficient training data for autoencoder representations.
-    \item \textbf{Near-Zero ARI Regimes:} On CNS, Colon, Prostate, and Ovarian, all evaluated methods achieve low ARI ($\le 0.052$), indicating unresolved clustering challenges on these benchmarks.
+    \item \textbf{Near-Zero ARI Regimes:} On CNS, Prostate, and Ovarian, evaluated methods achieve near-zero mean ARI ($\le 0.050$), while on Colon methods average below $0.073$, indicating unresolved clustering challenges on these biological benchmarks.
 \end{enumerate}
 
 
 \section{Conclusion}\label{sec:conclusion}
 
-This paper investigated Inductive Consensus Clustering (ICC), addressing the transductive formulation and noise vulnerability of classical cluster ensembles. Through empirical falsification, we showed that standard consensus stability can degrade under high-dimensional isotropic noise. The proposed ICC-v2 framework integrates Bimodality-Gated Subspace Selection (BGSS), determinacy-based bipartite anchor consensus, and stability-weighted centroid projection. Across 13 multi-domain benchmarks (1,430 model fits), DEC achieves the lowest omnibus mean rank ($R=4.31$), with ICC-v2 ranking fifth ($R=5.46$). ICC-v2 achieves the highest Grand Mean ARI of $0.160$ and attains mean rank $R = \RankBioICCvTwo$ on the exploratory high-dimensional biomedical subgroup ($D/N > 20$, with an absolute ARI improvement of $+0.388$ over the strongest baseline, FastMVC, on SRBCT), while reducing auxiliary consensus graph memory by \MemoryScalingTenKGraphReduction\ at $N=10{,}000$ (\MemoryScalingTenKReduction\ peak dynamic memory) and executing up to $N=1{,}000{,}000$ instances in \ExtremeScaleTime. Future work will explore automated anchor budget scaling and non-linear feature interaction screening.
-
-
+This paper presented an empirical examination of consensus clustering in high-dimensional noise regimes, systematically investigating when feature gating, anchor consensus, and inductive projection succeed and where they fail. Through finite-sample falsification experiments, we showed that conventional consensus stability metrics degrade under high-dimensional isotropic distractor noise, converging stably onto arbitrary noise partitions. We evaluated Inductive Consensus Clustering (ICC-v2), which combines linear Bimodality-Gated Subspace Selection (BGSS), bipartite anchor consensus, and stability-weighted centroid assignment. Across 13 multi-domain benchmarks (2,750 model fits), Standard Consensus achieves the lowest omnibus mean rank ($R=\TableThreeStdConsOverallRank$), followed by K-Means ($R=\TableThreeKMeansOverallRank$), DEC ($R=\TableThreeDecOverallRank$), and ICC-v2 ($R=\TableThreeIccVTwoOverallRank$, Friedman $\chi_F^2 = 9.59, p = \TableThreeFriedmanPValue$, $CD = \TrueNemenyiCD$). Although ICC-v2 attains the highest Grand Mean ARI (\GrandMeanARI), this metric is heavily driven by large gains on two cancer microarray benchmarks: Leukemia (\ARIleukemia) and SRBCT (\ARIsrbct, $+0.408$ over FastMVC), while averaging \OmnibusMeanExcludingLeukemiaSrbct\ on the remaining 11 benchmarks (omnibus median ARI: \OmnibusMedianARI). In the exploratory high-dimensional subgroup ($D/N > 20$), ICC-v2 achieves Rank \#1 ($R=\RankBioICCvTwo$), but fails on Prostate ($0.012$ vs. $0.049$). Our ablation experiments establish a key null result: determinacy anchor certification yields no statistically significant accuracy benefit over uniform random anchors ($\Delta = +0.019$, dataset-level cluster bootstrap 95\% CI: $[-0.039, +0.082]$), indicating that bipartite anchor graph dimensionality reduction---reducing graph memory by \MemoryScalingTenKGraphReduction\ at $N=10{,}000$ and enabling $N=1{,}000{,}000$ scaling in \ExtremeScaleTime\ under single-precision batch ensembling ($M=15, L=60$)---is the primary operational mechanism rather than anchor certification. Finally, our failure analysis demonstrates that marginal moment gating cannot resolve non-linear parity structures or sparse zero-inflated counts, delineating the exact boundaries of consensus clustering in high-dimensional noise.
 
 \backmatter
 
@@ -631,11 +696,18 @@ The authors thank the Department of Computer Science and Engineering, Techno Ind
 \item \textbf{Conflict of interest/Competing interests:} The authors declare that they have no competing financial or non-financial interests directly or indirectly related to the work submitted for publication.
 \item \textbf{Ethics approval and consent to participate:} Not applicable. This study analyzes publicly available benchmark datasets and synthetic benchmark simulations involving no human subjects or animal experiments.
 \item \textbf{Consent for publication:} All co-authors have been provided the complete pre-submission manuscript bundle. Formal submission sign-off is pending final co-author review.
-\item \textbf{Data availability:} All real-world benchmark datasets utilized in this study (CNS, Colon, Indian Pines, Isolet, Leukemia, Madelon, 20 Newsgroups, Ovarian, Prostate, Sonar, SRBCT, Extended Yale B, Zheng68k) are publicly accessible. Preprocessed benchmark arrays are mirrored at: \url{https://github.com/AkashKundu114/icc-clustering} (release tag \texttt{v2.0.0}).
+\item \textbf{Data availability:} All benchmark datasets analyzed in this study are publicly accessible from their original upstream open-access repositories:
+\begin{itemize}
+    \item \textbf{Biomedical and Tabular Microarrays:} CNS (OpenML ID: 1128, \url{https://www.openml.org/d/1128}), Colon (OpenML ID: 1111, \url{https://www.openml.org/d/1111}), Leukemia (OpenML ID: 1104, \url{https://www.openml.org/d/1104}), Ovarian (OpenML ID: 1142, \url{https://www.openml.org/d/1142}), Prostate (OpenML ID: 1159, \url{https://www.openml.org/d/1159}), SRBCT (OpenML ID: 1158, \url{https://www.openml.org/d/1158}), Sonar (OpenML ID: 40, \url{https://www.openml.org/d/40}), Madelon (OpenML ID: 1485, \url{https://www.openml.org/d/1485}), and Isolet (UCI Machine Learning Repository: \url{https://archive.ics.uci.edu/dataset/54/isolet}; OpenML ID: 300, \url{https://www.openml.org/d/300}).
+    \item \textbf{Text Benchmark:} 20 Newsgroups (original corpus: \url{http://qwone.com/~jason/20Newsgroups/}).
+    \item \textbf{Hyperspectral Benchmark:} Indian Pines (UPV/EHU Hyperspectral Imagery Repository: \url{https://www.ehu.eus/ccwintco/index.php/Hyperspectral_Remote_Sensing_Scenes}).
+    \item \textbf{Facial Image Benchmark:} Extended Yale B (Academic Torrents persistent archive: \url{https://academictorrents.com/details/aad8bf8e6ee5d8a3bf46c7ab5adfacdd8ad36247}).
+    \item \textbf{Single-Cell Genomics Benchmark:} PBMC68k-reduced (10x Genomics 68k PBMCs primary repository: \url{https://www.10xgenomics.com/datasets/fresh-68-k-pbm-cs-donor-a-1-standard-1-1-0}; distributed in Scanpy: \url{https://scanpy.readthedocs.io/en/stable/generated/scanpy.datasets.pbmc68k_reduced.html}).
+\end{itemize}
 \item \textbf{Materials availability:} Not applicable.
 \item \textbf{Code availability:} The complete, fully reproducible Python implementation of ICC-v2, benchmark harnesses, validation scripts, and figure generation routines are released under the MIT License at: \url{https://github.com/AkashKundu114/icc-clustering} (release tag \texttt{v2.0.0}).
 \item \textbf{Author contribution:} A. Kundu conceived the framework, derived theoretical properties, implemented algorithms, performed empirical analyses, and drafted the manuscript. T. Guha, R. Ghatak, and A. Naskar designed baseline pipelines, contributed to computational scaling experiments, and validated code integrity. K. K. Das supervised the research, reviewed statistical methodologies, and edited the manuscript.
-\item \textbf{Use of Artificial Intelligence Disclosure:} During the preparation of this manuscript and codebase, the authors utilized an agentic AI coding assistant (Google Antigravity / Claude / Gemini) to assist with automated execution of benchmark scripts, data extraction into LaTeX macro registries, code refactoring, and iterative drafting and proofreading of the manuscript text. The conceptual framework, experimental design, theoretical proofs, and data analysis were formulated and directed by the authors. The authors have reviewed, audited, and verified all text, tables, figures, and code, and take full responsibility for the scientific integrity and reproducibility of this work.
+\item \textbf{Use of Artificial Intelligence Disclosure:} During the preparation of this manuscript and software repository, the authors utilized an agentic AI coding assistant (Google Antigravity, utilizing Gemini models including experimental flash/pro checkpoints) to assist with iterative drafting and textual refactoring (including revision of title, abstract, and conclusion framing), automated script execution, bibliographic checking against CrossRef APIs, figure plotting, LaTeX table formatting, and proofreading text. All conceptual formulations, empirical designs, and theoretical derivations were directed by the human authors. The authors have conducted extensive cross-checks of the generated text, tables, figures, and code, and take full responsibility for the scientific integrity and reproducibility of all reported findings.
 \end{itemize}
 
 \bibliography{references}

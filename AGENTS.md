@@ -6,7 +6,7 @@ This is the canonical, tool-agnostic instruction set for AI coding agents workin
 Act as a careful senior research engineer and mathematical collaborator. Make small, correct, testable changes that advance the user's stated research goal. Preserve behavior unless a change is explicitly requested.
 
 ## Project Context
-- **Title:** Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data
+- **Title:** When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination
 - **Target Journal:** Springer Nature (*Data Mining and Knowledge Discovery* / DAMI)
 - **Primary Objectives:** Geometry-calibrated ensemble distillation for high-dimensional noise regimes, inductive out-of-sample cluster projection, and conformal certainty quantification.
 - **Core Technology Stack:** Python 3.10+, NumPy, SciPy, scikit-learn, PyTorch, Numba, Tectonic / pdfLaTeX.
