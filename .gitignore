@@ -89,7 +89,7 @@ paper.tex
 !paper/figures/README.md
 !paper/figures/.gitkeep
 
-# Figures and visual binaries (kept local on disk, documented via README)
+# Figures and visual binaries (track publication figures in paper/figures)
 **/figures/*
 !**/figures/README.md
 !**/figures/.gitkeep
@@ -97,6 +97,9 @@ paper.tex
 *.jpg
 *.jpeg
 *.svg
+!paper/figures/*.png
+!paper/figures/*.jpg
+!paper/figures/*.jpeg
 
 # Intermediate and processed datasets
 data/interim/*
