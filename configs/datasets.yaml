@@ -61,7 +61,7 @@ datasets:
     name: "colon"
     domain: "genomics"
     source: "openml"
-    openml_id: 1111
+    openml_id: 45087
     openml_name: "colon"
     openml_version: 1
     expected_N: 62
@@ -81,7 +81,7 @@ datasets:
     name: "srbct"
     domain: "genomics"
     source: "openml"
-    openml_id: 1158
+    openml_id: 45101
     openml_name: "srbct"
     openml_version: 1
     expected_N: 83
@@ -101,7 +101,7 @@ datasets:
     name: "cns"
     domain: "genomics"
     source: "openml"
-    openml_id: 1128
+    openml_id: 45086
     openml_name: "cns"
     openml_version: 1
     expected_N: 60
@@ -141,7 +141,7 @@ datasets:
     name: "prostate"
     domain: "genomics"
     source: "openml"
-    openml_id: 1159
+    openml_id: 45099
     openml_name: "prostate"
     openml_version: 1
     expected_N: 102
@@ -161,7 +161,7 @@ datasets:
     name: "ovarian"
     domain: "genomics"
     source: "openml"
-    openml_id: 1142
+    openml_id: 45098
     openml_name: "ovarian"
     openml_version: 1
     expected_N: 253
