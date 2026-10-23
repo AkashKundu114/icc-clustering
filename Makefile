@@ -1,4 +1,4 @@
-.PHONY: help install dev test lint format clean reproduce smoke numbers check-macros check-pdf figures
+.PHONY: help install dev test lint format clean reproduce smoke numbers check-macros check-pdf figures compile package
 
 PYTHON ?= python
 PIP ?= pip
@@ -17,6 +17,8 @@ help:
 	@echo "  check-macros : Verify numbers.tex consistency against Pass F store"
 	@echo "  check-pdf    : Verify compiled PDF decimals against Pass F numerical allowlist"
 	@echo "  figures      : Regenerate experiment figures from frozen caches"
+	@echo "  compile      : Compile Springer Nature manuscript main.pdf via Tectonic"
+	@echo "  package      : Build Springer Nature and Overleaf submission packages"
 	@echo "  clean        : Clean build and cache artifacts"
 
 install:
@@ -53,6 +55,12 @@ check-pdf:
 
 figures:
 	$(PYTHON) scripts/regenerate_figures_passF.py
+
+compile:
+	$(PYTHON) scripts/build_submission_package.py
+
+package:
+	$(PYTHON) scripts/build_submission_package.py
 
 clean:
 	rm -rf build/ dist/ *.egg-info .pytest_cache/ .ruff_cache/ .mypy_cache/ .coverage
