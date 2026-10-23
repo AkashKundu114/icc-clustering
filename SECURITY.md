@@ -4,11 +4,12 @@
 
 The following table lists the security support status for versions of the **Inductive Consensus Clustering (ICC)** framework:
 
-| Version | Supported          | Security Status                                  |
-| ------- | ------------------ | ------------------------------------------------ |
-| 2.0.x   | :white_check_mark: | Current active release (IEEE Submission Baseline)|
-| 1.0.x   | :x:                | Deprecated (v1 anchor-only prototype)            |
-| < 1.0   | :x:                | Unsupported                                      |
+| Version | Supported          | Security Status                                         |
+| ------- | ------------------ | ------------------------------------------------------- |
+| 2.1.x   | :white_check_mark: | Current active release (Springer Nature DAMI Baseline)  |
+| 2.0.x   | :white_check_mark: | Previous release baseline                               |
+| 1.0.x   | :x:                | Deprecated (v1 anchor-only prototype)                   |
+| < 1.0   | :x:                | Unsupported                                             |
 
 ---
 

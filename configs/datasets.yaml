@@ -178,7 +178,7 @@ datasets:
     description: "Ovarian cancer surface-enhanced laser desorption ionization mass spectrometry"
 
   # ============================================================================
-  # NEW BENCHMARK DATASETS (Phase 4 Expansion — Enabled: false)
+  # NEW BENCHMARK DATASETS (Phase 4 Expansion: Enabled: false)
   # ============================================================================
   newsgroups20:
     name: "newsgroups20"

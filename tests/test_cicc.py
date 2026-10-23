@@ -10,10 +10,10 @@ Tests:
 
 import numpy as np
 
-from src.cicc.conformal import ConformalClusterer, ConformalResult
-from src.cicc.decoy import DecoyFeatureGating
-from src.cicc.inductive import InductiveConsensusClusterer
-from src.cicc.memory import InductiveConsensusMemory
+from cicc.conformal import ConformalClusterer, ConformalResult
+from cicc.decoy import DecoyFeatureGating
+from cicc.inductive import InductiveConsensusClusterer
+from cicc.memory import InductiveConsensusMemory
 
 
 def test_decoy_feature_gating():

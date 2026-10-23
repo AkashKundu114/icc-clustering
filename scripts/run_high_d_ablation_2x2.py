@@ -1,17 +1,37 @@
+"""
+2x2 Factorial Ablation on High-Dimensional Benchmark Datasets.
+
+Evaluates the factorial cross {Ambient, BGSS} x {Dense Consensus, Anchor Consensus}:
+  - Ambient K-Means (Cell 0,0)
+  - BGSS K-Means (Cell 1,0)
+  - Ambient Standard Consensus (Cell 0,1a)
+  - BGSS Standard Consensus (Cell 1,1a)
+  - Ambient Anchor Consensus (Cell 0,1b)
+  - BGSS Random Anchors (Cell 1,1b)
+  - Full ICC-v2 with Core Certified Anchors (Cell 1,1c)
+across 6 high-dimensional genomics datasets (cns, colon, leukemia, ovarian, prostate, srbct)
+over 10 random seeds (0 to 9).
+
+Usage:
+    python scripts/run_high_d_ablation_2x2.py
+"""
+
+import sys
 import time
 from pathlib import Path
+
 import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
 
-import sys
 root_dir = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(root_dir))
+if str(root_dir) not in sys.path:
+    sys.path.insert(0, str(root_dir))
 
-from icc.datasets.registry import load_dataset
-from icc.baselines.consensus import run_standard_consensus, run_icc_v1
-from icc.consensus_v2 import InvariantCoreConsensusV2
-from experiments.exp2_ablation.src.ablation_engine import extract_vssg_candidate_features
+from experiments.exp2_ablation.src.ablation_engine import extract_vssg_candidate_features  # noqa: E402
+from icc.baselines.consensus import run_icc_v1, run_standard_consensus  # noqa: E402
+from icc.consensus_v2 import InvariantCoreConsensusV2  # noqa: E402
+from icc.datasets.registry import load_dataset  # noqa: E402
 
 DATASETS = ["cns", "colon", "leukemia", "ovarian", "prostate", "srbct"]
 SEEDS = list(range(10))  # Fixed seeds 0 to 9 per PREREG_B.md
@@ -20,9 +40,9 @@ def run_ablation_for_dataset(name: str):
     X, y, meta = load_dataset(name)
     N, D = X.shape
     K = meta["K"]
-    print(f"\n==========================================")
+    print("\n==========================================")
     print(f"Benchmarking 2x2 Factorial on {name.upper()}: N={N}, D={D}, K={K}")
-    print(f"==========================================")
+    print("==========================================")
 
     # BGSS Feature pool
     vssg_idx = extract_vssg_candidate_features(X, k=K)
@@ -135,10 +155,10 @@ def main():
     total_df = pd.concat(all_dfs, ignore_index=True)
     csv_path = out_dir / "exp2_real_high_d_factorial.csv"
     total_df.to_csv(csv_path, index=False)
-    print(f"\n=======================================================")
+    print("\n=======================================================")
     print(f"Successfully saved all 2x2 factorial runs to {csv_path}")
     print(f"Total rows: {len(total_df)}")
-    print(f"=======================================================")
+    print("=======================================================")
 
 if __name__ == "__main__":
     main()

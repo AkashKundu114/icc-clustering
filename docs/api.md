@@ -1,6 +1,12 @@
 # ICC-v2 Python API Reference
 
-The `icc` package provides an unsupervised, scikit-learn compatible clustering estimator for high-dimensional noise regimes ($D \gg N$).
+**Canonical Manuscript Title:** When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination  
+**Academic Lineage:** Initial University Allotment Title: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data" (`CSE_PROJECT_68`, Faculty Mentor: Prof. Kalyan Kumar Das); Early Proposal Blueprint: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"  
+**Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`)  
+**Canonical Active Release:** v2.1.0  
+**Repository Package:** `icc` (v2.1.0) and `cicc` (Conformal Inductive Consensus Clustering)
+
+The `icc` and `cicc` packages provide an unsupervised, scikit-learn compatible clustering estimator, split-conformal prediction sets, target-decoy feature selection, and episodic semantic memory for high-dimensional noise regimes ($D \gg N$).
 
 ---
 
@@ -90,6 +96,7 @@ from icc.metrics import evaluate_all, adjusted_rand_score, normalized_mutual_inf
 
 - `evaluate_all(y_true, y_pred) -> Dict[str, float]`:
   Computes ARI, NMI, AMI, V-Measure, and Fowlkes-Mallows Index in a unified dictionary.
+
 ---
 
 ## 4. Conformal Inductive Consensus Clustering (`cicc`)

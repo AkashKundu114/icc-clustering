@@ -7,13 +7,18 @@ Generate numbers.tex strictly from Pass F empirical stores:
 - results/passF/inductive_bootstrap_stats.json
 - results/passF/exp5_scaling_stats.json
 Synchronize to springer_manuscript/numbers.tex, paper/numbers.tex, and manuscript/numbers.tex.
+
+Usage:
+    python scripts/make_numbers_passF.py
 """
 
 import json
-import pandas as pd
 from pathlib import Path
 
+import pandas as pd
+
 OUT_DIR = Path("results/passF")
+
 
 def main():
     with open(OUT_DIR / "friedman_nemenyi_passF.json", "r") as f:
@@ -24,13 +29,6 @@ def main():
 
     with open(OUT_DIR / "fair_baselines_summary_passF.json", "r") as f:
         fb = json.load(f)
-
-    with open(OUT_DIR / "inductive_bootstrap_stats.json", "r") as f:
-        ind = json.load(f)
-
-    scaling_json = Path("results/passE/exp5_scaling_stats.json")
-    with open(scaling_json, "r") as f:
-        sc = json.load(f)
 
     summary_df = pd.read_csv(OUT_DIR / "benchmark_matrix_summary_passF.csv")
     def get_ari_std(dname, mname):
@@ -71,7 +69,7 @@ def main():
         f"\\newcommand{{\\TableThreeIccVTwoGrandMean}}{{{fn['N13']['grand_mean']['ICC_v2']:.3f}}}",
         f"\\newcommand{{\\GrandMeanARI}}{{{fn['N13']['grand_mean']['ICC_v2']:.3f}}}",
         f"\\newcommand{{\\OmnibusMedianARI}}{{{fn['N13']['grand_median']['ICC_v2']:.3f}}}",
-        f"\\newcommand{{\\OmnibusMeanExcludingLeukemiaSrbct}}{{0.071}}",
+        r"\newcommand{\OmnibusMeanExcludingLeukemiaSrbct}{0.071}",
         f"\\newcommand{{\\TableThreeDecGrandMean}}{{{fn['N13']['grand_mean']['DEC']:.3f}}}",
         f"\\newcommand{{\\TableThreeStdConsGrandMean}}{{{fn['N13']['grand_mean']['Standard_Consensus']:.3f}}}",
         f"\\newcommand{{\\TableThreeWardGrandMean}}{{{fn['N13']['grand_mean']['Ward']:.3f}}}",

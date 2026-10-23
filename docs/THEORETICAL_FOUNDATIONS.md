@@ -1,6 +1,12 @@
 # Theoretical Foundations and Mathematical Proofs of ICC-v2
 
-This document provides the formal mathematical formulations, definitions, assumptions, propositions, theorems, and proofs underlying **Inductive Consensus Clustering (ICC-v2)** and **Anchor-Space Perturbation Profiling (ASPP)**.
+**Canonical Manuscript Title:** When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination  
+**Academic Lineage:** Initial University Allotment Title: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data" (`CSE_PROJECT_68`, Faculty Mentor: Prof. Kalyan Kumar Das); Early Proposal Blueprint: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"  
+**Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`)  
+**Canonical Active Release:** v2.1.0  
+**Repository Package:** `icc` and `cicc` (Conformal Inductive Consensus Clustering)
+
+This document provides formal mathematical formulations, definitions, assumptions, propositions, theorems, and proofs underlying **Inductive Consensus Clustering (ICC-v2)**, **Anchor-Space Perturbation Profiling (ASPP)**, and **Conformal Inductive Consensus Clustering (CICC)**.
 
 ---
 
@@ -18,7 +24,7 @@ $$S_{ij} = \frac{1}{M} \sum_{m=1}^M \mathbb{I}(\pi_m(\mathbf{x}_i) = \pi_m(\math
 
 ---
 
-## 2. Feature Gating Theory: Variance-Stabilized Subspace Gating (VSSG)
+## 2. Feature Gating Theory: Variance-Stabilized Subspace Gating (VSSG / BGSS)
 
 ### Assumption 1 (Marginal Multimodality Prior)
 Let feature vector $\mathbf{f}_d = [X_{1d}, \dots, X_{Nd}]^T \in \mathbb{R}^N$ denote the $d$-th column of the standardized data matrix. We assume:
@@ -44,7 +50,7 @@ Because the uniform distribution represents the boundary of unimodality with min
 ### Remark 1 (Sparsity and Zero-Inflation Boundary)
 When data matrices are non-negative and highly sparse (e.g., text document term-frequency matrices or single-cell droplet sequencing count matrices), a distractor feature $d \in \mathcal{D}_{\text{noise}}$ with zero-inflation rate $p_0 = \Pr(X_{id} = 0) \to 1$ exhibits inflated marginal skewness and kurtosis:
 $$g_{1, d} \sim \frac{1 - 2p_0}{\sqrt{p_0(1-p_0)}}, \quad g_{2, d} \sim \frac{1 - 6p_0(1-p_0)}{p_0(1-p_0)}$$
-In the two-point limit, $BC \to 1.0$. Thus, on sparse zero-inflated matrices, marginal bimodality screening may retain sparse noise features, establishing that VSSG is primarily designed for continuous-valued measurement manifolds.
+In the two-point limit, $BC \to 1.0$. Thus, on sparse zero-inflated matrices, marginal bimodality screening may retain sparse noise features, establishing that VSSG / BGSS is primarily designed for continuous-valued measurement manifolds.
 
 ---
 
@@ -79,7 +85,7 @@ This identity holds with zero truncation error down to floating-point machine pr
 
 ## 4. Reduced Bipartite Spectral Consensus (Transfer-Cut)
 
-Let $\mathcal{A} \subset \{1, \dots, N\}$ be the set of $L$ certified core anchors selected from the top $\tau$-quantile of sample determinacy $\sigma_i$ ($L \ll N$).
+Let $\mathcal{A} \subset \{1, \dots, N\}$ be the set of $L$ anchors ($L \ll N$).
 We construct the rectangular bipartite co-association matrix $B \in [0, 1]^{N \times L}$:
 $$B_{il} = \frac{1}{M} \sum_{m=1}^M \mathbb{I}(\pi_m(i) = \pi_m(a_l)), \quad a_l \in \mathcal{A}$$
 Normalizing rows by their degrees $D_B = \mathrm{diag}(B \mathbf{1}_L)$:
@@ -105,7 +111,7 @@ $$\mathbf{c}_k = \frac{\sum_{i: \hat{y}_i = k} \sigma_i \cdot \mathbf{x}_i}{\sum
 where $\sigma_i$ is the exact determinacy stability score of instance $i$.
 
 ### Theorem 1 (Inductive Assignment Convergence)
-For an unseen query instance $\mathbf{x}_{\text{new}} \in \mathbb{R}^D$, let $\mathcal{F}_{\text{active}}$ denote the active candidate features selected by VSSG. The inductive cluster assignment is:
+For an unseen query instance $\mathbf{x}_{\text{new}} \in \mathbb{R}^D$, let $\mathcal{F}_{\text{active}}$ denote the active candidate features selected by VSSG / BGSS. The inductive cluster assignment is:
 $$\hat{y}(\mathbf{x}_{\text{new}}) = \arg\min_{k \in \{0, \dots, K-1\}} \|\mathbf{x}_{\text{new}}[\mathcal{F}_{\text{active}}] - \mathbf{c}_k[\mathcal{F}_{\text{active}}\|_2$$
 Assuming sub-Gaussian cluster conditional distributions on $\mathcal{S}$, the probability of misclassification on query points satisfies:
 $$\Pr(\hat{y}(\mathbf{x}_{\text{new}}) \neq y^*(\mathbf{x}_{\text{new}})) \le (K - 1) \exp\left( - \frac{\Delta_{\min}^2}{8 \sigma_{\max}^2} \right)$$
@@ -118,7 +124,7 @@ where $\Delta_{\min} = \min_{k \neq l} \|\mathbf{c}_k^* - \mathbf{c}_l^*\|_2$ is
 ### Theorem 2 (Asymptotic Complexity Bounds)
 Let $N$ be the sample size, $D$ feature dimension, $M$ base models, $K$ clusters, and $L$ anchors ($L \ll N$).
 1. **Time Complexity:**
-   - VSSG screening: $\mathcal{O}(N \cdot D)$.
+   - VSSG / BGSS screening: $\mathcal{O}(N \cdot D)$.
    - Base model fits: $\mathcal{O}(M \cdot (N \cdot d_{\text{sub}} \cdot K))$ where $d_{\text{sub}} \le 0.3 D$.
    - Linear Determinacy Calculation: $\mathcal{O}(M^2 N + M^2 K^2)$.
    - Bipartite Graph Construction: $\mathcal{O}(M \cdot N \cdot L)$.
@@ -127,7 +133,7 @@ Let $N$ be the sample size, $D$ feature dimension, $M$ base models, $K$ clusters
 2. **Space Complexity:**
    - Co-association storage: $\mathcal{O}(N \cdot L)$ auxiliary storage, compared to $\mathcal{O}(N^2)$ for standard consensus.
 3. **Inductive Query Latency:**
-   - Single point assignment: $\mathcal{O}(K \cdot |\mathcal{F}_{\text{active}}|)$ operations, independent of $N$.
+   - Single point assignment: $\mathcal{O}(K \cdot |\mathcal{F}_{\text{active}}|)$ operations, independent of $N$. In point-of-care benchmarks, empirical latency is 22.6 microseconds per patient biopsy.
 
 ---
 
@@ -148,3 +154,49 @@ $$\text{PSI}_k = 1.0 - \frac{1}{P} \sum_{p=1}^P F_k(p)$$
 Inductive query confidence calibrates the geometric nearest-centroid margin by cluster stability:
 $$\text{Conf}(\mathbf{x}_{\text{new}}) = \text{Margin}(\mathbf{x}_{\text{new}}) \cdot (1.0 - \text{PSI}_{\hat{y}(\mathbf{x}_{\text{new}})})$$
 This provides certified stability bounds for out-of-sample predictions in real time.
+
+---
+
+## 8. Extended Component Knockout Mechanics (Section 5.2)
+
+The factorial component ablation in Section 5.2 mathematically isolates the operative drivers of clustering accuracy in high-dimensional noise regimes ($D/N > 20$):
+
+1. **Knockout 1 (No Gating, V5 -> V3):**  
+   Disabling BGSS feature gating causes subgroup mean ARI to collapse from 0.217 to 0.046 (-78.8% drop). Under isotropic noise, distance concentration flattens pairwise distances across ambient features ($D \to \infty$). Bipartite consensus alone cannot recover cluster partitions without upstream feature selection.
+2. **Knockout 2 (No Anchors, V5 -> V2):**  
+   Replacing bipartite anchor consensus ($O(NL)$) with full dense consensus ($O(N^2)$) on identical gated features causes subgroup mean ARI to drop from 0.217 to 0.077 ($\Delta = -0.139$, 95% CI: $[+0.065, +0.218]$). Dense averaging across noisy base partitions creates spurious dense edges, whereas anchor distillation concentrates consensus weights exclusively on stable manifold anchors.
+3. **Knockout 3 (No Ensembling, V5 -> V1):**  
+   Replacing multi-model consensus with a single K-Means partition degrades subgroup mean ARI to 0.070, completely collapsing on Leukemia (-0.017 ARI). Subspace ensembling ($M=25$) is required to sample subsets where true discriminative markers co-occur.
+4. **Knockout 4 (Certified vs Random Anchors, V5 -> V4):**  
+   Comparing certified core anchors (V5, ARI 0.217) against uniform random anchors (V4, ARI 0.198) yields a null result ($\Delta = +0.019$, 95% CI: $[-0.039, +0.082]$, paired Wilcoxon $W = 9.0, p = 0.84$). Because the confidence interval encompasses zero, determinacy anchor certification provides no statistically significant accuracy lift over uniform random anchors. Thus, bipartite graph compression rather than anchor certification is the primary operational driver.
+
+---
+
+## 9. Conformal Inductive Consensus Clustering (`cicc`)
+
+The `cicc` framework couples inductive consensus clustering with distribution-free conformal inference:
+
+### 9.1 Split-Conformal Prediction Sets
+Given a calibration set $(X_{\text{cal}}, y_{\text{cal}})$, we compute non-conformity scores:
+$$s_i = \|\mathbf{x}_i[\mathcal{F}_{\text{gate}}] - \mathbf{c}_{y_i}[\mathcal{F}_{\text{gate}}\|_2$$
+Let $\hat{q}$ be the $\lceil (n_{\text{cal}} + 1)(1 - \alpha) \rceil / n_{\text{cal}}$ empirical quantile of calibration scores.
+For a prospective query instance $\mathbf{x}_{\text{query}}$, the conformal prediction set is:
+$$\mathcal{C}(\mathbf{x}_{\text{query}}) = \{ k \in \{0, \dots, K-1\} : \|\mathbf{x}_{\text{query}}[\mathcal{F}_{\text{gate}}] - \mathbf{c}_k[\mathcal{F}_{\text{gate}}\|_2 \le \hat{q} \}$$
+Under exchangeability, this satisfies the finite-sample marginal coverage guarantee:
+$$\Pr(y_{\text{query}} \in \mathcal{C}(\mathbf{x}_{\text{query}})) \ge 1 - \alpha$$
+
+### 9.2 Target-Decoy / Knockoff FDR Feature Screening (`src/cicc/decoy.py`)
+To bound False Discovery Rate (FDR) in feature selection, target-decoy screening constructs synthetic decoy features $\tilde{\mathbf{f}}_d$ (via sign-flipping or permutation) and computes mirror statistics:
+$$W_d = |T_d| - |\tilde{T}_d|$$
+Features with $W_d > \tau_{\text{FDR}}$ are retained, ensuring rigorous control over false candidate discoveries.
+
+### 9.3 Episodic Semantic Agent Memory (`src/cicc/memory.py`)
+Incoming memory items are embedded and routed to clusters in $\mathcal{O}(L)$ time. When a query yields an empty conformal set ($\mathcal{C}(\mathbf{x}) = \emptyset$), the system abstains from forcing cluster assignment, triggering creation of an episodic novelty cluster.
+
+---
+
+## 10. Real-World Applications & Empirical Benchmarks (Section 6)
+
+1. **Clinical Cancer Subtyping ([`examples/clinical_cancer_subtyping.py`](../examples/clinical_cancer_subtyping.py)):** Unsupervised subtyping on Golub Leukemia (ARI = 0.600) and Khan SRBCT (ARI = 0.546), recovering 54.0% of top oncogenic driver genes.
+2. **Point-of-Care Patient Biopsy Projection ([`examples/realtime_patient_projection.py`](../examples/realtime_patient_projection.py)):** Inductive query evaluation in **22.6 microseconds** per patient biopsy with $(1 - \alpha = 90\%)$ conformal validity.
+3. **Million-Scale Single-Cell Transcriptomics:** Clusters $N = 10^6$ cells in 55.6 s with 240 MB graph memory, bypassing the dense 8 TB RAM barrier.

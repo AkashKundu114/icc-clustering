@@ -1,6 +1,6 @@
 # Contributing to Inductive Consensus Clustering (ICC-v2)
 
-Thank you for your interest in contributing to **Inductive Consensus Clustering (ICC-v2)**! This repository hosts the official reference implementation, full reproducibility test harness, and experiment suite for our paper submitted to **IEEE Transactions on Knowledge and Data Engineering (TKDE)**.
+Thank you for your interest in contributing to **Inductive Consensus Clustering (ICC-v2)**! This repository hosts the official reference implementation, full reproducibility test harness, and experiment suite for our paper submitted to **Springer Nature (*Data Mining and Knowledge Discovery* / DAMI)**.
 
 We welcome contributions ranging from bug fixes and documentation improvements to new baseline comparisons, additional benchmark datasets, and performance optimizations.
 
@@ -99,9 +99,10 @@ Every contribution must pass the automated test harness.
   python demo.py
   ```
 
-* **Verify IEEE TKDE Manuscript compliance**:
+* **Verify numerical macro consistency with results registry**:
   ```bash
-  python ieee_manuscript/scripts/analyze_ieee_compliance.py
+  python tests/test_macro_consistency.py
+  python tests/test_pdf_allowlist.py
   ```
 
 ---
@@ -160,7 +161,7 @@ We use [Ruff](https://github.com/astral-sh/ruff) for fast, unified linting and f
 ## Submitting a Pull Request
 
 Before opening a pull request, ensure:
-- [ ] All 62 unit and integration tests pass (`pytest tests -q`).
+- [ ] All 84 unit and integration tests pass (`pytest tests -q`).
 - [ ] Code formatting and lint checks pass without errors (`ruff check .`).
 - [ ] Any newly introduced public functions or classes have descriptive NumPy-style docstrings.
 - [ ] If modifying algorithmic logic, verify that benchmark reproducibility is maintained.
@@ -173,9 +174,9 @@ Before opening a pull request, ensure:
   ```bash
   python scripts/sync_figures.py
   ```
-* Rebuild the complete Overleaf/ScholarOne IEEE submission zip:
+* Verify and synchronize single source of truth macros:
   ```bash
-  python ieee_manuscript/scripts/build_paper.py
+  python scripts/make_numbers.py
   ```
 
 Thank you for helping push the frontiers of robust, scalable consensus clustering!

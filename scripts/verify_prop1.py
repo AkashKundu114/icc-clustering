@@ -1,7 +1,19 @@
+"""
+Numerical Verification of Proposition 1: Bimodality Coefficient Separation Bound.
+
+Analytically and numerically solves for the minimum separation Delta / sigma0 required
+for Sarle's Bimodality Coefficient to exceed the uniform threshold b >= 5/9.
+Evaluates both standard Gaussian and Student-t heavy-tailed distributions (nu in [5, 100]).
+
+Usage:
+    python scripts/verify_prop1.py
+"""
+
 import numpy as np
-from scipy.optimize import brentq
 from scipy.integrate import quad
+from scipy.optimize import brentq
 from scipy.special import gamma
+
 
 def kurtosis_bimodal_gaussian(delta, sigma0=1.0):
     theta = (delta / sigma0) ** 2
