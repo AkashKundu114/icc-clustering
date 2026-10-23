@@ -1,4 +1,3 @@
-import re
 from pathlib import Path
 
 p_main = Path("springer_manuscript/main.tex")

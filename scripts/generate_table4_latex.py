@@ -3,7 +3,6 @@ Generate LaTeX tables for Table 4, Table 5, and Table 2 directly from Pass F dat
 """
 
 import pandas as pd
-import numpy as np
 
 # Table 4
 sum_df = pd.read_csv("results/passF/benchmark_matrix_summary_passF.csv")

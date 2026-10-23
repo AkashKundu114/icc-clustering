@@ -8,14 +8,11 @@ Tests:
 5. Decoy-calibrated feature gating prototype with empirical FDR control.
 """
 
-import sys
 import numpy as np
 import scipy.linalg as sla
-from scipy.spatial.distance import cdist
 from scipy.stats import kurtosis, skew
 from sklearn.decomposition import TruncatedSVD
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import adjusted_rand_score
 from sklearn.model_selection import train_test_split
 
 

@@ -17,7 +17,7 @@ _ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_ROOT))
 
 from icc.datasets.registry import load_dataset
-from icc.baselines.classical import run_single_kmeans, run_single_ward, run_single_spectral, run_single_fcm
+from icc.baselines.classical import run_single_kmeans, run_single_spectral, run_single_fcm
 from icc.baselines.consensus import run_standard_consensus, run_icc_v1, run_li_et_al_2019
 from icc.baselines.anchor import run_fcag, run_fastmvc
 

@@ -8,7 +8,7 @@ Compute ranks, Friedman, Nemenyi, and Grand Means for:
 import json
 import numpy as np
 import pandas as pd
-from scipy.stats import friedmanchisquare, wilcoxon
+from scipy.stats import friedmanchisquare
 from pathlib import Path
 
 OUT_DIR = Path("results/passF")

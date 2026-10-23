@@ -8,7 +8,6 @@ Validates:
 3. Maximum population BC over the skew-normal distribution family.
 """
 
-import sys
 import numpy as np
 from scipy import stats
 

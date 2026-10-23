@@ -1,4 +1,3 @@
-import os
 import sys
 import time
 from pathlib import Path
@@ -8,7 +7,6 @@ from sklearn.cluster import KMeans
 from sklearn.decomposition import TruncatedSVD
 from sklearn.neighbors import kneighbors_graph
 from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
-from scipy.spatial.distance import cdist
 
 root_dir = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(root_dir))

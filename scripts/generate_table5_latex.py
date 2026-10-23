@@ -3,7 +3,6 @@ Generate Table 5 LaTeX code directly from results/passF/fair_baselines_30seeds_p
 """
 
 import pandas as pd
-import numpy as np
 
 df = pd.read_csv("results/passF/fair_baselines_30seeds_passF.csv")
 piv_mean = df.groupby(["dataset", "model"])["ari"].mean().unstack()

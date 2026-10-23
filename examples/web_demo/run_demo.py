@@ -6,7 +6,23 @@ web application on http://127.0.0.1:8000.
 """
 
 import sys
-import uvicorn
+from pathlib import Path
+
+# Ensure demo directory is in python path
+cur_dir = Path(__file__).resolve().parent
+if str(cur_dir) not in sys.path:
+    sys.path.insert(0, str(cur_dir))
+
+# Ensure repo root is in python path
+repo_root = cur_dir.parent.parent
+if str(repo_root) not in sys.path:
+    sys.path.insert(0, str(repo_root))
+
+try:
+    import uvicorn
+except ImportError:
+    print("Error: uvicorn is not installed. Run: pip install fastapi uvicorn")
+    sys.exit(1)
 
 if __name__ == "__main__":
     print("=" * 70)

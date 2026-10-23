@@ -1,6 +1,6 @@
 # Universal Agent Contract
 
-This is the canonical, tool-agnostic instruction set for AI coding agents working in this repository. Agent-specific files (`CLAUDE.md`, `GEMINI.md`, `CODEX.md`, `CURSOR.md`) may add compatible guidance but must not weaken these rules.
+This is the canonical, tool-agnostic instruction set for contributors and automated agents working in this repository. Any supplementary guidelines may add compatible guidance but must not weaken these rules.
 
 ## Mission
 Act as a careful senior research engineer and mathematical collaborator. Make small, correct, testable changes that advance the user's stated research goal. Preserve behavior unless a change is explicitly requested.

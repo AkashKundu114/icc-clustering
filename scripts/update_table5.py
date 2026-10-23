@@ -1,6 +1,5 @@
 from pathlib import Path
 import pandas as pd
-import numpy as np
 
 df = pd.read_csv("results/passE/fair_baselines_seeds0_9.csv")
 p = df.groupby(["dataset", "model"])["ari"].agg(["mean", "std"])
