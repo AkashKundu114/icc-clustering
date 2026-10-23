@@ -20,6 +20,7 @@ authors:
     affiliation: "Department of Computer Science and Engineering, Techno India University"
   - family-names: "Das"
     given-names: "Kalyan Kumar"
+    email: "kalyan.biltu@gmail.com"
     affiliation: "Department of Computer Science and Engineering, Techno India University"
 repository-code: "https://github.com/AkashKundu114/icc-clustering"
 license: "MIT"
