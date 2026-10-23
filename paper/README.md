@@ -5,11 +5,11 @@ This unified directory contains the complete manuscript source files, style defi
 ## Repository Policy
 To maintain repository compactness and comply with journal pre-publication policies:
 - Manuscript LaTeX source files (`main.tex`, `sn-article.tex`, `numbers.tex`), references (`references.bib`), compiled PDFs (`main.pdf`), style definitions (`*.cls`, `*.bst`), and archive packages (`*.zip`) are **excluded from GitHub tracking** via `.gitignore`.
-- Figures in `paper/figures/` are generated from reproducible experiment scripts and also excluded from Git tracking.
+- Publication benchmark figures in `paper/figures/` (58 PNGs and 1 JPEG) are tracked in Git to provide empirical verification and visual validation.
 - All files remain fully available and intact in the local research environment.
 
 ## Manuscript Details
-- **Title:** Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data
+- **Title:** When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination
 - **Target Journal:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)
 - **Document Class:** `\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}` (v3.1, Dec 2024)
 - **Bibliography Style:** `sn-mathphys-num.bst` (Vancouver / numerical citation order)
@@ -19,13 +19,13 @@ To maintain repository compactness and comply with journal pre-publication polic
 ```text
 paper/
 ├── README.md               # This documentation file (tracked in Git)
-├── main.tex                # Primary Springer Nature manuscript source
-├── numbers.tex             # LaTeX macros bound to empirical results
-├── references.bib          # Verified BibTeX bibliography
-├── sn-jnl.cls              # Official Springer Nature LaTeX class file
-├── bst/                    # Official Springer BibTeX style files
-├── figures/                # 300 DPI figures generated from experiments
-│   └── README.md           # Figure reproduction instructions
+├── main.tex                # Primary Springer Nature manuscript source (local embargo)
+├── numbers.tex             # LaTeX macros bound to empirical results (local embargo)
+├── references.bib          # Verified BibTeX bibliography (local embargo)
+├── sn-jnl.cls              # Official Springer Nature LaTeX class file (local embargo)
+├── bst/                    # Official Springer BibTeX style files (local embargo)
+├── figures/                # 300 DPI figures generated from experiments (tracked in Git)
+│   └── README.md           # Figure documentation
 └── convert_to_springer.py  # Pipeline script for synchronizing manuscript syntax
 ```
 

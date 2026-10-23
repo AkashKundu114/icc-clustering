@@ -20,6 +20,7 @@ Consensus clustering synthesizes diverse base clusterings into a unified partiti
 - **Bipartite Anchor Consensus:** Compresses $O(N^2)$ co-association into an $O(N \cdot L)$ rectangular bipartite graph ($L \ll N$) with Transfer-Cut degree and eigenvalue normalization.
 - **Closed-Form Inductive Inference:** Stability-weighted active centroid projection requiring only $O(K \cdot |\mathcal{F}_{\text{active}}|)$ operations per query instance without graph recomputation.
 - **Anchor-Space Perturbation Profiling (ASPP):** Multi-family cluster reliability certification yielding cluster fingerprints and query confidence bounds in linear $O(N \cdot L)$ memory.
+- **Conformal Uncertainty Quantification (`cicc`):** Finite-sample distribution-free $(1 - \alpha)$ coverage guarantees with target-decoy FDR feature selection and automated point-of-care patient safety triage.
 
 ---
 
@@ -141,6 +142,12 @@ python examples/quickstart.py
 
 # Real Leukemia out-of-sample evaluation
 python examples/leukemia_inductive.py
+
+# Real-world clinical oncology subtyping (Leukemia & SRBCT)
+python examples/clinical_cancer_subtyping.py
+
+# Real-time point-of-care patient biopsy projection with conformal triage
+python examples/realtime_patient_projection.py
 ```
 
 Expected smoke runtime: < 3 seconds on modern CPU. Determinism is enforced with `OMP_NUM_THREADS=1`.
