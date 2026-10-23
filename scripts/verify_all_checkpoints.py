@@ -170,7 +170,8 @@ def run_checks():
     results.append((24, "Li et al. (2019) in references.bib", "DOI: 10.1016/j.artint.2018.12.007", "Found in bib" if has_li else "Missing", p24))
 
     # Check 25: CrossRef Audit Completeness (REFS_AUDIT.csv)
-    df_refs = pd.read_csv("LOOP/REFS_AUDIT.csv")
+    csv_path = Path("governance/preregistration/REFS_AUDIT.csv") if Path("governance/preregistration/REFS_AUDIT.csv").exists() else Path("LOOP/REFS_AUDIT.csv")
+    df_refs = pd.read_csv(csv_path)
     n_refs = len(df_refs)
     n_verified = len(df_refs[df_refs["match_status"] == "MATCH_VERIFIED"])
     p25 = (n_refs >= 30 and n_verified >= 20)
