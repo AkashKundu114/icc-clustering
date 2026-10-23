@@ -87,7 +87,7 @@ print("Out-of-sample predictions:", model.predict(X_query).tolist())
 
 ## Results Summary (Single Source of Truth)
 
-All reported values trace directly to frozen Pass F execution stores (`results/passF/` and `springer_manuscript/numbers.tex`):
+All reported values trace directly to frozen Pass F execution stores (`results/passF/` and `paper/numbers.tex`):
 
 Across all 13 benchmark datasets (2,750 individual model fits across 11 methods, 30 random seeds on 6 high-D datasets and 10 seeds on 7 general datasets), omnibus Friedman testing indicates no statistically significant difference across the complete heterogeneous benchmark suite (Friedman $\chi^2_F = 9.59, p = 0.48$, Nemenyi Critical Difference $CD = 4.19$). 
 

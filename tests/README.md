@@ -16,7 +16,7 @@ The test suite is structured into four functional tiers:
 1. **Algorithm and Core Mechanics**: Tests for the Invariant Core Consensus v2 (ICC-v2) solver, bipartite graph construction, spectral embedding backends, synthetic data generators, and mathematical co-association invariants.
 2. **Conformal and Inductive Generalization**: Tests for Conformal Inductive Consensus Clustering (CICC), target-decoy feature gating with FDR control, closed-form out-of-sample projection, and downstream multi-classifier generalization.
 3. **Baselines, Metrics, and Datasets**: Tests covering 10+ baseline clustering algorithms, evaluation metrics with dual-backend parity (scikit-learn and pure NumPy/SciPy fallback), and dataset registry loading and caching.
-4. **Reproducibility and Macro Traceability**: Strict build-time validation asserting that every macro in `springer_manuscript/numbers.tex`, every table in the manuscript, and every numerical value in compiled artifacts matches the frozen experimental results store.
+4. **Reproducibility and Macro Traceability**: Strict build-time validation asserting that every macro in `paper/numbers.tex`, every table in the manuscript, and every numerical value in compiled artifacts matches the frozen experimental results store.
 
 ---
 
@@ -36,7 +36,7 @@ The test suite contains 13 modular test files:
 | `test_core_and_generators.py` | Generators & Core Math | Synthetic benchmark generator (`build_dataset` across 5 noise regimes), pairwise co-association properties, base clustering engines, and legacy ICC-v1 solver. |
 | `test_edge_cases.py` | Numerical Robustness | Robustness against zero-variance features, duplicate instances, tiny sample size limits ($N=10$), extreme dimension ratio ($D/N=250$), metric boundaries, and MCAR missing data imputation. |
 | `test_macro_consistency.py` | Macro & Manuscript Traceability | Single-source-of-truth verification ensuring all LaTeX macros in `numbers.tex`, Table 4, Table 5, and Fig. 8 scaling curves reconcile with frozen Pass F result stores. |
-| `test_pdf_allowlist.py` | PDF Numerical Audit | Regex-level text audit of compiled `springer_manuscript/main.pdf` ensuring zero ungrounded decimals, purging stale tokens, and confirming Figure 7 critical difference ranks. |
+| `test_pdf_allowlist.py` | PDF Numerical Audit | Regex-level text audit of compiled `paper/main.pdf` ensuring zero ungrounded decimals, purging stale tokens, and confirming Figure 7 critical difference ranks. |
 | `test_anchor_fidelity.py` | Scalability & Fidelity | Scalability sweep verification, approximation fidelity bounds between bipartite anchor consensus and exact dense consensus graph. |
 | `test_exp1_multiclassifier.py` | Downstream Generalization | Downstream inductive classifier generalization across SVM, Random Forest, Multi-Layer Perceptron (MLP), and K-Nearest Neighbors (KNN). |
 

@@ -26,7 +26,9 @@ def load_allowlist():
     allowlist = set()
 
     # 1. Macro values from numbers.tex
-    num_path = Path("springer_manuscript/numbers.tex")
+    num_path = Path("paper/numbers.tex")
+    if not num_path.exists():
+        num_path = Path("springer_manuscript/numbers.tex")
     if num_path.exists():
         text = num_path.read_text(encoding="utf-8")
         for val in re.findall(r"\{([0-9]+\.[0-9]+)\}", text):
@@ -100,7 +102,9 @@ def test_pdf_allowlist_and_fig7_consistency():
     if pymupdf is None:
         import pytest
         pytest.skip("PyMuPDF / fitz is not installed; skipping PDF text extraction test.")
-    pdf_path = Path("springer_manuscript/main.pdf")
+    pdf_path = Path("paper/main.pdf")
+    if not pdf_path.exists():
+        pdf_path = Path("springer_manuscript/main.pdf")
     if not pdf_path.exists():
         import pytest
         pytest.skip(f"{pdf_path} not found. Please compile the manuscript first.")
