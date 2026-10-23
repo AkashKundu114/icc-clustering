@@ -90,3 +90,59 @@ from icc.metrics import evaluate_all, adjusted_rand_score, normalized_mutual_inf
 
 - `evaluate_all(y_true, y_pred) -> Dict[str, float]`:
   Computes ARI, NMI, AMI, V-Measure, and Fowlkes-Mallows Index in a unified dictionary.
+---
+
+## 4. Conformal Inductive Consensus Clustering (`cicc`)
+
+The `cicc` module provides finite-sample distribution-free uncertainty quantification, target-decoy feature selection with False Discovery Rate (FDR) control, and memory consolidation.
+
+```python
+from cicc import (
+    ConformalClusterer,
+    ConformalResult,
+    DecoyFeatureGating,
+    InductiveConsensusClusterer,
+    InductiveConsensusMemory,
+)
+```
+
+### `InductiveConsensusClusterer`
+
+Unified pipeline combining decoy feature gating, anchor consensus, and split-conformal calibration.
+
+```python
+InductiveConsensusClusterer(
+    n_clusters: int = 4,
+    n_anchors: int = 40,
+    n_base_models: int = 20,
+    subspace_rate: float = 0.50,
+    enable_decoy_gating: bool = True,
+    fdr_target: float = 0.10,
+    alpha: float = 0.10,
+    random_state: int = 42,
+)
+```
+
+- `fit(X, y_train=None)`: Fits anchor consensus graph and calibrates conformal prediction cutoffs on internal splits.
+- `predict_conformal(X_query) -> ConformalResult`: Returns prediction set assignments, posterior probabilities, and singleton/ambiguous/abstention classifications.
+
+### `ConformalClusterer`
+
+General split-conformal wrapper providing finite-sample coverage guarantees ($1 - \alpha$).
+
+- `fit_calibrate(X_disc, labels_disc, X_cal, labels_cal)`: Fits cluster prototypes on discovery set and calibrates non-conformity quantile $\hat{q}$ on calibration set.
+- `predict_set(X_query, ground_truth=None) -> ConformalResult`: Evaluates query points to yield candidate prediction sets $C(x)$.
+
+### `DecoyFeatureGating`
+
+False Discovery Rate (FDR) controlled feature selection via target-decoy / knockoff competition:
+
+- `fit(X, labels) -> DecoyFeatureGating`: Computes mirror statistics $W_d = |T_d| - |\tilde{T}_d|$ across true features and permuted/knockoff decoys.
+- `transform(X) -> np.ndarray`: Filters feature matrix to retained candidate features at nominal FDR threshold.
+
+### `InductiveConsensusMemory`
+
+Episodic semantic clustering memory for AI agents with instantaneous $\mathcal{O}(L)$ inductive routing and conformal novelty detection.
+
+- `store(text, embedding, metadata=None) -> MemoryItem`: Indexes new memory item, dynamically consolidating into existing cluster or triggering novel cluster creation upon conformal abstention ($C(x) = \emptyset$).
+- `query_similar(embedding, top_k=5) -> List[MemoryItem]`: Retrieves nearest indexed memory items.

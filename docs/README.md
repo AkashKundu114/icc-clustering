@@ -104,11 +104,14 @@ All theoretical formulations and documentation sections map directly to the prod
 
 | Documentation Section | Mathematical Formulation | Source Code Implementation | Test Verification |
 | :--- | :--- | :--- | :--- |
-| **VSSG Feature Gating** | Definition 1, Proposition 1 | [`src/icc/gating.py`](../src/icc/gating.py) | [`tests/test_gating.py`](../tests/test_gating.py) |
-| **Exact Linear Determinacy** | Proposition 2 | [`src/icc/linear_determinacy.py`](../src/icc/linear_determinacy.py) | [`tests/test_linear_determinacy.py`](../tests/test_linear_determinacy.py) |
-| **Bipartite Transfer-Cut** | Section 4, Theorem 2 | [`src/icc/consensus.py`](../src/icc/consensus.py) | [`tests/test_consensus.py`](../tests/test_consensus.py) |
-| **ASPP Stability Profiling** | Definition 3 | [`src/icc/profiling.py`](../src/icc/profiling.py) | [`tests/test_profiling.py`](../tests/test_profiling.py) |
-| **Inductive Prediction** | Theorem 1 | [`src/icc/consensus.py`](../src/icc/consensus.py) (`predict`) | [`tests/test_consensus.py`](../tests/test_consensus.py) |
+| **VSSG Feature Gating** | Definition 1, Proposition 1 | [`src/icc/consensus_v2.py`](../src/icc/consensus_v2.py) | [`tests/test_consensus_v2.py`](../tests/test_consensus_v2.py) |
+| **Exact Linear Determinacy** | Proposition 2 | [`src/icc/consensus_v2.py`](../src/icc/consensus_v2.py) | [`tests/test_consensus_v2.py`](../tests/test_consensus_v2.py) |
+| **Bipartite Transfer-Cut** | Section 4, Theorem 2 | [`src/icc/consensus_v2.py`](../src/icc/consensus_v2.py) | [`tests/test_consensus_v2.py`](../tests/test_consensus_v2.py) |
+| **ASPP Stability Profiling** | Definition 3 | [`src/icc/aspp.py`](../src/icc/aspp.py) | [`tests/test_aspp.py`](../tests/test_aspp.py) |
+| **Inductive Prediction** | Theorem 1 | [`src/icc/consensus_v2.py`](../src/icc/consensus_v2.py) (`predict`) | [`tests/test_inductive_projection.py`](../tests/test_inductive_projection.py) |
+| **Conformal Inductive Calibration** | Finite-Sample $(1 - \alpha)$ Sets | [`src/cicc/conformal.py`](../src/cicc/conformal.py) | [`tests/test_cicc.py`](../tests/test_cicc.py) |
+| **Target-Decoy FDR Gating** | Mirror Statistics $W_d$ | [`src/cicc/decoy.py`](../src/cicc/decoy.py) | [`tests/test_cicc.py`](../tests/test_cicc.py) |
+| **Agent Episodic Memory** | Conformal Triage / Novelty | [`src/cicc/memory.py`](../src/cicc/memory.py) | [`tests/test_cicc.py`](../tests/test_cicc.py) |
 | **10 Baseline Algorithms** | Baseline Matrix | [`src/icc/baselines/`](../src/icc/baselines/) | [`tests/test_baselines.py`](../tests/test_baselines.py) |
 | **Benchmark Datasets** | Benchmark Matrix | [`src/icc/datasets/`](../src/icc/datasets/) | [`tests/test_datasets.py`](../tests/test_datasets.py) |
 
