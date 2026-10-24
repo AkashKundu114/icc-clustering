@@ -32,13 +32,15 @@ def test_macro_and_text_consistency():
     # Extract macro definitions
     macros = dict(re.findall(r"\\newcommand\{\\([^}]+)\}\{([^}]+)\}", num_tex))
 
-    # Verify High-D Subgroup Mean and Median match Pass F store (0.217 and 0.036)
+    # Verify High-D Subgroup Mean and Median match Pass F store (0.217 and 0.061)
     assert macros["FairBaselinesIccVTwoHighDMean"] == "0.217", f"Mismatch in HighDMean macro: {macros['FairBaselinesIccVTwoHighDMean']}"
-    assert macros["FairBaselinesIccVTwoHighDMedian"] == "0.036", f"Mismatch in HighDMedian macro: {macros['FairBaselinesIccVTwoHighDMedian']}"
+    assert macros["FairBaselinesIccVTwoHighDMedian"] == "0.061", f"Mismatch in HighDMedian macro: {macros['FairBaselinesIccVTwoHighDMedian']}"
     assert macros["TableThreeFriedmanPValue"] == "0.48", f"Mismatch in Friedman p-value: {macros['TableThreeFriedmanPValue']}"
     assert macros["TrueNemenyiCD"] == "4.19", f"Mismatch in Nemenyi CD: {macros['TrueNemenyiCD']}"
     assert macros["TableThreeIccVTwoGrandMean"] == "0.152", f"Mismatch in GrandMean: {macros['TableThreeIccVTwoGrandMean']}"
-    print("  [OK] Pass F macros verified: HighDMean=0.217, HighDMedian=0.036, GrandMean=0.152, CD=4.19")
+    assert macros["OmnibusMedianARI"] == "0.055", f"Mismatch in OmnibusMedian: {macros['OmnibusMedianARI']}"
+    assert macros["OmnibusMeanExcludingLeukemiaSrbct"] == "0.076", f"Mismatch in MeanExcl: {macros['OmnibusMeanExcludingLeukemiaSrbct']}"
+    print("  [OK] Pass F macros verified: HighDMean=0.217, HighDMedian=0.061, GrandMean=0.152, OmnibusMedian=0.055, MeanExcl=0.076, CD=4.19")
 
     # 2. Check main.tex text for purged stale numbers (when present in local workspace)
     main_path = Path("paper/main.tex")
@@ -65,22 +67,34 @@ def test_macro_and_text_consistency():
     icc_bm = df_bm[(df_bm["model"] == "ICC_v2") & (df_bm["dataset"].isin(high_d))]
     table4_means = icc_bm.groupby("dataset")["ari"].mean()
     calc_mean = float(table4_means.mean())
-    calc_median = float(icc_bm["ari"].median())
+    calc_dataset_median = float(table4_means.median())
+    calc_run_median = float(icc_bm["ari"].median())
 
     assert abs(calc_mean - 0.2168) < 0.005, f"Calculated mean {calc_mean} differs from 0.217"
-    assert abs(calc_median - 0.0357) < 0.005, f"Calculated median {calc_median} differs from 0.036"
-    print(f"  [OK] Table 4 true High-D subgroup mean={calc_mean:.3f} and median={calc_median:.3f} match 0.217 and 0.036")
+    assert abs(calc_dataset_median - 0.0610) < 0.005, f"Calculated dataset median {calc_dataset_median} differs from 0.061"
+    assert abs(calc_run_median - 0.0357) < 0.005, f"Calculated run median {calc_run_median} differs from 0.036"
+    print(f"  [OK] Table 4 true High-D subgroup mean={calc_mean:.3f}, dataset median={calc_dataset_median:.3f}, run median={calc_run_median:.3f}")
+
+    # Check 13-dataset table derivations
+    all_icc = df_bm[df_bm["model"] == "ICC_v2"].groupby("dataset")["ari"].mean()
+    recomputed_13_median = float(all_icc.median())
+    recomputed_11_mean = float(all_icc.drop(["leukemia", "srbct"]).mean())
+    assert abs(recomputed_13_median - 0.0555) < 0.005, f"13-dataset median {recomputed_13_median} differs from 0.055"
+    assert abs(recomputed_11_mean - 0.0759) < 0.005, f"11-dataset mean {recomputed_11_mean} differs from 0.076"
+    print(f"  [OK] Table derivations verified: 13-dataset median={recomputed_13_median:.3f}, 11-dataset mean={recomputed_11_mean:.3f}")
 
     # 4. Check Table 5 dataset values against results/passF/fair_baselines_30seeds_passF.csv
     df_fb = pd.read_csv("results/passF/fair_baselines_30seeds_passF.csv")
     icc_fb = df_fb[(df_fb["model"] == "ICC_v2") & (df_fb["dataset"].isin(high_d))]
     table5_means = icc_fb.groupby("dataset")["ari"].mean()
     calc_fb_mean = float(table5_means.mean())
-    calc_fb_median = float(icc_fb["ari"].median())
+    calc_fb_dataset_median = float(table5_means.median())
+    calc_fb_run_median = float(icc_fb["ari"].median())
 
     assert abs(calc_fb_mean - 0.2168) < 0.005, f"Table 5 calculated mean {calc_fb_mean} differs from 0.217"
-    assert abs(calc_fb_median - 0.0357) < 0.005, f"Table 5 calculated median {calc_fb_median} differs from 0.036"
-    print(f"  [OK] Table 5 true High-D subgroup mean={calc_fb_mean:.3f} and median={calc_fb_median:.3f} match 0.217 and 0.036")
+    assert abs(calc_fb_dataset_median - 0.0610) < 0.005, f"Table 5 calculated dataset median {calc_fb_dataset_median} differs from 0.061"
+    assert abs(calc_fb_run_median - 0.0357) < 0.005, f"Table 5 calculated run median {calc_fb_run_median} differs from 0.036"
+    print(f"  [OK] Table 5 true High-D subgroup mean={calc_fb_mean:.3f}, dataset median={calc_fb_dataset_median:.3f}, run median={calc_fb_run_median:.3f}")
 
     # 5. Check Fig 8 scaling data against sample scaling summary
     p_sample = "experiments/exp4_scalability_and_sensitivity/data/exp4_sample_scaling_summary.csv"

@@ -39,6 +39,13 @@ def main():
     leuk_ari, leuk_std = get_ari_std("leukemia", "ICC_v2")
     ovar_ari, ovar_std = get_ari_std("ovarian", "ICC_v2")
 
+    icc_rows = summary_df[summary_df["model"] == "ICC_v2"].set_index("dataset")["mean"]
+    omnibus_median_ari = float(icc_rows.median())
+    other_11 = icc_rows.drop(["leukemia", "srbct"])
+    mean_excl = float(other_11.mean())
+    high_d_datasets = ["cns", "colon", "leukemia", "ovarian", "prostate", "srbct"]
+    high_d_median = float(icc_rows[high_d_datasets].median())
+
     lines = [
         "% Auto-generated LaTeX macros from frozen Pass F results. DO NOT EDIT BY HAND.",
         r"\newcommand{\PropOneCriticalBound}{1.854}",
@@ -68,8 +75,8 @@ def main():
         f"\\newcommand{{\\TableThreeWardTwelveRank}}{{{fn['N12']['ranks']['Ward']:.2f}}}",
         f"\\newcommand{{\\TableThreeIccVTwoGrandMean}}{{{fn['N13']['grand_mean']['ICC_v2']:.3f}}}",
         f"\\newcommand{{\\GrandMeanARI}}{{{fn['N13']['grand_mean']['ICC_v2']:.3f}}}",
-        f"\\newcommand{{\\OmnibusMedianARI}}{{{fn['N13']['grand_median']['ICC_v2']:.3f}}}",
-        r"\newcommand{\OmnibusMeanExcludingLeukemiaSrbct}{0.071}",
+        f"\\newcommand{{\\OmnibusMedianARI}}{{{omnibus_median_ari:.3f}}}",
+        f"\\newcommand{{\\OmnibusMeanExcludingLeukemiaSrbct}}{{{mean_excl:.3f}}}",
         f"\\newcommand{{\\TableThreeDecGrandMean}}{{{fn['N13']['grand_mean']['DEC']:.3f}}}",
         f"\\newcommand{{\\TableThreeStdConsGrandMean}}{{{fn['N13']['grand_mean']['Standard_Consensus']:.3f}}}",
         f"\\newcommand{{\\TableThreeWardGrandMean}}{{{fn['N13']['grand_mean']['Ward']:.3f}}}",
@@ -105,7 +112,7 @@ def main():
         r"\newcommand{\ExtremeScaleTime}{141.2\,\text{s}}",
         r"\newcommand{\MemoryScalingTenKSpeedup}{\ensuremath{2.9\times}}",
         f"\\newcommand{{\\FairBaselinesIccVTwoHighDMean}}{{{fb['means']['ICC_v2']:.3f}}}",
-        f"\\newcommand{{\\FairBaselinesIccVTwoHighDMedian}}{{{fb['medians']['ICC_v2']:.3f}}}",
+        f"\\newcommand{{\\FairBaselinesIccVTwoHighDMedian}}{{{high_d_median:.3f}}}",
         f"\\newcommand{{\\FairBaselinesKmVarFiltHighDMean}}{{{fb['means']['K-Means_VarFilt']:.3f}}}",
         f"\\newcommand{{\\FairBaselinesKmPcaHighDMean}}{{{fb['means']['K-Means_PCA']:.3f}}}",
         f"\\newcommand{{\\FairBaselinesKmLapScoreHighDMean}}{{{fb['means']['K-Means_LapScore']:.3f}}}",
