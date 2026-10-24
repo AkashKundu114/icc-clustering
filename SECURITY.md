@@ -23,8 +23,8 @@ We prioritize the security and integrity of our research software. If you identi
 
 Instead, please send an encrypted or direct email to the maintainer:
 * **Primary Contact**: Akash Kundu
-* **Academic Email**: `akash231001001449@technoindiaeducation.com`
-* **Personal Email**: `akashkundu11522@gmail.com`
+* **Academic Email**: `akashkundu1152@gmail.com`
+* **Personal Email**: `akashkundu1152@gmail.com`
 
 ### What to Include in Your Report
 

@@ -210,5 +210,5 @@ For academic mentors, peer reviewers, and reproducibility auditors inspecting th
 ## License & Contact
 
 - **License:** [MIT License](LICENSE)
-- **Corresponding Author:** Akash Kundu (`akash231001001449@technoindiaeducation.com`)
+- **Corresponding Author:** Akash Kundu (`akashkundu1152@gmail.com`)
 - **Institution:** Department of Computer Science and Engineering, Techno India University
