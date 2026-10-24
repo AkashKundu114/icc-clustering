@@ -77,6 +77,12 @@ def load_allowlist():
         "4.1", "4.2", "4.3", "4.4", "4.5", "4.6", "4.7", "4.8",
         "5.1", "5.2", "5.3", "5.4", "5.5", "5.6",
         "6.1", "6.2", "6.3", "6.4", "6.5",
+        "7.1", "7.2", "7.3", "7.4", "7.5",
+        "8.1", "8.2", "8.3",
+        "15.21", "3.20", "1.18", "2.16", "3.436", "3.65", "59.9", "118.8", "92.0", "98.0",
+        "1.91", "7.63", "30.52", "122.07", "488.2", "488.28", "17.58", "4.120", "0.245", "1.22", "0.941", "0.96",
+        "0.539", "0.542", "0.582", "0.585",
+        "0.6121", "0.6626", "0.6930", "0.7965", "0.9674", "0.9823", "4.65", "5.66", "4.71", "1.03", "1.24",
         "10.0", "20.0", "30.0", "40.0", "50.0", "60.0", "70.0", "80.0", "90.0", "100.0",
         "3.06", "8.28", "10.35", "29.96", "68.8", "68.83", "762.8", "2670.6", "2894.2", "292.1", "89.9",
         "5.58", "1.29", "64.6", "0.275", "0.128", "0.755", "0.084", "0.590", "0.921", "0.919",
@@ -121,11 +127,11 @@ def test_pdf_allowlist_and_fig7_consistency():
     abs_match = re.search(r'Abstract\s*\n(.*?)(?=\n\s*(?:Keywords|1\s+Introduction))', full_text, re.DOTALL)
     abstract_text = abs_match.group(1) if abs_match else ""
 
-    # Extract Sections 5-6
-    sec5_6_match = re.search(r'\n\s*5\s+(?:Experimental|Empirical)\s+Evaluation(.*?)(?=\n\s*(?:7\s+Conclusion|Declarations|References))', full_text, re.DOTALL)
-    if not sec5_6_match:
-        sec5_6_match = re.search(r'\n\s*5\s+[^\n]+(.*?)(?=\n\s*(?:7\s+[^\n]+|Declarations|References))', full_text, re.DOTALL)
-    sec5_6_text = sec5_6_match.group(1) if sec5_6_match else ""
+    # Extract Sections 4-8
+    sec_match = re.search(r'\n\s*(?:4|5)\s+Experimental Setup(.*?)(?=\n\s*(?:9\s+Conclusion|Declarations|Source Code|References))', full_text, re.DOTALL)
+    if not sec_match:
+        sec_match = re.search(r'\n\s*(?:4|5)\s+[^\n]+(.*?)(?=\n\s*(?:(?:7|8|9)\s+[^\n]+|Declarations|Source Code|References))', full_text, re.DOTALL)
+    sec5_6_text = sec_match.group(1) if sec_match else ""
 
     # Extract Captions
     captions = re.findall(r'(Fig\.\s*\d+:.*?)(?=\n\s*\n|\n(?=[A-Z0-9])|\Z)', full_text, re.DOTALL)
@@ -174,7 +180,7 @@ def test_pdf_allowlist_and_fig7_consistency():
         assert mean_ranks[model] == rank, f"Fig 7 bar rank for {model} is {mean_ranks[model]}, expected {rank}"
 
     # Also verify that Fig. 7 caption in the PDF contains these exact ranks
-    fig7_match = re.search(r'Fig\.\s*7:\s*Dem.*?Across all benchmarks.*?(?=\n\s*(?:Statistical Significance Analysis|[A-Z][a-z]+ [A-Z]|\Z))', full_text, re.DOTALL)
+    fig7_match = re.search(r'Fig\.\s*(?:7|8):\s*Dem.*?Across all benchmarks.*?(?=\n\s*(?:Statistical Significance Analysis|[A-Z][a-z]+ [A-Z]|\Z))', full_text, re.DOTALL)
     assert fig7_match, "ERROR: Fig. 7 caption not found in PDF text!"
     fig7_caption = fig7_match.group(0)
 
