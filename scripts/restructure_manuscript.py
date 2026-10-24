@@ -61,13 +61,13 @@ def generate_manuscript():
 
 \title[When Does Bimodality-Gated Feature Selection Help Consensus Clustering?]{When Does Bimodality-Gated Feature Selection Help Consensus Clustering?}
 
-\author*[1]{\fnm{Akash} \sur{Kundu}}\email{akash231001001449@technoindiaeducation.com}
+\author*[1]{\fnm{Akash} \sur{Kundu}}\email{akashkundu1152@gmail.com}
 
-\author[1]{\fnm{Trinankur} \sur{Guha}}\email{trinankur231001001450@technoindiaeducation.com}
+\author[1]{\fnm{Trinankur} \sur{Guha}}
 
-\author[1]{\fnm{Rupankar} \sur{Ghatak}}\email{rupankar231001001438@technoindiaeducation.com}
+\author[1]{\fnm{Rupankar} \sur{Ghatak}}
 
-\author[1]{\fnm{Anubhab} \sur{Naskar}}\email{anubhab231001001443@technoindiaeducation.com}
+\author[1]{\fnm{Anubhab} \sur{Naskar}}
 
 \author[1]{\fnm{Kalyan Kumar} \sur{Das}}\email{kalyan.biltu@gmail.com}
 

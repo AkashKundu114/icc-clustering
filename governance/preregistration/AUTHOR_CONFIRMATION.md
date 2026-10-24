@@ -15,7 +15,7 @@ All co-authors listed below must verify their contributions, official institutio
 
 | Name | Role / Title | Affiliation | Official Email | Consent Status | Approval Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Akash Kundu** | Corresponding Author & Lead Researcher | Department of Computer Science and Engineering, Techno India University, Kolkata, West Bengal, India | `akash231001001449@technoindiaeducation.com` | Verified Lead Author | PENDING FINAL REVIEW |
+| **Akash Kundu** | Corresponding Author & Lead Researcher | Department of Computer Science and Engineering, Techno India University, Kolkata, West Bengal, India | `akashkundu1152@gmail.com` | Verified Lead Author | PENDING FINAL REVIEW |
 | **Trinankur Guha** | Contributing Author | Department of Computer Science and Engineering, Techno India University, Kolkata, West Bengal, India | `trinankur231001001450@technoindiaeducation.com` | Pending Co-Author Audit | PENDING FINAL REVIEW |
 | **Rupankar Ghatak** | Contributing Author | Department of Computer Science and Engineering, Techno India University, Kolkata, West Bengal, India | `rupankar231001001438@technoindiaeducation.com` | Pending Co-Author Audit | PENDING FINAL REVIEW |
 | **Anubhab Naskar** | Contributing Author | Department of Computer Science and Engineering, Techno India University, Kolkata, West Bengal, India | `anubhab231001001443@technoindiaeducation.com` | Pending Co-Author Audit | PENDING FINAL REVIEW |

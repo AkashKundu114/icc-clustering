@@ -20,7 +20,7 @@ We welcome contributions ranging from bug fixes and documentation improvements t
 
 ## Code of Conduct
 
-All contributors and participants are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). Please report any violations or concerns to `akashkundu11522@gmail.com` or `akash231001001449@technoindiaeducation.com`.
+All contributors and participants are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). Please report any violations or concerns to `akashkundu1152@gmail.com` or `akashkundu1152@gmail.com`.
 
 ---
 

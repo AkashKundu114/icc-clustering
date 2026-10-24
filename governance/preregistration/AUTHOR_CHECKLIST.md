@@ -16,7 +16,7 @@ Please verify that all author names, affiliations, and email addresses match ins
 
 | # | Author Name | Role | Affiliation | Institutional Email | Verification Status |
 | :- | :--- | :--- | :--- | :--- | :---: |
-| 1 | **Akash Kundu** | Lead Author / Corresponding | Techno India University, Kolkata | `akash231001001449@technoindiaeducation.com` | Verified |
+| 1 | **Akash Kundu** | Lead Author / Corresponding | Techno India University, Kolkata | `akashkundu1152@gmail.com` | Verified |
 | 2 | **Trinankur Guha** | Co-Author | Techno India University, Kolkata | `trinankur231001001450@technoindiaeducation.com` | Confirmed by Lead Author |
 | 3 | **Rupankar Ghatak** | Co-Author | Techno India University, Kolkata | `rupankar231001001438@technoindiaeducation.com` | Confirmed by Lead Author |
 | 4 | **Anubhab Naskar** | Co-Author | Techno India University, Kolkata | `anubhab231001001443@technoindiaeducation.com` | Confirmed by Lead Author |

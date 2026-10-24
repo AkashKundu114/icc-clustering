@@ -42,7 +42,7 @@ Thank you for your time and consideration of our manuscript.
 Sincerely,  
 **Akash Kundu** (Corresponding Author)  
 Department of Computer Science and Engineering, Techno India University  
-Email: `akash231001001449@technoindiaeducation.com`  
+Email: `akashkundu1152@gmail.com`  
 
 On behalf of co-authors:  
 Trinankur Guha, Rupankar Ghatak, Anubhab Naskar, and Kalyan Kumar Das

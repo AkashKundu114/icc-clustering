@@ -29,6 +29,6 @@ For research collaborations, dataset usage clarifications, or academic correspon
 
 - **Corresponding Author:** Akash Kundu
 - **Affiliation:** Department of Computer Science and Engineering, Techno India University
-- **Institutional Email:** `akash231001001449@technoindiaeducation.com`
-- **Contact Email:** `akashkundu11522@gmail.com`
+- **Institutional Email:** `akashkundu1152@gmail.com`
+- **Contact Email:** `akashkundu1152@gmail.com`
 - **ORCID:** [0009-0003-8246-7316](https://orcid.org/0009-0003-8246-7316)

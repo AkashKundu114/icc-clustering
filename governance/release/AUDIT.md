@@ -59,8 +59,8 @@
 
 ### 2.2 Privacy & Local Path Audit
 - **Corresponding Author Emails Found:**
-  - `akash231001001449@technoindiaeducation.com` (Author institutional email, present in `CITATION.cff`, `pyproject.toml`, `README.md`)
-  - `akashkundu11522@gmail.com` (Author contact email in `CODE_OF_CONDUCT.md`, `README.md`)
+  - `akashkundu1152@gmail.com` (Author institutional email, present in `CITATION.cff`, `pyproject.toml`, `README.md`)
+  - `akashkundu1152@gmail.com` (Author contact email in `CODE_OF_CONDUCT.md`, `README.md`)
   - `iauthor@gmail.com` (Standard template placeholder in Springer LaTeX source `sn-article.tex`)
 - **Absolute Local Paths:**
   - `C:\Users\Akash\...` identified in `REMEDIATION/ENV.md` and captured log files (`REMEDIATION/logs/test_suite.log`, `exp0.log`, etc.). These document the empirical runtime environment per protocol.

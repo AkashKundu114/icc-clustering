@@ -72,7 +72,7 @@ preamble = r'''\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}
 
 \title[Inductive Consensus Clustering]{Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes}
 
-\author*[1]{\fnm{Akash} \sur{Kundu}}\email{akash231001001449@technoindiaeducation.com}
+\author*[1]{\fnm{Akash} \sur{Kundu}}\email{akashkundu1152@gmail.com}
 
 \author[1]{\fnm{Trinankur} \sur{Guha}}\email{trinankur231001001450@technoindiaeducation.com}
 
