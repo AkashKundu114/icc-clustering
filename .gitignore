@@ -78,6 +78,7 @@ tools/
 # Manuscript & Publication artifacts (kept local on disk, documented via README for GitHub)
 springer_manuscript/*
 manuscript/
+paper/
 paper.tex
 *.tex
 *.pdf
