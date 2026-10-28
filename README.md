@@ -201,7 +201,7 @@ For academic mentors, peer reviewers, and reproducibility auditors inspecting th
 
 ```bibtex
 @article{kundu2026when,
-  author    = {Akash Kundu and Trinankur Guha and Rupankar Ghatak and Anubhab Naskar and Kalyan Kumar Das},
+  author    = {Akash Kundu},
   title     = {When Does Feature Gating and Anchor Consensus Salvage High-Dimensional Clustering? An Empirical and Geometric Analysis},
   journal   = {Preprint / Submitted for Peer Review},
   year      = {2026},
