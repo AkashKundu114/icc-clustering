@@ -116,11 +116,11 @@ Springer Nature
 
 **Date:** October 28, 2026  
 
-**Subject:** Submission of Research Manuscript: *"When Does Bimodality-Gated Feature Selection Help Consensus Clustering?"* (ICC-v2)  
+**Subject:** Submission of Research Manuscript: *"When Does Feature Gating and Anchor Consensus Salvage High-Dimensional Clustering? An Empirical and Geometric Analysis"* (ICC-v2)  
 
 Dear Editor-in-Chief and Editorial Board,
 
-We are pleased to submit our original research manuscript titled **"When Does Bimodality-Gated Feature Selection Help Consensus Clustering?"** for consideration for publication as a regular research paper in *Data Mining and Knowledge Discovery* (DAMI).
+We are pleased to submit our original research manuscript titled **"When Does Feature Gating and Anchor Consensus Salvage High-Dimensional Clustering? An Empirical and Geometric Analysis"** for consideration for publication as a regular research paper in *Data Mining and Knowledge Discovery* (DAMI).
 
 ### Context and Core Problem
 Consensus clustering synthesizes diverse base clusterings to discover stable partitions. However, in modern ultra-high-dimensional regimes ($D \gg N$), distance concentration severely degrades base partition accuracy, while classical $O(N^2)$ co-association matrices prevent out-of-sample inference. Existing high-dimensional cluster ensembles either rely on transductive graph co-clustering or uniform random subspace screening, which struggle under extreme isotropic noise.

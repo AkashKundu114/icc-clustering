@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "icc"
 version = "2.1.0"
-description = "Reference implementation: When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"
+description = "Reference implementation: When Does Feature Gating and Anchor Consensus Salvage High-Dimensional Clustering? An Empirical and Geometric Analysis"
 readme = "README.md"
 authors = [
     {name = "Akash Kundu", email = "akashkundu1152@gmail.com"}

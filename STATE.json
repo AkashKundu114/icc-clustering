@@ -2,7 +2,7 @@
   "project": "Autonomous Research Engineer - Dual Track",
   "author": "Akash Kundu",
   "institution": "Techno India University",
-  "updated_at": "2026-10-28T16:10:00+05:30",
+  "updated_at": "2026-10-28T19:08:00+05:30",
   "current_status": "PAUSED_FOR_USER_REVIEW_AT_PREREGISTRATION",
   "environment": {
     "os": "Windows 11 (Build 10.0.26300)",
@@ -14,7 +14,7 @@
     "env_verified_file": "docs/ENV.md"
   },
   "track_a_paper1": {
-    "title": "When Does Bimodality-Gated Feature Selection Help Consensus Clustering? (ICC-v2)",
+    "title": "When Does Feature Gating and Anchor Consensus Salvage High-Dimensional Clustering? An Empirical and Geometric Analysis (ICC-v2)",
     "repo": "https://github.com/AkashKundu114/icc-clustering",
     "current_branch": "main",
     "target_venue": "Springer Nature (Data Mining and Knowledge Discovery / DAMI)",

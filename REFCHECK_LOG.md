@@ -1,6 +1,6 @@
 # Bibliography Verification Log (CrossRef & arXiv)
 
-**Target Manuscript:** *When Does Bimodality-Gated Feature Selection Help Consensus Clustering?* (ICC-v2)  
+**Target Manuscript:** *When Does Feature Gating and Anchor Consensus Salvage High-Dimensional Clustering? An Empirical and Geometric Analysis* (ICC-v2)  
 **Target Venue:** Springer Nature (*Data Mining and Knowledge Discovery* / DAMI)  
 **Date:** October 2026  
 

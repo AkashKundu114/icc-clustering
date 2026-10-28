@@ -1,7 +1,7 @@
 # When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? (ICC-v2)
 
 Official reference implementation of the manuscript:  
-**"When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"** (Under Review).
+**"When Does Feature Gating and Anchor Consensus Salvage High-Dimensional Clustering? An Empirical and Geometric Analysis"** (Under Review).
 
 [![CI](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml/badge.svg)](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
@@ -202,7 +202,7 @@ For academic mentors, peer reviewers, and reproducibility auditors inspecting th
 ```bibtex
 @article{kundu2026when,
   author    = {Akash Kundu and Trinankur Guha and Rupankar Ghatak and Anubhab Naskar and Kalyan Kumar Das},
-  title     = {When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination},
+  title     = {When Does Feature Gating and Anchor Consensus Salvage High-Dimensional Clustering? An Empirical and Geometric Analysis},
   journal   = {Preprint / Submitted for Peer Review},
   year      = {2026},
   url       = {https://github.com/AkashKundu114/icc-clustering}

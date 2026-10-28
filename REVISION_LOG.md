@@ -1,6 +1,6 @@
 # Manuscript Revision Log and Verification Ledger
 
-**Manuscript Title:** *When Does Bimodality-Gated Feature Selection Help Consensus Clustering?* (ICC-v2)  
+**Manuscript Title:** *When Does Feature Gating and Anchor Consensus Salvage High-Dimensional Clustering? An Empirical and Geometric Analysis* (ICC-v2)  
 **Target Venue:** Springer Nature (*Data Mining and Knowledge Discovery* / DAMI)  
 **Date:** October 2026  
 
