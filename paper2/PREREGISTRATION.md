@@ -1,7 +1,7 @@
 # Confirmatory Pre-Registration Protocol (PREREGISTRATION.md)
 
 **Title:** Permutation-Null Calibrated Consensus Clustering for High-Dimensional Manifolds (`nullconsensus`)  
-**Investigators:** Akash Kundu, Trinankur Guha, Rupankar Ghatak, Anubhab Naskar, Prof. Kalyan Kumar Das  
+**Lead Investigator & Software Architect:** Akash Kundu  
 **Host Institution:** Techno India University, Kolkata, India  
 **Pre-Registration Tag:** `prereg-v1`  
 **Date:** October 28, 2026  

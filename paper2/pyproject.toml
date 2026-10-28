@@ -10,11 +10,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [
-    { name = "Akash Kundu", email = "akashkundu1152@gmail.com" },
-    { name = "Trinankur Guha" },
-    { name = "Rupankar Ghatak" },
-    { name = "Anubhab Naskar" },
-    { name = "Kalyan Kumar Das" }
+    { name = "Akash Kundu", email = "akashkundu1152@gmail.com" }
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -24,30 +20,27 @@ classifiers = [
     "Programming Language :: Python :: 3.14",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
-    "Intended Audience :: Science/Research",
-    "Topic :: Scientific/Engineering :: Artificial Intelligence"
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis"
 ]
 dependencies = [
-    "numpy>=1.23.0",
-    "scipy>=1.9.0",
-    "scikit-learn>=1.2.0",
-    "pandas>=1.5.0",
-    "pyyaml>=6.0"
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "scikit-learn>=1.3.0"
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=7.2.0",
-    "pytest-cov>=4.0.0",
-    "ruff>=0.1.0",
-    "mypy>=1.0.0"
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.4.0",
+    "mypy>=1.9.0"
 ]
 
-[tool.ruff]
-line-length = 100
-target-version = "py310"
+[project.urls]
+Homepage = "https://github.com/AkashKundu114/nullconsensus"
+Repository = "https://github.com/AkashKundu114/nullconsensus.git"
+Issues = "https://github.com/AkashKundu114/nullconsensus/issues"
 
-[tool.mypy]
-python_version = "3.10"
-strict = false
-ignore_missing_imports = true
+[tool.setuptools.packages.find]
+where = ["src"]
