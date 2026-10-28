@@ -38,7 +38,9 @@ def plot_fidelity_quad():
         return
 
     df = pd.read_csv(csv_file)
-    n_vals = np.array(sorted(df["N"].unique()))
+    exact_n = set(df[df["model"] == "Standard_Consensus"]["N"])
+    red_n = set(df[df["model"] == "ICC_v2"]["N"])
+    n_vals = np.array(sorted(exact_n.intersection(red_n)))
 
     # Compute means and stds for Standard_Consensus (exact) and ICC_v2 (reduced)
     exact_time_mean, exact_time_std = [], []
@@ -190,7 +192,7 @@ def plot_fidelity_quad():
     clean_spines(ax3)
     clean_spines(ax4)
 
-    fig.tight_layout()
+    fig.tight_layout(pad=2.5)
     out_file = FIGURES_DIR / "fig24_anchor_fidelity_quad.png"
     out_alias = FIGURES_DIR / "fig_anchor_fidelity_quad.png"
     plt.savefig(out_file, dpi=300, bbox_inches="tight")

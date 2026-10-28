@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Kundu"
+    given-names: "Akash"
+    email: "akashkundu1152@gmail.com"
+    affiliation: "Techno India University"
+  - family-names: "Guha"
+    given-names: "Trinankur"
+  - family-names: "Ghatak"
+    given-names: "Rupankar"
+  - family-names: "Naskar"
+    given-names: "Anubhab"
+  - family-names: "Das"
+    given-names: "Kalyan Kumar"
+title: "nullconsensus: Permutation-Null Calibrated Consensus Clustering for High-Dimensional Manifolds"
+version: 0.1.0
+date-released: 2026-10-28
+url: "https://github.com/AkashKundu114/nullconsensus"
+license: MIT

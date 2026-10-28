@@ -13,6 +13,7 @@ To maintain repository compactness and comply with journal pre-publication polic
 - **Target Journal:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)
 - **Document Class:** `\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}` (v3.1, Dec 2024)
 - **Bibliography Style:** `sn-mathphys-num.bst` (Vancouver / numerical citation order)
+- **Bibliography Hygiene:** Exactly 47 verified references (`refs.bib`), 38 published 2024–2026 (80.85% vintage). Strictly single-cited at first mention in manuscript text (47 citations in `.tex`, 0 duplicates, 0 missing, verified by `scripts/verify_refs.py`).
 - **Macro Registry:** `paper/numbers.tex` acts as the single source of truth for all quantitative claims, metric values, confidence intervals, and dataset statistics reported in the manuscript.
 
 ## Directory Layout

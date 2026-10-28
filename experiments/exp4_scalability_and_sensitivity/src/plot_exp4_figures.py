@@ -36,7 +36,7 @@ MODEL_LABELS = {
     "Standard_Consensus": "Std Consensus O(N²)",
     "Li_et_al_2019": "Li et al. (2019) O(N²)",
     "ICC_v1": "ICC-v1 (Anchor) O(N)",
-    "ICC_v2": "ICC-v2 (VSSG+Anchor) O(N)"
+    "ICC_v2": "ICC-v2 (BGSS+Anchor) O(N)"
 }
 
 
@@ -183,7 +183,7 @@ def plot_figure_19():
     ax.legend(loc="upper left", fontsize=10.5, framealpha=0.92, facecolor="white", edgecolor="#cccccc")
     
     # Callout annotation at D=20,000 (placed in top center to avoid crossing curves)
-    ax.annotate("VSSG Feature Gating:\n36.7% faster runtime at D=20,000\n(0.96s vs 1.52s)",
+    ax.annotate("BGSS Feature Gating:\n36.7% faster runtime at D=20,000\n(0.96s vs 1.52s)",
                 xy=(20000, 0.964), xytext=(700, 1.15),
                 arrowprops=dict(arrowstyle="->", color="#d62728", lw=1.3),
                 fontsize=9.5, fontweight="bold", color="#d62728",

@@ -21,7 +21,18 @@ results/
 ├── figures/                            # Consolidated result visualizations
 ├── tables/                             # Auto-generated LaTeX tables
 ├── results.json                        # Master benchmark result registry (single source)
-└── MANIFEST.md                         # Checksum and execution manifest
+├── MANIFEST.md                         # Checksum and execution manifest
+├── INVENTORY.md                        # Master experiment and configuration inventory
+├── PLAN.md                             # Pre-registered experimental execution protocol
+├── refs_report.csv                     # Automated CrossRef/arXiv API reference verification report
+├── refs_map.csv                        # Per-citation section, sentence, and scientific rationale mapping
+├── lit_candidates.csv                  # Candidate 2024–2026 literature survey records
+├── exp3_cohirf_benchmark.csv           # CoHiRF baseline benchmark evaluations across 13 cohorts
+├── exp8b_anchor_selection.csv          # Certified core vs random anchor selection evaluation
+├── exp8c_feature_gating.csv            # BGSS vs random subspace feature selection evaluation
+├── exp8d_distance_metrics.csv          # Distance concentration metrics across noise dimensions
+├── exp8e_large_k_anchor_budget.csv     # Large-K anchor budget scaling evaluation (refuting starvation)
+└── exp8f_sensitivity_grid.csv          # Hyperparameter sensitivity grid (M x L)
 ```
 
 ## Traceability to Manuscript
@@ -29,4 +40,7 @@ Every metric reported in the manuscript originates from `results.json` and is in
 ```bash
 # Update manuscript macros from results.json
 python scripts/make_numbers.py
+
+# Verify reference audit against CrossRef and arXiv APIs
+python scripts/verify_refs.py refs.bib --out results/refs_report.csv --manual refs_manual.csv
 ```

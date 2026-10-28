@@ -33,10 +33,10 @@ VARIANT_COLORS = {
 
 VARIANT_LABELS = {
     "V0_Standard_Consensus": "V0: Standard Consensus (Ambient)",
-    "V1_VSSG_KMeans": "V1: VSSG + K-Means (Control 1)",
-    "V2_VSSG_StdConsensus": "V2: VSSG + Std Consensus (Control 2)",
+    "V1_VSSG_KMeans": "V1: BGSS + K-Means (Control 1)",
+    "V2_VSSG_StdConsensus": "V2: BGSS + Std Consensus (Control 2)",
     "V3_Anchors_Only": "V3: Core Anchors Only (Ambient)",
-    "V4_VSSG_Random_Anchors": "V4: VSSG + Random Anchors",
+    "V4_VSSG_Random_Anchors": "V4: BGSS + Random Anchors",
     "V5_Full_ICC_v2": "V5: Full ICC-v2 [Ours]"
 }
 
@@ -129,7 +129,7 @@ def plot_exp2_figures():
                      xytext=(0, 4), textcoords="offset points",
                      ha="center", va="bottom", fontsize=10.0, fontweight="bold")
 
-    ax2.annotate("VSSG Shielding Lift:\n+0.640 ARI (V5 vs V0)",
+    ax2.annotate("BGSS Shielding Lift:\n+0.640 ARI (V5 vs V0)",
                  xy=(5, 1.0), xytext=(2.2, 0.75),
                  arrowprops=dict(arrowstyle="->", color="#2ca02c", lw=1.3),
                  fontsize=10.0, fontweight="bold", color="#2ca02c",

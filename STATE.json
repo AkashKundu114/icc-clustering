@@ -1,0 +1,65 @@
+{
+  "project": "Autonomous Research Engineer - Dual Track",
+  "author": "Akash Kundu",
+  "institution": "Techno India University",
+  "updated_at": "2026-10-28T15:53:00+05:30",
+  "environment": {
+    "os": "Windows 11 (Build 10.0.26300)",
+    "cpu": "AMD Ryzen 9 8940HX (16 cores / 32 threads)",
+    "ram_total_gb": 15.21,
+    "python": "3.14.6",
+    "cuda_available": true,
+    "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU (8 GB)",
+    "env_verified_file": "docs/ENV.md"
+  },
+  "track_a_paper1": {
+    "title": "When Does Bimodality-Gated Feature Selection Help Consensus Clustering? (ICC-v2)",
+    "repo": "https://github.com/AkashKundu114/icc-clustering",
+    "current_branch": "main",
+    "target_venue": "Springer Nature (Data Mining and Knowledge Discovery / DAMI)",
+    "tasks": {
+      "A0_baseline_snapshot": "DONE",
+      "A1_reference_integrity": "DONE",
+      "A2_number_consistency": "DONE",
+      "A3_known_inconsistencies": "DONE",
+      "A4_literature_and_experiments": "DONE",
+      "A5_declarations": "DONE",
+      "A6_figures": "DONE",
+      "A7_final_build_and_package": "DONE"
+    },
+    "gate_a": "CLEARED",
+    "metrics": {
+      "total_references": 47,
+      "recent_references_2024_2026": 38,
+      "recent_fraction_pct": 80.85,
+      "single_citation_enforced": true,
+      "total_tests": 94,
+      "tests_passing": 94,
+      "pass_rate_pct": 100.0,
+      "omnibus_friedman_chi2": 11.56,
+      "omnibus_friedman_p": 0.40,
+      "high_d_subgroup_rank": 2.17,
+      "total_model_fits": 3000
+    }
+  },
+  "track_b_paper2": {
+    "current_phase": "B0_B1_DESIGN_OVERLAP",
+    "gate_b1": "NOT_REACHED",
+    "freeze_tag": null,
+    "tasks": {
+      "B0_problem_framing": "READY_TO_START",
+      "B1_literature_map": "READY_TO_START",
+      "B2_repo_infrastructure": "BLOCKED_BY_GATE_A",
+      "B3_dev_test_split": "BLOCKED_BY_GATE_A",
+      "B4_dev_pilots": "BLOCKED_BY_GATE_A",
+      "B5_freeze": "BLOCKED_BY_GATE_A",
+      "B6_test_experiments": "BLOCKED_BY_GATE_A",
+      "B7_paper2_release": "BLOCKED_BY_GATE_A"
+    }
+  },
+  "blockers": [
+    "BLOCKER-COAUTHORS",
+    "BLOCKER-DECLARATIONS",
+    "BLOCKER-JOURNAL-CHOICE"
+  ]
+}

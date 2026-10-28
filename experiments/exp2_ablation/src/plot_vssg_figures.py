@@ -69,7 +69,7 @@ def plot_madelon_pr():
     labels = [l.get_label() for l in lines]
     ax1.legend(lines, labels, loc="center right")
 
-    plt.title("VSSG Feature Recovery on Madelon ($D=500, K_{\\text{true}}=20$)")
+    plt.title("BGSS Feature Recovery on Madelon ($D=500, K_{\\text{true}}=20$)")
     fig.tight_layout()
     out_path = FIGURES_DIR / "fig22a_vssg_madelon_pr.png"
     plt.savefig(out_path, dpi=300)
@@ -122,7 +122,7 @@ def plot_synthetic_pr():
     labels = [l.get_label() for l in lines]
     ax1.legend(lines, labels, loc="center right")
 
-    plt.title("VSSG Feature Recovery in Ultra-High-D ($D=10,000, D_{\\text{signal}}=50$)")
+    plt.title("BGSS Feature Recovery in Ultra-High-D ($D=10,000, D_{\\text{signal}}=50$)")
     fig.tight_layout()
     out_path = FIGURES_DIR / "fig22b_vssg_synthetic_pr.png"
     plt.savefig(out_path, dpi=300)
@@ -163,7 +163,7 @@ def plot_noise_sweep():
 
     ax.set_xlabel("Noise Feature Dimension $D_{\\text{noise}}$")
     ax.set_ylabel("Signal Feature Recall")
-    ax.set_title("VSSG Signal Recovery vs Noise Dimension ($D_{\\text{signal}}=50$)")
+    ax.set_title("BGSS Signal Recovery vs Noise Dimension ($D_{\\text{signal}}=50$)")
     ax.set_ylim(0.0, 1.05)
     ax.grid(True)
     ax.legend(loc="lower left")

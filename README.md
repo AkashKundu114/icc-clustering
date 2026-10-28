@@ -6,7 +6,8 @@ Official reference implementation of the manuscript:
 [![CI](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml/badge.svg)](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Tests: Passing](https://img.shields.io/badge/pytest-86%2F86%20passed-brightgreen.svg)]()
+[![Tests: Passing](https://img.shields.io/badge/pytest-94%2F94%20passed-brightgreen.svg)]()
+[![References: 80.85% Recent (2024-2026)](https://img.shields.io/badge/references-80.85%25%20recent%20(2024--2026)-success.svg)]()
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 
 ---
@@ -125,6 +126,9 @@ Detailed per-dataset metrics, pre-registration specifications, and bootstrap con
 # Fast smoke verification (synthetic + real leukemia/srbct benchmarks, < 3 seconds)
 python scripts/reproduce.py --scope smoke
 
+# Verify bibliography against CrossRef and arXiv APIs (80.85% recent 2024-2026, exit code 0)
+python scripts/verify_refs.py refs.bib --out results/refs_report.csv --manual refs_manual.csv
+
 # Interactive CLI walkthrough
 python demo.py
 
@@ -172,7 +176,7 @@ For academic mentors, peer reviewers, and reproducibility auditors inspecting th
 
 2. **[`governance/preregistration/`](governance/preregistration/README.md): Research Integrity & Preregistration Archive:**
    - Preregistration protocols freezing evaluation thresholds in advance ([`PREREG_B.md`](governance/preregistration/PREREG_B.md), [`PREREG_C.md`](governance/preregistration/PREREG_C.md), [`PREREG_F.md`](governance/preregistration/PREREG_F.md)).
-   - 100% CrossRef API reference verification audit ([`REFS_AUDIT.md`](governance/preregistration/REFS_AUDIT.md), [`REFS_AUDIT.csv`](governance/preregistration/REFS_AUDIT.csv)).
+   - 100% CrossRef & arXiv API verification audit: 47 references, 38 published 2024–2026 (80.85%), strictly single-cited at first mention ([`REFCHECK_LOG.md`](REFCHECK_LOG.md), [`results/refs_report.csv`](results/refs_report.csv), [`results/refs_map.csv`](results/refs_map.csv)).
    - Related work taxonomy and novelty matrix ([`LITERATURE_MATRIX.csv`](governance/preregistration/LITERATURE_MATRIX.csv)).
    - Submission cover letters and rebuttal frameworks ([`COVER_LETTER_DRAFT.md`](governance/preregistration/COVER_LETTER_DRAFT.md), [`RESPONSE_TO_REVIEWERS_OUTLINE.md`](governance/preregistration/RESPONSE_TO_REVIEWERS_OUTLINE.md)).
 

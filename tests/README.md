@@ -5,7 +5,7 @@ This directory contains the unit, integration, and build-time consistency test s
 > **When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination**  
 > *Target Venue:* Springer Nature (*Data Mining and Knowledge Discovery* / DAMI)  
 > *Release Version:* v2.1.0  
-> *Total Tests:* 86 passing (100% pass rate)
+> *Total Tests:* 94 passing (100% pass rate)
 
 ---
 
@@ -22,7 +22,7 @@ The test suite is structured into four functional tiers:
 
 ## Test Catalog
 
-The test suite contains 13 modular test files:
+The test suite contains 14 modular test files:
 
 | Test File | Focus Area | Canonical Modules Covered |
 | :--- | :--- | :--- |
@@ -39,6 +39,7 @@ The test suite contains 13 modular test files:
 | `test_pdf_allowlist.py` | PDF Numerical Audit | Regex-level text audit of compiled `paper/main.pdf` ensuring zero ungrounded decimals, purging stale tokens, and confirming Figure 7 critical difference ranks. |
 | `test_anchor_fidelity.py` | Scalability & Fidelity | Scalability sweep verification, approximation fidelity bounds between bipartite anchor consensus and exact dense consensus graph. |
 | `test_exp1_multiclassifier.py` | Downstream Generalization | Downstream inductive classifier generalization across SVM, Random Forest, Multi-Layer Perceptron (MLP), and K-Nearest Neighbors (KNN). |
+| `test_verify_refs.py` | Reference Verification Pipeline | Mocked CrossRef & arXiv API verification, field mismatch detection, fuzzy search fallback, published version redirects, and CLI integrity. |
 
 ---
 
@@ -46,7 +47,7 @@ The test suite contains 13 modular test files:
 
 ### Running the Complete Suite
 
-To run all 86 tests with coverage reporting:
+To run all 94 tests with coverage reporting:
 
 ```powershell
 pytest tests/
@@ -74,6 +75,9 @@ pytest tests/test_edge_cases.py
 
 # 6. Build-time macro and manuscript consistency
 pytest tests/test_macro_consistency.py tests/test_pdf_allowlist.py
+
+# 7. Automated CrossRef/arXiv reference verification test suite
+pytest tests/test_verify_refs.py
 ```
 
 ### Verbose Output Without Coverage

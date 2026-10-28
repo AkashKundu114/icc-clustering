@@ -1,0 +1,206 @@
+{
+  "cpu_freq": {
+    "current": 2401.0,
+    "min": 0.0,
+    "max": 2401.0
+  },
+  "cpu_count": 32,
+  "cpu_percent": 7.9,
+  "virtual_mem": {
+    "total": 16334499840,
+    "available": 5822173184,
+    "percent": 64.4,
+    "used": 10512326656,
+    "free": 5822173184
+  },
+  "swap_mem": {
+    "total": 16334499840,
+    "used": 1076330496,
+    "free": 15258169344,
+    "percent": 6.6,
+    "sin": 0,
+    "sout": 0
+  },
+  "runs": [
+    {
+      "N": 5000,
+      "seed": 42,
+      "time_sec": 0.8472072000149637,
+      "peak_ram_mb": 50.21405220031738,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 3.1,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 5000,
+      "seed": 101,
+      "time_sec": 0.7290259999863338,
+      "peak_ram_mb": 50.41906547546387,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 38.9,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 5000,
+      "seed": 202,
+      "time_sec": 0.7798481000063475,
+      "peak_ram_mb": 50.210309982299805,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 35.7,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 5000,
+      "seed": 303,
+      "time_sec": 0.8636373000044841,
+      "peak_ram_mb": 51.186110496520996,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 35.8,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 5000,
+      "seed": 404,
+      "time_sec": 0.7244215999962762,
+      "peak_ram_mb": 50.10914611816406,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 37.2,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 6000,
+      "seed": 42,
+      "time_sec": 0.8417876000166871,
+      "peak_ram_mb": 53.85078811645508,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 36.4,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 6000,
+      "seed": 101,
+      "time_sec": 0.8680378000135534,
+      "peak_ram_mb": 54.539347648620605,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 37.7,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 6000,
+      "seed": 202,
+      "time_sec": 0.8607031000137795,
+      "peak_ram_mb": 53.71263313293457,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 38.7,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 6000,
+      "seed": 303,
+      "time_sec": 0.9746393999957945,
+      "peak_ram_mb": 54.34901809692383,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 39.3,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 6000,
+      "seed": 404,
+      "time_sec": 0.8954490999749396,
+      "peak_ram_mb": 54.03097438812256,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 38.7,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 8000,
+      "seed": 42,
+      "time_sec": 1.0132728999888059,
+      "peak_ram_mb": 60.93228721618652,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 38.4,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 8000,
+      "seed": 101,
+      "time_sec": 1.1201843999733683,
+      "peak_ram_mb": 61.600358963012695,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 37.2,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 8000,
+      "seed": 202,
+      "time_sec": 1.0793380000104662,
+      "peak_ram_mb": 61.03931903839111,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 39.1,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 8000,
+      "seed": 303,
+      "time_sec": 1.1490917999763042,
+      "peak_ram_mb": 61.60221004486084,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 40.4,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 8000,
+      "seed": 404,
+      "time_sec": 1.041267099994002,
+      "peak_ram_mb": 61.69094181060791,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 39.3,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 10000,
+      "seed": 42,
+      "time_sec": 1.2028351000044495,
+      "peak_ram_mb": 68.48988628387451,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 39.3,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 10000,
+      "seed": 101,
+      "time_sec": 1.1969611999811605,
+      "peak_ram_mb": 68.70779228210449,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 39.2,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 10000,
+      "seed": 202,
+      "time_sec": 1.2538604000001214,
+      "peak_ram_mb": 68.93373489379883,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 40.3,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 10000,
+      "seed": 303,
+      "time_sec": 1.3525888999865856,
+      "peak_ram_mb": 69.10765647888184,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 38.1,
+      "swap_used_mb": 1026.46875
+    },
+    {
+      "N": 10000,
+      "seed": 404,
+      "time_sec": 1.2389156999997795,
+      "peak_ram_mb": 69.00923919677734,
+      "cpu_freq_mhz": 2401.0,
+      "cpu_pct": 38.1,
+      "swap_used_mb": 1026.46875
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "key": "tkde2026fast",
+    "title": "Fast Bipartite Graph Clustering",
+    "authors": "Shun Yang and Shigang Liu and Jingjing Xue and Feiping Nie and Yali Peng",
+    "venue": "IEEE Transactions on Knowledge and Data Engineering",
+    "year": "2026",
+    "volume": "",
+    "pages": "1-13",
+    "doi": "10.1109/tkde.2026.3734593",
+    "section": "Sec 2.2",
+    "why": "Fast bipartite graph clustering"
+  },
+  {
+    "key": "biometrika2024bayesian",
+    "title": "Bayesian clustering of high-dimensional data via latent repulsive mixtures",
+    "authors": "L Ghilotti and M Beraha and A Guglielmi",
+    "venue": "Biometrika",
+    "year": "2025",
+    "volume": "112",
+    "pages": "",
+    "doi": "10.1093/biomet/asae059",
+    "section": "Sec 2.3",
+    "why": "Bayesian clustering in high dimensions"
+  },
+  {
+    "key": "patcog2026consensus",
+    "title": "Consensus-aware sparse subspace clustering via coreset selection",
+    "authors": "Katsuya Hotta and Chunzhi Gu and Chao Zhang",
+    "venue": "Pattern Recognition",
+    "year": "2026",
+    "volume": "175",
+    "pages": "113097",
+    "doi": "10.1016/j.patcog.2026.113097",
+    "section": "Sec 2.2",
+    "why": "Consensus-aware sparse subspace clustering"
+  },
+  {
+    "key": "ins2025fast",
+    "title": "Fast and direct co-clustering via adaptive anchor graph learning",
+    "authors": "Jiaqi Nie and Qianyao Qiang",
+    "venue": "Information Sciences",
+    "year": "2025",
+    "volume": "717",
+    "pages": "122349",
+    "doi": "10.1016/j.ins.2025.122349",
+    "section": "Sec 2.2",
+    "why": "Fast adaptive anchor graph co-clustering"
+  }
+]

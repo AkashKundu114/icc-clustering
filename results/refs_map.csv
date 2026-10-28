@@ -1,0 +1,48 @@
+bibkey,section,sentence,why
+fred2005combining,Sec 2.1,Consensus clustering aggregates diverse partitions into an integrated consensus solution,Evidence accumulation and standard consensus baseline
+fern2003random,Sec 2.3,Random subspace ensembles sample random subsets of features to create diversity,Random subspace ensemble baseline (ICC-v1 legacy)
+sarle1983sas,Sec 2.3,Linear-time Bimodality-Gated Subspace Selection using Sarle bimodality coefficient,Bimodality coefficient definition and formula
+xie2016unsupervised,Sec 2.1,Xie et al. developed Deep Embedded Clustering learning non-linear cluster representations,DEC deep clustering baseline
+li2019clustering,Sec 2.1,Li et al. introduced Core-Halo consensus clustering evaluating sample stability,Core-Halo consensus baseline
+nie2024fast,Sec 2.2,Nie et al. proposed Fast Clustering with Anchor Guidance achieving fast spectral partitioning,FCAG anchor clustering baseline
+witten2010framework,Sec 2.3,Witten and Tibshirani addressed high-dimensional clustering via Sparse K-Means,Sparse K-Means baseline with L1 penalty
+golub1999molecular,Sec 8.2,Evaluation on acute leukemia gene expression microarray cohort,Leukemia microarray dataset primary source
+hubert1985comparing,Sec 5.3,Clustering partition recovery was quantitatively evaluated using Adjusted Rand Index,ARI metric definition and chance-adjusted formulation
+demsar2006statistical,Sec 5.3,In accordance with modern empirical benchmarking guidelines we conduct non-parametric rank tests,Statistical comparisons of algorithms across multiple datasets
+belucci2025cohirf,Sec 2.3,Belucci et al. introduced CoHiRF combining random feature projections with hierarchical consensus,CoHiRF random feature hierarchical consensus baseline
+xu2025dynamic,Sec 2.2,Dynamic hypergraph reconstruction in anchor ensemble clustering,Dynamic anchor hypergraph ensemble clustering
+xu2026range,Sec 2.2,Robust outlier decoupling in large-scale anchor ensemble clustering,RANGE robust outlier decoupling consensus
+zhang2025structured,Sec 2.2,Structured bipartite graph learning method for ensemble clustering,Structured bipartite graph ensemble clustering
+zhang2025anchor,Sec 2.2,Anchor-based fast spectral ensemble clustering,Fast anchor spectral ensemble clustering
+zhao2026efficient,Sec 2.2,Efficient co-clustering via bipartite graph factorization,Bipartite graph factorization co-clustering
+xie2025fast,Sec 2.2,Fast co-clustering via anchor-guided label spreading,Anchor-guided label spreading co-clustering
+wang2026normalized,Sec 2.4,Normalized cut co-clustering with inductive out-of-sample extension,Closed-form inductive out-of-sample projection
+zhou2024comprehensive,Sec 2.4,Comprehensive survey detailing taxonomies and inductive capacity in deep clustering,Deep clustering taxonomy and inductive extensions survey
+wani2024comprehensive,Sec 2.1,Recent comprehensive surveys continue to emphasize persistent challenges of clustering algorithms,Comprehensive analysis and benchmark survey of clustering algorithms
+xu2024enhancing,Sec 2.2,Adaptive high-order topological weighting for ensemble clustering,High-order topological weighting consensus
+sceve2025single,Sec 8.2,Single-cell RNA-seq ensemble clustering capitalizing on partition differences,scRNA-seq single-cell ensemble clustering benchmark
+xu2026topological,Sec 2.2,Topological-aware multiple kernel learning for ensemble clustering,Topological multiple kernel consensus
+wang2024structured,Sec 2.2,Structured bipartite graph ensemble clustering,Structured bipartite graph clustering
+yang2025correntropy,Sec 2.2,Correntropy-based bipartite graph factorization for clustering,Correntropy robust bipartite clustering
+xie2025efficient,Sec 2.2,Efficient co-clustering via anchor-refined label spreading,Anchor-refined label spreading
+yang2025anchor,Sec 2.2,Multi-anchor graph fusion for co-clustering,Multi-anchor fusion co-clustering
+ma2025fast,Sec 2.2,Fast anchor-based spectral clustering,Fast anchor spectral clustering
+tkde2026fast,Sec 2.2,Fast bipartite graph clustering,Fast bipartite graph clustering factorization
+biometrika2024bayesian,Sec 2.3,Bayesian clustering via latent repulsive mixtures in high dimensions,High-dimensional Bayesian repulsive mixture clustering
+patcog2026consensus,Sec 2.3,Consensus-aware sparse subspace clustering via coreset selection,Sparse subspace clustering coreset selection
+ins2025fast,Sec 2.2,Adaptive anchor graph learning for direct co-clustering,Adaptive anchor graph co-clustering
+li2026rfag,Sec 2.2,Random forest clustering based on anchor graphs,Random forest anchor clustering
+lei2024anchor,Sec 2.2,Anchor graph-based multiview spectral clustering,Multiview anchor spectral clustering
+xu2026dynamic,Sec 2.2,Dynamic anchor-based one-step hypergraph ensemble clustering,One-step hypergraph anchor ensemble clustering
+ma2025large,Sec 2.2,Large-scale clustering with anchor-based constrained Laplacian rank,Anchor-based constrained Laplacian rank clustering
+zhao2024multiview,Sec 2.2,Multi-view clustering via dynamic unified bipartite graph learning,Dynamic unified bipartite graph learning
+song2026enhanced,Sec 2.2,Enhanced anchor multi-view clustering via projection learning and high-order correlation,Projection learning anchor multi-view clustering
+ren2026multiview,Sec 2.2,Multi-view anchor subspace clustering via consensus-specific reconstruction,Consensus-specific anchor subspace reconstruction
+ou2024anchor,Sec 2.2,Anchor-based multi-view subspace clustering with hierarchical feature descent,Hierarchical feature descent anchor clustering
+fettal2026scalable,Sec 2.1,Scalable multi-view clustering via explicit kernel feature maps,Explicit kernel feature maps scalable clustering
+patron2026codac,Sec 2.1,Constraint-based deep active clustering incorporating pairwise instance relationships,Active deep constraint-based clustering
+liao2026multiview,Sec 2.2,Multiview clustering integrating biorthogonal nonnegative tensor factorization and anchor graphs,Tensor factorization anchor graph clustering
+fu2025anchor,Sec 2.2,Anchor graph network for incomplete multiview clustering,Incomplete multiview anchor graph network
+gao2026consistency,Sec 2.3,Consistency-guided anchor in multi-view subspace clustering with prior-aware tensor norm,Consistency-guided anchor subspace clustering
+he2025subspace,Sec 2.3,Subspace-based GMM clustering ensemble algorithm for high-dimensional data,High-dimensional subspace clustering ensemble
+wang2026deep_jasa,Sec 5.3,Deep clustering evaluation and validation of internal validation measures,Internal validation measures and clustering benchmark evaluation

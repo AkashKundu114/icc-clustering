@@ -1,0 +1,23 @@
+         74751 function calls in 0.543 seconds
+
+   Ordered by: cumulative time
+   List reduced from 428 to 15 due to restriction <15>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.003    0.003    0.543    0.543 D:\Final Year Project\src\icc\baselines\consensus.py:237(run_icc_v2)
+        1    0.065    0.065    0.540    0.540 D:\Final Year Project\src\icc\consensus_v2.py:153(fit_predict)
+       26    0.000    0.000    0.316    0.012 D:\Final Year Project\src\icc\core.py:223(run_clusterer)
+       26    0.000    0.000    0.316    0.012 C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\cluster\_kmeans.py:1046(fit_predict)
+       26    0.002    0.000    0.316    0.012 C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\base.py:1381(wrapper)
+       26    0.016    0.001    0.307    0.012 C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\cluster\_kmeans.py:1431(fit)
+       26    0.000    0.000    0.222    0.009 C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\utils\parallel.py:206(wrapper)
+       26    0.187    0.007    0.221    0.008 C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\cluster\_kmeans.py:629(_kmeans_single_lloyd)
+        2    0.000    0.000    0.100    0.050 C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\scipy\stats\_axis_nan_policy.py:427(axis_nan_policy_wrapper)
+        4    0.062    0.016    0.089    0.022 C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\scipy\stats\_stats_py.py:1198(_moment)
+     2258    0.073    0.000    0.073    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+        1    0.001    0.001    0.048    0.048 C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\scipy\stats\_stats_py.py:1332(kurtosis)
+       60    0.001    0.000    0.048    0.001 C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\numpy\_core\_methods.py:115(_mean)
+        1    0.001    0.001    0.046    0.046 C:\Users\Akash\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\scipy\stats\_stats_py.py:1231(skew)
+       27    0.000    0.000    0.039    0.001 {method 'mean' of 'numpy.ndarray' objects}
+
+

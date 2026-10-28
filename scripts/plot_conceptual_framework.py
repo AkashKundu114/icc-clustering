@@ -86,7 +86,7 @@ def generate_conceptual_figure():
     ax_b.grid(True, linestyle="--", alpha=0.4)
 
     # Inset: Distance Concentration Curve
-    ax_inset = ax_b.inset_axes([0.52, 0.44, 0.44, 0.38])
+    ax_inset = ax_b.inset_axes([0.53, 0.42, 0.43, 0.38])
     d_vals = [2, 10, 50, 200, 1000, 5000]
     rel_spread = []
     for D in d_vals:
@@ -97,10 +97,10 @@ def generate_conceptual_figure():
 
     ax_inset.plot(d_vals, rel_spread, "d-", color="#d62728", linewidth=2.0, markersize=5.5)
     ax_inset.set_xscale("log")
-    ax_inset.set_title("Distance Concentration\n$(d_{\\max}-d_{\\min})/d_{\\min} \\to 0$", fontsize=8.0, pad=3)
-    ax_inset.set_xlabel("Dimension $D$", fontsize=7.5)
-    ax_inset.set_ylabel("Relative Spread", fontsize=7.5)
-    ax_inset.tick_params(labelsize=7.0)
+    ax_inset.set_title("Distance Concentration\n$(d_{\\max}-d_{\\min})/d_{\\min} \\to 0$", fontsize=8.0, pad=2)
+    ax_inset.set_xlabel("Dimension $D$", fontsize=7.5, labelpad=1)
+    ax_inset.set_ylabel("Relative Spread", fontsize=7.5, labelpad=1)
+    ax_inset.tick_params(labelsize=7.0, pad=1)
     ax_inset.grid(True, linestyle=":", alpha=0.5)
 
     # -------------------------------------------------------------------------
@@ -164,10 +164,10 @@ def generate_conceptual_figure():
     ax_d.annotate("Inductive Assignment:\n"
                   r"$\arg\min_c \|\mathbf{x}_{\text{new}} - \boldsymbol{\mu}_c\|_{\text{BGSS}}$" "\n"
                   r"$P(C_2 \mid \mathbf{x}) = 0.89$",
-                  xy=x_query, xytext=(0.3, 0.7),
+                  xy=x_query, xytext=(-0.2, 0.4),
                   arrowprops=dict(facecolor="red", arrowstyle="->", lw=1.2),
-                  fontsize=9.0, fontweight="bold",
-                  bbox=dict(boxstyle="round,pad=0.4", fc="#fff2f2", ec="red", lw=1.0))
+                  fontsize=8.5, fontweight="bold",
+                  bbox=dict(boxstyle="round,pad=0.3", fc="#fff2f2", ec="red", lw=1.0))
 
     ax_d.set_title("(d) Closed-Form Inductive Projection\nSubspace distance to anchor centroids assigns query $\\mathbf{x}_{\\text{new}}$", fontweight="bold", pad=8)
     ax_d.set_xlabel("Projected Feature $X_1$")

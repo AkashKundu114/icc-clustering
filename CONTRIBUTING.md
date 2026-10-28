@@ -84,9 +84,15 @@ All contributors and participants are expected to adhere to our [Code of Conduct
 
 Every contribution must pass the automated test harness.
 
-* **Run all tests**:
+* **Run all tests (94 passing)**:
   ```bash
   python -m pytest tests -q
+  ```
+
+* **Verify bibliography against live APIs**:
+  ```bash
+  make refs-check
+  # or: python scripts/verify_refs.py refs.bib --out results/refs_report.csv --manual refs_manual.csv
   ```
 
 * **Run tests with coverage tracking**:
