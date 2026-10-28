@@ -1,5 +1,8 @@
 # nullconsensus
 
+> [!NOTE]
+> **Standalone Repository Location:** Track B has been separated into its own dedicated Git repository located at [`d:\nullconsensus`](file:///d:/nullconsensus). All future development, tests, and paper generation for Track B occur in `d:\nullconsensus`.
+
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)

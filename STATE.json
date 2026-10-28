@@ -51,7 +51,7 @@
   "track_b_paper2": {
     "package_name": "nullconsensus",
     "method_title": "Permutation-Null Calibrated Consensus Clustering (NullConsensus)",
-    "repo": "AkashKundu114/nullconsensus",
+    "repo": "https://github.com/AkashKundu114/nullconsensus",
     "current_phase": "PHASE_B3_PREREGISTRATION_COMPLETE",
     "gate_b1": "CLEARED",
     "preregistration_tag": "prereg-v1",
@@ -68,7 +68,10 @@
       "B5_freeze": "BLOCKED_BY_DEV_PILOTS",
       "B6_test_experiments": "BLOCKED_BY_FREEZE",
       "B7_paper2_release": "BLOCKED_BY_TEST_RUNS"
-    }
+    },
+    "local_path": "d:/nullconsensus",
+    "primary_method": "Candidate 12 (NullGate: Unimodal/Permutation Null Calibrated Saliency)",
+    "count_aware_module": "Candidate 2 (HurdleGate: Positive-Support Bimodality & Dropout Entropy)"
   },
   "blockers": [
     "BLOCKER-COAUTHORS",
