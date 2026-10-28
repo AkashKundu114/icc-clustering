@@ -43,7 +43,7 @@ MODEL_LABELS = {
     "Standard_Consensus": "Std Consensus",
     "Li_et_al_2019": "Li et al. (2019)",
     "ICC_v1": "ICC-v1 (Anchor)",
-    "ICC_v2": "ICC-v2 (VSSG+Anchor)"
+    "ICC_v2": "ICC-v2 (BGSS+Anchor)"
 }
 
 

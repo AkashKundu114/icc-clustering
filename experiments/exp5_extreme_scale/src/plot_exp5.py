@@ -150,7 +150,7 @@ def plot_extreme_scale_quad(save_path=None):
     td_km = sum_d["time_km"]["mean"].values
     td_pca = sum_d["time_pca"]["mean"].values
 
-    ax3.plot(d_vals, td_icc, "o-", color="#d62728", linewidth=2.2, markersize=7, label="ICC-v2 (VSSG Gating)")
+    ax3.plot(d_vals, td_icc, "o-", color="#d62728", linewidth=2.2, markersize=7, label="ICC-v2 (BGSS Gating)")
     ax3.plot(d_vals, td_km, "^:", color="#7f7f7f", linewidth=1.8, markersize=6, label="KMeans (Full Space)")
     ax3.plot(d_vals, td_pca, "d-.", color="#2ca02c", linewidth=2.0, markersize=6, label="PCA + KMeans (d=10)")
 

@@ -80,9 +80,10 @@ def plot_exp1_figures():
         ax2.set_ylim(-26, 4)
         clean_spines(ax2)
 
-        plt.suptitle("Downstream Classifier Generalization from Oracle True Labels",
-                     fontweight="bold", fontsize=14.0, y=0.995)
         plt.tight_layout()
+        plt.subplots_adjust(top=0.90)
+        plt.suptitle("Downstream Classifier Generalization from Oracle True Labels",
+                     fontweight="bold", fontsize=13.0, y=0.98)
         fig9_path = fig_dir / "fig9_inductive_generalization.png"
         plt.savefig(fig9_path, dpi=300, bbox_inches="tight")
         plt.close()
@@ -181,9 +182,10 @@ def plot_exp1_figures():
         ax2.set_ylim(-12, 7.0)
         ax2.grid(True, linestyle=":", alpha=0.5, axis="y")
 
-        plt.suptitle("Downstream Generalization from Unsupervised Pseudo-Labels",
-                     fontweight="bold", fontsize=14.0, y=0.995)
         plt.tight_layout()
+        plt.subplots_adjust(top=0.90)
+        plt.suptitle("Downstream Generalization from Unsupervised Pseudo-Labels",
+                     fontweight="bold", fontsize=13.0, y=0.98)
         fig10_path = fig_dir / "fig10_pseudolabel_generalization.png"
         plt.savefig(fig10_path, dpi=300, bbox_inches="tight")
         for target_dir in [base_dir.parents[1] / "springer_manuscript" / "figures",

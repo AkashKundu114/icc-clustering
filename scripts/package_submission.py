@@ -57,6 +57,14 @@ def create_bundle(source_dir: Path, output_zip: Path):
         if fig_dir.exists():
             for f in fig_dir.glob("*.*"):
                 z.write(f, arcname=f"figures/{f.name}")
+
+        # Add gen directory (generated LaTeX tables)
+        gen_dir = source_dir / "gen"
+        if not gen_dir.exists():
+            gen_dir = Path("paper/gen")
+        if gen_dir.exists():
+            for f in gen_dir.glob("*.tex"):
+                z.write(f, arcname=f"gen/{f.name}")
                 
     print(f"Created {output_zip} ({output_zip.stat().st_size / (1024*1024):.2f} MB)")
 

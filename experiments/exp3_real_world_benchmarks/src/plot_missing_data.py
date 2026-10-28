@@ -40,7 +40,7 @@ METHOD_PALETTE = {
     "Standard_Consensus": ("#1f77b4", "--", "s", "Standard Consensus"),
     "Li_et_al_2019": ("#ff7f0e", "-.", "^", "Li et al. (2019)"),
     "ICC_v1": ("#2ca02c", "-", "D", "ICC-v1 (Anchor Only)"),
-    "ICC_v2": ("#d62728", "-", "*", "ICC-v2 (VSSG+Anchor, Ours)"),
+    "ICC_v2": ("#d62728", "-", "*", "ICC-v2 (BGSS+Anchor, Ours)"),
 }
 
 

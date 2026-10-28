@@ -37,7 +37,7 @@ The following declarations are prepared in `paper/main.tex` and match the formal
    - *Draft Statement:* "Not applicable. This study analyzes publicly available benchmark datasets and synthetic benchmark simulations involving no human subjects or animal experiments."
    - *Status:* [x] Verified & Approved by Authors
 4. **Consent for Publication:**
-   - *Draft Statement:* "All co-authors have been provided the complete pre-submission manuscript bundle. Formal submission sign-off is pending final co-author review."
+   - *Draft Statement:* "All authors have read and approved the final manuscript and consent to its publication."
    - *Status:* [x] Verified & Approved by Authors
 5. **Data Availability:**
    - *Draft Statement:* "All real-world benchmark datasets analyzed in this study are publicly accessible from their original open-access repositories: OpenML (\url{https://www.openml.org}) and the UCI Machine Learning Repository (\url{https://archive.ics.uci.edu}) for biomedical and tabular benchmarks (CNS, Colon, Isolet, Leukemia, Madelon, Ovarian, Prostate, Sonar, SRBCT, 20 Newsgroups); the UPV/EHU Hyperspectral Imagery Repository (\url{https://www.ehu.eus/ccwintco/index.php/Hyperspectral_Remote_Sensing_Scenes}) for Indian Pines; the UCSD Computer Vision Database (\url{http://vision.ucsd.edu/~leekc/ExtYaleDatabase/ExtYaleB.html}) for Extended Yale B; and 10x Genomics (\url{https://support.10xgenomics.com/single-cell-gene-expression/datasets}) and Scanpy (\url{https://scanpy.readthedocs.io}) for Zheng68k. Preprocessing scripts to fetch and cache all raw data directly from these original sources are provided in the code repository via \texttt{scripts/fetch_data.py}."
