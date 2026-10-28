@@ -1,0 +1,48 @@
+key,how,status,flags,bib_title,api_title,bib_year,api_year,bib_vol,api_vol,bib_pages,api_pages,api_doi
+fred2005combining,doi,OK,,Combining Multiple Clusterings Using Evidence Accumulation,Combining multiple clusterings using evidence accumulation,2005,2005,27,27,835--850,835-850,10.1109/tpami.2005.113
+fern2003random,manual,MANUAL,,Random Projection for High Dimensional Data Clustering: A Cluster Ensemble Approach,,2003,,,,186--193,,
+sarle1983sas,manual,MANUAL,,The Cubic Clustering Criterion,,1983,,,,,,
+xie2016unsupervised,manual,MANUAL,,Unsupervised Deep Embedding for Clustering Analysis,,2016,,,,478--487,,
+li2019clustering,doi,OK,,Clustering Ensemble Based on Sample's Stability,Clustering ensemble based on sample's stability,2019,2019,273,273,37--55,37-55,10.1016/j.artint.2018.12.007
+nie2024fast,doi,OK,,Fast Clustering with Anchor Guidance,Fast Clustering With Anchor Guidance,2024,2024,46,46,1898--1912,1898-1912,10.1109/tpami.2023.3318603
+witten2010framework,doi,OK,,A Framework for Feature Selection in Clustering,A Framework for Feature Selection in Clustering,2010,2010,105,105,713--726,713-726,10.1198/jasa.2010.tm09415
+golub1999molecular,doi,OK,,Molecular Classification of Cancer: Class Discovery and Class Prediction by Gene Expression Monitoring,Molecular Classification of Cancer: Class Discovery and Class Prediction by Gene Expression Monitoring,1999,1999,286,286,531--537,531-537,10.1126/science.286.5439.531
+hubert1985comparing,doi,OK,,Comparing Partitions,Comparing partitions,1985,1985,2,2,193--218,193-218,10.1007/bf01908075
+demsar2006statistical,manual,MANUAL,,Statistical Comparisons of Classifiers over Multiple Data Sets,,2006,,7,,1--30,,
+belucci2025cohirf,arxiv,OK,,CoHiRF: Hierarchical Consensus for Interpretable Clustering Beyond Scalability Limits,CoHiRF: Hierarchical Consensus for Interpretable Clustering Beyond Scalability Limits,2025,2025,,,,,
+xu2025dynamic,doi,OK,,Dynamic Anchor-based Ensemble Clustering via Hypergraph Reconstruction,Dynamic Anchor-based Ensemble Clustering via Hypergraph Reconstruction,2025,2025,,,6740-6748,6740-6748,10.24963/ijcai.2025/750
+xu2026range,manual,MANUAL,,Large-Scale Robust Enhanced Ensemble Clustering via Outlier Decoupling,,2026,,,,39691--39700,,
+zhang2025structured,doi,OK,,A Structured Bipartite Graph Learning method for ensemble clustering,A Structured Bipartite Graph Learning method for ensemble clustering,2025,2025,160,160,111133,111133,10.1016/j.patcog.2024.111133
+zhang2025anchor,doi,OK,,Anchor-based fast spectral ensemble clustering,Anchor-based fast spectral ensemble clustering,2025,2025,113,113,102587,102587,10.1016/j.inffus.2024.102587
+zhao2026efficient,doi,OK,,Efficient Co-Clustering via Bipartite Graph Factorization,Efficient Co-Clustering via Bipartite Graph Factorization,2026,2026,38,38,1695-1709,1695-1709,10.1109/tkde.2026.3656520
+xie2025fast,doi,OK,,Fast Co-clustering via Anchor-guided Label Spreading,Fast Co-clustering via Anchor-guided Label Spreading,2025,2025,185,185,107187,107187,10.1016/j.neunet.2025.107187
+wang2026normalized,doi,OK,,Normalized cut co-clustering with out-of-sample extension,Normalized cut co-clustering with out-of-sample extension,2026,2026,169,169,111881,111881,10.1016/j.patcog.2025.111881
+zhou2024comprehensive,doi,OK,,"A Comprehensive Survey on Deep Clustering: Taxonomy, Challenges, and Future Directions","A Comprehensive Survey on Deep Clustering: Taxonomy, Challenges, and Future Directions",2024,2024,57,57,1-38,1-38,10.1145/3689036
+wani2024comprehensive,doi,OK,,Comprehensive analysis of clustering algorithms: exploring limitations and innovative solutions,Comprehensive analysis of clustering algorithms: exploring limitations and innovative solutions,2024,2024,10,10,e2286,e2286,10.7717/peerj-cs.2286
+xu2024enhancing,doi,OK,,Enhancing Ensemble Clustering with Adaptive High-Order Topological Weights,Enhancing Ensemble Clustering with Adaptive High-Order Topological Weights,2024,2024,38,38,16184-16192,16184-16192,10.1609/aaai.v38i14.29552
+sceve2025single,doi,OK,,scEVE: a single-cell RNA-seq ensemble clustering algorithm capitalizing on the differences of predictions between multiple clustering methods,scEVE: a single-cell RNA-seq ensemble clustering algorithm capitalizing on the differences of predictions between multiple clustering methods,2025,2025,7,7,lqaf073,lqaf073,10.1093/nargab/lqaf073
+xu2026topological,doi,OK,,Topological-aware multiple kernel learning for ensemble clustering,Topological-aware multiple kernel learning for ensemble clustering,2026,2026,179,179,113588,113588,10.1016/j.patcog.2026.113588
+wang2024structured,doi,OK,,Structured Bipartite Graph Ensemble Clustering,Structured Bipartite Graph Ensemble Clustering,2024,2024,,,1-7,1-7,10.1145/3696409.3700265
+yang2025correntropy,doi,OK,,Correntropy-Based Bipartite Graph Factorization for Clustering,Correntropy-Based Bipartite Graph Factorization for Clustering,2025,2025,,,137-151,137-151,10.1007/978-981-96-0786-0_11
+xie2025efficient,doi,OK,,Efficient Co-clustering via Anchor-refined Label Spreading,Efficient Co-clustering via Anchor-refined Label Spreading,2025,2025,,,1-5,1-5,10.1109/icassp49660.2025.10887685
+yang2025anchor,doi,OK,,Anchor Label Guided Co-Clustering via Multi-Anchor Graphs Fusion,Anchor Label Guided Co-Clustering via Multi-Anchor Graphs Fusion,2025,2025,,,1170-1179,1170-1179,10.1109/icdmw69685.2025.00138
+ma2025fast,doi,OK,,Fast Anchor-based Spectral Clustering,Fast Anchor-based Spectral Clustering,2025,2025,,,870-874,870-874,10.1145/3795154.3795295
+tkde2026fast,doi,OK,,Fast Bipartite Graph Clustering,Fast Bipartite Graph Clustering,2026,2026,,,1-13,1-13,10.1109/tkde.2026.3734593
+biometrika2024bayesian,doi,OK,,Bayesian clustering of high-dimensional data via latent repulsive mixtures,Bayesian clustering of high-dimensional data via latent repulsive mixtures,2024,2024,112,112,,asae059,10.1093/biomet/asae059
+patcog2026consensus,doi,OK,,Consensus-aware sparse subspace clustering via coreset selection,Consensus-aware sparse subspace clustering via coreset selection,2026,2026,175,175,113097,113097,10.1016/j.patcog.2026.113097
+ins2025fast,doi,OK,,Fast and direct co-clustering via adaptive anchor graph learning,Fast and direct co-clustering via adaptive anchor graph learning,2025,2025,717,717,122349,122349,10.1016/j.ins.2025.122349
+li2026rfag,doi,OK,,RFAG: Random forest clustering based on anchor graph,RFAG: Random forest clustering based on anchor graph,2026,2026,174,174,112997,112997,10.1016/j.patcog.2025.112997
+lei2024anchor,doi,OK,,Anchor graph-based multiview spectral clustering,Anchor graph-based multiview spectral clustering,2024,2024,583,583,127579,127579,10.1016/j.neucom.2024.127579
+xu2026dynamic,doi,OK,,Dynamic Anchor-Based One-Step Hypergraph Ensemble Clustering,Dynamic Anchor-Based One-Step Hypergraph Ensemble Clustering,2026,2026,38,38,5798-5810,5798-5810,10.1109/tkde.2026.3710223
+ma2025large,doi,OK,,Large-Scale Clustering With Anchor-Based Constrained Laplacian Rank,Large-Scale Clustering With Anchor-Based Constrained Laplacian Rank,2025,2025,,,1-15,1-15,10.1109/tkde.2025.3557718
+zhao2024multiview,doi,OK,,Multi-view clustering via dynamic unified bipartite graph learning,Multi-view clustering via dynamic unified bipartite graph learning,2024,2024,156,156,110715,110715,10.1016/j.patcog.2024.110715
+song2026enhanced,doi,OK,,Enhanced anchor multi-view clustering via projection learning and high-order correlation exploitation,Enhanced anchor multi-view clustering via projection learning and high-order correlation exploitation,2026,2026,133,133,104297,104297,10.1016/j.inffus.2026.104297
+ren2026multiview,doi,OK,,Multi-view anchor subspace clustering via consensus-specific reconstruction,Multi-view anchor subspace clustering via consensus-specific reconstruction,2026,2026,129,129,103990,103990,10.1016/j.inffus.2025.103990
+ou2024anchor,doi,OK,,Anchor-based multi-view subspace clustering with hierarchical feature descent,Anchor-based multi-view subspace clustering with hierarchical feature descent,2024,2024,106,106,102225,102225,10.1016/j.inffus.2024.102225
+fettal2026scalable,doi,OK,,Scalable multi-view clustering via explicit kernel features maps,Scalable multi-view clustering via explicit kernel features maps,2026,2026,40,40,28,28,10.1007/s10618-026-01187-x
+patron2026codac,doi,OK,,CODAC: Constraint-based Deep Active Clustering,CODAC: Constraint-based Deep Active Clustering,2026,2026,40,40,80,80,10.1007/s10618-026-01229-4
+liao2026multiview,doi,OK,,Multiview Clustering Integrating Biorthogonal Nonnegative Tensor Factorization and Anchor Graph Learning,Multiview Clustering Integrating Biorthogonal Nonnegative Tensor Factorization and Anchor Graph Learning,2026,2026,,,1-15,1-15,10.1109/tnnls.2026.3713805
+fu2025anchor,doi,OK,,Anchor Graph Network for Incomplete Multiview Clustering,Anchor Graph Network for Incomplete Multiview Clustering,2025,2025,36,36,3708-3719,3708-3719,10.1109/tnnls.2024.3349405
+gao2026consistency,doi,OK,,Consistency-Guided Anchor in Multi-view Subspace Clustering with Prior-Aware Tensor Norm,Consistency-Guided Anchor in Multi-view Subspace Clustering with Prior-Aware Tensor Norm,2026,2026,,,1-16,1-16,10.1109/tkde.2026.3743168
+he2025subspace,doi,OK,,A Novel Subspace-Based GMM Clustering Ensemble Algorithm for High-Dimensional Data,A Novel Subspace-Based GMM Clustering Ensemble Algorithm for High-Dimensional Data,2025,2025,34,34,612-629,612-629,10.23919/cje.2023.00.153
+wang2026deep_jasa,doi,OK,,Deep Clustering Evaluation: How to Validate Internal Clustering Validation Measures,Deep Clustering Evaluation: How to Validate Internal Clustering Validation Measures,2026,2026,121,121,223-236,223-236,10.1080/01621459.2025.2592926

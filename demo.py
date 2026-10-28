@@ -4,7 +4,7 @@ Invariant Core Consensus (ICC-v2): 5-Second Interactive Walkthrough Demo.
 
 Demonstrates:
 1. Generation of high-dimensional noisy data (D = 2,000, N = 300, K = 3, 99.9% noise features).
-2. Variance-Stabilized Subspace Gating (VSSG) recovering ground-truth signal dimensions.
+2. Bimodality-Gated Subspace Selection (BGSS) recovering ground-truth signal dimensions.
 3. Certified Anchor consensus training (O(N) complexity).
 4. Inductive out-of-sample projection on unseen test samples.
 5. Comparative evaluation against K-Means and Spectral Clustering.
@@ -65,7 +65,7 @@ def main():
     )
 
     # 2. Train ICC-v2
-    print("\n[*] 2. Fitting ICC-v2 with Variance-Stabilized Subspace Gating (VSSG)...")
+    print("\n[*] 2. Fitting ICC-v2 with Bimodality-Gated Subspace Selection (BGSS)...")
     t0 = time.perf_counter()
     model = InvariantCoreConsensusV2(
         n_clusters=K,
@@ -76,13 +76,13 @@ def main():
     train_pred_icc = model.fit_predict(X_train)
     icc_train_time = time.perf_counter() - t0
 
-    # 3. Analyze VSSG Feature Recovery
+    # 3. Analyze BGSS Feature Recovery
     selected_features = model.selected_features_
     signal_recovered = [f for f in [0, 1] if f in selected_features]
     precision = len(signal_recovered) / len(selected_features)
     recall = len(signal_recovered) / D_signal
 
-    print(f"    -> VSSG Active Pool:   {len(selected_features)} features retained from {D_total}")
+    print(f"    -> BGSS Active Pool:   {len(selected_features)} features retained from {D_total}")
     print(f"    -> True Signals Found: {signal_recovered} (Precision = {precision * 100:.1f}%, Recall = {recall * 100:.1f}%)")
     core_pct = np.mean(model.core_mask_) * 100.0 if model.core_mask_ is not None else 50.0
     print(f"    -> Anchor Stability:   {core_pct:.1f}% samples certified as core anchors")
@@ -99,7 +99,7 @@ def main():
     scores_test_full = evaluate_all(y_test, test_pred_full)
 
     print(f"    -> Inductive Latency:  {pred_time * 1000:.2f} ms for {N_test} instances ({pred_time / N_test * 1e6:.1f} us / sample)")
-    print(f"    -> Test ARI (VSSG):    {scores_test_sub['ari']:.4f}")
+    print(f"    -> Test ARI (BGSS):    {scores_test_sub['ari']:.4f}")
     print(f"    -> Test ARI (No Gating): {scores_test_full['ari']:.4f} (Difference: {scores_test_sub['ari'] - scores_test_full['ari']:+.4f})")
 
     # 5. Benchmark Baselines on Training Set

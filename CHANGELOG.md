@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.2.0] - 2026-10-28
+
+### Added
+- **Automated CrossRef & arXiv Verification Suite (`scripts/verify_refs.py`, `tests/test_verify_refs.py`):** Live API client verifying DOIs, titles, first authors, publication years, volumes, and page ranges. Includes 8 unit tests testing matching, field mismatches, fuzzy title resolution, published version redirects, manual overrides, and CLI execution.
+- **`make refs-check` Target:** Automated Makefile target asserting zero bibliographic discrepancies across all active references.
+- **Reference Provenance Ledgers (`results/refs_report.csv`, `results/refs_map.csv`):** Complete traceability mapping every reference to its exact citing section, sentence, and scientific rationale.
+
+### Changed
+- **Modern Literature Overhaul (80.85% Recent Target):** Upgraded bibliography to 47 verified primary references, with 38 published between 2024 and 2026 (80.85% vintage) across leading journals (*IEEE TKDE*, *IEEE TNNLS*, *Pattern Recognition*, *Information Fusion*, *DAMI*, *JASA*), replacing textbook placeholders with contemporary surveys.
+- **Strict Single-Citation Policy:** Audited `paper/main.tex` and `springer_manuscript/main.tex` to enforce single-mention citation discipline. Each of the 47 references is cited strictly once at its first occurrence, eliminating 39 redundant subsequent citations.
+- **Test Suite Expansion:** Expanded automated test suite from 86 to 94 tests with 100% pass rate.
+- **Empirical Narrative Reconciliation:** Synchronized manuscript narrative text with Pass F / Table 7 single source of truth (PBMC68k K-Means 0.494 / Std Cons 0.555; 20 Newsgroups DEC 0.008 / KM 0.063; Indian Pines SD ±0.030; Yale B SD ±0.007; Table 8 K-Means alignment; and qualified synergy gain with Wilcoxon test p ≈ 0.16).
+
+---
+
 ## [2.1.0] - 2026-10-23
 
 ### Added
