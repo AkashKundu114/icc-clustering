@@ -59,8 +59,6 @@ dev = [
     "ruff",
     "mypy>=1.0.0",
     "pymupdf>=1.23.0",
-    "requests>=2.28.0",
-    "bibtexparser>=1.4.0",
 ]
 # All optional dependencies combined
 all = [
@@ -75,8 +73,6 @@ all = [
     "ruff",
     "mypy>=1.0.0",
     "pymupdf>=1.23.0",
-    "requests>=2.28.0",
-    "bibtexparser>=1.4.0",
 ]
 
 [project.urls]
