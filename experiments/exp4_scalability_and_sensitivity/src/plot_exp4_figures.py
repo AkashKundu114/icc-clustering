@@ -87,8 +87,8 @@ def plot_figure_18():
     ax1.legend(loc="upper left", fontsize=10.5, framealpha=0.92, facecolor="white", edgecolor="#cccccc")
     
     # Annotation on runtime
-    ax1.annotate("GAC Pipeline: 1.9x speedup at N=10,000\n(2.3s vs. 4.4s, 0.96s pure)",
-                 xy=(10000, 2.30), xytext=(1200, 0.5),
+    ax1.annotate("GAC Pipeline: 3.8x speedup at N=10,000\n(0.835s vs. 3.175s untraced)",
+                 xy=(10000, 0.835), xytext=(1200, 0.35),
                  arrowprops=dict(arrowstyle="->", color="#d62728", lw=1.3),
                  fontsize=9.0, fontweight="bold", color="#d62728",
                  bbox=dict(boxstyle="round,pad=0.25", facecolor="#fff0f0", edgecolor="#d62728", alpha=0.9))

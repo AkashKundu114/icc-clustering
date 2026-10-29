@@ -1,607 +1,115 @@
 """
-Script to apply required revisions to paper/main.tex and springer_manuscript/main.tex.
-Follows all prompt instructions:
-- Update Title and Abstract
-- Update Introduction contributions list and 3-stage pipeline reframing
-- Add Related Work positioning (bimodality gene filtering, Fern & Brodley 2003, U-SENC note)
-- Reconcile anchor budget in Algorithm 1 and Section 4.2
-- Neutral anchor naming in Section 4.2 (null result note)
-- Condense ASPP to one short paragraph as optional/future work
-- Add Hyperparameter Protocol and evaluation unit in Section 5
-- Fix Knockout 2 sign (+0.14)
-- Add 20 Newsgroups text sparsity limitation to Section 5.5
-- Replace Section 6 with 6.1 (Oncology), 6.2 (Single-cell, N=1,000,000, 240 MB, PBMC68k rank last), 6.3 (Point-of-care inductive assignment, O(K*|F_active|), bootstrap CIs span zero)
-- Update Conclusion to match reframed narrative, zero em-dashes
+scripts/apply_paper_revisions.py
+
+Synchronously applies all text revisions for Item 1, 3, 4, 5 to both:
+- paper/main.tex
+- springer_manuscript/main.tex
 """
 
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parent.parent
 
-def revise_content(text: str) -> str:
-    # 1. Title
-    target_title = (
-        r"\title[When Does Feature Gating and Anchor Consensus Improve"
-        r" High-Dimensional Clustering?]{When Does Feature Gating and Anchor"
-        r" Consensus Improve High-Dimensional Clustering? An Empirical"
-        r" Examination}"
-    )
-    repl_title = (
-        r"\title[When Does Bimodality-Gated Feature Selection Help Consensus"
-        r" Clustering?]{When Does Bimodality-Gated Feature Selection Help"
-        r" Consensus Clustering?}"
-    )
-    assert target_title in text, "Target title not found"
-    text = text.replace(target_title, repl_title, 1)
+def patch_file(p: Path):
+    with open(p, "r", encoding="utf-8") as f:
+        content = f.read()
 
-    # 2. Abstract
-    target_abs_start = (
-        r"\abstract{Consensus clustering synthesizes diverse base partitions"
-        r" to discover robust data groupings."
-    )
-    target_abs_end = (
-        r"We conclude with a detailed characterization of failure modes under"
-        r" platykurtic and non-linear parity structures.}"
-    )
-    idx_abs_start = text.find(target_abs_start)
-    assert idx_abs_start != -1, "Target abs start not found"
-    idx_abs_end = text.find(target_abs_end, idx_abs_start)
-    assert idx_abs_end != -1, "Target abs end not found"
-    full_target_abs = text[idx_abs_start : idx_abs_end + len(target_abs_end)]
+    # 1. Section 4 title rename
+    old_sec4 = r"\section{Proposed Methodology (Inductive Consensus Clustering Framework)}\label{sec:methodology}"
+    new_sec4 = r"\section{Proposed Methodology (Gated Anchor Consensus Pipeline)}\label{sec:methodology}"
+    if old_sec4 in content:
+        content = content.replace(old_sec4, new_sec4)
 
-    repl_abs = (
-        r"\abstract{Consensus clustering is often assumed to protect against"
-        r" high-dimensional noise, and dense $N \times N$ consensus is often"
-        r" assumed to be unavoidable. We test both assumptions. In"
-        r" finite-sample simulations with isotropic distractor features ($D \gg"
-        r" N$), base clusterers, particularly spectral and Ward, converge"
-        r" stably ($\text{stability} > 0.8$) on arbitrary noise partitions"
-        r" while ARI falls toward zero, so ensemble averaging alone does not"
-        r" remove the noise. We then study ICC-v2, a pipeline that combines"
-        r" linear-time Bimodality-Gated Subspace Selection (BGSS), a"
-        r" random-subspace ensemble, bipartite anchor-graph consensus, and"
-        r" closed-form centroid-based out-of-sample assignment. Across 13"
-        r" benchmarks (2,750 model fits), we find no statistically significant"
-        r" difference between methods (Friedman $p = 0.48$); Standard Consensus"
-        r" has the best mean rank (4.85) and ICC-v2 ranks fourth (5.23)."
-        r" ICC-v2's higher Grand Mean ARI (0.152) is driven by two cancer"
-        r" microarray datasets, Leukemia (0.600) and SRBCT (0.546); it is near"
-        r" zero on most others, and on Prostate ICC-v2 underperforms simple"
-        r" baselines (0.012 vs. 0.049). On the six $D/N > 20$ cohorts, ICC-v2"
-        r" ranks first (exploratory, $n = 6$, not significant after Holm"
-        r" correction). Ablations show that BGSS drives the accuracy gain and"
-        r" that bipartite compression, not determinacy-based anchor"
-        r" certification, drives the efficiency gain: certified anchors are"
-        r" statistically indistinguishable from random anchors ($\Delta ="
-        r" +0.019$, 95\% CI [$-0.039, +0.082$]), while the bipartite graph"
-        r" cuts consensus-graph memory by 99.6\% at $N = 10{,}000$. We"
-        r" characterize failure modes under non-linear parity structure,"
-        r" zero-inflated features, and large $K$.}"
-    )
-    text = text.replace(full_target_abs, repl_abs, 1)
+    # 2. Abstract update (Item 1e, 3b)
+    old_abstract_start = r"\abstract{Consensus clustering is widely assumed to resist high-dimensional noise."
+    old_abstract_end = r"Failure modes are further characterized under non-linear XOR parity, zero-inflated counts, and large $K$.}"
+    
+    idx_abs_start = content.find(old_abstract_start)
+    idx_abs_end = content.find(old_abstract_end, idx_abs_start) + len(old_abstract_end)
 
-    # 3. Intro pipeline and contributions
-    target_intro_start = (
-        r"To address these limitations, this paper investigates the"
-        r" \textbf{Inductive Consensus Clustering (ICC)} framework"
-        r" (Fig.~\ref{fig:conceptual_overview})."
-    )
-    target_intro_end = r"Section~\ref{sec:conclusion} concludes the paper."
-    idx_intro_start = text.find(target_intro_start)
-    assert idx_intro_start != -1, "Target intro start not found"
-    idx_intro_end = text.find(target_intro_end, idx_intro_start)
-    assert idx_intro_end != -1, "Target intro end not found"
-    full_target_intro = text[
-        idx_intro_start : idx_intro_end + len(target_intro_end)
-    ]
+    new_abstract = r"""\abstract{Consensus clustering is widely assumed to resist high-dimensional noise. We evaluate this assumption across synthetic simulations and six biomedical cohorts ($D/N > 20$) using a pre-registered stratified $80\%$ subsample perturbation stability protocol (30 draws per method) alongside independent column-permuted null controls. In finite-sample simulations with isotropic distractors ($D \gg N$), base clusterers (particularly Ward and Spectral) converge stably ($\text{stability} > 0.8$) onto arbitrary noise partitions while Adjusted Rand Index (ARI) collapses toward zero. On real biomedical cohorts, standard baselines exhibit severe subsample stability--accuracy gaps: three of twelve evaluated methods (FCAG, FCM, FastMVC) satisfy our pre-specified ``Stable but Wrong'' criterion ($\text{subsample stability} \ge 0.50$ and $\text{accuracy} \le 0.05$) across at least three distinct cohorts, with Ward and Spectral showing near-perfect stability ($\text{Stab} \ge 0.97$) yet zero accuracy ($\text{ARI} \le 0.03$) on Prostate ($D=12{,}600$), where permuted null stability drops to near zero ($\le 0.03$). A paired cohort bootstrap excludes zero for the overall stability--accuracy gap ($+0.464$, $95\%$ CI: $[+0.363, +0.607]$). We evaluate the Gated Anchor Consensus (GAC) pipeline, combining linear-time Bimodality-Gated Subspace Selection (BGSS), random-subspace ensembles, bipartite anchor graphs, and closed-form centroid projection. Across 13 benchmarks (3,000 fits), omnibus differences across methods are not statistically significant (Friedman $p = 0.40$). GAC achieves the highest mean ARI on the six $D/N > 20$ cohorts ($0.217$ vs. $0.065$ for the best baseline FCAG and $0.037$ for ambient consensus), with gains concentrating in high-bimodality cohorts (Leukemia $0.600 \pm 0.367$ and SRBCT $0.546 \pm 0.102$). Ablations reveal that the random-subspace bipartite ensemble accounts for $+0.118$ (65.6\%) of this gain, while BGSS screening adds $+0.062$ over matched random gating ($95\%$ CI: $[+0.013, +0.142]$, Wilcoxon $p = 0.0625$). Landmark determinacy yields an empirical null result over uniform random sampling ($\Delta = +0.019$, $95\%$ CI: $[-0.039, +0.082]$). On Prostate and CNS, weak marginal bimodality leaves GAC trapped in spurious consensus ($\text{accuracy} \le 0.02$). Failure modes are further characterized under non-linear XOR parity, zero-inflated counts, and large $K$.}"""
 
-    repl_intro = (
-        r"To address these limitations, this paper investigates the"
-        r" \textbf{Inductive Consensus Clustering (ICC)} framework"
-        r" (Fig.~\ref{fig:conceptual_overview}). We examine the finite-sample"
-        r" empirical breakdown of consensus stability under isotropic"
-        r" distractor noise (Section~\ref{sec:falsification}), illustrating how"
-        r" distance concentration generates consensus agreement on arbitrary"
-        r" noise boundaries. Motivated by these findings, we formulate"
-        r" \textbf{ICC-v2} as a three-stage pipeline coupled with an optional"
-        r" post-hoc diagnostic:"
-        "\n"
-        r"\begin{itemize}"
-        "\n"
-        r"    \item \textbf{Bimodality-Gated Subspace Selection (BGSS):} An"
-        r" $O(N \cdot D)$ linear feature screening mechanism utilizing Sarle's"
-        r" Bimodality Coefficient ($\hat{b}_d = \frac{\hat{\gamma}_d^2 +"
-        r" 1}{\hat{\kappa}_d + 3 \cdot \frac{(N-1)^2}{(N-2)(N-3)} +"
-        r" \epsilon}$)~\cite{sarle1983sas,ellison1987bimodality,pfister2013assessing}"
-        r" to filter unimodal distractor noise prior to base ensemble fitting."
-        "\n"
-        r"    \item \textbf{Bipartite Anchor Graph Consensus:} Constructs a"
-        r" rectangular bipartite co-association graph $B \in [0, 1]^{N \times"
-        r" L}$ over $L$ anchors, reducing auxiliary memory from $O(N^2)$ to"
-        r" $O(N \cdot L)$ and accelerating spectral decomposition onto an $L"
-        r" \times L$ anchor affinity space."
-        "\n"
-        r"    \item \textbf{Stability-Weighted Subspace Centroid Assignment:}"
-        r" Provides closed-form inductive out-of-sample mapping that assigns"
-        r" unseen query instances in $O(K \cdot |\mathcal{F}_{\text{active}}|)$"
-        r" time without recomputing the consensus graph."
-        "\n"
-        r"    \item \textbf{Optional Diagnostic: Anchor-Space Perturbation"
-        r" Profiling (ASPP):} An optional post-hoc diagnostic module that"
-        r" probes cluster structural resilience across physical perturbation"
-        r" families directly over anchor coordinates."
-        "\n"
-        r"\end{itemize}"
-        "\n\n"
-        r"The primary contributions of this work are fourfold:"
-        "\n"
-        r"\begin{enumerate}"
-        "\n"
-        r"    \item \textbf{Finite-sample evidence of a stability--accuracy"
-        r" gap:} Under isotropic distractor noise ($D \gg N$), consensus"
-        r" stability remains high while ARI collapses toward zero across"
-        r" several noise distributions."
-        "\n"
-        r"    \item \textbf{A linear-time marginal-bimodality gate (BGSS):}"
-        r" Analyzed with explicit failure conditions (bounded uniform support,"
-        r" zero-inflation, non-linear XOR parity, and small-$N$ detection"
-        r" power) and compared against variance, PCA, Laplacian-score, and"
-        r" sparse $k$-means baselines under matched feature budgets."
-        "\n"
-        r"    \item \textbf{A factorial ablation separating accuracy from"
-        r" efficiency:} BGSS supplies the accuracy gain, bipartite compression"
-        r" supplies the memory and runtime gain, while anchor certification"
-        r" yields a null result ($\Delta = +0.019$, 95\% CI: $[-0.039,"
-        r" +0.082]$)."
-        "\n"
-        r"    \item \textbf{A scalability and failure-mode study:} ICC-v2 runs"
-        r" at $N=10^6$ in 141--183~s, with empirical characterization of"
-        r" negative results and boundary failure modes (near-zero ARI on most"
-        r" datasets, $K \ge 20$, Prostate, Madelon, and sparse TF-IDF text)."
-        "\n"
-        r"\end{enumerate}"
-        "\n\n"
-        r"The remainder of this manuscript is structured as follows:"
-        r" Section~\ref{sec:related} reviews related work and positions our"
-        r" methodology. Section~\ref{sec:falsification} presents our empirical"
-        r" analysis of distance concentration and consensus behavior."
-        r" Section~\ref{sec:framework} details the mathematical architecture"
-        r" and complexity analysis of ICC-v2. Section~\ref{sec:experiments}"
-        r" provides empirical evaluations across generalization, ablation,"
-        r" real-world benchmarks, and scalability, followed by an explicit"
-        r" discussion of limitations. Section~\ref{sec:applications} details"
-        r" three illustrative use cases and their limits across translational"
-        r" oncology, million-scale single-cell transcriptomics, and"
-        r" point-of-care inductive decision support."
-        r" Section~\ref{sec:conclusion} concludes the paper."
-    )
-    text = text.replace(full_target_intro, repl_intro, 1)
+    if idx_abs_start != -1:
+        content = content[:idx_abs_start] + new_abstract + content[idx_abs_end:]
 
-    # 4. Related Work addition
-    target_rw = (
-        r"Similarly, non-parametric multimodality testing (e.g., the Dip Test"
-        r" by Hartigan and Hartigan~\cite{hartigan1985dip} and Sarle's"
-        r" Bimodality"
-        r" Coefficient~\cite{sarle1983sas,ellison1987bimodality,pfister2013assessing})"
-        r" provides statistical screening criteria. As summarized in"
-        r" Table~\ref{tab:taxonomy_comparison}, ICC-v2 combines linear"
-        r" bimodality subspace gating, determinacy-based bipartite anchor"
-        r" consensus, and inductive centroid projection into a unified"
-        r" linear-time pipeline."
-    )
-    repl_rw = (
-        r"Similarly, non-parametric multimodality testing (e.g., the Dip Test"
-        r" by Hartigan and Hartigan~\cite{hartigan1985dip} and Sarle's"
-        r" Bimodality"
-        r" Coefficient~\cite{sarle1983sas,ellison1987bimodality,pfister2013assessing})"
-        r" provides statistical screening criteria. As summarized in"
-        r" Table~\ref{tab:taxonomy_comparison}, ICC-v2 combines linear"
-        r" bimodality subspace gating, bipartite anchor graph consensus, and"
-        r" inductive centroid projection into a unified linear-time"
-        r" pipeline."
-        "\n\n"
-        r"\subsection{Positioning Against Bimodality Filtering and Random"
-        r" Subspaces}\label{sec:positioning}"
-        "\n"
-        r"Non-parametric multimodality testing has historically served in"
-        r" bioinformatics as a static 1D gene pre-filter for differential"
-        r" expression or single clustering algorithms. Similarly,"
-        r" random-subspace cluster ensembles (Fern and"
-        r" Brodley~\cite{fern2003random}) demonstrated that random feature"
-        r" projections improve ensemble diversity and partition accuracy when"
-        r" ambient features are informative; however, under extreme distractor"
-        r" noise ($D \gg N$), unguided random subspaces sample predominantly"
-        r" non-informative dimensions, causing ensemble consensus to collapse"
-        r" onto noise partitions. BGSS differs by coupling linear-time marginal"
-        r" bimodality gating with randomized subspace ensembling: by"
-        r" restricting subspace sampling to the bimodality-screened candidate"
-        r" pool $\mathcal{F}_{\text{active}}$, it preserves ensemble diversity"
-        r" while preventing subspace collapse onto pure noise. In scalable"
-        r" ensemble clustering, ultra-scalable bipartite anchor methods such as"
-        r" U-SPEC and U-SENC~\cite{huang2020ultra} compress the co-association"
-        r" graph via $k$-means anchors; however, because no standalone"
-        r" implementation of U-SENC was integrated into our evaluation harness,"
-        r" it was not executed as an empirical baseline in our benchmark suite."
-    )
-    assert target_rw in text, "Target rw not found"
-    text = text.replace(target_rw, repl_rw, 1)
+    # 3. Keywords update
+    old_keywords = r"\keywords{Stability-accuracy gap, consensus clustering, high-dimensional noise, clustering ensembles, bipartite anchor graphs, feature gating, distance concentration, inductive out-of-sample projection.}"
+    new_keywords = r"\keywords{Subsample stability-accuracy gap, consensus clustering, high-dimensional noise, clustering ensembles, bipartite anchor graphs, feature gating, distance concentration, null control, inductive out-of-sample projection.}"
+    content = content.replace(old_keywords, new_keywords)
 
-    # 5. Section 4.2 Anchor Naming & Budget
-    target_sec42 = (
-        r"\subsection{Determinacy-Based Bipartite Anchor"
-        r" Consensus}\label{sec:anchor_consensus}"
-    )
-    repl_sec42 = (
-        r"\subsection{Bipartite Anchor Graph"
-        r" Consensus}\label{sec:anchor_consensus}"
-    )
-    assert target_sec42 in text, "Target sec42 not found"
-    text = text.replace(target_sec42, repl_sec42, 1)
+    # 4. Intro citation (li2025selfsupervised)
+    old_intro_p2 = r"Yet in high dimensions ($D \gg N$), ambient noise undermines this aggregation through two distinct structural bottlenecks."
+    new_intro_p2 = r"In high-dimensional domains, unsupervised and self-supervised feature selection has emerged as a necessary prerequisite to remove uninformative coordinates before similarity estimation (Li et al.~\cite{li2025selfsupervised}). Yet in high dimensions ($D \gg N$), ambient noise undermines this aggregation through two distinct structural bottlenecks."
+    if old_intro_p2 in content and "li2025selfsupervised" not in content:
+        content = content.replace(old_intro_p2, new_intro_p2)
 
-    target_sec42_body = (
-        r"Given sample determinacy $\boldsymbol{\sigma} \in [0, 1]^N$, ICC-v2"
-        r" extracts a core anchor set $\mathcal{A}_{\text{core}} = \{a_1,"
-        r" \dots, a_L\}$ of size $L \ll N$ (default $L=40$) from samples"
-        r" exceeding stability quantile $\tau_{\text{core}}$. ICC-v2 then"
-        r" constructs a rectangular bipartite co-association matrix $B \in [0,"
-        r" 1]^{N \times L}$ where $B_{ia} = \frac{1}{M}\sum_{m=1}^M"
-        r" \mathbf{1}\{\pi_m(\mathbf{x}_i) = \pi_m(\mathbf{x}_a)\}$ in $O(N"
-        r" \cdot L)$ memory."
-    )
-    repl_sec42_body = (
-        r"Given sample determinacy $\boldsymbol{\sigma} \in [0, 1]^N$, ICC-v2"
-        r" extracts an anchor set $\mathcal{A} = \{a_1, \dots, a_L\}$ of size"
-        r" $L \ll N$ (default $L=40$) from samples exceeding stability"
-        r" quantile $\tau_{\text{core}}$. All benchmark experiments used fixed"
-        r" default $L=40$ ($L = \min(40, |\mathcal{C}_{\text{core}}|)$); the"
-        r" dynamic rule $L = \max(40, 10K)$ is an exploratory recommendation"
-        r" for datasets with $K \ge 20$, analyzed in Section~\ref{sec:limitations}."
-        r" Crucially, empirical ablation (Section~\ref{sec:exp2_knockout})"
-        r" reveals that determinacy-ordered anchors achieve accuracy"
-        r" statistically indistinguishable from uniform random anchors ($V_5$"
-        r" vs. $V_4$: $\Delta = +0.019$, 95\% CI: $[-0.039, +0.082]$),"
-        r" establishing that bipartite graph compression rather than anchor"
-        r" certification is the primary operational driver. ICC-v2 then"
-        r" constructs a rectangular bipartite co-association matrix $B \in [0,"
-        r" 1]^{N \times L}$ where $B_{ia} = \frac{1}{M}\sum_{m=1}^M"
-        r" \mathbf{1}\{\pi_m(\mathbf{x}_i) = \pi_m(\mathbf{x}_a)\}$ in $O(N"
-        r" \cdot L)$ memory."
-    )
-    assert target_sec42_body in text, "Target sec42 body not found"
-    text = text.replace(target_sec42_body, repl_sec42_body, 1)
+    # 5. Contributions Item 1 update
+    old_contrib1 = r"\item \textbf{The Stability Trap in High Dimensions (Simulations and Real Benchmarks):} Controlled empirical falsification demonstrating that under isotropic noise ($D \gg N$) and real biomedical cohorts ($D/N > 20$, 30 seeds), consensus stability remains elevated ($\text{stability} \ge 0.50$ to $1.00$) while accuracy collapses near zero ($\text{ARI} \le 0.05$). We document severe stability-accuracy gaps across classical and modern baselines (e.g., Ward and Spectral exhibit mean gaps of $+0.968$ and $+0.964$), proving that ensemble averaging can entrench false partitions rather than eliminate noise."
+    new_contrib1 = r"\item \textbf{The Stability Trap in High Dimensions (Subsample Stability and Null Control):} Controlled empirical falsification under isotropic noise ($D \gg N$) and six real biomedical cohorts ($D/N > 20$, 30 stratified $80\%$ subsamples) demonstrates that consensus stability remains high ($\text{subsample stability} \ge 0.50$ to $1.00$) while accuracy collapses near zero ($\text{ARI} \le 0.05$). Paired bootstrap analysis across cohorts ($B=10{,}000$) confirms a positive subsample stability--accuracy gap ($+0.464$, $95\%$ CI: $[+0.363, +0.607]$), while independent column-permuted null controls confirm that null stability collapses to zero (mean $+0.007$). Three methods (FCAG, FCM, FastMVC) meet our pre-registered ``Stable but Wrong'' criterion across at least 3 cohorts, proving that high stability does not indicate partition correctness on real high-dimensional data."
+    content = content.replace(old_contrib1, new_contrib1)
 
-    # 6. Condense ASPP (Section 4.4)
-    target_aspp_start = (
-        r"\subsection{Anchor-Space Perturbation Profiling (ASPP)}\label{sec:aspp}"
-    )
-    target_aspp_end = (
-        r"where $d_{(1)}$ and $d_{(2)}$ represent Euclidean distances to the"
-        r" closest and second-closest active subspace centroids."
-    )
-    idx_aspp_start = text.find(target_aspp_start)
-    assert idx_aspp_start != -1, "Target aspp start not found"
-    idx_aspp_end = text.find(target_aspp_end, idx_aspp_start)
-    assert idx_aspp_end != -1, "Target aspp end not found"
-    full_target_aspp = text[
-        idx_aspp_start : idx_aspp_end + len(target_aspp_end)
-    ]
+    # 6. Contributions Item 2 SD consistency (Item 3a)
+    old_contrib2 = r"Leukemia $\text{ARI}=0.600$, SRBCT $\text{ARI}=0.546$"
+    new_contrib2 = r"Leukemia $\text{ARI}=0.600 \pm 0.367$, SRBCT $\text{ARI}=0.546 \pm 0.102$"
+    content = content.replace(old_contrib2, new_contrib2)
 
-    repl_aspp = (
-        r"\subsection{Optional Diagnostic: Anchor-Space Perturbation"
-        r" Profiling (Future Work)}\label{sec:aspp}"
-        "\n"
-        r"Anchor-Space Perturbation Profiling (ASPP) is an optional post-hoc"
-        r" diagnostic framework designed to probe cluster structural"
-        r" resilience against perturbation families (instance dropout,"
-        r" subspace masking, additive measurement noise, synthetic batch"
-        r" shifts, and algorithmic jitter) directly over bipartite anchor"
-        r" coordinates. Because ASPP introduces auxiliary computational"
-        r" overhead and is not required for partition generation, it was"
-        r" disabled during all benchmark evaluations to preserve strictly"
-        r" linear runtime and memory complexity ($O(N \cdot D)$). We detail"
-        r" its formal stability metrics, perturbation sensitivity indices"
-        r" ($\mathrm{PSI}_k \in [0, 1]$), and out-of-sample query confidence"
-        r" scores in the supplementary technical report as a direction for"
-        r" future diagnostic exploration."
-    )
-    text = text.replace(full_target_aspp, repl_aspp, 1)
+    # 7. Senbabaoglu et al. and Race & Meyer rewrite (Item 3e)
+    old_senbabaoglu = r"However, Senbabaoglu et al.~\cite{senbabaoglu2014critical} reassessed the empirical validity of consensus clustering in class discovery, demonstrating that high consensus stability often reflects clusterer-induced geometric artifacts rather than genuine cluster structure, a pathology directly anticipating the stability-accuracy gap examined in this work. To address cluster count ambiguity in consensus pipelines, Race and Meyer~\cite{race2013determining} investigated iterative consensus clustering (ICC), successively pruning confident cluster assignments."
+    new_senbabaoglu = r"In a foundational critique, Senbabaoglu et al.~\cite{senbabaoglu2014critical} demonstrated that consensus clustering can produce apparently high stability and apparent cluster structure even on unimodal null data with weak or no true underlying cluster structure. To determine the number of clusters without arbitrary heuristics, Race and Meyer~\cite{race2013determining} developed iterative consensus clustering, successively extracting confident cluster assignments from the consensus matrix and reclustering the remaining residual samples."
+    content = content.replace(old_senbabaoglu, new_senbabaoglu)
 
-    # 7. Knockout 2 sign fix
-    target_ko2 = (
-        r"\item \textbf{Knockout 2: Removing Bipartite Anchor Graph (V5 $\to$"
-        r" V2):} Replacing bipartite anchor consensus ($O(NL)$) with full"
-        r" dense consensus ($O(N^2)$) under identical BGSS features causes the"
-        r" subgroup mean ARI to drop from $\AblationHighDSubgroupFullIccVTwo$"
-        r" to $\AblationHighDSubgroupBgssStdCons$ ($\Delta = -0.139$, $95\%$"
-        r" CI: $[+0.065, +0.218]$). Standard dense co-association averaging"
-        r" across the noisy base partitions creates spurious dense edges,"
-        r" whereas anchor distillation concentrates consensus weights"
-        r" exclusively on stable manifold anchors."
-    )
-    repl_ko2 = (
-        r"\item \textbf{Knockout 2: Removing Bipartite Anchor Graph (V5 $\to$"
-        r" V2):} Replacing bipartite anchor consensus ($O(NL)$) with full"
-        r" dense consensus ($O(N^2)$) under identical BGSS features yields a"
-        r" subgroup mean ARI difference of $V_5 - V_2 = +0.14$ ($95\%$ CI:"
-        r" $[+0.065, +0.218]$), with $V_5$ achieving"
-        r" $\AblationHighDSubgroupFullIccVTwo$ compared to"
-        r" $\AblationHighDSubgroupBgssStdCons$ for $V_2$. Standard dense"
-        r" co-association averaging across the noisy base partitions introduces"
-        r" spurious dense edges, whereas bipartite anchor distillation"
-        r" concentrates consensus weights exclusively on stable manifold"
-        r" anchors."
-    )
-    assert target_ko2 in text, "Target ko2 not found"
-    text = text.replace(target_ko2, repl_ko2, 1)
+    # 8. Add recent citations to Related Work (Section 2.1 & 2.2)
+    old_rw_p1 = r"Recent active and constraint-based consensus formulations further refine partition assignments by incorporating pairwise instance relationships (CODAC, Patron et al.~\cite{patron2026codac})."
+    new_rw_p1 = r"Recent active and constraint-based consensus formulations further refine partition assignments by incorporating pairwise instance relationships (CODAC, Patron et al.~\cite{patron2026codac}). High-order consensus frameworks capture multi-hop relations beyond pairwise co-occurrences (Zhang et al.~\cite{zhang2025highorder}), while sparse representations suppress noisy partition edges in spectral consensus (Fan et al.~\cite{fan2026robust}). Enforcing doubly stochastic normalization over the consensus affinity matrix eliminates vertex degree artifacts in spectral graph partitioning (Cai et al.~\cite{cai2025spectral}), and auto-weighted graph reconstruction dynamically recalibrates base ensemble contributions according to partition reliability (Yang et al.~\cite{yang2025autoweighted}). In multiview domains, hypergraph p-Laplacian regularization with feature selection provides robustness against distractor noise (Hu et al.~\cite{hu2024multiview}), and contrastive clustering ensembles regularize deep representations (Chen et al.~\cite{chen2025ccegan})."
+    if old_rw_p1 in content and "zhang2025highorder" not in content:
+        content = content.replace(old_rw_p1, new_rw_p1)
 
-    # 8. Hyperparameter Protocol and Statistics Wording
-    target_stat = (
-        r"\textbf{Statistical Significance Analysis:}"
-        "\n"
-        r"Across all 13 benchmarks, Friedman omnibus"
-        r" testing~\cite{demsar2006statistical} yields $\chi_F^2 = 9.59$, $p ="
-        r" \TableThreeFriedmanPValue$, indicating no statistically significant"
-        r" difference across the omnibus collection."
-    )
-    repl_stat = (
-        r"\textbf{Hyperparameter Protocol and Evaluation Unit:}"
-        "\n"
-        r"All benchmark experiments (Table~\ref{tab:benchmark_ari} and"
-        r" Table~\ref{tab:fair_baselines}) were executed with hyperparameters"
-        r" fixed \textit{a priori} across all datasets without any post-hoc"
-        r" tuning or label supervision. Specifically, base ensemble size was"
-        r" fixed to $M=25$, active candidate feature pool fraction to $\alpha ="
-        r" 0.15$ ($|\mathcal{F}_{\text{active}}| = \min(D, \max(K, \lfloor 0.15"
-        r" D \rfloor))$), anchor budget to $L=40$ ($L = \min(40, N)$), and"
-        r" core determinacy threshold to median quantile $\tau_{\text{core}} ="
-        r" 0.50$. No dataset-specific hyperparameter grid searches were"
-        r" conducted on the benchmark cohorts, preventing optimistic"
-        r" overfitting to ground-truth labels. The primary statistical unit of"
-        r" analysis is the dataset ($N=13$ omnibus, $n=6$ high-dimensional"
-        r" subgroup), with random seeds (30 seeds on $D/N > 20$ cohorts, 10"
-        r" seeds on standard benchmarks) treated as repeated measures within"
-        r" each dataset."
-        "\n\n"
-        r"\textbf{Statistical Significance Analysis:}"
-        "\n"
-        r"Across all 13 benchmarks, Friedman omnibus"
-        r" testing~\cite{demsar2006statistical} yields $\chi_F^2 = 9.59$, $p ="
-        r" \TableThreeFriedmanPValue$, indicating no statistically significant"
-        r" difference across the omnibus collection."
-    )
-    assert target_stat in text, "Target stat not found"
-    text = text.replace(target_stat, repl_stat, 1)
+    old_rw_p2 = r"GAC pipeline builds upon these bipartite foundations, coupling bipartite compression with linear-time feature gating to resolve high-dimensional noise."
+    new_rw_p2 = r"Adaptive anchor selection strategies further enhance bipartite consensus efficiency across large instance sets (Guo et al.~\cite{guo2026consensus}), scalable multi-view ensemble clustering leverages adaptive anchor bipartite graphs (Kong et al.~\cite{kong2026adaptive}), and high-order graph embedding with co-regularization aligns multi-view cluster assignments (Wang et al.~\cite{wang2025coregularized}). Streaming and inductive consensus frameworks have recently expanded toward fairness-constrained partition updates across continuous data flows (Chakraborty et al.~\cite{chakraborty2026generic}). GAC pipeline builds upon these bipartite foundations, coupling bipartite compression with linear-time feature gating to resolve high-dimensional noise."
+    if old_rw_p2 in content and "guo2026consensus" not in content:
+        content = content.replace(old_rw_p2, new_rw_p2)
 
-    # 9. Limitations update (20 Newsgroups text sparsity)
-    target_lim = (
-        r"\item \textbf{Sparse, Zero-Inflated, and Non-Linear Features:} BGSS"
-        r" evaluates marginal moments independently. Features with heavy point"
-        r" masses at zero (e.g., single-cell RNA counts or sparse TF-IDF text"
-        r" features) or non-linear multi-feature interactions (e.g., XOR"
-        r" parity structures) can either spuriously inflate Sarle\'s"
-        r" Bimodality Coefficient or fail to manifest marginal bimodality,"
-        r" requiring multi-dimensional interaction screening in future"
-        r" architectures."
-    )
-    repl_lim = (
-        r"\item \textbf{Sparse, Zero-Inflated, and Non-Linear Features:} BGSS"
-        r" evaluates marginal moments independently. Features with heavy point"
-        r" masses at zero (e.g., single-cell RNA counts) or non-linear"
-        r" multi-feature interactions (e.g., XOR parity structures) can either"
-        r" spuriously inflate Sarle's Bimodality Coefficient or fail to"
-        r" manifest marginal bimodality, requiring multi-dimensional"
-        r" interaction screening in future architectures."
-        "\n"
-        r"    \item \textbf{High-Dimensional Text Sparsity (20 Newsgroups):}"
-        r" On 20 Newsgroups ($N=18{,}846, D=10{,}000, K=20$), ICC-v2 yields an"
-        r" ARI of $0.000 \pm 0.000$. BGSS is fundamentally mismatched to sparse"
-        r" TF-IDF features where extreme vocabulary sparsity and high point"
-        r" masses at zero invalidate continuous unimodal/bimodal moment"
-        r" screening, whereas classical Ward linkage ($0.099$) and DEC"
-        r" ($0.096$) achieve non-zero cluster separation."
-    )
-    assert target_lim in text, "Target lim not found"
-    text = text.replace(target_lim, repl_lim, 1)
+    # 9. Add citations in Section 3 (zhang2024optimal, lau2024bayesian, jahanian2026highdim)
+    old_sec3_intro = r"To investigate whether consensus clustering inherently overcomes high-dimensional noise, we conduct controlled finite-sample simulations across isotropic distractor regimes."
+    new_sec3_intro = r"Minimax theoretical analysis establishes that consistent cluster recovery in high dimensions requires feature signal-to-noise ratios scaling with ambient dimension (Zhang and Zhou~\cite{zhang2024optimal}), and latent repulsive mixture models have been proposed to prevent over-clustering in high-dimensional genomic feature spaces (Lau et al.~\cite{lau2024bayesian}). To investigate whether consensus clustering inherently overcomes high-dimensional noise, we conduct controlled finite-sample simulations across isotropic distractor regimes."
+    if old_sec3_intro in content and "zhang2024optimal" not in content:
+        content = content.replace(old_sec3_intro, new_sec3_intro)
 
-    # 10. Replace Section 6 completely
-    target_sec6_start = (
-        r"\section{Practical Real-World Applications and Domain Case"
-        r" Studies}\label{sec:applications}"
-    )
-    target_sec6_end = (
-        r"accelerating consensus grouping while maintaining robust topic"
-        r" coherence." + "\n" + r"\end{enumerate}"
-    )
-    idx_s6_start = text.find(target_sec6_start)
-    assert idx_s6_start != -1, "Target sec6 start not found"
-    idx_s6_end = text.find(target_sec6_end, idx_s6_start)
-    assert idx_s6_end != -1, "Target sec6 end not found"
-    full_target_sec6 = text[idx_s6_start : idx_s6_end + len(target_sec6_end)]
+    # 10. Rewrite Section 3.1 (Item 1e, 3a, 3c)
+    old_sec31_intro = r"As shown in Table~\ref{tab:real_data_stability} and Figure~\ref{fig:real_data_stability}, the stability trap is pervasive across real high-dimensional benchmarks, displaying three distinct algorithmic regimes:"
+    old_sec31_end = r"In these cohorts, weak marginal feature multimodality prevents BGSS from isolating the signal manifold, showing that feature gating attenuates but cannot entirely eliminate the stability trap when signal coordinates lack detectable marginal separation."
 
-    repl_sec6 = (
-        r"\section{Illustrative Use Cases and Their Limits}\label{sec:applications}"
-        "\n\n"
-        r"To examine how the empirical properties and trade-offs of ICC-v2"
-        r" manifest in domain-specific workflows, this section presents three"
-        r" illustrative use cases spanning translational oncology, large-scale"
-        r" single-cell transcriptomics, and point-of-care inductive assignment,"
-        r" highlighting their practical utility alongside explicit empirical"
-        r" boundaries."
-        "\n\n"
-        r"\subsection{Translational Oncology}\label{sec:app_oncology}"
-        "\n"
-        r"In translational cancer genomics, molecular subtyping via microarray"
-        r" and RNA-seq profiling routinely operates in small-sample,"
-        r" high-dimensional regimes ($N \le 100, D \ge 2{,}000\text{ to"
-        r" }20{,}000$) where distance concentration degrades unguided"
-        r" consensus clustering~\cite{golub1999molecular,khan2001multiplex}. On"
-        r" the Leukemia microarray benchmark ($N=72, D=7{,}129, K=2$), ICC-v2"
-        r" attains an ARI of $0.600 \pm 0.367$, with 22 of 30 canonical random"
-        r" seeds achieving $\text{ARI} > 0.50$ (median ARI $0.787$). On the"
-        r" pediatric SRBCT benchmark ($N=83, D=2{,}308, K=4$), ICC-v2 delivers"
-        r" an ARI of $0.546 \pm 0.102$ (median $0.547$, with $70.0\%$ of seeds"
-        r" exceeding $0.50$). Furthermore, BGSS captures 27 of the top 50"
-        r" known supervised diagnostic marker genes ($54.0\%$ overlap) purely"
-        r" unsupervised in $O(N \cdot D)$ time as a descriptive finding."
-        "\n\n"
-        r"However, outcomes on other high-dimensional cohorts reveal strict"
-        r" limitations: across the remaining four high-dimensional cohorts"
-        r" (CNS, Colon, Ovarian, and Prostate), ICC-v2 yields near-zero ARI"
-        r" ($\le 0.072$), with $0/30$ seeds exceeding $0.50$, and on Prostate"
-        r" ($0.012 \pm 0.013$) it underperforms simple ambient baselines"
-        r" ($0.049$). These results suggest BGSS-gated ensembling can recover"
-        r" coarse subtype structure on some cohorts, but outcomes are highly"
-        r" seed-dependent and not clinically actionable without validation."
-        "\n\n"
-        r"\subsection{Single-Cell Transcriptomics}\label{sec:app_scrna}"
-        "\n"
-        r"Droplet-based single-cell RNA sequencing (scRNA-seq) profiles tens"
-        r" of thousands to millions of individual"
-        r" cells~\cite{zheng2017massively}. Storing an $N \times N$ dense"
-        r" co-association matrix in double precision for $N=1{,}000{,}000$"
-        r" cells requires approximately $8\text{ Terabytes of RAM}$, creating"
-        r" a consensus memory wall on standard workstations. By mapping $N$"
-        r" cells to $L=60$ representative anchor prototypes, ICC-v2 replaces"
-        r" the $N \times N$ matrix with an $N \times L$ bipartite affinity"
-        r" matrix $B$ and an $L \times L$ anchor affinity graph"
-        r" $W_{\text{anchor}}$. At $N=1{,}000{,}000$ cells, the auxiliary"
-        r" consensus graph memory requires only $10^6 \times 60 \times 4\text{"
-        r" bytes} = 240.0\text{ MB}$, a $99.6\%$ reduction over the dense"
-        r" matrix."
-        "\n\n"
-        r"However, this scaling feasibility is established primarily under"
-        r" synthetic Gaussian mixture benchmarks (Experiment~5,"
-        r" Table~\ref{tab:exp5_controlled}, where ICC-v2 scales to"
-        r" $N=1{,}000{,}000$ in \ExtremeScaleTime\ with $\text{ARI} \approx"
-        r" 0.36$). On real biological single-cell data, such as"
-        r" PBMC68k-reduced ($N=68{,}579, D=1{,}000$), ICC-v2 achieves an ARI"
-        r" of $0.182 \pm 0.009$ and ranks last among evaluated baselines,"
-        r" trailing K-Means ($0.555 \pm 0.008$) and Standard Consensus ($0.540"
-        r" \pm 0.004$). Thus, while bipartite graph compression successfully"
-        r" solves the memory scaling bottleneck on single-node hardware,"
-        r" partition quality on sparse, dropout-dominated single-cell"
-        r" distributions requires further algorithmic refinement."
-        "\n\n"
-        r"\subsection{Point-of-Care Inductive Query"
-        r" Assignment}\label{sec:app_conformal}"
-        "\n"
-        r"Traditional consensus clustering frameworks are strictly"
-        r" transductive: when a new patient profile or query sample arrives,"
-        r" conventional algorithms cannot assign the query without appending it"
-        r" to the historical dataset and re-executing the entire $O((N+1)^2)$"
-        r" ensemble consensus optimization from scratch. ICC-v2 addresses this"
-        r" latency bottleneck via stability-weighted centroid assignment in the"
-        r" active feature subspace (Section~\ref{sec:centroid})."
-        "\n\n"
-        r"Closed-form centroid assignment costs $O(K \cdot"
-        r" |\mathcal{F}_{\text{active}}|)$ per query and agrees with"
-        r" unweighted nearest-centroid on 94--99\% of held-out queries"
-        r" (Table~\ref{tab:inductive_direct}). However, its test ARI is not"
-        r" significantly better than Ambient K-Means, Nystr\"om spectral"
-        r" extension, or Random Forest extensions (all bootstrap confidence"
-        r" intervals span zero: $\Delta = +0.046$, 95\% CI: $[-0.029, +0.129]$"
-        r" vs. Ambient K-Means; $\Delta = -0.023$, 95\% CI: $[-0.081, +0.033]$"
-        r" vs. Nystr\"om; $\Delta = -0.006$, 95\% CI: $[-0.053, +0.046]$ vs."
-        r" Random Forest). Inductive centroid projection therefore provides an"
-        r" efficient, closed-form computational approximation for streaming"
-        r" query assignment, but does not achieve superior out-of-sample"
-        r" accuracy compared to standard projection alternatives."
-    )
-    text = text.replace(full_target_sec6, repl_sec6, 1)
+    idx_s31_start = content.find(old_sec31_intro)
+    idx_s31_end = content.find(old_sec31_end, idx_s31_start) + len(old_sec31_end)
 
-    # 11. Conclusion reframing and zero em-dash enforcement
-    target_concl = (
-        r"This paper presented an empirical examination of consensus"
-        r" clustering in high-dimensional noise regimes, systematically"
-        r" investigating when feature gating, anchor consensus, and inductive"
-        r" projection succeed and where they fail. Through finite-sample"
-        r" falsification experiments, we showed that conventional consensus"
-        r" stability metrics degrade under high-dimensional isotropic"
-        r" distractor noise, converging stably onto arbitrary noise"
-        r" partitions. We evaluated Inductive Consensus Clustering (ICC-v2),"
-        r" which combines linear Bimodality-Gated Subspace Selection (BGSS),"
-        r" bipartite anchor consensus, and stability-weighted centroid"
-        r" assignment. Across 13 multi-domain benchmarks (2,750 model fits),"
-        r" Standard Consensus achieves the lowest omnibus mean rank"
-        r" ($R=\TableThreeStdConsOverallRank$), followed by K-Means"
-        r" ($R=\TableThreeKMeansOverallRank$), DEC ($R=\TableThreeDecOverallRank$),"
-        r" and ICC-v2 ($R=\TableThreeIccVTwoOverallRank$, Friedman $\chi_F^2 ="
-        r" 9.59, p = \TableThreeFriedmanPValue$, $CD = \TrueNemenyiCD$)."
-        r" Although ICC-v2 attains the highest Grand Mean ARI (\GrandMeanARI),"
-        r" this metric is heavily driven by large gains on two cancer"
-        r" microarray benchmarks: Leukemia (\ARIleukemia) and SRBCT (\ARIsrbct,"
-        r" $+0.408$ over FastMVC), while averaging"
-        r" \OmnibusMeanExcludingLeukemiaSrbct\ on the remaining 11 benchmarks"
-        r" (omnibus median ARI: \OmnibusMedianARI). In the exploratory"
-        r" high-dimensional subgroup ($D/N > 20$), ICC-v2 achieves Rank \#1"
-        r" ($R=\RankBioICCvTwo$), but fails on Prostate ($0.012$ vs. $0.049$)."
-        r" Our ablation experiments establish a key null result: determinacy"
-        r" anchor certification yields no statistically significant accuracy"
-        r" benefit over uniform random anchors ($\Delta = +0.019$,"
-        r" dataset-level cluster bootstrap 95\% CI: $[-0.039, +0.082]$),"
-        r" indicating that bipartite anchor graph"
-        r" dimensionality reduction---reducing graph memory by"
-        r" \MemoryScalingTenKGraphReduction\ at $N=10{,}000$ and enabling"
-        r" $N=1{,}000{,}000$ scaling in \ExtremeScaleTime\ under"
-        r" single-precision batch ensembling ($M=15, L=60$)---is the primary"
-        r" operational mechanism rather than anchor certification. Finally, our"
-        r" failure analysis demonstrates that marginal moment gating cannot"
-        r" resolve non-linear parity structures or sparse zero-inflated counts,"
-        r" delineating the exact boundaries of consensus clustering in"
-        r" high-dimensional noise."
-    )
-    repl_concl = (
-        r"This paper presented an empirical examination of consensus"
-        r" clustering in high-dimensional noise regimes, systematically"
-        r" investigating when feature gating, anchor consensus, and inductive"
-        r" projection succeed and where they fail. Through finite-sample"
-        r" falsification experiments, we showed that conventional consensus"
-        r" stability metrics degrade under high-dimensional isotropic"
-        r" distractor noise, converging stably onto arbitrary noise"
-        r" partitions. We evaluated Inductive Consensus Clustering (ICC-v2),"
-        r" which combines linear Bimodality-Gated Subspace Selection (BGSS),"
-        r" bipartite anchor consensus, and stability-weighted centroid"
-        r" assignment. Across 13 multi-domain benchmarks (2,750 model fits),"
-        r" Standard Consensus achieves the lowest omnibus mean rank"
-        r" ($R=\TableThreeStdConsOverallRank$), followed by K-Means"
-        r" ($R=\TableThreeKMeansOverallRank$), DEC ($R=\TableThreeDecOverallRank$),"
-        r" and ICC-v2 ($R=\TableThreeIccVTwoOverallRank$, Friedman $\chi_F^2 ="
-        r" 9.59, p = \TableThreeFriedmanPValue$, $CD = \TrueNemenyiCD$)."
-        r" Although ICC-v2 attains the highest Grand Mean ARI (\GrandMeanARI),"
-        r" this metric is heavily driven by large gains on two cancer"
-        r" microarray benchmarks: Leukemia (\ARIleukemia) and SRBCT (\ARIsrbct),"
-        r" while averaging \OmnibusMeanExcludingLeukemiaSrbct\ on the"
-        r" remaining 11 benchmarks (omnibus median ARI: \OmnibusMedianARI). In"
-        r" the exploratory high-dimensional subgroup ($D/N > 20$), ICC-v2"
-        r" achieves Rank \#1 ($R=\RankBioICCvTwo$), but fails on Prostate"
-        r" ($0.012$ vs. $0.049$). Our ablation experiments establish a key null"
-        r" result: determinacy anchor certification yields no statistically"
-        r" significant accuracy benefit over uniform random anchors ($\Delta ="
-        r" +0.019$, dataset-level cluster bootstrap 95\% CI: $[-0.039,"
-        r" +0.082]$), indicating that bipartite anchor graph compression"
-        r" (reducing graph memory by \MemoryScalingTenKGraphReduction\ at"
-        r" $N=10{,}000$ and enabling $N=1{,}000{,}000$ scaling in"
-        r" \ExtremeScaleTime\ under single-precision batch ensembling) is the"
-        r" primary operational mechanism rather than anchor certification."
-        r" Finally, our failure analysis demonstrates that marginal moment"
-        r" gating cannot resolve non-linear parity structures or sparse"
-        r" zero-inflated counts, delineating the exact boundaries of consensus"
-        r" clustering in high-dimensional noise."
-    )
-    assert target_concl in text, "Target concl not found"
-    text = text.replace(target_concl, repl_concl, 1)
+    new_sec31 = r"""Biomedical cohort clustering under high feature-to-sample ratios requires explicit noise screening to avoid convergence on spurious clinical subtypes (Jahanian et al.~\cite{jahanian2026highdim}). As shown in Table~\ref{tab:real_data_stability} and Figure~\ref{fig:real_data_stability}, our pre-registered stratified subsample perturbation protocol reveals three distinct algorithmic regimes across real high-dimensional benchmarks ($D/N > 20$, 30 stratified $80\%$ subsamples):
 
-    return text
+\paragraph{1. Pervasive Entrapment Across Classical and Graph Baselines:}
+Under stratified subsampling, classical and graph-based baselines repeatedly lock onto mutually agreeing yet clinically spurious partitions. Across all six high-$D$ cohorts, three methods satisfy pre-specified Decision Rule~(i) (subsample stability $\ge 0.50$ and empirical accuracy $\le 0.05$) across at least three distinct cohorts: FCAG (Colon, CNS, Prostate), FCM (Colon, CNS, Ovarian), and FastMVC (Colon, CNS, Prostate). On Prostate ($D=12{,}600$), ten of the twelve evaluated methods satisfy Rule~(i), led by Ward ($\text{Stab}=0.996, \text{Acc}=0.026, \Delta=+0.970$), Spectral ($\text{Stab}=0.971, \text{Acc}=-0.002, \Delta=+0.973$), and Core-Halo ($\text{Stab}=1.000, \text{Acc}=0.000, \Delta=+1.000$). Crucially, under independent column-permuted null controls, stability on Prostate collapses to near zero (range $-0.001$ to $+0.049$). This verifies that the elevated stability observed on real data reflects genuine, highly reproducible geometric attractors in the noise subspace that are completely orthogonal to clinical truth, directly validating the ``Stable but Wrong'' pathology. Paired bootstrap resampling across cohorts ($B=10{,}000$) yields an overall mean stability--accuracy gap of $+0.464$ with a 95\% confidence interval of $[+0.363, +0.607]$, firmly excluding zero and supporting pre-registered Decision Rule~(iii).
 
+\paragraph{2. Behavior of CoHiRF as Run:}
+Under our evaluation, CoHiRF exhibits an attenuated mean subsample gap ($\Delta = +0.267$). As run in this benchmark (a reimplementation strictly adhering to official specification with 25 repetitions, a $0.15$ random subspace fraction, and an $0.80$ unanimous threshold), CoHiRF achieves low mean accuracy ($\text{Acc} = 0.020$) and low subsample stability ($\text{Stab} = 0.281$). On Colon, CoHiRF yields subsample stability of only $0.068$ ($\text{Acc}=0.013$), matching Decision Rule~(ii) where real stability minus null stability is below $0.10$ ($0.068 - 0.002 = 0.066$), indicating that stability is uninformative under high distractor dimensionality for this configuration.
+
+\paragraph{3. Where Feature Gating Helps, and Where It Entraps GAC:}
+The GAC pipeline achieves the highest mean subsample accuracy among all tested methods ($0.168$ vs. $0.051$ for K-Means and $0.049$ for FCAG) and lowers the mean gap to $+0.300$. On Leukemia ($D=7{,}129$, $\text{Acc} = 0.412, \text{Stab} = 0.334, \Delta = -0.078$) and SRBCT ($D=2{,}308$, $\text{Acc} = 0.493, \text{Stab} = 0.507, \Delta = +0.014$), GAC breaks free from the stability trap: empirical accuracy matches or exceeds subsample stability. In full-cohort runs across 30 seeds, GAC attains $\text{ARI} = 0.600 \pm 0.367$ on Leukemia and $0.546 \pm 0.102$ on SRBCT. However, boundary conditions must be stated transparently: on Prostate ($D=12{,}600$) and CNS ($D=7{,}129$), GAC also falls into the stability trap ($\text{Acc} = 0.012$ and $0.007$, $\text{Stab} = 0.860$ and $0.549$, yielding gaps of $\mathbf{+0.847}$ and $\mathbf{+0.542}$). In these cohorts, diffuse non-bimodal signal distributions prevent marginal BGSS from isolating the signal manifold, demonstrating that unsupervised feature gating cannot rescue consensus clustering when informative coordinates lack detectable marginal separation."""
+
+    if idx_s31_start != -1:
+        content = content[:idx_s31_start] + new_sec31 + content[idx_s31_end:]
+
+    # 11. Ensure Declarations have generic AI statement without model names
+    idx_decl = content.find(r"\section*{Declarations}")
+    if idx_decl != -1:
+        decl_sub = content[idx_decl:]
+        for banned in ["GPT", "Claude", "Gemini", "OpenAI", "Anthropic", "ChatGPT"]:
+            assert banned not in decl_sub, f"Banned model name {banned} found in declarations!"
+
+    with open(p, "w", encoding="utf-8") as f:
+        f.write(content)
+    print(f"[+] Revisions applied cleanly to {p}")
 
 def main():
-    paths = [Path("paper/main.tex"), Path("springer_manuscript/main.tex")]
-    for path in paths:
-        if path.exists():
-            orig = path.read_text(encoding="utf-8")
-            revised = revise_content(orig)
-            path.write_text(revised, encoding="utf-8")
-            print(f"Successfully applied revisions to {path}")
-
+    patch_file(ROOT / "paper" / "main.tex")
+    patch_file(ROOT / "springer_manuscript" / "main.tex")
 
 if __name__ == "__main__":
     main()

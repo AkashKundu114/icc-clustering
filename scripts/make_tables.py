@@ -161,10 +161,10 @@ def generate_table4():
         sub_dense = df[(df["N"] == N) & (df["model"] == "Standard_Consensus")]
         sub_icc = df[(df["N"] == N) & (df["model"] == "ICC_v2")]
 
-        dense_peak_ram = sub_dense["peak_memory_mb"].mean() if not sub_dense.empty else 0.0
-        icc_peak_ram = sub_icc["peak_memory_mb"].mean() if not sub_icc.empty else 0.0
-        icc_time_mean = sub_icc["runtime_sec"].mean() if not sub_icc.empty else 0.0
-        icc_time_std = sub_icc["runtime_sec"].std() if not sub_icc.empty else 0.0
+        dense_peak_ram = sub_dense["peak_memory_mb"].iloc[0] if not sub_dense.empty else 0.0
+        icc_peak_ram = sub_icc["peak_memory_mb"].iloc[0] if not sub_icc.empty else 0.0
+        icc_time_mean = sub_icc["runtime_sec"].iloc[0] if not sub_icc.empty else 0.0
+        icc_time_std = sub_icc["time_std"].iloc[0] if (not sub_icc.empty and "time_std" in sub_icc.columns) else 0.0
 
         # formatting
         d_g_str = f"${dense_graph_mb:.2f}\\text{{ MB}}$" if dense_graph_mb < 1000 else f"${dense_graph_mb/1024:.2f}\\text{{ GB}}$"

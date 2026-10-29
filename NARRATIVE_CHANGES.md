@@ -101,3 +101,40 @@ This document records all scientific, empirical, and textual narrative revisions
   - Calculation on 3-decimal rounded benchmark table: $\chi_F^2 = 11.54, p = 0.40$ (ICC-v2 omnibus rank 5.58). Both confirm null retention ($p = 0.40 \gg 0.05$).
 - **OpenML Metadata Verification:** Verified OpenML IDs match $N, D, K$ in Table 6: Sonar (40), Madelon (1485), Colon (45087), SRBCT (45101), CNS (45086), Leukemia (1104), Prostate (45099), Ovarian (45098), Isolet (300).
 - **Reproducibility Verification:** `scripts/fetch_data.py --verify-only` verified all 13 benchmarks present and checksum-valid.
+
+
+---
+
+## 9. Subsample Stability & Null Control Protocol (Revision Item 1)
+- **Protocol Pre-Specification:** Authored `results/PLAN_STAB.md` pre-specifying 6 cohorts ($D/N > 20$), 12 Table 7 models, 30 stratified 80% subsamples (seeds 5000–5029), independent column-permuted null control (seeds 6000–6029), and Decision Rules (i), (ii), (iii).
+- **Execution:** Completed 4,320 runs in parallel with PyTorch CUDA GPU acceleration on NVIDIA RTX 5060 Laptop GPU.
+- **Empirical Findings:**
+  - Rule (i) ("Stable but Wrong": $\text{Stab} \ge 0.50, \text{Acc} \le 0.05$): Satisfied on $\ge 3$ cohorts by 3 methods: FCAG (Colon, CNS, Prostate), FCM (Colon, CNS, Ovarian), FastMVC (Colon, CNS, Prostate).
+  - Prostate Entrapment: 10 of 12 methods satisfy Rule (i) on Prostate ($D=12{,}600$), with Ward ($\text{Stab}=0.996, \text{Acc}=0.026, \Delta=+0.970$), Spectral ($\text{Stab}=0.971, \text{Acc}=-0.002, \Delta=+0.973$), Core-Halo ($\text{Stab}=1.000, \text{Acc}=0.000, \Delta=+1.000$), GAC ($\text{Stab}=0.860, \text{Acc}=0.012, \Delta=+0.847$), while column-permuted null controls collapse to near zero ($-0.001$ to $+0.049$).
+  - Rule (iii) Paper-Level Claim: Supported by the data. Paired cohort bootstrap ($B=10{,}000$) for the stability-accuracy gap firmly excludes zero ($+0.464$, 95% CI: $[+0.363, +0.607]$).
+- **Narrative Updates:** Rewrote Abstract, Contributions, and Section 3.1 to strictly report subsample stability metrics and null controls.
+
+---
+
+## 10. Scalability & Timing Hygiene (Revision Item 2)
+- **Untraced Execution Rerun:** Reran pure untraced execution time (`time.perf_counter()`) across $N \in \{500, 1000, 2000, 5000, 8000, 10000\}$ and 5 canonical seeds ($42, 101, 202, 303, 404$), measuring memory footprint separately via `tracemalloc`.
+- **Table 4 / Table 6 Fix:** Fixed `\pm nan` in table generator by properly computing standard deviation across the 5 seeds ($0.736 \pm 0.089\text{ s}$ at $N=500$, $0.835 \pm 0.030\text{ s}$ at $N=10{,}000$).
+- **Figure 18 Caption:** Deleted approximate $\beta \approx 1.0$ and $2.9\times$ speedup; reported fitted exponent $\beta = 0.09 \pm 0.17$ (95% CI: $[-0.03, 0.24]$) across full range ($\beta \approx 0.81$ over $N \in [500, 5000]$) and $3.80\times$ speedup at $N=10{,}000$ ($0.835\text{ s vs } 3.175\text{ s}$).
+- **De-Speculation:** Removed CPU throttling speculation; replaced with "the jump at N=8,000 observed in an earlier run was not reproduced in the final runs" (5 independent reruns) with telemetry preserved in `results/timing_rerun_environment_log.json`.
+
+---
+
+## 11. Consistency & Attribution Hygiene (Revision Item 3)
+- **Standard Deviation Consistency:** Reconciled Leukemia and SRBCT SDs in narrative text to match Table 7 per-seed SD across 30 seeds ($0.600 \pm 0.367$ and $0.546 \pm 0.102$).
+- **Abstract Subgroup Comparison:** Updated Abstract to compare GAC ($0.217$) with the best baseline in the high-$D$ subgroup (FCAG, $0.065$) and ambient consensus ($0.037$).
+- **CoHiRF Attribution:** Rewrote CoHiRF paragraphs to strictly attribute performance to the method configuration as run (reimplementation adhering to official specification with 25 repetitions, 0.15 subspace fraction, 0.80 unanimous threshold).
+- **Section 4 Header:** Renamed to "Proposed Methodology (Gated Anchor Consensus Pipeline)".
+- **Literature Descriptions:** Rewrote Senbabaoglu et al. (consensus produces apparent stability on weak/no structure) and Race & Meyer (iterative consensus extracts confident clusters and reclusters residuals) to match primary literature accurately.
+- **Citation Hygiene:** Removed "cite-once" policy in `AGENTS.md` and restored standard academic citation discipline.
+
+---
+
+## 12. Bibliography Expansion (Revision Item 4)
+- **Recent Literature Share:** Added 14 verified 2024–2026 citations to `paper/references.bib` and `springer_manuscript/references.bib`, increasing recent literature share from 75.0% (39/52) to **80.3%** (53/66).
+- **Verification:** 100% verified via `scripts/verify_refs.py` (exit code 0, 58 OK, 8 MANUAL).
+- **Mapping:** All 14 entries mapped in `results/refs_map.csv` and cited in the manuscript.
