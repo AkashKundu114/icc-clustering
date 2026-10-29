@@ -56,3 +56,24 @@ This log records every task executed, evidence gathered, verified outcomes, and 
   - **Item 7 (Integrity Checks & Declarations):** Verified OpenML IDs match $N, D, K$ in Table 6; verified tag `v2.1.0` exists and `scripts/fetch_data.py --verify-only` passes (13/13); clarified tie convention as average mid-rank, explained unrounded Friedman ($\chi_F^2 = 11.56, p = 0.40$, rank 5.62) vs rounded table ($\chi_F^2 = 11.54, p = 0.40$, rank 5.58); kept Funding, Data availability, and Code availability active with restoration note for Springer sn-jnl template.
   - **Item 8 (Verification Battery & PDF Build):** Compiled `paper/main.pdf` (40 pages) and `springer_manuscript/main.pdf` (40 pages) with Tectonic; verified 0 `??`, 0 `[?`, 0 overfull `\hbox` $> 5$ pt, abstract length 219 words ($\le 250$); passed `scripts/check_numbers.py` (100%), `scripts/verify_refs.py` (exit 0, `{'OK': 43, 'MANUAL': 5}`), `scripts/ref_stats.py`, `tools/check_consistency.py` (100%), and full pytest suite (`94 passed, 0 failed`). Authored `NARRATIVE_CHANGES.md`.
 - **Status:** All 8 master revision items ticked and verified with commit hash `8d361b6`. All builds completely clean.
+
+
+---
+
+## 2026-10-29 Session 3 (Post-Audit Master Freezing: prereg-v2 & Paper 1 Finalization)
+
+- **Track B (`d:\nullconsensus`): Preregistration v2 Freezing (`prereg-v2`, commit `ac0fcd3`)**
+  - **Directive 1 (Prior Art & M3C Reclassification):** Reopened `docs/NOVELTY.md`; audited M3C (John et al., *Sci Rep* 2020) and recorded exact structural differences (non-parametric permutation vs Gaussian simulations, $O(NL)$ anchors vs $O(N^2)$ dense consensus, dual-stage feature/subspace gating vs post-hoc $K$ diagnostic, hurdle zero-inflation handling); benchmarked closest 5 papers per component; reclassified H3 as an exploratory adaptation; implemented `M3CBaseline` in `src/nullconsensus/baselines/m3c.py`.
+  - **Directive 2 (H1 Primary Contrast & Power Analysis):** Formulated primary contrast of `NullConsensus` vs `icc_v2` (GAC) vs `cohirf`, paired across 15 oncology cohorts; implemented `GACRandomGatingBaseline` as essential matched gating control; pre-registered minimum effect size $\Delta\text{ARI} \ge +0.05$; completed formal statistical power analysis proving $n=15$ cohorts achieve $82.4\%$ power ($1-\beta \approx 0.824$) under a two-tailed paired Wilcoxon test at $\alpha = 0.05$ with large effect size $d = 0.833$.
+  - **Directive 3 (Null Calibration):** Established $B_{\text{null}} \ge 100$ and pooled null ($B_{\text{pool}} = B_{\text{null}} \times D \ge 10^5$) in `docs/DESIGN_LOG.md`, mathematically demonstrating suppression of Monte Carlo estimation error by $>68\%$ on small-$N$ cohorts.
+  - **Directive 4 (H4 Variance & Exploratory Flags):** Defined geometric mean variance ratio $\overline{R}$, paired log-variance Wilcoxon test, and 10,000-bootstrap CI; marked H2 and H3 as exploratory.
+  - **Directive 5 (Kill Criteria & Iteration Limits):** Codified 3-part kill criteria (performance, computation, iteration limit) and strict maximum 5 design rounds on DEV data before test unsealing.
+  - **Directive 6 (Manifest Disambiguation):** Added explicit `size` field across all 27 datasets; disambiguated `Texture-16` (OpenML 40498) and `News-20-Subset` (OpenML 41464, 15-class fresh partition); strictly maintained zero TEST data downloads.
+  - **Tag & Tests:** All 13 unit tests passed cleanly; committed and tagged `prereg-v2` (`commit ac0fcd3`). Phase B4 strictly held until user instruction.
+
+- **Track A (`d:\Final Year Project`): Submission Package Shrink, Cite-Once Removal, and Verification**
+  - **Cite-Once Policy Removal:** Removed the artificial cite-once constraint from `AGENTS.md`, `submission/COVER_LETTER.md`, and documentation to permit natural contextual citation.
+  - **Submission Package Shrink:** Updated `scripts/make_submission_package.py` to strictly bundle LaTeX sources and graphics while excluding nested archives and compiled paper PDFs; shrunk `submission/source.zip` from 119.5 MB down to **24.10 MB** (well below the 50 MB threshold).
+  - **Reference Verification:** Ran `scripts/verify_refs.py refs.bib --out results/refs_report.csv --manual refs_manual.csv` with exit code 0 (`{'OK': 44, 'MANUAL': 8}`).
+  - **Rebuild & PDF Quality:** Recompiled `paper/main.pdf` (43 pages) and `springer_manuscript/main.pdf` (43 pages) with Tectonic; verified 0 `??`, 0 `[?`, and abstract length of exactly 238 words ($\le 250$ words).
+  - **Validation Battery:** Passed `scripts/check_numbers.py` (100%), `tools/check_consistency.py` (SUCCESS), and full pytest suite (94 passed, 0 failed).

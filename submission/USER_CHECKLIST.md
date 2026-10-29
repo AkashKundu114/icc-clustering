@@ -37,7 +37,7 @@ In `paper/main.tex` and `springer_manuscript/main.tex`, restore the commented-ou
 
 ### Phase 4: Portal Upload Package Verification
 Upload the assets located in `submission/`:
-- [ ] `submission/main.pdf`: Full compiled 38-page manuscript for reviewer inspection.
+- [ ] `submission/main.pdf`: Full compiled manuscript for reviewer inspection.
 - [ ] `submission/source.zip`: Complete LaTeX source bundle (`main.tex`, `numbers.tex`, `references.bib`, `sn-jnl.cls`, `bst/`, `figures/`, `gen/`).
 - [ ] `submission/COVER_LETTER.md`: Cover letter text to paste into the submission editor.
 - [ ] `submission/refs_report.csv`: Bibliographic audit report verifying CrossRef/arXiv resolution.
