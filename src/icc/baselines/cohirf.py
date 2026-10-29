@@ -9,6 +9,7 @@ import time
 from typing import Optional, Tuple, Union
 
 import numpy as np
+from numpy.typing import NDArray
 from scipy.sparse.csgraph import connected_components
 from sklearn.base import BaseEstimator, ClusterMixin
 from sklearn.cluster import KMeans
@@ -64,8 +65,8 @@ class CoHiRF(BaseEstimator, ClusterMixin):
             d_rf = max(2, min(D, int(self.n_features_subspace)))
 
         # Track representative indices and parent assignments
-        representatives = np.arange(N)
-        parent_map = np.arange(N)
+        representatives: NDArray[np.int64] = np.arange(N, dtype=np.int64)
+        parent_map: NDArray[np.int64] = np.arange(N, dtype=np.int64)
 
         for iteration in range(self.max_iter):
             n_rep = len(representatives)
