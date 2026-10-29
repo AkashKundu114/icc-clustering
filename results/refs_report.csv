@@ -9,7 +9,7 @@ witten2010framework,doi,OK,,A Framework for Feature Selection in Clustering,A Fr
 golub1999molecular,doi,OK,,Molecular Classification of Cancer: Class Discovery and Class Prediction by Gene Expression Monitoring,Molecular Classification of Cancer: Class Discovery and Class Prediction by Gene Expression Monitoring,1999,1999,286,286,531--537,531-537,10.1126/science.286.5439.531
 hubert1985comparing,doi,OK,,Comparing Partitions,Comparing partitions,1985,1985,2,2,193--218,193-218,10.1007/bf01908075
 demsar2006statistical,manual,MANUAL,,Statistical Comparisons of Classifiers over Multiple Data Sets,,2006,,7,,1--30,,
-belucci2025cohirf,arxiv,OK,,CoHiRF: Hierarchical Consensus for Interpretable Clustering Beyond Scalability Limits,CoHiRF: Hierarchical Consensus for Interpretable Clustering Beyond Scalability Limits,2025,2025,,,,,
+belucci2025cohirf,manual,MANUAL,,CoHiRF: Hierarchical Consensus for Interpretable Clustering Beyond Scalability Limits,,2025,,,,,,
 xu2025dynamic,doi,OK,,Dynamic Anchor-based Ensemble Clustering via Hypergraph Reconstruction,Dynamic Anchor-based Ensemble Clustering via Hypergraph Reconstruction,2025,2025,,,6740-6748,6740-6748,10.24963/ijcai.2025/750
 xu2026range,manual,MANUAL,,Large-Scale Robust Enhanced Ensemble Clustering via Outlier Decoupling,,2026,,,,39691--39700,,
 zhang2025structured,doi,OK,,A Structured Bipartite Graph Learning method for ensemble clustering,A Structured Bipartite Graph Learning method for ensemble clustering,2025,2025,160,160,111133,111133,10.1016/j.patcog.2024.111133
@@ -47,3 +47,7 @@ gao2026consistency,doi,OK,,Consistency-Guided Anchor in Multi-view Subspace Clus
 he2025subspace,doi,OK,,A Novel Subspace-Based GMM Clustering Ensemble Algorithm for High-Dimensional Data,A Novel Subspace-Based GMM Clustering Ensemble Algorithm for High-Dimensional Data,2025,2025,34,34,612-629,612-629,10.23919/cje.2023.00.153
 wang2026deep_jasa,doi,OK,,Deep Clustering Evaluation: How to Validate Internal Clustering Validation Measures,Deep Clustering Evaluation: How to Validate Internal Clustering Validation Measures,2026,2026,121,121,223-236,223-236,10.1080/01621459.2025.2592926
 peng2024interpreting,arxiv,OK,,Interpreting the Curse of Dimensionality from Distance Concentration and Manifold Effect,Interpreting the Curse of Dimensionality from Distance Concentration and Manifold Effect,2023,2023,,,,,
+senbabaoglu2014critical,doi,OK,,Critical limitations of consensus clustering in class discovery,Critical limitations of consensus clustering in class discovery,2014,2014,4,4,6207,6207,10.1038/srep06207
+race2013determining,doi,OK,,Determining the Number of Clusters via Iterative Consensus Clustering,Determining the Number of Clusters via Iterative Consensus Clustering,2013,2013,,,94--102,94-102,10.1137/1.9781611972832.11
+lindenbaum2021differentiable,manual,MANUAL,,Differentiable Unsupervised Feature Selection based on a Gated Laplacian,,2021,,34,,7084--7095,,
+chen2026data,manual,MANUAL,,A Data-Informed Variational Clustering Framework for Noisy High-Dimensional Data,,2026,,,,,,

@@ -47,3 +47,7 @@ gao2026consistency,Sec 2.3,Consistency-guided anchor in multi-view subspace clus
 he2025subspace,Sec 2.3,Subspace-based GMM clustering ensemble algorithm for high-dimensional data,High-dimensional subspace clustering ensemble
 wang2026deep_jasa,Sec 5.3,Deep clustering evaluation and validation of internal validation measures,Internal validation measures and clustering benchmark evaluation
 peng2024interpreting,Sec 3,When uninformative ambient noise dimensions expand distance concentration compresses relative distance metrics,Geometric analysis of distance concentration and manifold effect under high-dimensional noise
+senbabaoglu2014critical,Sec 2.1,"Senbabaoglu et al. reassessed consensus clustering, demonstrating that high consensus stability often reflects clusterer-induced artifact rather than genuine cluster structure",Critical limitations and stability-accuracy gap in consensus clustering
+race2013determining,Sec 2.1,"Race and Meyer investigated iterative consensus clustering to resolve cluster count ambiguities",Iterative consensus clustering historical context and disambiguation
+lindenbaum2021differentiable,Sec 2.3,"Lindenbaum et al. formulated differentiable unsupervised feature selection using a gated Laplacian",Differentiable feature gating comparison
+chen2026data,Sec 2.3,"Chen developed a data-informed variational clustering framework with continuous feature gating for noisy high dimensions",Variational feature gating comparison in noisy high dimensions
