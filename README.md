@@ -89,7 +89,7 @@ print("Out-of-sample predictions:", model.predict(X_query).tolist())
 
 ## Results Summary (Single Source of Truth)
 
-All reported values trace directly to frozen Pass F execution stores (`results/passF/` and `paper/numbers.tex`):
+All reported values trace directly to frozen Pass F execution stores (`results/passF/` and `results/stats.json`):
 
 Across all 13 benchmark datasets (3,000 individual model fits across 12 clustering pipelines, 30 random seeds on 6 high-D datasets and 10 seeds on 7 general datasets), omnibus Friedman testing indicates no statistically significant difference across the complete heterogeneous benchmark suite (Friedman $\chi^2_F = 11.56, p = 0.40$, Nemenyi Critical Difference $CD = 4.62$). 
 
@@ -166,26 +166,14 @@ During the preparation of this manuscript and software repository, the authors u
 
 ---
 
-## Research Provenance & Governance Dossiers
+## Reproducibility & Verification
 
-For academic mentors, peer reviewers, and reproducibility auditors inspecting the scientific lineage of this project, all audit trails, preregistrations, and quality assurance logs are consolidated under [`governance/`](governance/README.md):
-
-1. **[`governance/remediation/`](governance/remediation/README.md): Scientific Remediation & Verification Dossier:**
-   - Catalog and resolution proofs for all 27 technical, numerical, and theoretical issues identified during internal audits.
-   - Master issue matrix: [`governance/remediation/LEDGER.md`](governance/remediation/LEDGER.md).
-   - Theoretical derivations and proofs: [`governance/remediation/THEORY_NOTES.md`](governance/remediation/THEORY_NOTES.md).
-   - Granular manuscript claim audit: [`governance/remediation/CLAIMS_AUDIT.md`](governance/remediation/CLAIMS_AUDIT.md).
-
-2. **[`governance/preregistration/`](governance/preregistration/README.md): Research Integrity & Preregistration Archive:**
-   - Preregistration protocols freezing evaluation thresholds in advance ([`PREREG_B.md`](governance/preregistration/PREREG_B.md), [`PREREG_C.md`](governance/preregistration/PREREG_C.md), [`PREREG_F.md`](governance/preregistration/PREREG_F.md)).
-   - 100% CrossRef & arXiv API verification audit: 52 references, 39 published 2024–2026 (75.0%), strictly single-cited at first mention, strictly single-cited at first mention ([`REFCHECK_LOG.md`](REFCHECK_LOG.md), [`results/refs_report.csv`](results/refs_report.csv), [`results/refs_map.csv`](results/refs_map.csv)).
-   - Related work taxonomy and novelty matrix ([`LITERATURE_MATRIX.csv`](governance/preregistration/LITERATURE_MATRIX.csv)).
-   - Submission cover letters and rebuttal frameworks ([`COVER_LETTER_DRAFT.md`](governance/preregistration/COVER_LETTER_DRAFT.md), [`RESPONSE_TO_REVIEWERS_OUTLINE.md`](governance/preregistration/RESPONSE_TO_REVIEWERS_OUTLINE.md)).
-
-3. **[`governance/release/`](governance/release/README.md): Software Release Governance & Quality Assurance:**
-   - Pre-release validation reports and sign-offs ([`RELEASE_REPORT.md`](governance/release/RELEASE_REPORT.md)).
-   - MIT open-source license justification ([`LICENSE_DECISION.md`](governance/release/LICENSE_DECISION.md)).
-   - Regression test output baselines ([`governance/release/baseline/`](governance/release/baseline/)).
+To reproduce benchmark evaluations and verify theoretical identities:
+- **Smoke Reproduction Suite:** `python scripts/reproduce.py --scope smoke`
+- **Real-Data Stability Audit:** `python scripts/run_real_data_stability.py`
+- **Theoretical Identity Verification:** `python scripts/verify_determinacy_identity.py`
+- **Inductive Query Latency Benchmark:** `python scripts/measure_query_latency.py`
+- **Bimodality Null Calibration Check:** `python scripts/verify_bc.py`
 
 ---
 
@@ -194,8 +182,8 @@ For academic mentors, peer reviewers, and reproducibility auditors inspecting th
 - [API Reference](docs/api.md)
 - [Dataset Guide & Verified Licenses](docs/DATA.md)
 - [Theoretical Foundations](docs/THEORETICAL_FOUNDATIONS.md)
-- [Pre-Registration Protocol (Pass F)](governance/preregistration/PREREG_F.md)
-- [Claims Audit Ledger](governance/remediation/CLAIMS_AUDIT.md)
+- [Hardware & Software Environment](docs/ENV.md)
+- [AI Usage Declaration](docs/AI_USE.md)
 
 ---
 
