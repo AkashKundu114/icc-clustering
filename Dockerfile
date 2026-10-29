@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 WORKDIR /workspace
 
@@ -15,6 +15,8 @@ RUN pip install --no-cache-dir --upgrade pip && \
 COPY src/ ./src/
 COPY configs/ ./configs/
 COPY tests/ ./tests/
+COPY scripts/ ./scripts/
+COPY examples/ ./examples/
 COPY demo.py ./
 
 RUN pip install --no-cache-dir -e .

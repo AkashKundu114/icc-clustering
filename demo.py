@@ -124,7 +124,7 @@ def main():
     print(tabulate(table_data, headers=["Algorithm", "ARI", "NMI", "Runtime", "Mode"], floatfmt=".4f", tablefmt="github"))
     print("=" * 75)
 
-    # 5. Anchor-Space Perturbation Profiling (ASPP)
+    # 7. Anchor-Space Perturbation Profiling (ASPP)
     print("\n[*] 5. Executing Anchor-Space Perturbation Profiling (ASPP)...")
     t0_aspp = time.perf_counter()
     fp_df = model.profile_perturbations(X_train)
@@ -138,7 +138,7 @@ def main():
     print("=" * 75)
     print(tabulate(aspp_display, headers="keys", floatfmt=".3f", tablefmt="github", showindex=False))
 
-    # 6. Inductive Out-of-Sample Confidence Scoring
+    # 8. Inductive Out-of-Sample Confidence Scoring
     print("\n[*] 6. Inductive Prediction with Stability-Calibrated Confidence (First 5 queries):")
     res_stab = model.predict_with_stability(X_test[:5])
     query_table = []

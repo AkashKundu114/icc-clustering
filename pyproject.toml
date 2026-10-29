@@ -80,6 +80,9 @@ Homepage = "https://github.com/AkashKundu114/icc-clustering"
 Repository = "https://github.com/AkashKundu114/icc-clustering.git"
 Issues = "https://github.com/AkashKundu114/icc-clustering/issues"
 
+[project.scripts]
+icc-demo = "icc.__main__:main"
+
 [tool.setuptools.packages.find]
 where = ["src"]
 
