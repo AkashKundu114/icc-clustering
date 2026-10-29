@@ -5,7 +5,15 @@ from unittest.mock import MagicMock, patch
 
 # Ensure scripts directory is in path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "scripts")))
-import verify_refs as vr
+import pytest
+
+try:
+    import verify_refs as vr
+except ImportError:
+    vr = None
+
+if vr is None:
+    pytest.skip("scripts/verify_refs.py dependencies (requests, bibtexparser) not installed", allow_module_level=True)
 
 
 def test_norm_and_sim():
