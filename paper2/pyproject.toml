@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nullconsensus"
+version = "0.1.0"
+description = "Permutation-Null Calibrated Consensus Clustering for High-Dimensional Manifolds"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Akash Kundu", email = "akashkundu1152@gmail.com" }
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.14",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis"
+]
+dependencies = [
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "scikit-learn>=1.3.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.4.0",
+    "mypy>=1.9.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/AkashKundu114/nullconsensus"
+Repository = "https://github.com/AkashKundu114/nullconsensus.git"
+Issues = "https://github.com/AkashKundu114/nullconsensus/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]

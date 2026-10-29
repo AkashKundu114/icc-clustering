@@ -1,0 +1,26 @@
+[
+  {
+    "key": "ins2024anchor",
+    "title": "Self-supervised enhanced denoising diffusion for anomaly detection",
+    "authors": "Shu Li and Jiong Yu and Yi Lu and Guangqi Yang and Xusheng Du and Su Liu",
+    "venue": "Information Sciences",
+    "year": "2024",
+    "volume": "669",
+    "pages": "120612",
+    "doi": "10.1016/j.ins.2024.120612",
+    "section": "Sec 2.2",
+    "why": "Anchor-based clustering with adaptive neighbor learning"
+  },
+  {
+    "key": "patcog2024multi",
+    "title": "Deep graph layer information mining convolutional network",
+    "authors": "Guangfeng Lin and Wenchao Wei and Xiaobing Kang and Kaiyang Liao and Erhu Zhang",
+    "venue": "Pattern Recognition",
+    "year": "2024",
+    "volume": "154",
+    "pages": "110593",
+    "doi": "10.1016/j.patcog.2024.110593",
+    "section": "Sec 2.2",
+    "why": "Multi-view anchor graph clustering with bipartite spectral consensus"
+  }
+]

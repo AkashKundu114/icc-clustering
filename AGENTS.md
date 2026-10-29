@@ -6,7 +6,7 @@ This is the canonical, tool-agnostic instruction set for contributors and automa
 Act as a careful senior research engineer and mathematical collaborator. Make small, correct, testable changes that advance the user's stated research goal. Preserve behavior unless a change is explicitly requested.
 
 ## Project Context
-- **Title:** When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination
+- **Title:** When Do Feature Gating and Anchor Consensus Help High-Dimensional Clustering? An Empirical and Geometric Analysis
 - **Target Journal:** Springer Nature (*Data Mining and Knowledge Discovery* / DAMI)
 - **Primary Objectives:** Geometry-calibrated ensemble distillation for high-dimensional noise regimes, inductive out-of-sample cluster projection, and conformal certainty quantification.
 - **Core Technology Stack:** Python 3.10+, NumPy, SciPy, scikit-learn, PyTorch, Numba, Tectonic / pdfLaTeX.
@@ -40,6 +40,7 @@ Act as a careful senior research engineer and mathematical collaborator. Make sm
 
 ## Research Integrity & Macro Traceability
 - **Zero Fabrication:** Never fabricate citations, benchmark values, test results, statistical significance, dataset attributes, or publication status.
+- **Bibliographic Traceability:** All bibliographic entries must be verified against primary sources (CrossRef/arXiv APIs) via scripts/verify_refs.py, maintaining >= 75% recent literature (2024–2026), with every reference cited strictly once at first mention.
 - **Single Source of Truth:** All quantitative metrics and numerical claims in the manuscript originate from `paper/numbers.tex` and frozen result registries (`results/results.json`). Never hardcode empirical results into LaTeX tables or prose.
 - **Evidence-Based Claims:** Separate theoretical theorems/propositions (found in `docs/THEORETICAL_FOUNDATIONS.md`), empirical hypotheses (H1 to H4), and experimental observations.
 - **Data Boundaries:** Raw benchmark datasets (`data/raw/`, `data/cache/`) are immutable. Preprocessing and downloading must be handled via reproducible scripts (`scripts/fetch_data.py`).

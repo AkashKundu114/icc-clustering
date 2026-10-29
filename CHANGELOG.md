@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.2.0] - 2026-10-29
+
+### Added
+- **Automated CrossRef & arXiv Verification Suite (`scripts/verify_refs.py`, `tests/test_verify_refs.py`):** Live API client verifying DOIs, titles, first authors, publication years, volumes, and page ranges. Includes 8 unit tests testing matching, field mismatches, fuzzy title resolution, published version redirects, manual overrides, and CLI execution.
+- **`make refs-check` Target:** Automated Makefile target asserting zero bibliographic discrepancies across all active references.
+- **Reference Provenance Ledgers (`results/refs_report.csv`, `results/refs_map.csv`):** Complete traceability mapping every reference to its exact citing section, sentence, and scientific rationale.
+- **Section 3.2 Real-Data Stability Analysis:** Empirical measurement of the stability-accuracy trap across 13 benchmarks x 12 methods, featuring per-seed stability tracking and opening Figure 2.
+
+### Changed
+- **Modern Literature Overhaul (75.0% Recent Target):** Upgraded bibliography to 52 verified primary references, with 39 published between 2024 and 2026 (75.0% vintage) across leading journals (*IEEE TKDE*, *IEEE TNNLS*, *Pattern Recognition*, *Information Fusion*, *DAMI*, *JASA*, *Biometrika*), verified with zero errors (`scripts/verify_refs.py`, exit 0).
+- **Strict Single-Citation (Cite-Once) Policy:** Audited `paper/main.tex` and `springer_manuscript/main.tex` to enforce single-mention citation discipline. Each of the 52 references in `refs.bib` is cited strictly once at its first occurrence, eliminating redundant subsequent citations. Corrected TKDE 2026 citation to properly cite authors Shun Yang et al.
+- **Empirical Harmonization & Single Source of Truth:** Reconciled model fit count to 3,000 total fits across 12 clustering pipelines (30 seeds on 6 high-D datasets, 10 seeds on 7 general datasets); Friedman stat = 11.56, p = 0.40, Nemenyi CD = 4.62; GAC pipeline commands Rank #1 on high-D biological cohorts (D/N > 20, mean ARI = 0.217, mean rank 2.17).
+- **Submission Package Optimization:** Shrunk `submission/source.zip` to 24.10 MB (well below the 50 MB journal threshold).
+- **Test Suite Expansion:** Expanded automated test suite from 86 to 94 tests with 100% pass rate.
+---
+
 ## [2.1.0] - 2026-10-23
 
 ### Added

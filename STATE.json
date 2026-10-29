@@ -1,0 +1,95 @@
+{
+  "project": "Autonomous Research Engineer - Dual Track",
+  "author": "Akash Kundu",
+  "institution": "Techno India University",
+  "updated_at": "2026-10-29T11:08:00+05:30",
+  "current_status": "V2.2.0_RELEASED_AND_PREREG_V2_FROZEN",
+  "environment": {
+    "os": "Windows 11 (Build 10.0.26300)",
+    "cpu": "AMD Ryzen 9 8940HX (16 cores / 32 threads)",
+    "ram_total_gb": 15.21,
+    "python": "3.14.6",
+    "cuda_available": true,
+    "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU (8 GB)",
+    "env_verified_file": "docs/ENV.md"
+  },
+  "track_a_paper1": {
+    "title": "Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps",
+    "repo": "https://github.com/AkashKundu114/icc-clustering",
+    "current_branch": "main",
+    "target_venue": "Springer Nature (Data Mining and Knowledge Discovery / DAMI)",
+    "tasks": {
+      "A0_baseline_snapshot": "DONE",
+      "A1_reference_integrity": "DONE",
+      "A2_number_consistency": "DONE",
+      "A3_known_inconsistencies": "DONE",
+      "A4_literature_and_experiments": "DONE",
+      "A5_declarations": "DONE",
+      "A6_figures": "DONE",
+      "A7_final_build_and_package": "DONE",
+      "A8_scientific_integrity_audit": "DONE",
+      "A9_mathematical_repair": "DONE",
+      "A10_consistency_checker": "DONE",
+      "A11_master_revision_items": "DONE",
+      "A12_title_alignment_and_stability": "DONE"
+    },
+    "gates": {
+      "gate_1_leakage_and_provenance": "CLEARED",
+      "gate_2_mathematical_guarantees": "CLEARED",
+      "gate_3_reproducibility": "CLEARED",
+      "gate_4_text_data_concordance": "CLEARED",
+      "gate_5_bibliographic_hygiene": "CLEARED",
+      "gate_6_submission_readiness": "CLEARED"
+    },
+    "submission_package": {
+      "path": "submission/",
+      "pdf_pages": 40,
+      "unresolved_markers_count": 0,
+      "overfull_boxes_count": 0,
+      "total_model_fits": 3000,
+      "evaluated_pipelines": 12,
+      "benchmark_datasets": 13,
+      "verified_references": 52,
+      "recent_fraction_pct": 75.0,
+      "artifacts": [
+        "submission/main.pdf",
+        "submission/source.zip",
+        "submission/arxiv_source.zip",
+        "submission/refs_report.csv",
+        "submission/COVER_LETTER.md",
+        "submission/JOURNAL_SHORTLIST.md",
+        "submission/USER_CHECKLIST.md"
+      ]
+    }
+  },
+  "track_b_paper2": {
+    "package_name": "nullconsensus",
+    "method_title": "Permutation-Null Calibrated Consensus Clustering (NullConsensus)",
+    "repo": "https://github.com/AkashKundu114/nullconsensus",
+    "current_phase": "PHASE_B3_PREREG_V2_COMPLETE",
+    "gate_b1": "CLEARED",
+    "preregistration_tag": "prereg-v2",
+    "preregistration_commit": "ac0fcd3",
+    "preregistration_file": "PREREGISTRATION.md",
+    "test_manifest_file": "data/test_manifest.json",
+    "test_datasets_count": 27,
+    "tasks": {
+      "B0_problem_framing": "DONE",
+      "B1_literature_map_and_novelty": "DONE",
+      "B2_repo_infrastructure": "DONE",
+      "B3_dev_test_split_and_prereg": "DONE",
+      "B4_dev_pilots": "PENDING_USER_PREREG_REVIEW",
+      "B5_freeze": "BLOCKED_BY_DEV_PILOTS",
+      "B6_test_experiments": "BLOCKED_BY_FREEZE",
+      "B7_paper2_release": "BLOCKED_BY_TEST_RUNS"
+    },
+    "local_path": "d:/nullconsensus",
+    "primary_method": "Candidate 12 (NullGate: Unimodal/Permutation Null Calibrated Saliency)",
+    "count_aware_module": "Candidate 2 (HurdleGate: Positive-Support Bimodality & Dropout Entropy)"
+  },
+  "blockers": [
+    "BLOCKER-COAUTHORS",
+    "BLOCKER-DECLARATIONS",
+    "BLOCKER-JOURNAL-CHOICE"
+  ]
+}

@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-message: "If you use this software or benchmark suite in your research, please cite our manuscript as follows."
-title: "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"
+message: "If you use this software or benchmark suite in your research, please cite as follows."
+title: "When Does Feature Gating and Anchor Consensus Salvage High-Dimensional Clustering? An Empirical and Geometric Analysis"
 version: 2.1.0
 date-released: "2026-10-23"
 authors:
@@ -8,19 +8,6 @@ authors:
     given-names: "Akash"
     orcid: "https://orcid.org/0009-0003-8246-7316"
     email: "akashkundu1152@gmail.com"
-    affiliation: "Department of Computer Science and Engineering, Techno India University"
-  - family-names: "Guha"
-    given-names: "Trinankur"
-    affiliation: "Department of Computer Science and Engineering, Techno India University"
-  - family-names: "Ghatak"
-    given-names: "Rupankar"
-    affiliation: "Department of Computer Science and Engineering, Techno India University"
-  - family-names: "Naskar"
-    given-names: "Anubhab"
-    affiliation: "Department of Computer Science and Engineering, Techno India University"
-  - family-names: "Das"
-    given-names: "Kalyan Kumar"
-    email: "kalyan.biltu@gmail.com"
     affiliation: "Department of Computer Science and Engineering, Techno India University"
 repository-code: "https://github.com/AkashKundu114/icc-clustering"
 license: "MIT"

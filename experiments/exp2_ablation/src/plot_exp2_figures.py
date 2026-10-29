@@ -37,7 +37,7 @@ VARIANT_LABELS = {
     "V2_VSSG_StdConsensus": "V2: BGSS + Std Consensus (Control 2)",
     "V3_Anchors_Only": "V3: Core Anchors Only (Ambient)",
     "V4_VSSG_Random_Anchors": "V4: BGSS + Random Anchors",
-    "V5_Full_ICC_v2": "V5: Full ICC-v2 [Ours]"
+    "V5_Full_ICC_v2": "V5: Full GAC Pipeline [Ours]"
 }
 
 
@@ -70,7 +70,7 @@ def plot_exp2_figures():
         ax.plot(sub["d_noise"], sub["mean_ari"], marker=marker, label=label,
                 color=VARIANT_COLORS.get(v_name, "#000"), linewidth=lw, linestyle=ls, markersize=7)
 
-    ax.set_title("Component-Wise Ablation: Dissecting Invariant Core Consensus (ICC-v2)", fontsize=13.0, fontweight="bold")
+    ax.set_title("Component-Wise Ablation: Dissecting Gated Anchor Consensus (GAC)", fontsize=13.0, fontweight="bold")
     ax.set_xlabel(r"Nuisance Distractor Dimensions ($D_{\text{noise}}$)", fontsize=12.0, fontweight="bold")
     ax.set_ylabel("Clustering Recovery (ARI)", fontsize=12.0, fontweight="bold")
     ax.tick_params(labelsize=11.0)
@@ -207,7 +207,7 @@ def plot_exp2_figures():
                       fontsize=9.5, fontweight="bold", color="#2ca02c",
                       bbox=dict(boxstyle="round,pad=0.25", facecolor="#f0fff0", edgecolor="#2ca02c", alpha=0.9))
 
-        plt.suptitle("Real-World Cancer Genomics: Ablation of Controls 1 & 2 vs Full ICC-v2",
+        plt.suptitle("Real-World Cancer Genomics: Ablation of Controls 1 & 2 vs Full GAC Pipeline",
                      fontweight="bold", fontsize=13.5, y=0.995)
         plt.tight_layout()
         fig14_path = fig_dir / "fig14_genomics_ablation.png"

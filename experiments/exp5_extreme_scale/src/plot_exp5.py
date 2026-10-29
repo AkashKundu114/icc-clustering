@@ -68,7 +68,7 @@ def plot_extreme_scale_quad(save_path=None):
         color="#d62728",
         ecolor="#d62728",
         capsize=3,
-        label="ICC-v2 (O(N) Anchor Ensemble)",
+        label="GAC Pipeline (O(N) Anchor Ensemble)",
         zorder=5,
     )
     ax1.errorbar(
@@ -115,7 +115,7 @@ def plot_extreme_scale_quad(save_path=None):
     m_icc = df_s.groupby("N")["mem_icc_mb"].mean().values
     m_mbk = df_s.groupby("N")["mem_mbk_mb"].mean().values
 
-    ax2.plot(n_vals, m_icc, "o-", color="#d62728", linewidth=2.2, markersize=7, label="ICC-v2 Peak Memory")
+    ax2.plot(n_vals, m_icc, "o-", color="#d62728", linewidth=2.2, markersize=7, label="GAC Pipeline Peak Memory")
     ax2.plot(n_vals, m_mbk, "s--", color="#1f77b4", linewidth=2.2, markersize=7, label="MiniBatchKMeans Peak Memory")
 
     if "mem_km_mb" in df_s.columns:
@@ -150,7 +150,7 @@ def plot_extreme_scale_quad(save_path=None):
     td_km = sum_d["time_km"]["mean"].values
     td_pca = sum_d["time_pca"]["mean"].values
 
-    ax3.plot(d_vals, td_icc, "o-", color="#d62728", linewidth=2.2, markersize=7, label="ICC-v2 (BGSS Gating)")
+    ax3.plot(d_vals, td_icc, "o-", color="#d62728", linewidth=2.2, markersize=7, label="GAC Pipeline (BGSS Gating)")
     ax3.plot(d_vals, td_km, "^:", color="#7f7f7f", linewidth=1.8, markersize=6, label="KMeans (Full Space)")
     ax3.plot(d_vals, td_pca, "d-.", color="#2ca02c", linewidth=2.0, markersize=6, label="PCA + KMeans (d=10)")
 
@@ -182,7 +182,7 @@ def plot_extreme_scale_quad(save_path=None):
         linewidth=2.2,
         markersize=7,
         capsize=4,
-        label="ICC-v2 Cluster Recovery",
+        label="GAC Pipeline Cluster Recovery",
     )
     ax4.errorbar(
         n_vals,

@@ -1,0 +1,218 @@
+{
+  "Abstract": {
+    "words": 222,
+    "zerogpt": {
+      "ai_pct": 0.0,
+      "is_human_pct": 100,
+      "highlighted": [],
+      "text_words": 222,
+      "ai_words": 0
+    },
+    "piratexx": {
+      "human_pct": 99.9832963406848,
+      "ai_pct": 0.016703659315198127
+    },
+    "radar": {
+      "human_pct": 99.45976645685732,
+      "ai_pct": 0.5402335431426764
+    }
+  },
+  "Introduction": {
+    "words": 645,
+    "zerogpt": {
+      "ai_pct": 0.0,
+      "is_human_pct": 100,
+      "highlighted": [],
+      "text_words": 250,
+      "ai_words": 0
+    },
+    "piratexx": {
+      "human_pct": 99.98249356940433,
+      "ai_pct": 0.017506430595670697
+    },
+    "radar": {
+      "human_pct": 99.1214046254754,
+      "ai_pct": 0.8785953745245934
+    }
+  },
+  "Related Work": {
+    "words": 481,
+    "zerogpt": {
+      "ai_pct": 0.0,
+      "is_human_pct": 100,
+      "highlighted": [],
+      "text_words": 250,
+      "ai_words": 0
+    },
+    "piratexx": {
+      "human_pct": 99.98371539193597,
+      "ai_pct": 0.0162846080640211
+    },
+    "radar": {
+      "human_pct": 98.95437601953745,
+      "ai_pct": 1.0456239804625511
+    }
+  },
+  "Empirical Motivation and Finite-Sample Falsification": {
+    "words": 241,
+    "zerogpt": {
+      "ai_pct": 0.0,
+      "is_human_pct": 100,
+      "highlighted": [],
+      "text_words": 241,
+      "ai_words": 0
+    },
+    "piratexx": {
+      "human_pct": 99.98269933519394,
+      "ai_pct": 0.017300664806063626
+    },
+    "radar": {
+      "human_pct": 99.25258834846318,
+      "ai_pct": 0.7474116515368223
+    }
+  },
+  "Proposed Methodology (Inductive Consensus Clustering Framework)": {
+    "words": 1006,
+    "zerogpt": {
+      "ai_pct": 0.0,
+      "is_human_pct": 100,
+      "highlighted": [],
+      "text_words": 250,
+      "ai_words": 0
+    },
+    "piratexx": {
+      "human_pct": 99.98326696703195,
+      "ai_pct": 0.016733032968041517
+    },
+    "radar": {
+      "human_pct": 96.48385941982269,
+      "ai_pct": 3.516140580177307
+    }
+  },
+  "Experimental Setup": {
+    "words": 571,
+    "zerogpt": {
+      "ai_pct": 0.0,
+      "is_human_pct": 100,
+      "highlighted": [],
+      "text_words": 250,
+      "ai_words": 0
+    },
+    "piratexx": {
+      "human_pct": 99.98224062459836,
+      "ai_pct": 0.017759375401638078
+    },
+    "radar": {
+      "human_pct": 97.06122353672981,
+      "ai_pct": 2.9387764632701874
+    }
+  },
+  "Experimental Evaluation": {
+    "words": 1133,
+    "zerogpt": {
+      "ai_pct": 0.0,
+      "is_human_pct": 100,
+      "highlighted": [],
+      "text_words": 250,
+      "ai_words": 0
+    },
+    "piratexx": {
+      "human_pct": 99.98323900786858,
+      "ai_pct": 0.01676099213142601
+    },
+    "radar": {
+      "human_pct": 93.21375116705894,
+      "ai_pct": 6.786248832941055
+    }
+  },
+  "Ablation Study and Modular Decomposition": {
+    "words": 355,
+    "zerogpt": {
+      "ai_pct": 0.0,
+      "is_human_pct": 100,
+      "highlighted": [],
+      "text_words": 250,
+      "ai_words": 0
+    },
+    "piratexx": {
+      "human_pct": 99.97805257471336,
+      "ai_pct": 0.021947425286639177
+    },
+    "radar": {
+      "human_pct": 97.3927041515708,
+      "ai_pct": 2.607295848429203
+    }
+  },
+  "Real-World Applications": {
+    "words": 328,
+    "zerogpt": {
+      "ai_pct": 0.0,
+      "is_human_pct": 100,
+      "highlighted": [],
+      "text_words": 250,
+      "ai_words": 0
+    },
+    "piratexx": {
+      "human_pct": 99.98171331061897,
+      "ai_pct": 0.01828668938103073
+    },
+    "radar": {
+      "human_pct": 98.9574434235692,
+      "ai_pct": 1.0425565764307976
+    }
+  },
+  "Limitations and Future Scope": {
+    "words": 272,
+    "zerogpt": {
+      "ai_pct": 0.0,
+      "is_human_pct": 100,
+      "highlighted": [],
+      "text_words": 250,
+      "ai_words": 0
+    },
+    "piratexx": {
+      "human_pct": 99.98372756800224,
+      "ai_pct": 0.016272431997765846
+    },
+    "radar": {
+      "human_pct": 98.32774344831705,
+      "ai_pct": 1.672256551682949
+    }
+  },
+  "Conclusion": {
+    "words": 189,
+    "zerogpt": {
+      "ai_pct": 0.0,
+      "is_human_pct": 100,
+      "highlighted": [],
+      "text_words": 189,
+      "ai_words": 0
+    },
+    "piratexx": {
+      "human_pct": 99.98279379101727,
+      "ai_pct": 0.01720620898272296
+    },
+    "radar": {
+      "human_pct": 99.40783851779997,
+      "ai_pct": 0.5921614822000265
+    }
+  },
+  "Source Code and Data Availability": {
+    "words": 61,
+    "zerogpt": {
+      "ai_pct": 0.0,
+      "is_human_pct": 100,
+      "highlighted": [],
+      "text_words": 61,
+      "ai_words": 0
+    },
+    "piratexx": {
+      "human_pct": 99.97888207435608,
+      "ai_pct": 0.0211179256439209
+    },
+    "radar": {
+      "human_pct": 45.10974884033203,
+      "ai_pct": 54.89025115966797
+    }
+  }
+}

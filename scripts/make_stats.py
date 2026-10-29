@@ -35,10 +35,25 @@ def run():
 
     # 1. Benchmark omnibus data
     summary_df = pd.read_csv(PASS_F / "benchmark_matrix_summary_passF.csv")
+    cohirf_csv = RESULTS_DIR / "exp3_cohirf_benchmark.csv"
+    if cohirf_csv.exists():
+        cohirf_raw = pd.read_csv(cohirf_csv)
+        cohirf_summary = cohirf_raw.groupby("dataset").agg(
+            mean=("ari", "mean"),
+            std=("ari", "std"),
+            median=("ari", "median"),
+            count=("ari", "count")
+        ).reset_index()
+        cohirf_summary["model"] = "CoHiRF"
+        summary_df = pd.concat([summary_df, cohirf_summary], ignore_index=True)
+
     models = [
         "K-Means", "Ward", "Spectral", "FCM", "Standard_Consensus",
-        "Core_Halo_Consensus", "DEC", "FCAG", "FastMVC", "ICC_v1", "ICC_v2"
+        "Core_Halo_Consensus", "DEC", "FCAG", "FastMVC", "CoHiRF", "ICC_v1", "ICC_v2"
     ]
+    # Filter to models present in summary_df
+    available_models = [m for m in models if m in summary_df["model"].unique()]
+    models = available_models
     high_d = ["cns", "colon", "leukemia", "ovarian", "prostate", "srbct"]
     all_13 = list(summary_df["dataset"].unique())
     n12 = [d for d in all_13 if d != "zheng68k"]
@@ -58,10 +73,10 @@ def run():
     f_stat_12, f_p_12 = friedmanchisquare(*[piv.loc[n12, m] for m in models])
     f_stat_6, f_p_6 = friedmanchisquare(*[piv.loc[high_d, m] for m in models])
 
-    # Nemenyi CD: q_alpha = 3.219 for k=11, alpha=0.05
+    # Nemenyi CD: q_alpha = 3.268 for k=12, 3.219 for k=11, alpha=0.05
     k = len(models)
-    q_alpha = 3.219
-    cd_13 = q_alpha * np.sqrt((k * (k + 1)) / (6.0 * 13.0))  # 4.1876 -> 4.19
+    q_alpha = 3.268 if k == 12 else 3.219
+    cd_13 = q_alpha * np.sqrt((k * (k + 1)) / (6.0 * 13.0))
     cd_12 = q_alpha * np.sqrt((k * (k + 1)) / (6.0 * 12.0))
     cd_6 = q_alpha * np.sqrt((k * (k + 1)) / (6.0 * 6.0))
 
@@ -228,6 +243,10 @@ def run():
         f"\\newcommand{{\\TableThreeFcagGrandMean}}{{{grand_means['FCAG']:.3f}}}",
         f"\\newcommand{{\\TableThreeFastMvcGrandMean}}{{{grand_means['FastMVC']:.3f}}}",
         f"\\newcommand{{\\TableThreeSpectralGrandMean}}{{{grand_means['Spectral']:.3f}}}",
+        f"\\newcommand{{\\TableThreeCohirfGrandMean}}{{{grand_means.get('CoHiRF', 0.0):.3f}}}",
+        f"\\newcommand{{\\TableThreeCohirfOverallRank}}{{{mean_ranks_13.get('CoHiRF', 0.0):.2f}}}",
+        f"\\newcommand{{\\TableThreeCohirfHighDRank}}{{{mean_ranks_6.get('CoHiRF', 0.0):.2f}}}",
+        f"\\newcommand{{\\TableThreeCohirfTwelveRank}}{{{mean_ranks_12.get('CoHiRF', 0.0):.2f}}}",
         f"\\newcommand{{\\TableThreeIccVOneGrandMean}}{{{grand_means['ICC_v1']:.3f}}}",
         f"\\newcommand{{\\TableThreeLiGrandMean}}{{{grand_means['Core_Halo_Consensus']:.3f}}}",
         f"\\newcommand{{\\TableThreeFcmGrandMean}}{{{grand_means['FCM']:.3f}}}",

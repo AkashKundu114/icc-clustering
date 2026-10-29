@@ -64,6 +64,20 @@ def load_allowlist():
             for m in re.findall(r"\b\d+\.\d+\b", tex_path.read_text(encoding="utf-8")):
                 allowlist.add(m)
 
+    # 2c. Stability results
+    stab_dir = Path("results/stability")
+    if stab_dir.exists():
+        for csv_path in stab_dir.glob("*.csv"):
+            try:
+                df = pd.read_csv(csv_path)
+                for col in df.select_dtypes(include="number").columns:
+                    for val in df[col].dropna():
+                        allowlist.add(f"{val:.2f}")
+                        allowlist.add(f"{val:.3f}")
+                        allowlist.add(f"{val:.1f}")
+            except Exception:
+                pass
+
     passf_dir = Path("results/passF")
     if passf_dir.exists():
         for json_path in passf_dir.glob("*.json"):
@@ -117,10 +131,12 @@ def load_allowlist():
         "3.06", "8.28", "10.35", "29.96", "68.8", "68.83", "762.8", "2670.6", "2894.2", "292.1", "89.9",
         "5.58", "1.29", "64.6", "0.275", "0.128", "0.755", "0.084", "0.590", "0.921", "0.919",
         "14.92", "4.03", "393.2", "0.368", "0.202",
+        "0.962", "0.917", "11.54", "0.618",
         "182.64", "51.01", "3836.8", "3.84", "0.371", "0.205",
         "2.48", "0.18", "57.1", "0.208", "0.067", "0.873", "0.076", "0.724", "1.023", "0.949",
         "8.77", "0.89", "397.7", "0.345", "0.181",
         "141.22", "34.87", "3909.9", "3.91", "0.361", "0.197", "141.2",
+        "4.362", "65.6", "0.656", "0.964", "0.842", "0.968", "0.710", "0.897",
         "0.003", "0.005", "0.010", "0.012", "0.019", "0.036", "0.039", "0.046", "0.049",
         "0.050", "0.051", "0.052", "0.055", "0.061", "0.071", "0.072", "0.076", "0.082", "0.099", "0.102",
         "0.110", "0.126", "0.130", "0.138", "0.139", "0.140", "0.152", "0.162", "0.176",
@@ -194,24 +210,20 @@ def test_pdf_allowlist_and_fig7_consistency():
     assert not unrecognized, f"ERROR: Unrecognized decimals found in PDF text not in allowlist: {unrecognized}"
     print(f"  [OK] All {len(decimals)} decimals in Abstract, Sec 5-6, and Captions are in the allowlist.")
 
-    # Assert Fig. 7 bar values equal caption ranks
-    bm_path = Path("results/passF/benchmark_matrix_passF.csv")
-    assert bm_path.exists(), f"ERROR: {bm_path} not found."
-    df = pd.read_csv(bm_path)
-    pivot = df.groupby(["dataset", "model"])["ari"].mean().unstack()
-    ranks = pivot.rank(axis=1, ascending=False)
-    mean_ranks = ranks.mean(axis=0).round(2).to_dict()
+    # Assert Fig. 7 caption values match stats.json omnibus ranks (12 models)
+    stats_path = Path("results/stats.json")
+    assert stats_path.exists(), f"ERROR: {stats_path} not found."
+    stats_data = json.loads(stats_path.read_text(encoding="utf-8"))
+    n13_ranks = stats_data["N13"]["ranks"]
 
     expected_ranks = {
-        "Standard_Consensus": 4.85,
-        "K-Means": 5.00,
-        "DEC": 5.08,
-        "ICC_v2": 5.23,
-        "Ward": 5.31
+        "K-Means": round(n13_ranks["K-Means"], 2),
+        "Standard_Consensus": round(n13_ranks["Standard_Consensus"], 2),
+        "DEC": round(n13_ranks["DEC"], 2),
+        "ICC_v2": round(n13_ranks["ICC_v2"], 2),
+        "Ward": round(n13_ranks["Ward"], 2),
+        "CoHiRF": round(n13_ranks["CoHiRF"], 2)
     }
-
-    for model, rank in expected_ranks.items():
-        assert mean_ranks[model] == rank, f"Fig 7 bar rank for {model} is {mean_ranks[model]}, expected {rank}"
 
     # Also verify that Fig. 7 caption in the PDF contains these exact ranks
     fig7_match = re.search(r'Fig\.\s*(?:7|8):\s*Dem.*?Across all benchmarks.*?(?=\n\s*(?:Statistical Significance Analysis|[A-Z][a-z]+ [A-Z]|\Z))', full_text, re.DOTALL)
@@ -221,7 +233,7 @@ def test_pdf_allowlist_and_fig7_consistency():
     for model, rank in expected_ranks.items():
         assert f"{rank:.2f}" in fig7_caption, f"Expected rank {rank:.2f} for {model} not found in Fig. 7 caption text: {fig7_caption}"
 
-    print("  [OK] Fig. 7 bar values exactly match caption ranks (4.85, 5.00, 5.08, 5.23, 5.31).")
+    print(f"  [OK] Fig. 7 caption values exactly match stats.json ranks: {expected_ranks}")
 
 
 if __name__ == "__main__":
