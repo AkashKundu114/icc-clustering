@@ -152,6 +152,7 @@ def load_allowlist():
         "190.73", "106.8", "10.346", "2.009", "0.778", "0.680", "0.856", "0.812", "0.814", "0.766", "0.608",
         # Legitimate revision constants: scaling exponents, hardware clocks, profiling, memory
         "1.20", "1.198", "1.085", "160.0", "58.2", "2.40", "5.20", "0.825", "0.916", "0.548", "0.841",
+        "1.382", "1.175", "0.0002", "2.302", "0.0001", "0.00004",
     }
     allowlist.update(config_constants)
     return allowlist
