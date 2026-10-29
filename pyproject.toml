@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "icc"
-version = "2.1.0"
+version = "2.2.0"
 description = "Reference implementation: Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps"
 readme = "README.md"
 authors = [
@@ -59,6 +59,8 @@ dev = [
     "ruff",
     "mypy>=1.0.0",
     "pymupdf>=1.23.0",
+    "requests>=2.28.0",
+    "bibtexparser>=1.4.0",
 ]
 # All optional dependencies combined
 all = [
@@ -73,6 +75,8 @@ all = [
     "ruff",
     "mypy>=1.0.0",
     "pymupdf>=1.23.0",
+    "requests>=2.28.0",
+    "bibtexparser>=1.4.0",
 ]
 
 [project.urls]
