@@ -25,7 +25,7 @@ In this manuscript, we provide a thorough empirical and geometric dissection ans
 
 ### Research Integrity & Reproducibility
 - **Zero Fabrication:** All numerical claims originate from frozen per-seed execution stores and automated macro bindings (`paper/numbers.tex`).
-- **Literature Vintage:** 75.0% (39 of 52) of references are from 2024–2026, verified via automated CrossRef and arXiv REST APIs.
+- **Literature Vintage:** 75.0% (39 of 52) of references are from 2024–2026, verified via automated CrossRef and arXiv REST APIs. Every reference is cited strictly once at first mention.
 - **Code and Data Availability:** The complete open-source Python library (`icc`, `cicc`), unit tests (94 passing), and deterministic reproduction scripts are available at https://github.com/AkashKundu114/icc-clustering under an open-source MIT license. The repository name `icc-clustering` is historical and unrelated to the Iterative Consensus Clustering of Race and Meyer.
 
 This manuscript represents original work that has not been published previously and is not under consideration for publication elsewhere. All authors have approved the manuscript and agree with its submission to *Data Mining and Knowledge Discovery*.

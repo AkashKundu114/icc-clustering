@@ -77,3 +77,16 @@ This log records every task executed, evidence gathered, verified outcomes, and 
   - **Reference Verification:** Ran `scripts/verify_refs.py refs.bib --out results/refs_report.csv --manual refs_manual.csv` with exit code 0 (`{'OK': 44, 'MANUAL': 8}`).
   - **Rebuild & PDF Quality:** Recompiled `paper/main.pdf` (43 pages) and `springer_manuscript/main.pdf` (43 pages) with Tectonic; verified 0 `??`, 0 `[?`, and abstract length of exactly 238 words ($\le 250$ words).
   - **Validation Battery:** Passed `scripts/check_numbers.py` (100%), `tools/check_consistency.py` (SUCCESS), and full pytest suite (94 passed, 0 failed).
+
+
+---
+
+## 2026-10-29 Session 4 (Cite-Once Enforcement, TKDE 2026 Author Polish, and v2.2.0 GitHub Release)
+
+- **Track A (`d:\Final Year Project`):**
+  - **Cite-Once Strict Bijection:** Re-enforced strict single-citation discipline across `paper/main.tex`, `springer_manuscript/main.tex`, `AGENTS.md`, `REVISION_LOG.md`, `docs/CLAIM_EVIDENCE.md`, and `scripts/make_submission_package.py`. Fixed redundant citation to `peng2024interpreting` in line 173. Automated verification confirmed exact 1-to-1 bijection: 52 citations for 52 bibliography records in `refs.bib`, 0 duplicates, 0 missing.
+  - **Citation Prose Polish (TKDE 2026 / Ref 23):** Rectified drafting artifact on Section 2.2 line 100 where `and TKDE 2026~\cite{tkde2026fast}` cited the journal/year abbreviation rather than author names; updated to `Yang et al.~\cite{yang2025correntropy,tkde2026fast}`, properly referencing Shun Yang et al. (IEEE TKDE 2026) alongside Shangzong Yang et al. (2025).
+  - **Manuscript Rebuild & Verification:** Recompiled `paper/main.pdf` (43 pages) and `springer_manuscript/main.pdf` (43 pages) using Tectonic; confirmed 0 `??`, 0 `[?`, 0 unmapped citations, abstract length 238 words ($\le 250$); re-ran `scripts/make_submission_package.py` updating `submission/source.zip` (24.10 MB) and `submission/main.pdf`.
+  - **Results Table & Documentation Synchronization:** Updated `README.md` and `CHANGELOG.md` to reflect Pass F single source of truth (3,000 fits across 12 clustering pipelines, Friedman $\chi_F^2 = 11.56, p = 0.40$, Nemenyi CD $= 4.62$, High-D Rank #1 with mean ARI $= 0.217$, mean rank $2.17$).
+  - **Validation Battery:** 100% clean passes: `scripts/check_numbers.py` (PASS), `tools/check_consistency.py` (SUCCESS), `scripts/verify_refs.py` (exit 0: `{'OK': 44, 'MANUAL': 8}`), and full test suite (`94 passed, 0 failed`).
+  - **Release Tag & Commit:** Prepared tag `v2.2.0`, committed and pushed to GitHub remote `origin/main`.

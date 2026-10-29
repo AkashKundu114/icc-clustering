@@ -55,7 +55,7 @@ In accordance with the Scientific Integrity Rules, no empirical number or theore
 - **Verification Status:** 100% verified via automated CrossRef and arXiv REST APIs (`{'OK': 44, 'MANUAL': 8}`, exit code 0).
 - **Recent Literature Vintage:** 39 out of 52 references published in 2024–2026 ($75.0\%$).
 - **Manual Entries Audit:** All 8 MANUAL entries verified against primary publisher and preprint repositories in `refs_manual.csv` (`sarle1983sas`, `fern2003random`, `xie2016unsupervised`, `demsar2006statistical`, `belucci2025cohirf`, `xu2026range`, `lindenbaum2021differentiable`, `chen2026data`).
-- **Citation Discipline:** The artificial cite-once policy has been removed; all references are mapped to specific sentences in `results/refs_map.csv` to ensure zero unmapped padding citations.
+- **Citation Discipline:** Strictly enforced Cite-Once policy across `paper/main.tex` and `springer_manuscript/main.tex`: all 52 references in `refs.bib` are cited strictly once at first mention (52 unique citations, 0 duplicates, 0 unmapped padding references).
 
 ---
 
