@@ -18,7 +18,7 @@ Thank you for your interest in the Inductive Consensus Clustering (`icc`) codeba
 
 - **Reproducibility Inquiries:**
   If you encounter discrepancies reproducing the benchmark tables or figures:
-  - Consult the [Reproduction Guide](README.md#reproduction-cli-guide).
+  - Consult the [Reproduction Guide](README.md#reproducing-the-paper).
   - Verify that your environment flags match the single-thread determinism constraints (`OMP_NUM_THREADS=1`, `MKL_NUM_THREADS=1`).
 
 ---

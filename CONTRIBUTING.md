@@ -20,7 +20,7 @@ We welcome contributions ranging from bug fixes and documentation improvements t
 
 ## Code of Conduct
 
-All contributors and participants are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). Please report any violations or concerns to `akashkundu1152@gmail.com` or `akashkundu1152@gmail.com`.
+All contributors and participants are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). Please report any violations or concerns to `akashkundu1152@gmail.com`.
 
 ---
 
@@ -33,8 +33,8 @@ All contributors and participants are expected to adhere to our [Code of Conduct
 ### Step-by-Step Environment Setup
 1. **Fork and clone the repository**:
    ```bash
-   git clone https://github.com/your-username/inductive-consensus-clustering.git
-   cd inductive-consensus-clustering
+   git clone https://github.com/your-username/icc-clustering.git
+   cd icc-clustering
    ```
 
 2. **Create and activate a clean virtual environment**:
@@ -76,7 +76,7 @@ All contributors and participants are expected to adhere to our [Code of Conduct
    ```
 
 2. **Commit Conventions**:
-   Write clear, imperative commit messages (e.g., `Add sparse matrix support for VSSG feature gating`, `Fix off-by-one indexing in bipartite anchor graph`).
+   Write clear, imperative commit messages (e.g., `Add sparse matrix support for BGSS feature gating`, `Fix off-by-one indexing in bipartite anchor graph`).
 
 ---
 
@@ -167,7 +167,7 @@ We use [Ruff](https://github.com/astral-sh/ruff) for fast, unified linting and f
 ## Submitting a Pull Request
 
 Before opening a pull request, ensure:
-- [ ] All 84 unit and integration tests pass (`pytest tests -q`).
+- [ ] All 94 unit and integration tests pass (`pytest tests -q`).
 - [ ] Code formatting and lint checks pass without errors (`ruff check .`).
 - [ ] Any newly introduced public functions or classes have descriptive NumPy-style docstrings.
 - [ ] If modifying algorithmic logic, verify that benchmark reproducibility is maintained.

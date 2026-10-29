@@ -4,7 +4,7 @@ Official reference implementation of the manuscript:
 **"Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps"** (Under Review).
 
 [![CI](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml/badge.svg)](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml)
-[![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
+[![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Tests: Passing](https://img.shields.io/badge/pytest-94%2F94%20passed-brightgreen.svg)]()
 [![References: 75.0% Recent (2024-2026) | Cite-Once Enforced](https://img.shields.io/badge/references-75.0%25%20recent%20(52%20verified)-success.svg)]()
@@ -95,7 +95,7 @@ Across all 13 benchmark datasets (3,000 individual model fits across 12 clusteri
 
 However, on the target ultra-high-dimensional biological cancer assays ($D/N > 20$), the GAC pipeline commands **Rank #1** (subgroup mean ARI = 0.217, mean rank 2.17):
 
-| Method | High-D Mean ARI (/N > 20$) | High-D Rank (6 Datasets) | Overall Rank (13 Datasets) | Grand Mean ARI (13 Datasets) |
+| Method | High-D Mean ARI (D/N > 20) | High-D Rank (6 Datasets) | Overall Rank (13 Datasets) | Grand Mean ARI (13 Datasets) |
 | :--- | :---: | :---: | :---: | :---: |
 | **GAC Pipeline (Ours)** | **0.217** | **2.17** | 5.62 | **0.152** |
 | **Standard K-Means** | 0.056 | 5.67 | **5.15** | 0.124 |
