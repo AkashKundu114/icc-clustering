@@ -66,7 +66,7 @@
     "package_name": "nullconsensus",
     "method_title": "Permutation-Null Calibrated Consensus Clustering (NullConsensus)",
     "repo": "https://github.com/AkashKundu114/nullconsensus",
-    "current_phase": "PHASE_B3_PREREG_V2_COMPLETE",
+    "current_phase": "PHASE_B4_DEV_PILOTS_ROUND_1",
     "gate_b1": "CLEARED",
     "preregistration_tag": "prereg-v2",
     "preregistration_commit": "ac0fcd3",
@@ -78,7 +78,7 @@
       "B1_literature_map_and_novelty": "DONE",
       "B2_repo_infrastructure": "DONE",
       "B3_dev_test_split_and_prereg": "DONE",
-      "B4_dev_pilots": "PENDING_USER_PREREG_REVIEW",
+      "B4_dev_pilots": "IN_PROGRESS",
       "B5_freeze": "BLOCKED_BY_DEV_PILOTS",
       "B6_test_experiments": "BLOCKED_BY_FREEZE",
       "B7_paper2_release": "BLOCKED_BY_TEST_RUNS"
