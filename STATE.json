@@ -2,8 +2,8 @@
   "project": "Autonomous Research Engineer - Dual Track",
   "author": "Akash Kundu",
   "institution": "Techno India University",
-  "updated_at": "2026-10-29T07:54:00+05:30",
-  "current_status": "AUDIT_COMPLETE_SUBMISSION_READY",
+  "updated_at": "2026-10-29T09:05:00+05:30",
+  "current_status": "REVISION_COMPLETE_ALL_ITEMS_VERIFIED",
   "environment": {
     "os": "Windows 11 (Build 10.0.26300)",
     "cpu": "AMD Ryzen 9 8940HX (16 cores / 32 threads)",
@@ -14,7 +14,7 @@
     "env_verified_file": "docs/ENV.md"
   },
   "track_a_paper1": {
-    "title": "When Does Feature Gating and Anchor Consensus Salvage High-Dimensional Clustering? An Empirical and Geometric Analysis",
+    "title": "When Do Feature Gating and Anchor Consensus Help High-Dimensional Clustering? An Empirical and Geometric Analysis",
     "repo": "https://github.com/AkashKundu114/icc-clustering",
     "current_branch": "main",
     "target_venue": "Springer Nature (Data Mining and Knowledge Discovery / DAMI)",
@@ -29,7 +29,8 @@
       "A7_final_build_and_package": "DONE",
       "A8_scientific_integrity_audit": "DONE",
       "A9_mathematical_repair": "DONE",
-      "A10_consistency_checker": "DONE"
+      "A10_consistency_checker": "DONE",
+      "A11_master_revision_items": "DONE"
     },
     "gates": {
       "gate_1_leakage_and_provenance": "CLEARED",
@@ -41,14 +42,14 @@
     },
     "submission_package": {
       "path": "submission/",
-      "pdf_pages": 38,
+      "pdf_pages": 40,
       "unresolved_markers_count": 0,
       "overfull_boxes_count": 0,
       "total_model_fits": 3000,
       "evaluated_pipelines": 12,
       "benchmark_datasets": 13,
-      "verified_references": 28,
-      "recent_fraction_pct": 82.14,
+      "verified_references": 48,
+      "recent_fraction_pct": 79.17,
       "artifacts": [
         "submission/main.pdf",
         "submission/source.zip",
