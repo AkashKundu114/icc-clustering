@@ -44,8 +44,8 @@ HIGH_D_DATASETS = ["colon", "srbct", "cns", "leukemia", "prostate", "ovarian"]
 OTHER_DATASETS = ["sonar", "madelon", "isolet", "indian_pines", "yale_b", "zheng68k", "newsgroups20"]
 ALL_DATASETS = HIGH_D_DATASETS + OTHER_DATASETS
 
-SEEDS_30 = list(range(42, 72))  # 42 to 71 (30 seeds)
-SEEDS_10 = list(range(42, 52))  # 42 to 51 (10 seeds)
+SEEDS_30 = list(range(30))  # 0 to 29 (30 seeds matching Pass F main benchmark)
+SEEDS_10 = list(range(10))  # 0 to 9 (10 seeds matching Pass F main benchmark)
 
 def _eval_cohirf_seed(dname, s, X, y, K):
     t0 = time.perf_counter()

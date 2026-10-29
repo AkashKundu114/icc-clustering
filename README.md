@@ -1,13 +1,13 @@
-# When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? (ICC-v2)
+# When Do Feature Gating and Anchor Consensus Help High-Dimensional Clustering? (ICC-v2)
 
 Official reference implementation of the manuscript:  
-**"When Does Feature Gating and Anchor Consensus Salvage High-Dimensional Clustering? An Empirical and Geometric Analysis"** (Under Review).
+**"When Do Feature Gating and Anchor Consensus Help High-Dimensional Clustering? An Empirical and Geometric Analysis"** (Under Review).
 
 [![CI](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml/badge.svg)](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Tests: Passing](https://img.shields.io/badge/pytest-94%2F94%20passed-brightgreen.svg)]()
-[![References: 80.85% Recent (2024-2026)](https://img.shields.io/badge/references-80.85%25%20recent%20(2024--2026)-success.svg)]()
+[![References: 80.85% Recent (2024-2026)](https://img.shields.io/badge/references-79.2%25%20recent%20(2024--2026)-success.svg)]()
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 
 ---
@@ -202,7 +202,7 @@ For academic mentors, peer reviewers, and reproducibility auditors inspecting th
 ```bibtex
 @article{kundu2026when,
   author    = {Akash Kundu},
-  title     = {When Does Feature Gating and Anchor Consensus Salvage High-Dimensional Clustering? An Empirical and Geometric Analysis},
+  title     = {When Do Feature Gating and Anchor Consensus Help High-Dimensional Clustering? An Empirical and Geometric Analysis},
   journal   = {Preprint / Submitted for Peer Review},
   year      = {2026},
   url       = {https://github.com/AkashKundu114/icc-clustering}

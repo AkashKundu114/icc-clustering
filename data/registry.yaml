@@ -1,0 +1,299 @@
+# ==============================================================================
+# Unified Dataset Provenance & Preprocessing Registry (data/registry.yaml)
+# Single Source of Truth for all 13 Benchmark Datasets in Paper 1 (ICC-v2)
+# ==============================================================================
+
+version: "2.1.0"
+updated_at: "2026-10-29"
+curator: "Akash Kundu (Techno India University)"
+license_policy: "Public academic benchmark datasets under CC-BY / OpenML / Public Domain"
+
+preprocessing_pipeline_default:
+  imputation: "SimpleImputer(strategy='mean')"
+  scaling: "StandardScaler(with_mean=True, with_std=True)"
+  label_encoding: "LabelEncoder() mapping discrete classes to [0, K-1]"
+  feature_filtering: "None (filtering handled exclusively by unsupervised algorithms under test)"
+
+datasets:
+  # ----------------------------------------------------------------------------
+  # Category 1: Oncology Microarray Cohorts (D/N > 20)
+  # ----------------------------------------------------------------------------
+  cns:
+    name: "Central Nervous System Embryonal Tumors (CNS)"
+    domain: "Oncology Microarray"
+    upstream_source: "OpenML"
+    upstream_id: 45086
+    upstream_url: "https://www.openml.org/d/45086"
+    retrieval_date: "2026-10-20"
+    license: "Public Domain / Open Access"
+    n_samples: 60
+    n_features: 7129
+    n_clusters: 2
+    d_over_n: 118.82
+    class_balance: [21, 39]
+    class_labels: ["survivor", "failure"]
+    subsampling: null
+    missing_values: 0
+    preprocessing:
+      imputation: "None required (0 missing)"
+      standardization: "StandardScaler()"
+    notes: "High-D distractor noise regime. Originates from Pomeroy et al. (Nature 2002)."
+
+  colon:
+    name: "Colon Cancer Gene Expression"
+    domain: "Oncology Microarray"
+    upstream_source: "OpenML"
+    upstream_id: 45087
+    upstream_url: "https://www.openml.org/d/45087"
+    retrieval_date: "2026-10-20"
+    license: "Public Domain / Open Access"
+    n_samples: 62
+    n_features: 2000
+    n_clusters: 2
+    d_over_n: 32.26
+    class_balance: [40, 22]
+    class_labels: ["tumor", "normal"]
+    subsampling: null
+    missing_values: 0
+    preprocessing:
+      imputation: "None required (0 missing)"
+      standardization: "StandardScaler()"
+    notes: "Alon et al. (PNAS 1999) Affymetrix oligonucleotide array."
+
+  leukemia:
+    name: "Golub Acute Leukemia (ALL vs AML)"
+    domain: "Oncology Microarray"
+    upstream_source: "OpenML"
+    upstream_id: 1104
+    upstream_url: "https://www.openml.org/d/1104"
+    retrieval_date: "2026-10-20"
+    license: "Public Domain / Open Access"
+    n_samples: 72
+    n_features: 7129
+    n_clusters: 2
+    d_over_n: 99.01
+    class_balance: [47, 25]
+    class_labels: ["ALL", "AML"]
+    subsampling: null
+    missing_values: 0
+    preprocessing:
+      imputation: "None required (0 missing)"
+      standardization: "StandardScaler()"
+    notes: "Benchmark from Golub et al. (Science 1999). 50 verified clinical diagnostic markers."
+
+  ovarian:
+    name: "Ovarian Cancer Mass Spectrometry (SELDI)"
+    domain: "Oncology Microarray"
+    upstream_source: "OpenML"
+    upstream_id: 45098
+    upstream_url: "https://www.openml.org/d/45098"
+    retrieval_date: "2026-10-20"
+    license: "Public Domain / Open Access"
+    n_samples: 253
+    n_features: 15154
+    n_clusters: 2
+    d_over_n: 59.90
+    class_balance: [91, 162]
+    class_labels: ["normal", "cancer"]
+    subsampling: null
+    missing_values: 0
+    preprocessing:
+      imputation: "None required (0 missing)"
+      standardization: "StandardScaler()"
+    notes: "Petricoin et al. (Lancet 2002) ultra-high-dimensional SELDI-TOF proteomic spectra."
+
+  prostate:
+    name: "Prostate Cancer Microarray"
+    domain: "Oncology Microarray"
+    upstream_source: "OpenML"
+    upstream_id: 45099
+    upstream_url: "https://www.openml.org/d/45099"
+    retrieval_date: "2026-10-20"
+    license: "Public Domain / Open Access"
+    n_samples: 102
+    n_features: 12600
+    n_clusters: 2
+    d_over_n: 123.53
+    class_balance: [50, 52]
+    class_labels: ["normal", "tumor"]
+    subsampling: null
+    missing_values: 0
+    preprocessing:
+      imputation: "None required (0 missing)"
+      standardization: "StandardScaler()"
+    notes: "Singh et al. (Cancer Cell 2002). Extreme high-D noise with subtle transcriptional signal."
+
+  srbct:
+    name: "Small Round Blue Cell Tumors"
+    domain: "Oncology Microarray"
+    upstream_source: "OpenML"
+    upstream_id: 45101
+    upstream_url: "https://www.openml.org/d/45101"
+    retrieval_date: "2026-10-20"
+    license: "Public Domain / Open Access"
+    n_samples: 83
+    n_features: 2308
+    n_clusters: 4
+    d_over_n: 27.81
+    class_balance: [29, 11, 18, 25]
+    class_labels: ["EWS", "BL", "NB", "RMS"]
+    subsampling: null
+    missing_values: 0
+    preprocessing:
+      imputation: "None required (0 missing)"
+      standardization: "StandardScaler()"
+    notes: "Khan et al. (Nature Medicine 2001) 4 distinct pediatric tumor subclasses."
+
+  # ----------------------------------------------------------------------------
+  # Category 2: Single-Cell / Tabular / Synthetic Cohorts
+  # ----------------------------------------------------------------------------
+  sonar:
+    name: "Sonar Acoustic Returns (Mines vs Rocks)"
+    domain: "Acoustic / Tabular"
+    upstream_source: "OpenML"
+    upstream_id: 40
+    upstream_url: "https://www.openml.org/d/40"
+    retrieval_date: "2026-10-20"
+    license: "Public Domain / UCI"
+    n_samples: 208
+    n_features: 60
+    n_clusters: 2
+    d_over_n: 0.29
+    class_balance: [97, 111]
+    class_labels: ["mine", "rock"]
+    subsampling: null
+    missing_values: 0
+    preprocessing:
+      imputation: "None required (0 missing)"
+      standardization: "StandardScaler()"
+    notes: "Gorman & Sejnowski (1988) dense continuous baseline control."
+
+  madelon:
+    name: "Madelon Synthetic XOR Benchmark"
+    domain: "Synthetic Non-Linear"
+    upstream_source: "OpenML"
+    upstream_id: 1485
+    upstream_url: "https://www.openml.org/d/1485"
+    retrieval_date: "2026-10-20"
+    license: "Public Domain / NIPS 2003 Feature Selection Challenge"
+    n_samples: 500
+    n_features: 500
+    n_clusters: 2
+    d_over_n: 1.00
+    class_balance: [250, 250]
+    class_labels: ["-1", "1"]
+    subsampling: "First 500 instances from OpenML 1485 (Guyon et al., NIPS 2003), seed-pinned."
+    missing_values: 0
+    preprocessing:
+      imputation: "None required"
+      standardization: "StandardScaler()"
+    notes: "20 non-linear XOR informative features + 480 pure distractor features."
+
+  isolet:
+    name: "Isolet Spoken Letter Recognition"
+    domain: "Acoustic / Speech"
+    upstream_source: "OpenML"
+    upstream_id: 300
+    upstream_url: "https://www.openml.org/d/300"
+    retrieval_date: "2026-10-20"
+    license: "Public Domain / UCI"
+    n_samples: 7797
+    n_features: 617
+    n_clusters: 26
+    d_over_n: 0.08
+    class_balance: "Balanced across 26 spoken English alphabet letters (~300 samples per class)"
+    class_labels: "Letters A through Z (26 classes)"
+    subsampling: null
+    missing_values: 0
+    preprocessing:
+      imputation: "None required"
+      standardization: "StandardScaler()"
+    notes: "Large-K benchmark (K=26) evaluating anchor scaling and class overlap."
+
+  zheng68k:
+    name: "Zheng PBMC 68k Single-Cell RNA-seq (Reduced)"
+    domain: "Single-Cell Transcriptomics"
+    upstream_source: "10x Genomics via Scanpy"
+    upstream_id: "scanpy.datasets.pbmc68k_reduced()"
+    upstream_url: "https://scanpy.readthedocs.io"
+    retrieval_date: "2026-10-20"
+    license: "CC-BY 4.0 (10x Genomics, Zheng et al., Nature Communications 2017)"
+    n_samples: 700
+    n_features: 765
+    n_clusters: 10
+    d_over_n: 1.09
+    class_balance: "10 immune cell subtypes (CD4+, CD8+, B-cells, NK, Monocytes, Dendritic)"
+    class_labels: "Classes 0 through 9 (10 immune cell types)"
+    subsampling: "Standard 700-cell reduced cohort from Scanpy benchmark."
+    missing_values: 0
+    preprocessing:
+      imputation: "None required"
+      log_transform: "log1p(count) normalization"
+      standardization: "StandardScaler()"
+    notes: "Extreme zero-inflation (>85% zeros) testing hurdle dropout limitations."
+
+  # ----------------------------------------------------------------------------
+  # Category 3: Text, Hyperspectral, and Computer Vision Cohorts
+  # ----------------------------------------------------------------------------
+  newsgroups20:
+    name: "20 Newsgroups (CMU)"
+    domain: "Text Document TF-IDF"
+    upstream_source: "Scikit-Learn (CMU / Lang 1995)"
+    upstream_id: "sklearn.datasets.fetch_20newsgroups"
+    upstream_url: "http://qwone.com/~jason/20Newsgroups/"
+    retrieval_date: "2026-10-20"
+    license: "Public Domain"
+    n_samples: 18846
+    n_features: 10000
+    n_clusters: 20
+    d_over_n: 0.53
+    class_balance: "20 topic newsgroups (~900-1000 documents per group)"
+    class_labels: "20 newsgroup topics (alt.atheism to talk.religion.misc)"
+    subsampling: null
+    missing_values: 0
+    preprocessing:
+      vectorizer: "TfidfVectorizer(max_features=10000, stop_words='english', norm='l2')"
+      standardization: "None (preserves sparse TF-IDF unit norm)"
+    notes: "High-dimensional sparse bag-of-words text clustering."
+
+  indian_pines:
+    name: "Indian Pines Hyperspectral Flight Line"
+    domain: "Hyperspectral Remote Sensing"
+    upstream_source: "Universidad del País Vasco (UPV/EHU)"
+    upstream_id: "Indian_pines_corrected.mat"
+    upstream_url: "https://www.ehu.eus/ccwintco/uploads/6/67/Indian_pines_corrected.mat"
+    retrieval_date: "2026-10-20"
+    license: "Public Domain / NASA AVIRIS Sensor"
+    n_samples: 10249
+    n_features: 200
+    n_clusters: 16
+    d_over_n: 0.02
+    class_balance: "16 agricultural land-cover classes (highly imbalanced: 20 to 2,455 samples)"
+    class_labels: "16 agricultural land-cover classes (Alfalfa to Stone-steel towers)"
+    subsampling: "Excludes unlabelled background pixels (label 0), retaining 10,249 valid pixels."
+    missing_values: 0
+    preprocessing:
+      imputation: "None required"
+      standardization: "StandardScaler()"
+    notes: "Continuous spectral radiance bands across 0.4-2.5 um."
+
+  yale_b:
+    name: "Extended Yale Face Database B"
+    domain: "Computer Vision / Face Manifolds"
+    upstream_source: "UC San Diego Computer Vision Archive"
+    upstream_id: "CroppedYaleB.zip"
+    upstream_url: "http://vision.ucsd.edu/extyaleb/CroppedYaleB.zip"
+    retrieval_date: "2026-10-20"
+    license: "Academic Research Use / UCSD (Georghiades et al., IEEE TPAMI 2001)"
+    n_samples: 2414
+    n_features: 1024
+    n_clusters: 38
+    d_over_n: 0.42
+    class_balance: "38 human subjects under 64 distinct illumination angles (~64 images per subject)"
+    class_labels: "38 human subject IDs (yaleB01 to yaleB39)"
+    subsampling: "Cropped 32x32 grayscale face images (D=1024), 2,414 valid face crops."
+    missing_values: 0
+    preprocessing:
+      imputation: "None required"
+      standardization: "StandardScaler()"
+    notes: "Non-linear illumination manifolds with large cluster count (K=38)."
