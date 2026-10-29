@@ -1,7 +1,25 @@
 # Narrative and Methodological Changes Register (NARRATIVE_CHANGES.md)
 
 This document records all scientific, empirical, and textual narrative revisions made to the manuscript:  
-**"When Do Feature Gating and Anchor Consensus Help High-Dimensional Clustering? An Empirical and Geometric Analysis"** (ICC-v2).
+**"Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps"** (GAC Pipeline).
+
+---
+
+## 0. Title Alignment and Reframing: "Stable but Wrong"
+- **New Title:** *"Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps"*
+- **Short Title / Running Head:** *Why Consensus Clustering Can Fail in High Dimensions*
+- **Algorithmic Relabeling:** "ICC-v2" relabeled to "GAC pipeline" (Gated Anchor Consensus pipeline) and "ICC-v1" relabeled to "ungated anchor consensus" across manuscript text, tables, and scripts; added historical notice that `icc-clustering` repository name is historical and distinct from Race & Meyer (2013).
+- **Opening Focus:** Shifted the paper's opening from abstract algorithmic proposals to the empirical and theoretical *stability trap*: base clusterers and consensus methods converge with deceptively high agreement ($\text{Stab} \ge 0.50$ to $1.00$) onto arbitrary noise partitions while empirical accuracy collapses near zero ($\text{ARI} \le 0.05$).
+- **Reordered Contributions:**
+  1. *The Stability Trap in High Dimensions:* Empirical falsification in finite-sample simulations and real biomedical cohorts.
+  2. *What Helps:* The GAC pipeline, linear-time BGSS moment gating ($O(ND)$), and bipartite anchor graph compression ($O(NL)$ auxiliary memory, 99.6% compression at $N=10^4$).
+  3. *What Fails:* Boundary conditions and negative results (determinacy null result $\Delta = +0.019$, Prostate/CNS weak bimodality, Madelon XOR parity, scRNA-seq zero-inflation, and large $K$).
+- **Real-Data Stability Findings:**
+  - Evaluated 13 benchmark datasets across 11 models with saved per-seed partitions.
+  - Documented severe stability-accuracy gaps ($\Delta = \text{Stab} - \overline{\text{ARI}}$) on high-$D$ cohorts ($D/N > 20$): Ward ($\Delta = +0.968$), Spectral ($\Delta = +0.964$), FCM ($\Delta = +0.897$), FCAG ($\Delta = +0.842$), FastMVC ($\Delta = +0.710$), Standard Consensus ($\Delta = +0.656$), Core-Halo ($\Delta = +0.612$).
+  - Identified that CoHiRF's lower gap ($\Delta = +0.259$) stems from instability ($\text{Stab} = 0.279$) rather than true cluster recovery ($\overline{\text{ARI}} = 0.021$).
+  - Showed that GAC achieves the lowest gap ($\Delta = +0.268$) and breaks out of the trap on Leukemia ($\text{ARI}=0.600, \text{Stab}=0.567, \Delta=-0.032$) and SRBCT ($\text{ARI}=0.546, \text{Stab}=0.541, \Delta=-0.005$), while transparently reporting that on Prostate and CNS, weak marginal bimodality limits GAC's accuracy ($\text{ARI}=0.012$ and $0.021$).
+- **Related Work Additions:** Integrated Senbabaoglu et al. (2014, consensus reassessment), Race & Meyer (2013, iterative consensus), Fern & Brodley (2003, random subspaces), Lindenbaum et al. (2021, gated Laplacian), and Chen (2026, variational clustering with feature gating).
 
 ---
 

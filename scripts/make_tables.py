@@ -86,7 +86,7 @@ def generate_table3():
         r"\resizebox{\textwidth}{!}{%",
         r"\begin{tabular}{@{}lcccccc@{}}",
         r"\toprule",
-        r"\textbf{Dataset} & \textbf{Ambient KM} & \textbf{ICC-v2 Centroid} & \textbf{Nearest Centroid} & \textbf{Random Forest} & \textbf{Nystr\"om Ext.} & \textbf{Agreement (\%)} \\",
+        r"\textbf{Dataset} & \textbf{Ambient KM} & \textbf{GAC Centroid} & \textbf{Nearest Centroid} & \textbf{Random Forest} & \textbf{Nystr\"om Ext.} & \textbf{Agreement (\%)} \\",
         r"\midrule",
     ]
 
@@ -149,7 +149,7 @@ def generate_table4():
         r"\resizebox{\textwidth}{!}{%",
         r"\begin{tabular}{@{}rcccccc@{}}",
         r"\toprule",
-        r"\textbf{Sample Size $N$} & \textbf{Dense Graph} & \textbf{ICC-v2 Graph} & \textbf{Graph Reduct.} & \textbf{Dense Peak RAM} & \textbf{ICC-v2 Peak RAM} & \textbf{ICC-v2 Time (s)} \\",
+        r"\textbf{Sample Size $N$} & \textbf{Dense Graph} & \textbf{GAC Graph} & \textbf{Graph Reduct.} & \textbf{Dense Peak RAM} & \textbf{GAC Peak RAM} & \textbf{GAC Time (s)} \\",
         r"\midrule",
     ]
 
@@ -198,7 +198,7 @@ def generate_table5():
 
     lines = [
         r"\begin{table*}[!t]",
-        r"\caption{Empirical Scalability of ICC-v2 to 1 Million Samples ($D=100, K=5$, \texttt{float32} Precision, 3 Independent Seeds). Config A corresponds to the default parameter budget ($M=25, L=40$), while Config B evaluates an anchor-expanded configuration ($M=15, L=60$).}",
+        r"\caption{Empirical Scalability of the GAC Pipeline to 1 Million Samples ($D=100, K=5$, \texttt{float32} Precision, 3 Independent Seeds). Config A corresponds to the default parameter budget ($M=25, L=40$), while Config B evaluates an anchor-expanded configuration ($M=15, L=60$).}",
         r"\label{tab:exp5_controlled}",
         r"\centering",
         r"\resizebox{\textwidth}{!}{%",
@@ -296,8 +296,8 @@ def generate_table7():
         r"\textbf{FCAG}",
         r"\textbf{FastMVC}",
         r"\textbf{CoHiRF}",
-        r"\textbf{ICC-v1}",
-        r"\textbf{ICC-v2}",
+        r"\textbf{Ungated AC}",
+        r"\textbf{GAC (Ours)}",
     ]
 
     # Filter to available models
@@ -449,7 +449,7 @@ def generate_table8():
         r"\textbf{StdCons All}",
         r"\textbf{StdCons VarFilt}",
         r"\textbf{StdCons PCA}",
-        r"\textbf{ICC-v2}",
+        r"\textbf{GAC (Ours)}",
     ]
 
     datasets = ["cns", "colon", "leukemia", "ovarian", "prostate", "srbct"]
@@ -531,7 +531,7 @@ def generate_table10():
         "FCM": r"\textbf{FCM}",
         "Standard_Consensus": r"\textbf{StdCons}",
         "Core_Halo_Consensus": r"\textbf{CoreHalo}",
-        "ICC_v1": r"\textbf{ICC-v1}",
+        "ICC_v1": r"\textbf{Ungated AC}",
         "DEC": r"\textbf{DEC}",
         "FCAG": r"\textbf{FCAG}",
         "FastMVC": r"\textbf{FastMVC}",
@@ -551,7 +551,7 @@ def generate_table10():
 
     lines = [
         r"\begin{table*}[!t]",
-        r"\caption{Vargha-Delaney $A_{12}$ Non-Parametric Effect Sizes for ICC-v2 vs. Baseline Models Across 30 Seeds}",
+        r"\caption{Vargha-Delaney $A_{12}$ Non-Parametric Effect Sizes for GAC Pipeline vs. Baseline Models Across 30 Seeds}",
         r"\label{tab:vargha_delaney}",
         r"\centering",
         r"\resizebox{\textwidth}{!}{%",
@@ -612,7 +612,7 @@ def generate_table11():
 
     lines = [
         r"\begin{table*}[!t]",
-        r"\caption{ICC-v2 Per-Seed Stability, Normality Tests, and Discrete Bimodality Over 30 Seeds}",
+        r"\caption{GAC Pipeline Per-Seed Stability, Normality Tests, and Discrete Bimodality Over 30 Seeds}",
         r"\label{tab:seed_stability}",
         r"\centering",
         r"\resizebox{\textwidth}{!}{%",
@@ -670,7 +670,7 @@ def generate_table13():
         r"\shortstack{\textbf{V2}\\\textbf{BGSS+Std}}",
         r"\shortstack{\textbf{V3}\\\textbf{Anchors}}",
         r"\shortstack{\textbf{V4}\\\textbf{BGSS+Rand}}",
-        r"\shortstack{\textbf{V5}\\\textbf{ICC-v2}}",
+        r"\shortstack{\textbf{V5}\\\textbf{GAC}}",
     ]
 
     datasets = ["cns", "colon", "leukemia", "ovarian", "prostate", "srbct"]
@@ -794,7 +794,7 @@ def generate_table15():
     diff_v5_v2 = round(means["Full_ICC_v2"] - means["BGSS_StdConsensus"], 3)
 
     rows_def = [
-        (r"Full ICC-v2 ($V_5$)", means["Full_ICC_v2"], "Baseline", "[Reference]"),
+        (r"Full GAC Pipeline ($V_5$)", means["Full_ICC_v2"], "Baseline", "[Reference]"),
         (r"Remove BGSS Gating ($V_5 \to V_3$)", means["Ambient_AnchorConsensus"], f"\\Delta = {ab_boot['V5_minus_V3']['mean_delta']:+.3f}", fmt_ci("V5_minus_V3")),
         (r"Remove Bipartite Graph ($V_5 \to V_2$)", means["BGSS_StdConsensus"], f"V_5 - V_2 = {diff_v5_v2:+.3f}", fmt_ci("V5_minus_V2")),
         (r"Remove Ensembling ($V_5 \to V_1$)", means["BGSS_KMeans"], f"\\Delta = {ab_boot['V5_minus_V1']['mean_delta']:+.3f}", fmt_ci("V5_minus_V1")),
@@ -804,7 +804,7 @@ def generate_table15():
 
     lines = [
         r"\begin{table*}[!t]",
-        r"\caption{Component Contributions and Paired Impact Relative to Full ICC-v2 ($V_5$)}",
+        r"\caption{Component Contributions and Paired Impact Relative to Full GAC Pipeline ($V_5$)}",
         r"\label{tab:component_contributions}",
         r"\centering",
         r"\resizebox{\textwidth}{!}{%",

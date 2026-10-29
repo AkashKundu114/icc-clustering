@@ -1,7 +1,7 @@
-# When Do Feature Gating and Anchor Consensus Help High-Dimensional Clustering? (ICC-v2)
+# Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps
 
 Official reference implementation of the manuscript:  
-**"When Do Feature Gating and Anchor Consensus Help High-Dimensional Clustering? An Empirical and Geometric Analysis"** (Under Review).
+**"Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps"** (Under Review).
 
 [![CI](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml/badge.svg)](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
@@ -202,7 +202,7 @@ For academic mentors, peer reviewers, and reproducibility auditors inspecting th
 ```bibtex
 @article{kundu2026when,
   author    = {Akash Kundu},
-  title     = {When Do Feature Gating and Anchor Consensus Help High-Dimensional Clustering? An Empirical and Geometric Analysis},
+  title     = {Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps},
   journal   = {Preprint / Submitted for Peer Review},
   year      = {2026},
   url       = {https://github.com/AkashKundu114/icc-clustering}

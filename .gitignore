@@ -12,6 +12,7 @@ experiments/**/data/*.mat
 !experiments/**/data/.gitkeep
 !experiments/**/figures/.gitkeep
 results/study_null_gating/confirmatory_raw/
+results/stability/labels/
 
 # Python bytecode and caches
 __pycache__/

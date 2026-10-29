@@ -44,7 +44,7 @@ def plot_exp1_figures():
         ax1.plot(df_gen["d_noise"], df_gen["mean_li2019_50"], marker="^", color="#ff7f0e",
                  linewidth=2.2, markersize=7, label="Li et al. (2019) Determinacy Core (50%)")
         ax1.plot(df_gen["d_noise"], df_gen["mean_icc_50"], marker="d", color="#2ca02c",
-                 linewidth=2.6, markersize=8, label="ICC-v1 Calibrated Core (50%) [Ours]")
+                 linewidth=2.6, markersize=8, label="Ungated AC Calibrated Core (50%)")
 
         ax1.set_title(r"(a) Out-of-Sample Generalization on Held-Out Test Set (20%)", fontsize=13.0, fontweight="bold")
         ax1.set_xlabel(r"Nuisance Distractor Dimensions ($D_{\text{noise}}$)", fontsize=12.0, fontweight="bold")
@@ -99,7 +99,7 @@ def plot_exp1_figures():
                 sax1.plot(df_gen["d_noise"], df_gen["li_test_nmi"], marker="^", color="#ff7f0e",
                           linewidth=2.0, markersize=6, label="Li et al. (2019) Core (50%)")
             sax1.plot(df_gen["d_noise"], df_gen["test_nmi"], marker="d", color="#2ca02c",
-                      linewidth=2.2, markersize=7, label="ICC-v1 Calibrated Core (50%) [Ours]")
+                      linewidth=2.2, markersize=7, label="Ungated AC Calibrated Core (50%)")
 
             sax1.set_title(r"(a) Held-Out Test NMI Across Noise Dimensions", fontweight="bold")
             sax1.set_xlabel(r"Nuisance Distractor Dimensions ($D_{\text{noise}}$)", fontweight="bold")
@@ -117,7 +117,7 @@ def plot_exp1_figures():
                           linewidth=2.0, markersize=6, label="Li et al. (2019) Core (50%)")
             if "test_ami" in df_gen.columns:
                 sax2.plot(df_gen["d_noise"], df_gen["test_ami"], marker="d", color="#2ca02c",
-                          linewidth=2.2, markersize=7, label="ICC-v1 Calibrated Core (50%) [Ours]")
+                          linewidth=2.2, markersize=7, label="Ungated AC Calibrated Core (50%)")
 
             sax2.set_title(r"(b) Held-Out Test AMI Across Noise Dimensions", fontweight="bold")
             sax2.set_xlabel(r"Nuisance Distractor Dimensions ($D_{\text{noise}}$)", fontweight="bold")
@@ -146,7 +146,7 @@ def plot_exp1_figures():
         ax1.plot(df_p["d_noise"], df_p["test_acc_full_pseudo"], marker="o", color="#1f77b4",
                  linewidth=2.4, markersize=7, label="Train on All Pseudo-Labels (100%)")
         ax1.plot(df_p["d_noise"], df_p["test_acc_core_pseudo"], marker="d", color="#2ca02c",
-                 linewidth=2.6, markersize=8, label="Train on Core Pseudo-Labels Only (ICC-v1)")
+                 linewidth=2.6, markersize=8, label="Train on Core Pseudo-Labels Only (Ungated AC)")
 
         ax1.set_title(r"(a) Unsupervised Pseudo-Label Generalization to Test Set", fontsize=13.0, fontweight="bold")
         ax1.set_xlabel(r"Nuisance Distractor Dimensions ($D_{\text{noise}}$)", fontsize=12.0, fontweight="bold")

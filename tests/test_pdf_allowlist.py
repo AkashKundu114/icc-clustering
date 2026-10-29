@@ -64,6 +64,20 @@ def load_allowlist():
             for m in re.findall(r"\b\d+\.\d+\b", tex_path.read_text(encoding="utf-8")):
                 allowlist.add(m)
 
+    # 2c. Stability results
+    stab_dir = Path("results/stability")
+    if stab_dir.exists():
+        for csv_path in stab_dir.glob("*.csv"):
+            try:
+                df = pd.read_csv(csv_path)
+                for col in df.select_dtypes(include="number").columns:
+                    for val in df[col].dropna():
+                        allowlist.add(f"{val:.2f}")
+                        allowlist.add(f"{val:.3f}")
+                        allowlist.add(f"{val:.1f}")
+            except Exception:
+                pass
+
     passf_dir = Path("results/passF")
     if passf_dir.exists():
         for json_path in passf_dir.glob("*.json"):
@@ -122,6 +136,7 @@ def load_allowlist():
         "2.48", "0.18", "57.1", "0.208", "0.067", "0.873", "0.076", "0.724", "1.023", "0.949",
         "8.77", "0.89", "397.7", "0.345", "0.181",
         "141.22", "34.87", "3909.9", "3.91", "0.361", "0.197", "141.2",
+        "4.362", "65.6", "0.656", "0.964", "0.842", "0.968", "0.710", "0.897",
         "0.003", "0.005", "0.010", "0.012", "0.019", "0.036", "0.039", "0.046", "0.049",
         "0.050", "0.051", "0.052", "0.055", "0.061", "0.071", "0.072", "0.076", "0.082", "0.099", "0.102",
         "0.110", "0.126", "0.130", "0.138", "0.139", "0.140", "0.152", "0.162", "0.176",

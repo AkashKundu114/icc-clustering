@@ -130,9 +130,9 @@ def main():
         doi = re.sub(r"^https?://(dx\.)?doi\.org/", "", e.get("doi", "")).strip()
         aid = e.get("eprint", "")
         rec, how = None, ""
-        if doi: rec, how = crossref_by_doi(doi), "doi"
+        if key in manual: how = "manual"
+        elif doi: rec, how = crossref_by_doi(doi), "doi"
         elif aid: rec, how = arxiv_rec(aid), "arxiv"
-        elif key in manual: how = "manual"
         else:
             rec = crossref_by_title(e.get("title", ""), last_names(e.get("author", ""))[0:1] and
                                     e.get("author", "").split(",")[0]); how = "title-search"

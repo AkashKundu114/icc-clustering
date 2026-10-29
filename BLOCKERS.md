@@ -29,6 +29,13 @@ This file tracks active and resolved blocking conditions, external human decisio
    - *Status:* POLICY_VERIFIED_COMPLIANT
    - *Action:* Retain Supplementary Table S1 in manuscript; if Springer editorial requests merging upon revision, accept 69.1% recent share without padding.
 
+5. **BLOCKER-REFERENCE-VINTAGE:**
+   - *Description:* Verification of 2024–2026 reference vintage following integration of foundational works requested in Item 5 (Senbabaoglu et al. 2014, Race & Meyer 2013, Fern & Brodley 2003, Lindenbaum et al. 2021, Chen 2026).
+   - *Metric:* 39 of 52 total references published in 2024–2026 (**75.0%** recent vintage).
+   - *Policy Adherence:* Under user Rule R1 / Item 5: *"Keep the share of 2024-2026 references above 80% (scripts/ref_stats.py); if it cannot be met with relevant references, report the number instead of padding."*
+   - *Status:* COMPLIANT_NO_PADDING_REPORTED
+   - *Action:* The exact verified vintage (75.0%) is transparently reported without artificial citation inflation.
+
 ---
 
 ## Resolved Blockers

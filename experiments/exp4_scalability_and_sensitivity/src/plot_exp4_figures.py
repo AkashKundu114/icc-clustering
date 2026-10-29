@@ -35,8 +35,8 @@ MODEL_PALETTE = {
 MODEL_LABELS = {
     "Standard_Consensus": "Std Consensus O(N²)",
     "Li_et_al_2019": "Li et al. (2019) O(N²)",
-    "ICC_v1": "ICC-v1 (Anchor) O(N)",
-    "ICC_v2": "ICC-v2 (BGSS+Anchor) O(N)"
+    "ICC_v1": "Ungated AC (Anchor) O(N)",
+    "ICC_v2": "GAC Pipeline (BGSS+Anchor) O(N)"
 }
 
 
@@ -87,7 +87,7 @@ def plot_figure_18():
     ax1.legend(loc="upper left", fontsize=10.5, framealpha=0.92, facecolor="white", edgecolor="#cccccc")
     
     # Annotation on runtime
-    ax1.annotate("ICC-v2: 1.9x speedup at N=10,000\n(2.3s vs. 4.4s, 0.96s pure)",
+    ax1.annotate("GAC Pipeline: 1.9x speedup at N=10,000\n(2.3s vs. 4.4s, 0.96s pure)",
                  xy=(10000, 2.30), xytext=(1200, 0.5),
                  arrowprops=dict(arrowstyle="->", color="#d62728", lw=1.3),
                  fontsize=9.0, fontweight="bold", color="#d62728",
@@ -239,7 +239,7 @@ def plot_figure_20():
     ax.set_xlabel("Ensemble Size M (Number of Subspace Base Clusterings)", fontsize=12.0, fontweight="bold")
     ax.set_ylabel("Clustering Recovery Score", fontsize=12.0, fontweight="bold")
     ax.tick_params(labelsize=11.0)
-    ax.set_title("ICC-v2 Performance Plateau vs Ensemble Size M", fontsize=13.0, fontweight="bold")
+    ax.set_title("GAC Pipeline Performance Plateau vs Ensemble Size M", fontsize=13.0, fontweight="bold")
     ax.grid(True, linestyle=":", alpha=0.5)
     ax.set_ylim(0.25, 1.05)
     ax.legend(loc="lower right", fontsize=10.5, framealpha=0.92, facecolor="white", edgecolor="#cccccc")
