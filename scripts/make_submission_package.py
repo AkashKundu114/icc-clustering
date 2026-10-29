@@ -107,7 +107,7 @@ def build_submission():
     print(f"Created {arxiv_zip} ({arxiv_zip.stat().st_size / (1024*1024):.2f} MB)")
 
     # 5. Author COVER_LETTER.md
-    cover_letter = """# Submission Cover Letter
+    cover_letter = r"""# Submission Cover Letter
 
 **To:**  
 The Editor-in-Chief  
@@ -116,11 +116,11 @@ Springer Nature
 
 **Date:** October 28, 2026  
 
-**Subject:** Submission of Research Manuscript: *"When Does Feature Gating and Anchor Consensus Salvage High-Dimensional Clustering? An Empirical and Geometric Analysis"* (ICC-v2)  
+**Subject:** Submission of Research Manuscript: *"When Do Feature Gating and Anchor Consensus Help High-Dimensional Clustering? An Empirical and Geometric Analysis"* (ICC-v2)  
 
 Dear Editor-in-Chief and Editorial Board,
 
-We are pleased to submit our original research manuscript titled **"When Does Feature Gating and Anchor Consensus Salvage High-Dimensional Clustering? An Empirical and Geometric Analysis"** for consideration for publication as a regular research paper in *Data Mining and Knowledge Discovery* (DAMI).
+We are pleased to submit our original research manuscript titled **"When Do Feature Gating and Anchor Consensus Help High-Dimensional Clustering? An Empirical and Geometric Analysis"** for consideration for publication as a regular research paper in *Data Mining and Knowledge Discovery* (DAMI).
 
 ### Context and Core Problem
 Consensus clustering synthesizes diverse base clusterings to discover stable partitions. However, in modern ultra-high-dimensional regimes ($D \gg N$), distance concentration severely degrades base partition accuracy, while classical $O(N^2)$ co-association matrices prevent out-of-sample inference. Existing high-dimensional cluster ensembles either rely on transductive graph co-clustering or uniform random subspace screening, which struggle under extreme isotropic noise.
@@ -216,7 +216,7 @@ This dossier outlines five peer-reviewed venues evaluated for this manuscript, i
     print("Created submission/JOURNAL_SHORTLIST.md")
 
     # 7. Author USER_CHECKLIST.md
-    user_checklist = """# User Action Checklist for Submission (USER_CHECKLIST.md)
+    user_checklist = r"""# User Action Checklist for Submission (USER_CHECKLIST.md)
 
 Before initiating the final upload on the target journal portal, the human investigator (Akash Kundu) must complete the following mandatory checks:
 

@@ -28,3 +28,17 @@ This log records every task executed, evidence gathered, verified outcomes, and 
   - Passed `tests/test_macro_consistency.py` and `tests/test_pdf_allowlist.py` (440 decimals in allowlist).
   - Regenerated `submission/source.zip` (119.46 MB) and `submission/arxiv_source.zip` (30.00 MB).
 - **Next Task:** Await user sign-off at Pause Point 1 to unseal Phase B4 (DEV pilots on synthetic benchmarks and 13 Paper 1 datasets).
+
+
+### Iteration 4: Master Scientific Integrity Audit, Mathematical Verification & Submission Readiness
+- **Task:** Execute full `/goal` audit across Track A (Paper 1) and Track B (Paper 2) following the Master Scientific Integrity Protocol.
+- **Audit & Remediation Evidence:**
+  - **Mathematical Audits:** Verified Definition 1 Subspace Separation Ratio normalization across unique cluster pairs. Formally derived Proposition 1 Sarle's coefficient threshold for Gaussian mixtures (separation $\Delta/\sigma_0 > 1.854$). Proved and independently verified Proposition 2 Contingency Identity in `scripts/verify_determinacy_identity.py` across 9 scenarios ($\Delta < 10^{-14}$). Clarified BGSS candidate pool selection rule in `src/icc/consensus_v2.py` as $\min(D, \max(K, \max(100, \lfloor \alpha D \rfloor)))$ with a minimum floor of 100 features.
+  - **Empirical Harmonization:** Reconciled model fit count from 2,750 to 3,000 total model fits ($(6 \times 12 \times 30) + (7 \times 12 \times 10) = 3{,}000$) across 12 evaluated pipelines in `paper/main.tex` and `springer_manuscript/main.tex`.
+  - **Terminology De-biasing:** Retired 'certified core' in favor of 'high-determinacy core' and 'determinacy-selected anchors' across all manuscript files (0 occurrences of 'certified' remaining).
+  - **Data Registry & Tooling:** Authored `data/registry.yaml` capturing all 13 benchmark datasets. Implemented `tools/check_consistency.py` validating dataset counts, fit counts, macros, stale tokens, and result artifacts (100% clean pass, exit 0).
+  - **Auditable Documentation Deliverables:** Created `docs/AUDIT_LOG.md`, `docs/CLAIM_EVIDENCE.md`, `docs/REMEDIATION_REPORT.md`, and `docs/DECISIONS.md`.
+  - **Typesetting & Packaging:** Successfully compiled `paper/main.pdf` (38 pages, 0 `??`, 0 `[?`, 0 overfull boxes) and `springer_manuscript/main.pdf` with Tectonic 0.17.0. Rebuilt `submission/` package via `scripts/make_submission_package.py`.
+  - **Validation & Quality Suite:** 94 unit tests passing cleanly (`pytest tests/`), `ruff check` passing (0 errors), `mypy -p icc` passing (0 issues in 22 source files), and `scripts/verify_refs.py` passing ({'OK': 42, 'MANUAL': 5}, exit 0).
+  - **Track B Decoupling:** Standalone repository established at `d:\nullconsensus` with Candidate 12 (NullGate) and Candidate 2 (HurdleGate), unit tested (10 passed), and tagged `prereg-v1`.
+- **Status:** ALL GATES (Gate 1 through Gate 6) CLEARED. Paper 1 submission package complete and verified.

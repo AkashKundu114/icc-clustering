@@ -72,8 +72,9 @@ repo_file_tree.txt
 scripts/scratch/
 
 # Local tools and binaries
-tools/
+tools/bin/
 *.exe
+!tools/check_consistency.py
 
 # Manuscript & Publication artifacts (kept local on disk, documented via README for GitHub)
 springer_manuscript/*

@@ -87,8 +87,8 @@ def plot_figure_18():
     ax1.legend(loc="upper left", fontsize=10.5, framealpha=0.92, facecolor="white", edgecolor="#cccccc")
     
     # Annotation on runtime
-    ax1.annotate("ICC-v2: 2.9x speedup at N=10,000\n(10.3s vs. 30.0s)",
-                 xy=(10000, 10.35), xytext=(1400, 2.5),
+    ax1.annotate("ICC-v2: 1.9x speedup at N=10,000\n(2.3s vs. 4.4s, 0.96s pure)",
+                 xy=(10000, 2.30), xytext=(1200, 0.5),
                  arrowprops=dict(arrowstyle="->", color="#d62728", lw=1.3),
                  fontsize=9.0, fontweight="bold", color="#d62728",
                  bbox=dict(boxstyle="round,pad=0.25", facecolor="#fff0f0", edgecolor="#d62728", alpha=0.9))

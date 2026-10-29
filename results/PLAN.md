@@ -1,6 +1,6 @@
 # Experimental Protocol and Pre-Registration Plan (ICC-v2 Revision)
 
-**Title:** *When Does Feature Gating and Anchor Consensus Salvage High-Dimensional Clustering? An Empirical and Geometric Analysis*  
+**Title:** *When Do Feature Gating and Anchor Consensus Help High-Dimensional Clustering? An Empirical and Geometric Analysis*  
 **Date:** October 2026  
 **Status:** Pre-registered and Frozen Prior to Experimental Execution  
 

@@ -46,3 +46,4 @@ fu2025anchor,Sec 2.2,Anchor graph network for incomplete multiview clustering,In
 gao2026consistency,Sec 2.3,Consistency-guided anchor in multi-view subspace clustering with prior-aware tensor norm,Consistency-guided anchor subspace clustering
 he2025subspace,Sec 2.3,Subspace-based GMM clustering ensemble algorithm for high-dimensional data,High-dimensional subspace clustering ensemble
 wang2026deep_jasa,Sec 5.3,Deep clustering evaluation and validation of internal validation measures,Internal validation measures and clustering benchmark evaluation
+peng2024interpreting,Sec 3,When uninformative ambient noise dimensions expand distance concentration compresses relative distance metrics,Geometric analysis of distance concentration and manifold effect under high-dimensional noise
