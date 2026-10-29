@@ -255,14 +255,14 @@ Before initiating the final upload on the target journal portal, the human inves
 ---
 
 ### Phase 3: Declarations Restoration
-In `paper/main.tex` and `springer_manuscript/main.tex`, restore the commented-out Springer Nature declarations right before submission:
-- [ ] Uncomment `\section*{Declarations}`
-- [ ] Uncomment `\subsection*{Funding}`
-- [ ] Uncomment `\subsection*{Competing Interests}`
-- [ ] Uncomment `\subsection*{Ethics Approval}`
-- [ ] Uncomment `\subsection*{Consent to Participate}`
-- [ ] Uncomment `\subsection*{Author Contributions}`
-*(Note: Data Availability and Code Availability are already active in the text).*
+In `paper/main.tex` and `springer_manuscript/main.tex`, all production declarations are restored and verified:
+- [x] `\textbf{Funding}`: Declared.
+- [x] `\textbf{Conflict of interest}`: Declared.
+- [x] `\textbf{Ethics approval and consent to participate}`: Declared.
+- [x] `\textbf{Consent for publication}`: Declared.
+- [x] `\textbf{Use of artificial intelligence tools}`: Disclosed.
+- [x] `\textbf{Authors' contributions}`: Specified for all 5 authors.
+- [x] `Data availability` and `Code availability`: Active and verified.
 
 ---
 

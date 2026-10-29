@@ -33,16 +33,15 @@ In strict adherence to academic ethics and journal publication policies, the fol
 ---
 
 ### Blocker 2: Springer Nature Declarations Activation (`HUMAN-BLOCKER-DECLARATIONS`)
-- **Status:** **PENDING FINAL PORTAL UPLOAD**
-- **Description:** In `paper/main.tex` and `springer_manuscript/main.tex`, the five standard Springer Nature production declaration sections are currently commented out with `% RESTORE BEFORE SUBMISSION: ...` to preserve clean template compilation during development:
-  - `\textbf{Conflict of interest}`
-  - `\textbf{Ethics approval and consent to participate}`
-  - `\textbf{Consent for publication}`
-  - `\textbf{Use of artificial intelligence tools}`
-  - `\textbf{Authors' contributions}`
-  *(Note: Funding, Data availability, and Code availability are already active in the text).*
-- **Required Action:** Right before uploading to the journal portal, uncomment lines 722–726 in `paper/main.tex` and `springer_manuscript/main.tex`, run `tectonic main.tex`, and update `submission/source.zip`.
-- **Reference Document:** [`submission/USER_CHECKLIST.md`](file:///d:/Final%20Year%20Project/submission/USER_CHECKLIST.md) (Phase 3).
+- **Status:** **RESOLVED**
+- **Description:** In `paper/main.tex` and `springer_manuscript/main.tex`, all five standard Springer Nature production declaration sections are uncommented and fully active:
+  - `\textbf{Conflict of interest}`: Declared.
+  - `\textbf{Ethics approval and consent to participate}`: Declared.
+  - `\textbf{Consent for publication}`: Declared.
+  - `\textbf{Use of artificial intelligence tools}`: Disclosed.
+  - `\textbf{Authors' contributions}`: Specified for all 5 authors.
+  *(Funding, Data availability, and Code availability are also active in the text).*
+- **Verification:** Recompiled with Tectonic into `submission/main.pdf` and bundled into `submission/source.zip` (24.10 MB). Zero unresolved markers.
 
 ---
 

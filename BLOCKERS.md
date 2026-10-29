@@ -12,9 +12,9 @@ This file tracks active and resolved blocking conditions, external human decisio
    - *Action:* Autonomous agent will prepare complete `submission/` package locally and await user submission.
 
 2. **BLOCKER-DECLARATIONS:**
-   - *Description:* Springer Nature declarations (Competing Interests, Ethics Approval, Consent to Participate, Authors' Contributions) are currently commented out with `% RESTORE BEFORE SUBMISSION...` per Springer sn-jnl template directives to maintain clean local drafts.
-   - *Status:* PREPARED_FOR_RESTORATION
-   - *Action:* Restore these commented-out blocks before uploading `.tex` to the Springer submission portal.
+   - *Description:* Springer Nature declarations (Conflict of Interest, Ethics Approval, Consent for Publication, AI Use Disclosure, Authors' Contributions) are fully uncommented and active in both `paper/main.tex` and `springer_manuscript/main.tex`.
+   - *Status:* RESOLVED
+   - *Verification:* Recompiled with Tectonic into `submission/main.pdf` and bundled into `submission/source.zip`. Zero unresolved markers.
 
 3. **BLOCKER-JOURNAL-CHOICE:**
    - *Description:* Final selection among target journal shortlist (Springer DAMI, IEEE TKDE, Information Fusion, Pattern Recognition, JMLR).
