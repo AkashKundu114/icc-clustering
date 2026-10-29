@@ -1,13 +1,15 @@
-# When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? (ICC-v2)
+# Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps
 
 Official reference implementation of the manuscript:  
-**"When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"** (Under Review).
+**"Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps"** (Under Review).
 
 [![CI](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml/badge.svg)](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml)
-[![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
+[![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Tests: Passing](https://img.shields.io/badge/pytest-86%2F86%20passed-brightgreen.svg)]()
+[![Tests: Passing](https://img.shields.io/badge/pytest-94%2F94%20passed-brightgreen.svg)]()
+[![References: 75.0% Recent (2024-2026) | Cite-Once Enforced](https://img.shields.io/badge/references-75.0%25%20recent%20(52%20verified)-success.svg)]()
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
+[![XERJ Corpus Hub contributor](https://hub.xerj.org/contributors/AkashKundu114/badge.svg)](https://hub.xerj.org/contributors/AkashKundu114)
 
 ---
 
@@ -89,23 +91,24 @@ print("Out-of-sample predictions:", model.predict(X_query).tolist())
 
 All reported values trace directly to frozen Pass F execution stores (`results/passF/` and `paper/numbers.tex`):
 
-Across all 13 benchmark datasets (2,750 individual model fits across 11 methods, 30 random seeds on 6 high-D datasets and 10 seeds on 7 general datasets), omnibus Friedman testing indicates no statistically significant difference across the complete heterogeneous benchmark suite (Friedman $\chi^2_F = 9.59, p = 0.48$, Nemenyi Critical Difference $CD = 4.19$). 
+Across all 13 benchmark datasets (3,000 individual model fits across 12 clustering pipelines, 30 random seeds on 6 high-D datasets and 10 seeds on 7 general datasets), omnibus Friedman testing indicates no statistically significant difference across the complete heterogeneous benchmark suite (Friedman $\chi^2_F = 11.56, p = 0.40$, Nemenyi Critical Difference $CD = 4.62$). 
 
-However, on the target ultra-high-dimensional biological cancer assays ($D/N > 20$), ICC-v2 commands **Rank #1**:
+However, on the target ultra-high-dimensional biological cancer assays ($D/N > 20$), the GAC pipeline commands **Rank #1** (subgroup mean ARI = 0.217, mean rank 2.17):
 
-| Method | High-D Mean ARI ($D/N > 20$) | High-D Rank (6 Datasets) | Overall Rank (13 Datasets) | Grand Mean ARI (13 Datasets) |
+| Method | High-D Mean ARI (/N > 20$) | High-D Rank (6 Datasets) | Overall Rank (13 Datasets) | Grand Mean ARI (13 Datasets) |
 | :--- | :---: | :---: | :---: | :---: |
-| **ICC-v2 (Proposed)** | **0.217** | **2.00** | 5.23 | **0.152** |
-| **Standard Consensus** | 0.037 | 6.67 | 4.85 | 0.126 |
-| **Standard K-Means** | 0.056 | 5.50 | 5.00 | 0.124 |
-| **DEC (Deep Embedded)** | 0.045 | 6.00 | 5.08 | 0.125 |
-| **Ward Hierarchical** | 0.032 | 6.67 | 5.31 | 0.120 |
-| **FCM (Fuzzy C-Means)** | 0.044 | 5.67 | 6.77 | 0.070 |
-| **FastMVC** | 0.049 | 6.33 | 6.92 | 0.110 |
-| **FCAG** | 0.066 | 7.17 | 7.23 | 0.116 |
-| **Core-Halo Consensus (Li et al.)** | 0.036 | 7.33 | 6.62 | 0.097 |
-| **Spectral Clustering** | 0.035 | 7.50 | 6.62 | 0.105 |
-| **ICC-v1 (Uncalibrated)** | 0.046 | 5.17 | 6.38 | 0.091 |
+| **GAC Pipeline (Ours)** | **0.217** | **2.17** | 5.62 | **0.152** |
+| **Standard K-Means** | 0.056 | 5.67 | **5.15** | 0.124 |
+| **Ungated Anchor Consensus** | 0.046 | 5.67 | 6.92 | 0.091 |
+| **FCM (Fuzzy C-Means)** | 0.044 | 5.83 | 7.08 | 0.070 |
+| **DEC (Deep Embedded)** | 0.045 | 6.17 | 5.23 | 0.125 |
+| **FastMVC** | 0.049 | 6.83 | 7.38 | 0.110 |
+| **Standard Consensus** | 0.037 | 7.17 | 5.23 | 0.126 |
+| **Ward Hierarchical** | 0.032 | 7.17 | 5.69 | 0.120 |
+| **CoHiRF** | 0.017 | 7.67 | 7.69 | 0.085 |
+| **FCAG** | 0.066 | 7.83 | 7.77 | 0.116 |
+| **Core-Halo Consensus (Li et al.)** | 0.036 | 7.83 | 7.15 | 0.097 |
+| **Spectral Clustering** | 0.035 | 8.00 | 7.08 | 0.105 |
 
 When compared against classical dimension reduction baselines under identical 30-seed protocol on the high-D subgroup ($D/N > 20$):
 - **PCA + K-Means:** Mean ARI = 0.054 (Median = 0.027)
@@ -124,6 +127,9 @@ Detailed per-dataset metrics, pre-registration specifications, and bootstrap con
 ```bash
 # Fast smoke verification (synthetic + real leukemia/srbct benchmarks, < 3 seconds)
 python scripts/reproduce.py --scope smoke
+
+# Verify bibliography against CrossRef and arXiv APIs (75.0% recent 2024-2026 (52 verified, Cite-Once enforced), exit code 0)
+python scripts/verify_refs.py refs.bib --out results/refs_report.csv --manual refs_manual.csv
 
 # Interactive CLI walkthrough
 python demo.py
@@ -172,7 +178,7 @@ For academic mentors, peer reviewers, and reproducibility auditors inspecting th
 
 2. **[`governance/preregistration/`](governance/preregistration/README.md): Research Integrity & Preregistration Archive:**
    - Preregistration protocols freezing evaluation thresholds in advance ([`PREREG_B.md`](governance/preregistration/PREREG_B.md), [`PREREG_C.md`](governance/preregistration/PREREG_C.md), [`PREREG_F.md`](governance/preregistration/PREREG_F.md)).
-   - 100% CrossRef API reference verification audit ([`REFS_AUDIT.md`](governance/preregistration/REFS_AUDIT.md), [`REFS_AUDIT.csv`](governance/preregistration/REFS_AUDIT.csv)).
+   - 100% CrossRef & arXiv API verification audit: 52 references, 39 published 2024–2026 (75.0%), strictly single-cited at first mention, strictly single-cited at first mention ([`REFCHECK_LOG.md`](REFCHECK_LOG.md), [`results/refs_report.csv`](results/refs_report.csv), [`results/refs_map.csv`](results/refs_map.csv)).
    - Related work taxonomy and novelty matrix ([`LITERATURE_MATRIX.csv`](governance/preregistration/LITERATURE_MATRIX.csv)).
    - Submission cover letters and rebuttal frameworks ([`COVER_LETTER_DRAFT.md`](governance/preregistration/COVER_LETTER_DRAFT.md), [`RESPONSE_TO_REVIEWERS_OUTLINE.md`](governance/preregistration/RESPONSE_TO_REVIEWERS_OUTLINE.md)).
 
@@ -197,8 +203,8 @@ For academic mentors, peer reviewers, and reproducibility auditors inspecting th
 
 ```bibtex
 @article{kundu2026when,
-  author    = {Akash Kundu and Trinankur Guha and Rupankar Ghatak and Anubhab Naskar and Kalyan Kumar Das},
-  title     = {When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination},
+  author    = {Akash Kundu},
+  title     = {Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps},
   journal   = {Preprint / Submitted for Peer Review},
   year      = {2026},
   url       = {https://github.com/AkashKundu114/icc-clustering}

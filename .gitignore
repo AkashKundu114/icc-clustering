@@ -12,6 +12,7 @@ experiments/**/data/*.mat
 !experiments/**/data/.gitkeep
 !experiments/**/figures/.gitkeep
 results/study_null_gating/confirmatory_raw/
+results/stability/labels/
 
 # Python bytecode and caches
 __pycache__/
@@ -72,13 +73,13 @@ repo_file_tree.txt
 scripts/scratch/
 
 # Local tools and binaries
-tools/
+tools/bin/
 *.exe
+!tools/check_consistency.py
 
 # Manuscript & Publication artifacts (kept local on disk, documented via README for GitHub)
 springer_manuscript/*
 manuscript/
-paper/
 paper.tex
 *.tex
 *.pdf

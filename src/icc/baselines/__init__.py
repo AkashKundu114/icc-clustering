@@ -32,6 +32,7 @@ from .classical import (
     run_spectral,
     run_ward,
 )
+from .cohirf import CoHiRF, run_cohirf
 from .consensus import (
     run_icc_v1,
     run_icc_v2,
@@ -80,6 +81,8 @@ _STATIC_DISPATCH: Dict[str, Callable] = {
     "fcag": run_fcag,
     "run_fcag": run_fcag,
     "fastmvc": run_fastmvc,
+    "cohirf": run_cohirf,
+    "run_cohirf": run_cohirf,
     "run_fastmvc": run_fastmvc,
 }
 
@@ -175,5 +178,7 @@ __all__ = [
     "run_dec",
     "run_fcag",
     "run_fastmvc",
+    "CoHiRF",
+    "run_cohirf",
     "ModelMetadata",
 ]

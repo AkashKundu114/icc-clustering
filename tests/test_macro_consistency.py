@@ -35,12 +35,12 @@ def test_macro_and_text_consistency():
     # Verify High-D Subgroup Mean and Median match Pass F store (0.217 and 0.061)
     assert macros["FairBaselinesIccVTwoHighDMean"] == "0.217", f"Mismatch in HighDMean macro: {macros['FairBaselinesIccVTwoHighDMean']}"
     assert macros["FairBaselinesIccVTwoHighDMedian"] == "0.061", f"Mismatch in HighDMedian macro: {macros['FairBaselinesIccVTwoHighDMedian']}"
-    assert macros["TableThreeFriedmanPValue"] == "0.48", f"Mismatch in Friedman p-value: {macros['TableThreeFriedmanPValue']}"
-    assert macros["TrueNemenyiCD"] == "4.19", f"Mismatch in Nemenyi CD: {macros['TrueNemenyiCD']}"
+    assert macros["TableThreeFriedmanPValue"] == "0.40", f"Mismatch in Friedman p-value: {macros['TableThreeFriedmanPValue']}"
+    assert macros["TrueNemenyiCD"] == "4.62", f"Mismatch in Nemenyi CD: {macros['TrueNemenyiCD']}"
     assert macros["TableThreeIccVTwoGrandMean"] == "0.152", f"Mismatch in GrandMean: {macros['TableThreeIccVTwoGrandMean']}"
     assert macros["OmnibusMedianARI"] == "0.055", f"Mismatch in OmnibusMedian: {macros['OmnibusMedianARI']}"
     assert macros["OmnibusMeanExcludingLeukemiaSrbct"] == "0.076", f"Mismatch in MeanExcl: {macros['OmnibusMeanExcludingLeukemiaSrbct']}"
-    print("  [OK] Pass F macros verified: HighDMean=0.217, HighDMedian=0.061, GrandMean=0.152, OmnibusMedian=0.055, MeanExcl=0.076, CD=4.19")
+    print("  [OK] Pass F macros verified: HighDMean=0.217, HighDMedian=0.061, GrandMean=0.152, OmnibusMedian=0.055, MeanExcl=0.076, CD=4.62, p=0.40")
 
     # 2. Check main.tex text for purged stale numbers (when present in local workspace)
     main_path = Path("paper/main.tex")

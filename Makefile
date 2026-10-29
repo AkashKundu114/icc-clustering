@@ -1,4 +1,4 @@
-.PHONY: help install dev test lint format clean reproduce smoke numbers check-macros check-pdf figures compile package
+.PHONY: help install dev test lint format clean reproduce smoke numbers check-macros check-pdf refs-check figures compile package
 
 PYTHON ?= python
 PIP ?= pip
@@ -16,6 +16,7 @@ help:
 	@echo "  numbers      : Re-synchronize LaTeX numbers.tex from Pass F results store"
 	@echo "  check-macros : Verify numbers.tex consistency against Pass F store"
 	@echo "  check-pdf    : Verify compiled PDF decimals against Pass F numerical allowlist"
+	@echo "  refs-check   : Verify bibliography against CrossRef and arXiv APIs"
 	@echo "  figures      : Regenerate experiment figures from frozen caches"
 	@echo "  compile      : Compile Springer Nature manuscript main.pdf via Tectonic"
 	@echo "  package      : Build Springer Nature and Overleaf submission packages"
@@ -52,6 +53,9 @@ check-macros:
 
 check-pdf:
 	$(PYTHON) tests/test_pdf_allowlist.py
+
+refs-check:
+	$(PYTHON) scripts/verify_refs.py refs.bib --out results/refs_report.csv --manual refs_manual.csv
 
 figures:
 	$(PYTHON) scripts/sync_figures.py
