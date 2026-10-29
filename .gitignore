@@ -80,6 +80,11 @@ tools/bin/
 !tools/check_consistency.py
 
 # Manuscript & Publication artifacts (kept local on disk, documented via README for GitHub)
+submission/arxiv_package/
+submission/overleaf_package/
+submission/springer_nature_package/
+submission/arxiv_source/
+submission/source/
 springer_manuscript/*
 manuscript/
 paper.tex
