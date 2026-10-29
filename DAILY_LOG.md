@@ -90,3 +90,5 @@ This log records every task executed, evidence gathered, verified outcomes, and 
   - **Results Table & Documentation Synchronization:** Updated `README.md` and `CHANGELOG.md` to reflect Pass F single source of truth (3,000 fits across 12 clustering pipelines, Friedman $\chi_F^2 = 11.56, p = 0.40$, Nemenyi CD $= 4.62$, High-D Rank #1 with mean ARI $= 0.217$, mean rank $2.17$).
   - **Validation Battery:** 100% clean passes: `scripts/check_numbers.py` (PASS), `tools/check_consistency.py` (SUCCESS), `scripts/verify_refs.py` (exit 0: `{'OK': 44, 'MANUAL': 8}`), and full test suite (`94 passed, 0 failed`).
   - **Release Tag & Commit:** Prepared tag `v2.2.0`, committed and pushed to GitHub remote `origin/main`.
+
+- **Algorithm Cross-Referencing:** Added formal in-text references to Algorithm 1 (`\ref{alg:iccv2}`) in Section 1 (Roadmap paragraph), Section 4 (Methodology Overview), Section 4.2 (Theorem 1 Complexity statement), and Section 4.3 (Execution Flow), resolving the unreferenced algorithm defect. Verified in `submission/main.pdf` across pages 4, 11, 14, 15, and 16.
