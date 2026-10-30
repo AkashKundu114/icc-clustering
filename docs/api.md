@@ -6,7 +6,7 @@
 **Canonical Active Release:** v2.1.0  
 **Repository Package:** `icc` (v2.1.0) and `cicc` (Conformal Inductive Consensus Clustering)
 
-The `icc` and `cicc` packages provide an unsupervised, scikit-learn compatible clustering estimator, split-conformal prediction sets, target-decoy feature selection, and episodic semantic memory for high-dimensional noise regimes ($D \gg N$).
+The `icc` and `cicc` packages provide an unsupervised, scikit-learn compatible clustering estimator, split-conformal prediction sets, target-decoy feature selection, and dynamic incremental memory routing for high-dimensional noise regimes ($D \gg N$).
 
 ---
 
@@ -149,7 +149,7 @@ False Discovery Rate (FDR) controlled feature selection via target-decoy / knock
 
 ### `InductiveConsensusMemory`
 
-Episodic semantic clustering memory for AI agents with instantaneous $\mathcal{O}(L)$ inductive routing and conformal novelty detection.
+Dynamic incremental clustering memory for streaming query evaluation with instantaneous $\mathcal{O}(L)$ inductive routing and conformal novelty detection.
 
 - `store(text, embedding, metadata=None) -> MemoryItem`: Indexes new memory item, dynamically consolidating into existing cluster or triggering novel cluster creation upon conformal abstention ($C(x) = \emptyset$).
 - `query_similar(embedding, top_k=5) -> List[MemoryItem]`: Retrieves nearest indexed memory items.

@@ -35,7 +35,6 @@ lib/
 lib64/
 parts/
 sdist/
-var/
 wheels/
 share/python-wheels/
 *.egg-info/
@@ -70,19 +69,22 @@ htmlcov/
 *~
 .DS_Store
 Thumbs.db
+.mcp.json
 
-# Remediation scratch and prompts
-REMEDIATION_USER_PROMPT_*.txt
-file_list_inventory.txt
-repo_file_tree.txt
-scripts/scratch/
+# Internal logs and scratchpads
+*.log
+scratch/
+governance/
+reports/
+paper2/
+results_legacy/
 
 # Local tools and binaries
 tools/bin/
 *.exe
 !tools/check_consistency.py
 
-# Manuscript & Publication artifacts (kept local on disk, documented via README for GitHub)
+# Manuscript & Publication artifacts
 submission/arxiv_package/
 submission/overleaf_package/
 submission/springer_nature_package/
@@ -132,11 +134,8 @@ data/cache/*
 *.aux
 *.bbl
 *.blg
-*.log
 *.out
 *.toc
 *.synctex.gz
 *.fls
 *.fdb_latexmk
-
-

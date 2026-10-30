@@ -9,11 +9,11 @@ Asserts:
 
 import time
 import tracemalloc
-import numpy as np
-import pytest
 
-from experiments.exp4_scalability_and_sensitivity.src.scaling_benchmark import generate_benchmark_synthetic
+import numpy as np
+
 from experiments.exp3_real_world_benchmarks.src.benchmark_models import run_icc_v2, run_standard_consensus
+from experiments.exp4_scalability_and_sensitivity.src.scaling_benchmark import generate_benchmark_synthetic
 from icc.consensus_v2 import InvariantCoreConsensusV2
 
 

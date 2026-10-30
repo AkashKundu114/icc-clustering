@@ -602,7 +602,7 @@ def run_idec(
     Guo et al. "Improved deep embedded clustering with local structure preservation."
     IJCAI, 2017.
     """
-    raise NotImplementedError("IDEC deep clustering baseline not yet implemented. Enable in Phase 4.")
+    raise NotImplementedError("IDEC deep clustering baseline not yet implemented. Reserved interface for future benchmark extensions.")
 
 
 def run_contrastive_clustering(
@@ -618,7 +618,7 @@ def run_contrastive_clustering(
     ----------
     Li, Hu, Liu, Peng, Zhou, Peng. "Contrastive clustering." AAAI, 2021.
     """
-    raise NotImplementedError("Contrastive Clustering baseline not yet implemented. Enable in Phase 4.")
+    raise NotImplementedError("Contrastive Clustering baseline not yet implemented. Reserved interface for future benchmark extensions.")
 
 
 def run_scan(
@@ -634,4 +634,4 @@ def run_scan(
     ----------
     Van Gansbeke et al. "SCAN: Learning to classify images without labels." ECCV, 2020.
     """
-    raise NotImplementedError("SCAN baseline not yet implemented. Enable in Phase 4.")
+    raise NotImplementedError("SCAN baseline not yet implemented. Reserved interface for future benchmark extensions.")

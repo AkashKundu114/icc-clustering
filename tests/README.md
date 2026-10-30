@@ -2,10 +2,10 @@
 
 This directory contains the unit, integration, and build-time consistency test suites for the reference implementation of:
 
-> **When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination**  
+> **Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes**  
 > *Target Venue:* Springer Nature (*Data Mining and Knowledge Discovery* / DAMI)  
 > *Release Version:* v2.1.0  
-> *Total Tests:* 94 passing (100% pass rate)
+> *Total Tests:* 98 passing (100% pass rate)
 
 ---
 
@@ -22,7 +22,7 @@ The test suite is structured into four functional tiers:
 
 ## Test Catalog
 
-The test suite contains 14 modular test files:
+The test suite contains 15 modular test files:
 
 | Test File | Focus Area | Canonical Modules Covered |
 | :--- | :--- | :--- |
@@ -38,6 +38,7 @@ The test suite contains 14 modular test files:
 | `test_macro_consistency.py` | Macro & Manuscript Traceability | Single-source-of-truth verification ensuring all LaTeX macros in `numbers.tex`, Table 4, Table 5, and Fig. 8 scaling curves reconcile with frozen Pass F result stores. |
 | `test_pdf_allowlist.py` | PDF Numerical Audit | Regex-level text audit of compiled `paper/main.pdf` ensuring zero ungrounded decimals, purging stale tokens, and confirming Figure 7 critical difference ranks. |
 | `test_anchor_fidelity.py` | Scalability & Fidelity | Scalability sweep verification, approximation fidelity bounds between bipartite anchor consensus and exact dense consensus graph. |
+| `test_scaling_timing.py` | Scalability Timing & Isolation | End-to-end stage verification, untraced wall-clock runtime validation, and tracemalloc memory isolation. |
 | `test_exp1_multiclassifier.py` | Downstream Generalization | Downstream inductive classifier generalization across SVM, Random Forest, Multi-Layer Perceptron (MLP), and K-Nearest Neighbors (KNN). |
 | `test_verify_refs.py` | Reference Verification Pipeline | Mocked CrossRef & arXiv API verification, field mismatch detection, fuzzy search fallback, published version redirects, and CLI integrity. |
 

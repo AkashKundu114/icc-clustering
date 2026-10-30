@@ -28,6 +28,7 @@ __all__ = [
     "ICC",
     "ICCv1",
     "ICCv2",
+    "GAC",
     "InvariantCoreConsensus",
     "InvariantCoreConsensusV2",
     "ASPPConfig",

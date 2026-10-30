@@ -17,14 +17,13 @@ Real-Data Stability Test across 13 benchmark datasets and 12 clustering methods:
     - springer_manuscript/figures/fig_real_data_stability.png
 """
 
-import os
 import sys
 import time
-from pathlib import Path
 from itertools import combinations
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from sklearn.metrics import adjusted_rand_score
 
 # Ensure root in sys.path
@@ -32,21 +31,21 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from icc.datasets.registry import load_dataset
 from icc.baselines import (
-    run_kmeans,
-    run_ward,
-    run_spectral,
-    run_fcm,
-    run_standard_consensus,
-    run_li_et_al_2019,
-    run_icc_v1,
-    run_icc_v2,
-    run_fcag,
-    run_fastmvc,
     run_cohirf,
     run_dec,
+    run_fastmvc,
+    run_fcag,
+    run_fcm,
+    run_icc_v1,
+    run_icc_v2,
+    run_kmeans,
+    run_li_et_al_2019,
+    run_spectral,
+    run_standard_consensus,
+    run_ward,
 )
+from icc.datasets.registry import load_dataset
 
 HIGH_D_DATASETS = ["colon", "srbct", "cns", "leukemia", "prostate", "ovarian"]
 OTHER_DATASETS = ["sonar", "madelon", "isolet", "zheng68k", "newsgroups20", "indian_pines", "yale_b"]

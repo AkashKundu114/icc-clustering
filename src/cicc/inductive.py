@@ -144,7 +144,7 @@ class InductiveConsensusClusterer:
         km_final = KMeans(n_clusters=self.n_clusters, n_init=10, random_state=self.random_state)
         disc_labels = km_final.fit_predict(U_norm)
 
-        # 4. Decoy Feature Gating (Idea 3)
+        # 4. Target-decoy feature selection via finite-sample FDR control
         if self.enable_decoy_gating:
             self.decoy_gating_ = DecoyFeatureGating(
                 fdr_target=self.fdr_target, random_state=self.random_state
@@ -167,7 +167,7 @@ class InductiveConsensusClusterer:
         cos_cal = X_cal @ centroids.T
         cal_labels = np.argmax(cos_cal, axis=1)
 
-        # 6. Conformal Calibration (Idea 1)
+        # 6. Split-conformal calibration for finite-sample coverage guarantees
         self.conformal_calibrator_ = ConformalClusterer(
             alpha=self.alpha, random_state=self.random_state
         )

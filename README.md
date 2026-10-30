@@ -1,43 +1,87 @@
 # Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes
 
 Official reference implementation of the manuscript:  
-**"Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes"** (Under Review).
+**"Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes"** (Springer Nature *Data Mining and Knowledge Discovery* / DAMI, Under Review).
 
 [![CI](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml/badge.svg)](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml)
-[![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
+[![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Tests: Passing](https://img.shields.io/badge/pytest-94%2F94%20passed-brightgreen.svg)]()
-[![References: 75.0% Recent (2024-2026) | Cite-Once Enforced](https://img.shields.io/badge/references-75.0%25%20recent%20(52%20verified)-success.svg)]()
+[![Tests: Passing](https://img.shields.io/badge/pytest-98%2F98%20passed-brightgreen.svg)](tests/)
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
-[![XERJ Corpus Hub contributor](https://hub.xerj.org/contributors/AkashKundu114/badge.svg)](https://hub.xerj.org/contributors/AkashKundu114)
+[![Type Checked: Mypy](https://img.shields.io/badge/mypy-checked-blue.svg)](https://mypy-lang.org/)
 
 ---
 
 ## Overview
 
-Consensus clustering synthesizes diverse base clusterings into a unified partition. However, in high-dimensional noise regimes ($D \gg N$), distance concentration degrades base partition quality, while classical $O(N^2)$ co-association matrices prevent out-of-sample inference.
+Consensus clustering synthesizes diverse base clusterings into an aggregated partition to discover robust latent structures without supervision. However, in extreme high-dimensional noise regimes ($D \gg N$), distance concentration severely degrades base partition fidelity, while classical $\mathcal{O}(N^2)$ co-association matrices prevent scaling to large sample sizes and preclude out-of-sample inductive inference.
 
-**Inductive Consensus Clustering (ICC-v2)** resolves these challenges through four coupled mechanisms:
-- **Bimodality-Gated Subspace Selection (BGSS):** Unsupervised linear $O(N \cdot D)$ feature screening using Sarle's Bimodality Coefficient ($BC$) with finite-sample null correction to separate multimodal signals from unimodal background distractor noise.
-- **Bipartite Anchor Consensus:** Compresses $O(N^2)$ co-association into an $O(N \cdot L)$ rectangular bipartite graph ($L \ll N$) with Transfer-Cut degree and eigenvalue normalization.
-- **Closed-Form Inductive Inference:** Stability-weighted active centroid projection requiring only $O(K \cdot |\mathcal{F}_{\text{active}}|)$ operations per query instance without graph recomputation.
-- **Anchor-Space Perturbation Profiling (ASPP):** Multi-family cluster reliability certification yielding cluster fingerprints and query confidence bounds in linear $O(N \cdot L)$ memory.
-- **Conformal Uncertainty Quantification (`cicc`):** Finite-sample distribution-free $(1 - \alpha)$ coverage guarantees with target-decoy FDR feature selection and automated point-of-care patient safety triage.
+**Inductive Consensus Clustering (ICC-v2)** resolves these fundamental challenges through four mathematically calibrated mechanisms:
+1. **Bimodality-Gated Subspace Selection (BGSS):** Unsupervised linear $\mathcal{O}(N \cdot D)$ feature screening using Sarle's Bimodality Coefficient ($BC$) with finite-sample null correction to filter continuous unimodal distractor noise ($BC \le 5/9$) while retaining true multimodal cluster signals.
+2. **Exact Linear-Memory Contingency Determinacy:** An algebraic identity that evaluates full ensemble co-association directly from base contingency tables in $\mathcal{O}(M^2 N + M^2 K^2)$ time and $\mathcal{O}(N + M K)$ memory, achieving a 99.6% reduction in memory footprint over quadratic consensus.
+3. **Reduced Bipartite Spectral Transfer-Cut:** Compresses consensus optimization into an $\mathcal{O}(N \cdot L)$ rectangular bipartite graph ($L \ll N$) with generalized degree and eigenvalue normalization, yielding linear scaling in $\mathcal{O}(N L^2 + L^3)$ time.
+4. **Closed-Form Inductive Inference:** Stability-weighted active centroid projection executing in $\mathcal{O}(K \cdot |\mathcal{F}_{\text{active}}|)$ operations per query instance without graph recomputation, enabling real-time clinical biopsy assignment ($22.6\,\mu\text{s}$ per query).
+5. **Conformal Uncertainty Quantification (`cicc`):** Finite-sample distribution-free $(1 - \alpha)$ coverage guarantees with target-decoy False Discovery Rate (FDR) feature selection and automated point-of-care patient safety triage.
 
 ---
 
 ## When to Use and Limitations
 
-- **Optimal Regimes:** Small-sample, continuous high-dimensional data ($D \gg N, D/N > 20$) with localized cluster separation under additive isotropic distractor noise (e.g. genomic microarrays, mass spectrometry assays).
+- **Optimal Regimes:** Continuous high-dimensional data with substantial nuisance features ($D \gg N, D/N > 20$) and localized cluster structure under additive isotropic distractor noise (e.g. genomic microarrays, mass spectrometry assays, oncological expression profiles).
 - **When NOT to Use:**
-  - Large-sample low-dimensional data ($N \gg D$) or ultra-sparse count matrices (e.g. single-cell count matrices with high zero inflation or sparse TF-IDF text), where classical Ward or DEC is preferred.
-  - Non-linear multi-feature XOR interactions (e.g. Madelon), where 1D marginal unimodality cannot detect joint multi-variable dependencies without marginal separation.
+  - Large-sample low-dimensional data ($N \gg D$) or ultra-sparse count matrices (e.g., single-cell count matrices with high zero inflation or sparse TF-IDF text), where classical Ward or DEC is preferred.
+  - Non-linear multi-feature XOR interactions (e.g., Madelon), where 1D marginal unimodality cannot detect joint multi-variable dependencies without marginal separation.
   - Very large cluster counts ($K \ge 20$) with small anchor budgets ($L < K$).
+
+---
+
+## Repository Architecture
+
+```text
+icc-clustering/
+├── src/
+│   ├── icc/                    # Core ICC-v2 package
+│   │   ├── consensus_v2.py     # Main ICCv2, GAC solvers & Transfer-Cut
+│   │   ├── aspp.py             # Anchor-Space Perturbation Profiling
+│   │   ├── baselines/          # 11 comparative baseline solvers
+│   │   ├── datasets/           # 13 benchmark dataset loaders
+│   │   └── metrics.py          # Clustering evaluation metrics (ARI, NMI, etc.)
+│   └── cicc/                   # Conformal Inductive Consensus Clustering
+│       ├── conformal.py        # Split-conformal prediction sets
+│       ├── decoy.py            # Target-decoy knockoff FDR screening
+│       ├── inductive.py        # Inductive out-of-sample projection
+│       └── memory.py           # Dynamic incremental memory routing
+├── tests/                      # Pytest test suite (98 tests, 100% pass rate)
+├── scripts/                    # Research reproduction and verification scripts
+│   ├── reproduce.py            # Central reproduction CLI (smoke, verify, tables, figures)
+│   ├── make_tables.py          # Programmatic LaTeX table compiler (Tables 1–21)
+│   ├── sync_figures.py         # Figure synchronization across manuscript targets
+│   └── check_numbers.py        # 19-point automated numerical integrity audit
+├── docs/                       # Research documentation
+│   ├── REPRODUCIBILITY.md      # Master table-by-table & figure reproduction guide
+│   ├── THEORETICAL_FOUNDATIONS.md # Formal proofs (Propositions 1 & 2, Theorems 1 & 2)
+│   ├── DATA.md                 # Dataset specifications, hashes, and download sources
+│   ├── api.md                  # Python API reference
+│   └── ENV.md                  # Environment setup and BLAS determinism configuration
+├── paper/                      # LaTeX manuscript source (Springer Nature sn-jnl)
+│   ├── main.tex                # Primary manuscript source
+│   ├── numbers.tex             # Single source of truth macro registry
+│   ├── references.bib          # Bibliographic citations (CrossRef/arXiv verified)
+│   └── gen/                    # Programmatically generated LaTeX tables
+└── results/                    # Frozen empirical results and statistical registries
+    ├── stats.json              # Omnibus statistical significance tests
+    └── results.json            # Complete experimental run logs
+```
 
 ---
 
 ## Installation
 
+### Prerequisites
+- Python 3.10+ (tested on Python 3.10 through 3.14).
+- C/C++ compiler and BLAS/LAPACK runtime (bundled with standard NumPy/SciPy wheels).
+
+### Quick Install
 ```bash
 # Clone the repository
 git clone https://github.com/AkashKundu114/icc-clustering.git
@@ -46,56 +90,82 @@ cd icc-clustering
 # Install core package in editable mode
 pip install -e .
 
-# Optional development tools
-pip install -e ".[dev]"
+# Optional development, test, and deep learning dependencies
+pip install -e ".[dev,deep]"
 ```
 
-Run tests to verify installation:
+Verify the installation with the automated test battery:
 ```bash
-python -m pytest tests/ -v
+python -m pytest tests/
 ```
 
 ---
 
-## Quickstart (Offline Synthetic Example)
+## Quickstart
 
 ```python
 import numpy as np
 from icc import ICC
 from icc.metrics import evaluate_all
 
-# 1. Generate synthetic data (N=150, D=300, K=3) with 15 informative features
+# 1. Generate synthetic high-dimensional data (N=150, D=300, K=3) with 15 informative features
 rng = np.random.default_rng(42)
 X = rng.standard_normal((150, 300))
 y_true = np.array([0] * 50 + [1] * 50 + [2] * 50)
 X[:50, :15] += 2.5
 X[50:100, :15] -= 2.5
 
-# 2. Fit estimator
+# 2. Fit the Feature-Gated Bipartite Graph Ensemble model
 model = ICC(n_clusters=3, n_base_models=25, n_anchors=30, random_state=42)
 labels = model.fit_predict(X)
 
-# 3. Evaluate clustering
+# 3. Evaluate partition quality
 metrics = evaluate_all(y_true, labels)
-print(f"Training ARI: {metrics['ari']:.4f}")
+print(f"Discovered Clusters ARI: {metrics['ari']:.4f}")
 
-# 4. Inductive prediction for unseen queries
+# 4. Out-of-sample inductive projection for unseen query instances
 X_query = rng.standard_normal((5, 300))
 X_query[:, :15] += 2.5
-print("Out-of-sample predictions:", model.predict(X_query).tolist())
+query_preds = model.predict(X_query)
+print("Inductive query predictions:", query_preds.tolist())
 ```
 
 ---
 
-## Results Summary (Single Source of Truth)
+## One-Command Paper Reproduction
 
-All reported values trace directly to frozen Pass F execution stores (`results/passF/` and `paper/numbers.tex`):
+All empirical results, tables, figures, and mathematical proofs can be verified using the central reproduction CLI:
 
-Across all 13 benchmark datasets (3,000 individual model fits across 12 clustering pipelines, 30 random seeds on 6 high-D datasets and 10 seeds on 7 general datasets), omnibus Friedman testing indicates no statistically significant difference across the complete heterogeneous benchmark suite (Friedman $\chi^2_F = 11.56, p = 0.40$, Nemenyi Critical Difference $CD = 4.62$). 
+```powershell
+# 1. Fast smoke verification across synthetic and real cohorts (< 2 seconds)
+python scripts/reproduce.py --scope smoke
 
-However, on the target ultra-high-dimensional biological cancer assays ($D/N > 20$), the GAC pipeline commands **Rank #1** (subgroup mean ARI = 0.217, mean rank 2.17):
+# 2. Mathematical proofs & 19-point numerical integrity verification (< 5 seconds)
+python scripts/reproduce.py --scope verify
 
-| Method | High-D Mean ARI (/N > 20$) | High-D Rank (6 Datasets) | Overall Rank (13 Datasets) | Grand Mean ARI (13 Datasets) |
+# 3. Regenerate all 21 paper LaTeX tables from empirical stores (< 5 seconds)
+python scripts/reproduce.py --scope tables
+
+# 4. Synchronize and render all manuscript figures (< 10 seconds)
+python scripts/reproduce.py --scope figures
+
+# 5. Execute the complete reproduction pipeline end-to-end
+python scripts/reproduce.py --scope full
+```
+
+For detailed table-by-table (Tables 1–21) and figure-by-figure (Figures 1–10) mapping, see the [Reproducibility Guide](docs/REPRODUCIBILITY.md).
+
+---
+
+## Empirical Benchmark Findings (Single Source of Truth)
+
+All reported statistics strictly trace to frozen results (`results/stats.json`) and compiled macros (`paper/numbers.tex`):
+
+Across all 13 benchmark datasets (3,000 individual model fits across 12 clustering pipelines, 30 random seeds on 6 high-D datasets and 10 seeds on 7 general datasets), omnibus Friedman testing confirms no statistically significant difference across the complete multi-domain suite (Friedman $\chi^2_F = 11.56, p = 0.40$, Nemenyi Critical Difference $\text{CD} = 4.62$). 
+
+However, on the target ultra-high-dimensional biological cancer cohorts ($D/N > 20$), the GAC pipeline commands **Rank #1** (subgroup mean ARI = **0.217**, mean rank **2.17**):
+
+| Method | High-D Mean ARI ($D/N > 20$) | High-D Rank (6 Datasets) | Overall Rank (13 Datasets) | Grand Mean ARI (13 Datasets) |
 | :--- | :---: | :---: | :---: | :---: |
 | **GAC Pipeline (Ours)** | **0.217** | **2.17** | 5.62 | **0.152** |
 | **Standard K-Means** | 0.056 | 5.67 | **5.15** | 0.124 |
@@ -110,7 +180,7 @@ However, on the target ultra-high-dimensional biological cancer assays ($D/N > 2
 | **Core-Halo Consensus (Li et al.)** | 0.036 | 7.83 | 7.15 | 0.097 |
 | **Spectral Clustering** | 0.035 | 8.00 | 7.08 | 0.105 |
 
-When compared against classical dimension reduction baselines under identical 30-seed protocol on the high-D subgroup ($D/N > 20$):
+When compared against classical dimension reduction baselines under an identical 30-seed protocol on the high-D subgroup ($D/N > 20$):
 - **PCA + K-Means:** Mean ARI = 0.054 (Median = 0.027)
 - **Sparse K-Means:** Mean ARI = 0.051 (Median = 0.004)
 - **Variance Filter + K-Means:** Mean ARI = 0.046 (Median = 0.017)
@@ -118,94 +188,26 @@ When compared against classical dimension reduction baselines under identical 30
 - **PCA + Standard Consensus:** Mean ARI = 0.038 (Median = 0.019)
 - **Variance Filter + Standard Consensus:** Mean ARI = 0.032 (Median = 0.019)
 
-Detailed per-dataset metrics, pre-registration specifications, and bootstrap confidence intervals are available in `results/passF/` and `LOOP/PREREG_F.md`.
-
 ---
 
-## Reproducing the Paper
+## Documentation Links
 
-```bash
-# Fast smoke verification (synthetic + real leukemia/srbct benchmarks, < 3 seconds)
-python scripts/reproduce.py --scope smoke
-
-# Verify bibliography against CrossRef and arXiv APIs (75.0% recent 2024-2026 (52 verified, Cite-Once enforced), exit code 0)
-python scripts/verify_refs.py refs.bib --out results/refs_report.csv --manual refs_manual.csv
-
-# Interactive CLI walkthrough
-python demo.py
-
-# Verify numbers.tex macros against Pass F store
-python tests/test_macro_consistency.py
-
-# Verify compiled PDF decimals against Pass F numerical allowlist
-python tests/test_pdf_allowlist.py
-
-# Fetch and verify benchmark datasets
-python scripts/fetch_data.py
-
-# Offline synthetic quickstart
-python examples/quickstart.py
-
-# Real Leukemia out-of-sample evaluation
-python examples/leukemia_inductive.py
-
-# Real-world clinical oncology subtyping (Leukemia & SRBCT)
-python examples/clinical_cancer_subtyping.py
-
-# Real-time point-of-care patient biopsy projection with conformal triage
-python examples/realtime_patient_projection.py
-```
-
-Expected smoke runtime: < 3 seconds on modern CPU. Determinism is enforced with `OMP_NUM_THREADS=1`.
-
----
-
-## AI Assistance Disclosure
-
-During the preparation of this manuscript and software repository, the authors utilized an agentic AI coding assistant solely for assistive technical tasks, specifically code quality audits, static analysis, unit test suite verification, bibliographic cross-checking against CrossRef APIs, figure plotting, LaTeX table and manuscript formatting, and typographical proofreading. No artificial intelligence tools were used for scientific ideation, research conceptualization, empirical design, theoretical derivations, or the formulation of substantive claims. All conceptual formulations, empirical designs, and mathematical derivations were conceived and directed exclusively by the human authors. The authors conducted independent cross-checks of all generated code, tables, figures, and formatting, and assume full responsibility for the scientific integrity, accuracy, and reproducibility of all reported findings.
-
----
-
-## Research Provenance & Governance Dossiers
-
-For academic mentors, peer reviewers, and reproducibility auditors inspecting the scientific lineage of this project, all audit trails, preregistrations, and quality assurance logs are consolidated under [`governance/`](governance/README.md):
-
-1. **[`governance/remediation/`](governance/remediation/README.md): Scientific Remediation & Verification Dossier:**
-   - Catalog and resolution proofs for all 27 technical, numerical, and theoretical issues identified during internal audits.
-   - Master issue matrix: [`governance/remediation/LEDGER.md`](governance/remediation/LEDGER.md).
-   - Theoretical derivations and proofs: [`governance/remediation/THEORY_NOTES.md`](governance/remediation/THEORY_NOTES.md).
-   - Granular manuscript claim audit: [`governance/remediation/CLAIMS_AUDIT.md`](governance/remediation/CLAIMS_AUDIT.md).
-
-2. **[`governance/preregistration/`](governance/preregistration/README.md): Research Integrity & Preregistration Archive:**
-   - Preregistration protocols freezing evaluation thresholds in advance ([`PREREG_B.md`](governance/preregistration/PREREG_B.md), [`PREREG_C.md`](governance/preregistration/PREREG_C.md), [`PREREG_F.md`](governance/preregistration/PREREG_F.md)).
-   - 100% CrossRef & arXiv API verification audit: 52 references, 39 published 2024–2026 (75.0%), strictly single-cited at first mention, strictly single-cited at first mention ([`REFCHECK_LOG.md`](REFCHECK_LOG.md), [`results/refs_report.csv`](results/refs_report.csv), [`results/refs_map.csv`](results/refs_map.csv)).
-   - Related work taxonomy and novelty matrix ([`LITERATURE_MATRIX.csv`](governance/preregistration/LITERATURE_MATRIX.csv)).
-   - Submission cover letters and rebuttal frameworks ([`COVER_LETTER_DRAFT.md`](governance/preregistration/COVER_LETTER_DRAFT.md), [`RESPONSE_TO_REVIEWERS_OUTLINE.md`](governance/preregistration/RESPONSE_TO_REVIEWERS_OUTLINE.md)).
-
-3. **[`governance/release/`](governance/release/README.md): Software Release Governance & Quality Assurance:**
-   - Pre-release validation reports and sign-offs ([`RELEASE_REPORT.md`](governance/release/RELEASE_REPORT.md)).
-   - MIT open-source license justification ([`LICENSE_DECISION.md`](governance/release/LICENSE_DECISION.md)).
-   - Regression test output baselines ([`governance/release/baseline/`](governance/release/baseline/)).
-
----
-
-## Documentation
-
-- [API Reference](docs/api.md)
-- [Dataset Guide & Verified Licenses](docs/DATA.md)
-- [Theoretical Foundations](docs/THEORETICAL_FOUNDATIONS.md)
-- [Pre-Registration Protocol (Pass F)](governance/preregistration/PREREG_F.md)
-- [Claims Audit Ledger](governance/remediation/CLAIMS_AUDIT.md)
+- [Reproducibility Guide](docs/REPRODUCIBILITY.md)
+- [Theoretical Foundations & Mathematical Proofs](docs/THEORETICAL_FOUNDATIONS.md)
+- [Benchmark Datasets Guide](docs/DATA.md)
+- [Python API Reference](docs/api.md)
+- [Environment & BLAS Configuration](docs/ENV.md)
+- [Literature Matrix & Comparative Baselines](docs/literature/papers.md)
 
 ---
 
 ## Citation
 
 ```bibtex
-@article{kundu2026when,
+@article{kundu2026featuregated,
   author    = {Akash Kundu},
   title     = {Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes},
-  journal   = {Preprint / Submitted for Peer Review},
+  journal   = {Data Mining and Knowledge Discovery (Under Review)},
   year      = {2026},
   url       = {https://github.com/AkashKundu114/icc-clustering}
 }
@@ -216,5 +218,5 @@ For academic mentors, peer reviewers, and reproducibility auditors inspecting th
 ## License & Contact
 
 - **License:** [MIT License](LICENSE)
-- **Corresponding Author:** Akash Kundu (`akashkundu1152@gmail.com`)
+- **Author:** Akash Kundu (`akashkundu1152@gmail.com`)
 - **Institution:** Department of Computer Science and Engineering, Techno India University

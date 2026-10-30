@@ -23,7 +23,7 @@ import sys
 import time
 import tracemalloc
 from pathlib import Path
-import numpy as np
+
 import pandas as pd
 import psutil
 
@@ -32,13 +32,13 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from experiments.exp4_scalability_and_sensitivity.src.scaling_benchmark import generate_benchmark_synthetic
 from experiments.exp3_real_world_benchmarks.src.benchmark_models import (
-    run_standard_consensus,
-    run_li_et_al_2019,
     run_icc_v1,
     run_icc_v2,
+    run_li_et_al_2019,
+    run_standard_consensus,
 )
+from experiments.exp4_scalability_and_sensitivity.src.scaling_benchmark import generate_benchmark_synthetic
 
 MODELS = {
     "Standard_Consensus": run_standard_consensus,
