@@ -7,13 +7,15 @@ Outputs results to results/query_latency.json.
 """
 
 import json
-import time
-from pathlib import Path
-import numpy as np
-from sklearn.model_selection import StratifiedShuffleSplit
 
 # Add project root
 import sys
+import time
+from pathlib import Path
+
+import numpy as np
+from sklearn.model_selection import StratifiedShuffleSplit
+
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 

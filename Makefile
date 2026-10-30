@@ -1,4 +1,4 @@
-.PHONY: help install dev test lint format clean reproduce smoke refs-check
+.PHONY: help install dev test lint format clean check reproduce smoke
 
 PYTHON ?= python
 PIP ?= pip
@@ -11,7 +11,7 @@ help:
 	@echo "  test         : Run full pytest test suite"
 	@echo "  lint         : Check formatting and static type checking (ruff, mypy)"
 	@echo "  format       : Auto-format source code using ruff"
-	@echo "  refs-check   : Verify bibliography against CrossRef and arXiv APIs"
+	@echo "  check        : Run automated scientific and empirical consistency check"
 	@echo "  reproduce    : Run demo reproduction check"
 	@echo "  smoke        : Run fast fixed-seed smoke reproduction CLI"
 	@echo "  clean        : Clean build and cache artifacts"
@@ -26,15 +26,15 @@ test:
 	$(PYTHON) -m pytest tests/ -v
 
 lint:
-	$(PYTHON) -m ruff check src/
+	$(PYTHON) -m ruff check .
 	$(PYTHON) -m mypy -p icc
 
 format:
-	$(PYTHON) -m ruff format src/
-	$(PYTHON) -m ruff check src/ --fix
+	$(PYTHON) -m ruff format .
+	$(PYTHON) -m ruff check . --fix
 
-refs-check:
-	$(PYTHON) scripts/verify_refs.py refs.bib --out results/refs_report.csv --manual refs_manual.csv
+check:
+	$(PYTHON) tools/check_consistency.py
 
 reproduce:
 	$(PYTHON) demo.py

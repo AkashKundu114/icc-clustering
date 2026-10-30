@@ -1,14 +1,16 @@
 import os
-import sys
 import platform
+import sys
+
 import psutil
 import requests
+
 
 def check_env():
     lines = []
     lines.append("# Computational Environment Verification (ENV.md)")
     lines.append("")
-    lines.append(f"**Verification Date:** 2026-10-28")
+    lines.append("**Verification Date:** 2026-10-28")
     lines.append(f"**Host OS:** {platform.system()} {platform.release()} (Build {platform.version()})")
     lines.append(f"**Architecture:** {platform.machine()}")
     lines.append(f"**Processor:** {platform.processor()}")
@@ -62,7 +64,7 @@ def check_env():
     if os.path.exists(tectonic_path):
         lines.append(f"**Tectonic Engine:** Present ({tectonic_path})")
     else:
-        lines.append(f"**Tectonic Engine:** Missing")
+        lines.append("**Tectonic Engine:** Missing")
 
     # Memory Limits and Policies
     lines.append("")

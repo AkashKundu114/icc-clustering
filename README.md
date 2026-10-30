@@ -1,13 +1,13 @@
-# Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps
+# Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes
 
 Official reference implementation of the manuscript:  
-**"Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps"** (Under Review).
+**"Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes"** (Springer Nature *Data Mining and Knowledge Discovery* / DAMI, Under Review).
 
 [![CI](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml/badge.svg)](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Tests: Passing](https://img.shields.io/badge/pytest-94%2F94%20passed-brightgreen.svg)]()
-[![References: 75.0% Recent (2024-2026) | Cite-Once Enforced](https://img.shields.io/badge/references-75.0%25%20recent%20(52%20verified)-success.svg)]()
+[![Tests: Passing](https://img.shields.io/badge/pytest-84%2F84%20passed-brightgreen.svg)]()
+[![References: 80.3% Recent (2024-2026) | Cite-Once Enforced](https://img.shields.io/badge/references-80.3%25%20recent%20(53%2F66%20verified)-success.svg)]()
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![XERJ Corpus Hub contributor](https://hub.xerj.org/contributors/AkashKundu114/badge.svg)](https://hub.xerj.org/contributors/AkashKundu114)
 
@@ -118,7 +118,7 @@ When compared against classical dimension reduction baselines under identical 30
 - **PCA + Standard Consensus:** Mean ARI = 0.038 (Median = 0.019)
 - **Variance Filter + Standard Consensus:** Mean ARI = 0.032 (Median = 0.019)
 
-Detailed per-dataset metrics, pre-registration specifications, and bootstrap confidence intervals are available in `results/passF/` and `LOOP/PREREG_F.md`.
+Detailed per-dataset metrics, pre-registration specifications, and bootstrap confidence intervals are available in `results/passF/` and `experiments/PRE_REGISTRATION_v1.0.md`.
 
 ---
 
@@ -128,17 +128,11 @@ Detailed per-dataset metrics, pre-registration specifications, and bootstrap con
 # Fast smoke verification (synthetic + real leukemia/srbct benchmarks, < 3 seconds)
 python scripts/reproduce.py --scope smoke
 
-# Verify bibliography against CrossRef and arXiv APIs (75.0% recent 2024-2026 (52 verified, Cite-Once enforced), exit code 0)
-python scripts/verify_refs.py refs.bib --out results/refs_report.csv --manual refs_manual.csv
+# Automated repository, data, and scientific invariant consistency check
+python tools/check_consistency.py
 
 # Interactive CLI walkthrough
 python demo.py
-
-# Verify numbers.tex macros against Pass F store
-python tests/test_macro_consistency.py
-
-# Verify compiled PDF decimals against Pass F numerical allowlist
-python tests/test_pdf_allowlist.py
 
 # Fetch and verify benchmark datasets
 python scripts/fetch_data.py
@@ -162,7 +156,7 @@ Expected smoke runtime: < 3 seconds on modern CPU. Determinism is enforced with 
 
 ## AI Assistance Disclosure
 
-During the preparation of this manuscript and software repository, the authors utilized an agentic AI coding assistant solely for assistive technical tasks, specifically code quality audits, static analysis, unit test suite verification, bibliographic cross-checking against CrossRef APIs, figure plotting, LaTeX table and manuscript formatting, and typographical proofreading. No artificial intelligence tools were used for scientific ideation, research conceptualization, empirical design, theoretical derivations, or the formulation of substantive claims. All conceptual formulations, empirical designs, and mathematical derivations were conceived and directed exclusively by the human authors. The authors conducted independent cross-checks of all generated code, tables, figures, and formatting, and assume full responsibility for the scientific integrity, accuracy, and reproducibility of all reported findings.
+The authors used AI assistance solely for grammatical checking and English language copy-editing. All concepts, analyses, code, mathematical formulations, experimental pipelines, and conclusions were developed and verified entirely by the authors.
 
 ---
 
@@ -190,10 +184,10 @@ To reproduce benchmark evaluations and verify theoretical identities:
 ## Citation
 
 ```bibtex
-@article{kundu2026when,
-  author    = {Akash Kundu},
-  title     = {Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps},
-  journal   = {Preprint / Submitted for Peer Review},
+@article{das2026featuregated,
+  author    = {Kalyan Kumar Das and Akash Kundu and Anirban Mukhopadhyay},
+  title     = {Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes},
+  journal   = {Data Mining and Knowledge Discovery (Under Review)},
   year      = {2026},
   url       = {https://github.com/AkashKundu114/icc-clustering}
 }
@@ -201,8 +195,12 @@ To reproduce benchmark evaluations and verify theoretical identities:
 
 ---
 
-## License & Contact
+## License & Authors
 
 - **License:** [MIT License](LICENSE)
-- **Corresponding Author:** Akash Kundu (`akashkundu1152@gmail.com`)
-- **Institution:** Department of Computer Science and Engineering, Techno India University
+- **Prof. Kalyan Kumar Das** (Corresponding Author, Research Supervisor: `kalyan.biltu@gmail.com`)  
+  Department of Computer Science and Engineering, Techno India University, Kolkata, West Bengal, India
+- **Akash Kundu** (Lead Developer, Code & Reproduction Materials Contact: `akashkundu1152@gmail.com`)  
+  Department of Computer Science and Engineering, Techno India University, Kolkata, West Bengal, India
+- **Prof. Anirban Mukhopadhyay** (Senior Collaborator: `anirban@klyuniv.ac.in`)  
+  Department of Computer Science and Engineering, University of Kalyani, Nadia, West Bengal, India

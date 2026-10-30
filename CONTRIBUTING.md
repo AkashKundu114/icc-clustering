@@ -14,7 +14,7 @@ We welcome contributions ranging from bug fixes and documentation improvements t
 5. [Adding New Baselines & Datasets](#adding-new-baselines--datasets)
 6. [Code Style & Quality Standards](#code-style--quality-standards)
 7. [Submitting a Pull Request](#submitting-a-pull-request)
-8. [Reproducibility & Manuscript Artifacts](#reproducibility--manuscript-artifacts)
+8. [Reproducibility & Verification](#reproducibility--verification)
 
 ---
 
@@ -27,7 +27,7 @@ All contributors and participants are expected to adhere to our [Code of Conduct
 ## Getting Started & Development Setup
 
 ### Prerequisites
-* Python 3.10+ (tested on Python 3.10, 3.11, 3.12, and 3.14)
+* Python 3.10+ (tested on Python 3.10, 3.11, 3.12, 3.13, and 3.14)
 * Git
 
 ### Step-by-Step Environment Setup
@@ -84,32 +84,25 @@ All contributors and participants are expected to adhere to our [Code of Conduct
 
 Every contribution must pass the automated test harness.
 
-* **Run all tests (94 passing)**:
-  ```bash
-  python -m pytest tests -q
-  ```
+* **Run all tests (84 passing)**:
+   ```bash
+   python -m pytest tests -q
+   ```
 
-* **Verify bibliography against live APIs**:
-  ```bash
-  make refs-check
-  # or: python scripts/verify_refs.py refs.bib --out results/refs_report.csv --manual refs_manual.csv
-  ```
+* **Verify repository and scientific consistency**:
+   ```bash
+   python tools/check_consistency.py
+   ```
 
 * **Run tests with coverage tracking**:
-  ```bash
-  python -m pytest tests --cov=src/icc --cov-report=term-missing
-  ```
+   ```bash
+   python -m pytest tests --cov=src/icc --cov-report=term-missing
+   ```
 
 * **Run the quick interactive demo**:
-  ```bash
-  python demo.py
-  ```
-
-* **Verify numerical macro consistency with results registry**:
-  ```bash
-  python tests/test_macro_consistency.py
-  python tests/test_pdf_allowlist.py
-  ```
+   ```bash
+   python demo.py
+   ```
 
 ---
 
@@ -152,37 +145,37 @@ Every contribution must pass the automated test harness.
 We use [Ruff](https://github.com/astral-sh/ruff) for fast, unified linting and formatting.
 
 * **Check linting and formatting**:
-  ```bash
-  ruff check .
-  ```
+   ```bash
+   ruff check .
+   ```
 
 * **Automatically apply safe fixes**:
-  ```bash
-  ruff check --fix .
-  ruff format .
-  ```
+   ```bash
+   ruff check --fix .
+   ruff format .
+   ```
 
 ---
 
 ## Submitting a Pull Request
 
 Before opening a pull request, ensure:
-- [ ] All 94 unit and integration tests pass (`pytest tests -q`).
+- [ ] All 84 unit and integration tests pass (`pytest tests -q`).
 - [ ] Code formatting and lint checks pass without errors (`ruff check .`).
 - [ ] Any newly introduced public functions or classes have descriptive NumPy-style docstrings.
 - [ ] If modifying algorithmic logic, verify that benchmark reproducibility is maintained.
 
 ---
 
-## Reproducibility & Manuscript Artifacts
+## Reproducibility & Verification
 
-* If changes affect figures or benchmark CSVs, regenerate and synchronize figure assets:
-  ```bash
-  python scripts/sync_figures.py
-  ```
-* Verify and synchronize single source of truth macros:
-  ```bash
-  python scripts/make_numbers.py
-  ```
+* Verify complete scientific invariant and dataset integrity:
+   ```bash
+   python tools/check_consistency.py
+   ```
+* Run fast smoke reproduction suite:
+   ```bash
+   python scripts/reproduce.py --scope smoke
+   ```
 
 Thank you for helping push the frontiers of robust, scalable consensus clustering!
