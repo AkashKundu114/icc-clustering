@@ -1,0 +1,6 @@
+Dataset,Classes (K),Scaled Budget (L=10K),Default L=40 ARI,Scaled L=10K ARI,Paired Gain (Delta)
+Indian Pines,16,160,0.154 +/- 0.032,0.167 +/- 0.028,+0.014
+Isolet,26,260,0.293 +/- 0.027,0.303 +/- 0.015,+0.010
+20 Newsgroups,20,200,0.0002 +/- 0.0001,0.0001 +/- 0.0001,-0.00004
+Extended Yale B,38,380,0.046 +/- 0.013,0.060 +/- 0.006,+0.014
+Macro Average,---,---,0.123 +/- 0.130,0.132 +/- 0.133,+0.009

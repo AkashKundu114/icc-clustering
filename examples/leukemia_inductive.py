@@ -1,3 +1,18 @@
+"""
+Inductive out-of-sample evaluation on Leukemia microarray gene expression.
+
+Demonstrates out-of-sample generalization of ICC-v2 on real-world cancer genomics data:
+1. Loads the Golub et al. Leukemia dataset (N=72 patients, D=7,129 gene probes, K=2 subtypes: ALL vs AML).
+2. Performs an 80/20 train/test split.
+3. Fits ICC-v2 solely on the 80% training partition.
+4. Evaluates training partition recovery (ARI).
+5. Projects the remaining 20% held-out test patients in closed form using geometry-calibrated
+   anchor centroids, demonstrating robust inductive generalization without model refitting.
+
+Usage:
+    python examples/leukemia_inductive.py
+"""
+
 import numpy as np
 
 from icc import ICC
@@ -42,6 +57,7 @@ def main():
     test_ari = evaluate_all(y_test, test_preds)["ari"]
     print(f"Held-Out Out-of-Sample (20%) Test ARI:     {test_ari:.4f}")
     print("=" * 60)
+
 
 if __name__ == "__main__":
     main()

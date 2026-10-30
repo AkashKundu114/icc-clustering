@@ -173,9 +173,14 @@ Before opening a pull request, ensure:
    ```bash
    python tools/check_consistency.py
    ```
-* Run fast smoke reproduction suite:
+* Run fast smoke reproduction suite (< 3s):
    ```bash
    python scripts/reproduce.py --scope smoke
    ```
+* Regenerate paper LaTeX tables (~2s):
+   ```bash
+   python scripts/reproduce.py --scope tables
+   ```
+* Consult the [Peer Reviewer & Reproducibility Guide](docs/REPRODUCIBILITY.md) for full traceability across Tables 1--16 and Figures 1--9.
 
 Thank you for helping push the frontiers of robust, scalable consensus clustering!

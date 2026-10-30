@@ -112,7 +112,7 @@ def run_realtime_patient_projection():
     print("-" * 78)
     print("Clinical Interpretation:")
     print("  - High-Confidence singletons allow immediate targeted therapy.")
-    print("  - Ambiguous biopsies prompt manual review or secondary immunohistochemistry,")
+    print("  - Ambiguous biopsies trigger manual review or secondary immunohistochemistry,")
     print("    preventing toxic misclassification in borderline clinical presentations.")
     print("=" * 78)
 

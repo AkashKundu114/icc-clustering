@@ -66,11 +66,9 @@ htmlcov/
 .DS_Store
 Thumbs.db
 
-# Remediation scratch and prompts
-REMEDIATION_USER_PROMPT_*.txt
-file_list_inventory.txt
-repo_file_tree.txt
+# Scratch and temporary developer files
 scripts/scratch/
+*.tmp
 
 # Local tools and binaries
 tools/bin/

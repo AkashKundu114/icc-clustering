@@ -1,13 +1,13 @@
 """
-Edge Case and Numerical Stability Tests for ICC-v2.
+Edge-case, boundary-condition, and numerical stability tests for ICC-v2.
 
-Verifies robustness against:
-1. Zero-variance / constant features
-2. Duplicate samples
-3. Small sample size limits (N=10, K=2)
-4. Extreme dimension ratio (D/N = 500)
-5. Metric edge cases (single-cluster partitions, all-distinct partitions)
-6. Missing data injection and imputation mechanics
+Validates algorithm robustness across pathological and extreme settings:
+1. Zero-variance and degenerate constant feature dimensions.
+2. Identical duplicate observations in feature space.
+3. Micro-scale sample sizes (N=10, K=2) near partition cardinality limits.
+4. Ultra-high dimensional regimes with extreme aspect ratios (D/N = 250).
+5. Degenerate cluster evaluation edge cases (single-cluster partitions, all-singleton partitions).
+6. Missing Completely At Random (MCAR) noise injection and imputation strategies.
 """
 
 import numpy as np
@@ -28,8 +28,14 @@ except (ImportError, Exception):
 
 
 def test_zero_variance_features():
+    """
+    Verify numerical stability when encountering zero-variance (constant) features.
+    
+    Injects 3 perfectly invariant feature columns (constants 5.0, -2.0, 0.0).
+    Ensures that standard deviation calculations, feature gating, and subsequent
+    out-of-sample projection execute cleanly without zero-division warnings or NaNs.
+    """
     rng = np.random.default_rng(42)
-    # 40 samples, 20 features: features 0, 5, 10 are completely constant
     X = rng.normal(size=(40, 20))
     X[:, 0] = 5.0
     X[:, 5] = -2.0
@@ -40,15 +46,21 @@ def test_zero_variance_features():
 
     assert labels.shape == (40,)
     assert not np.isnan(labels).any()
-    # Out-of-sample prediction works without error
+    
+    # Out-of-sample prediction must execute cleanly
     X_new = rng.normal(size=(5, 20))
     preds = model.predict(X_new)
     assert preds.shape == (5,)
 
 
 def test_duplicate_samples():
+    """
+    Verify consensus consistency when duplicate samples exist in the dataset.
+    
+    Creates exact duplicate pairs by duplicating a 20-sample block.
+    Confirms that identical points achieve high label agreement under anchor consensus.
+    """
     rng = np.random.default_rng(42)
-    # 20 unique points, duplicated to 40
     X_base = rng.normal(size=(20, 10))
     X = np.vstack([X_base, X_base])
 
@@ -56,14 +68,18 @@ def test_duplicate_samples():
     labels = model.fit_predict(X)
 
     assert labels.shape == (40,)
-    # Duplicated instances should receive consistent labels under anchor consensus
     agreement = (labels[:20] == labels[20:]).mean()
     assert agreement >= 0.85
 
 
 def test_small_sample_size():
+    """
+    Verify algorithmic execution at small sample size boundaries (N=10, K=2).
+    
+    Checks that core sample quantile filtering and anchor subsampling degrade
+    gracefully when N is very small.
+    """
     rng = np.random.default_rng(42)
-    # N=10, D=5, K=2
     X = np.vstack([rng.normal(loc=-2, size=(5, 5)), rng.normal(loc=2, size=(5, 5))])
 
     model = InvariantCoreConsensusV2(n_clusters=2, n_base_models=5, n_anchors=5, random_state=42)
@@ -74,8 +90,13 @@ def test_small_sample_size():
 
 
 def test_extreme_dimension_ratio():
+    """
+    Verify memory and algorithmic stability under severe high dimensionality (D/N = 250).
+    
+    Evaluates N=20 observations embedded in D=5000 dimensions, verifying that
+    feature importance scoring and subspace gating operate within memory limits.
+    """
     rng = np.random.default_rng(42)
-    # N=20, D=5000 -> D/N = 250
     X = rng.normal(size=(20, 5000))
 
     model = InvariantCoreConsensusV2(n_clusters=2, n_base_models=10, n_anchors=8, random_state=42)
@@ -87,6 +108,13 @@ def test_extreme_dimension_ratio():
 
 
 def test_metric_edge_cases():
+    """
+    Verify clustering evaluation metric behavior on degenerate label assignments.
+    
+    Validates that evaluate_all does not raise ZeroDivisionError or output NaNs when:
+    - Case A: Prediction collapses to a single monolithic cluster.
+    - Case B: Prediction fractures into all singleton clusters.
+    """
     y_true = np.array([0, 0, 1, 1, 1, 0])
 
     # Case A: Prediction is all one cluster
@@ -107,6 +135,12 @@ def test_metric_edge_cases():
 @pytest.mark.skipif(not HAS_IMPUTE, reason="impute_data unavailable or blocked by system policy")
 @pytest.mark.parametrize("strategy", ["Mean", "Median", "KNN", "Zero"])
 def test_missing_data_injection_and_imputation(strategy):
+    """
+    Verify Missing Completely At Random (MCAR) injection and imputation strategies.
+    
+    Injects 30% missing values (NaNs) into feature tensors and verifies that Mean,
+    Median, KNN, and Zero imputation strategies restore dense, NaN-free arrays.
+    """
     rng = np.random.default_rng(42)
     X = rng.normal(size=(30, 15))
     rho = 0.30

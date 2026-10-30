@@ -149,7 +149,7 @@ False Discovery Rate (FDR) controlled feature selection via target-decoy / knock
 
 ### `InductiveConsensusMemory`
 
-Episodic semantic clustering memory for AI agents with instantaneous $\mathcal{O}(L)$ inductive routing and conformal novelty detection.
+Dynamic episodic memory and semantic clustering buffer with instantaneous $\mathcal{O}(L)$ inductive routing and conformal novelty detection.
 
 - `store(text, embedding, metadata=None) -> MemoryItem`: Indexes new memory item, dynamically consolidating into existing cluster or triggering novel cluster creation upon conformal abstention ($C(x) = \emptyset$).
 - `query_similar(embedding, top_k=5) -> List[MemoryItem]`: Retrieves nearest indexed memory items.

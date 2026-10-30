@@ -229,19 +229,19 @@ def run_clustering_endpoint(
 
 @app.post("/api/simulate_memory")
 def simulate_memory_endpoint():
-    """Simulate streaming agent memories with consolidation and novelty detection."""
+    """Simulate streaming data records with consolidation and novelty detection."""
     dim = 64
     rng = np.random.default_rng(42)
     mem_engine = InductiveConsensusMemory(dim=dim, alpha=0.10, similarity_threshold=0.35)
 
     scenarios = [
-        ("User stated preferred programming language is Python", rng.normal(size=dim)),
-        ("User mentioned writing FastAPI services in Python", None),  # Will be similar to 0
-        ("User inquired about weather in San Francisco tomorrow", rng.normal(size=dim)),
-        ("User requested temperature forecast for Bay Area", None),  # Will be similar to 2
-        ("User reported error: Postgres connection refused on port 5432", rng.normal(size=dim)),
-        ("Agent noted: check firewall rules for database connection", None),  # Similar to 4
-        ("Unrelated memory: classical piano compositions of Chopin", rng.normal(size=dim)),
+        ("Specimen A1: mRNA sequencing profile of B-cell acute lymphoblastic leukemia", rng.normal(size=dim)),
+        ("Specimen A2: Replicate transcriptional assay exhibiting concordant markers", None),
+        ("Spectral Scan S1: Reflectance spectrometry of agricultural soil matrix", rng.normal(size=dim)),
+        ("Spectral Scan S2: Calibrated infrared re-measurement confirming absorption band", None),
+        ("Clinical Bio-Assay C1: Elevated blast count with chromosomal translocation", rng.normal(size=dim)),
+        ("Clinical Bio-Assay C2: Follow-up cytogenetics verifying gene fusion", None),
+        ("Unrelated Reference: High-latitude geomagnetic telemetry background baseline", rng.normal(size=dim)),
     ]
 
     # Create correlated embeddings for conversational context
@@ -306,7 +306,7 @@ HTML_CONTENT = """<!DOCTYPE html>
                     <i class="fa-solid fa-shapes text-blue-500"></i> Conformal Inductive Consensus Clustering
                 </h1>
                 <p class="text-sm text-gray-400 mt-1 max-w-3xl">
-                    Distribution-free finite-sample coverage guarantees for out-of-sample cluster assignments with Decoy-calibrated FDR feature gating & streaming agent memory.
+                    Distribution-free finite-sample coverage guarantees for out-of-sample cluster assignments with Decoy-calibrated FDR feature gating & dynamic streaming memory.
                 </p>
             </div>
             <div class="flex items-center gap-3">
@@ -369,7 +369,7 @@ HTML_CONTENT = """<!DOCTYPE html>
 
                 <div class="border-t border-gray-800 pt-5">
                     <h2 class="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-brain text-purple-400"></i> Agent Memory
+                        <i class="fa-solid fa-database text-purple-400"></i> Streaming Memory
                     </h2>
                     <p class="text-xs text-gray-400 mb-3">Simulate inductive streaming memory consolidation & split triggers.</p>
                     <button id="simMemBtn" class="w-full bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/40 text-xs font-semibold py-2.5 rounded-lg transition flex items-center justify-center gap-2">
@@ -427,7 +427,7 @@ HTML_CONTENT = """<!DOCTYPE html>
                     <div id="manifoldPlot" class="w-full h-[420px] rounded-lg"></div>
                 </div>
 
-                <!-- Secondary Visualizations: Decoy Gating & Agent Memory -->
+                <!-- Secondary Visualizations: Decoy Gating & Streaming Memory -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Decoy FDR Chart -->
                     <div class="glass-panel p-5 rounded-2xl space-y-3">
@@ -438,14 +438,14 @@ HTML_CONTENT = """<!DOCTYPE html>
                         <div id="decoyPlot" class="w-full h-[220px]"></div>
                     </div>
 
-                    <!-- Agent Memory Timeline -->
+                    <!-- Streaming Memory Timeline -->
                     <div class="glass-panel p-5 rounded-2xl space-y-3">
                         <h3 class="text-sm font-semibold text-white flex items-center gap-2">
-                            <i class="fa-solid fa-clock-rotate-left text-purple-400"></i> Agent Streaming Memory Feed
+                            <i class="fa-solid fa-clock-rotate-left text-purple-400"></i> Dynamic Streaming Memory Feed
                         </h3>
                         <p class="text-xs text-gray-400">Real-time memory consolidation vs novel cluster schema allocation.</p>
                         <div id="memoryLog" class="h-[220px] overflow-y-auto space-y-2 text-xs font-mono pr-2">
-                            <div class="text-gray-500 italic p-2 text-center">Click "Simulate Memory Stream" to run agent episodic intake.</div>
+                            <div class="text-gray-500 italic p-2 text-center">Click "Simulate Memory Stream" to run streaming episodic intake.</div>
                         </div>
                     </div>
                 </div>

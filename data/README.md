@@ -6,7 +6,7 @@ This directory manages all raw, cached, and preprocessed datasets used in Induct
 In strict compliance with GitHub repository size guidelines and scientific open-access licensing:
 - **No large binary datasets (`*.npz`, `*.mat`, `*.h5ad`, `*.tar.gz`) are committed to Git.**
 - All raw datasets and caches are ignored by Git via `.gitignore`.
-- Datasets are automatically downloaded, verified, and preprocessed via `scripts/fetch_data.py`.
+- Datasets are automatically downloaded, verified, and preprocessed via `scripts/download_data.py` (or legacy alias `scripts/fetch_data.py`).
 
 ## Directory Layout
 ```text
@@ -39,6 +39,6 @@ The evaluation suite benchmarks ICC across 13 diverse real-world datasets spanni
 ## Automated Fetching and Verification
 To provision and preprocess all datasets locally:
 ```bash
-python scripts/fetch_data.py
+python scripts/download_data.py
 ```
 This script validates SHA-256 checksums before caching tensors into `data/cache/`.

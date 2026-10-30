@@ -22,10 +22,9 @@ We prioritize the security and integrity of our research software. If you identi
 
 **Please do not open a public GitHub issue for security vulnerabilities.**
 
-Instead, please send an encrypted or direct email to the maintainer:
-* **Primary Contact**: Akash Kundu
-* **Academic Email**: `akashkundu1152@gmail.com`
-* **Personal Email**: `akashkundu1152@gmail.com`
+Instead, please send an encrypted or direct email to the maintainers:
+* **Lead Maintainer**: Akash Kundu (`akashkundu1152@gmail.com`)
+* **Research Supervisor**: Prof. Kalyan Kumar Das (`kalyan.biltu@gmail.com`)
 
 ### What to Include in Your Report
 
