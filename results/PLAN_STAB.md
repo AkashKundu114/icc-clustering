@@ -119,3 +119,23 @@ To maintain absolute scientific integrity and prevent post-hoc rationalization, 
   - Timeout cap: 30 minutes per fit.
   - Failed or timed-out fits are recorded as `status="failed"`, runtime logged, and accuracy set to $0.0$.
 - **Historical Traceability:** The existing seed-stability metrics are retained as a secondary reference column in the comprehensive report, explicitly annotated: `"Seed stability (transductive; reflects algorithmic determinism)"`.
+
+---
+
+## 6. Amendment: Non-Degeneracy Condition for Discordance Evidence (2026-10-30)
+
+### 6.1 Motivation & Degenerate Partition Vulnerability
+On certain extreme-dimensional cohorts (such as Prostate, $D=12{,}600$), several methods produce degenerate partitions where almost all samples are assigned to a single dominant cluster while only one or two points form tiny singleton/near-singleton clusters. Because two single-cluster or near-single-cluster partitions have trivial mathematical agreement (the Adjusted Rand Index between near-identical trivial partitions approaches 1.000 by construction), degenerate clusterings can artificially mimic high stability.
+
+### 6.2 Pre-Registered Amended Rule (i') — Non-Degenerate Stability-Accuracy Discordance (SAD)
+A method-cohort pair satisfies the amended stability-accuracy discordance criterion (i') if and only if:
+1. Mean subsample stability: $\text{Stab}_{\text{sub}} \ge 0.50$; **AND**
+2. Mean empirical accuracy: $\overline{\text{Acc}} \le 0.05$; **AND**
+3. **Non-Degeneracy Condition:** The smallest cluster holds at least $5\%$ of the subsample size ($\min_k |C_k| / N_{\text{sub}} \ge 0.05$) in at least $90\%$ of the 30 subsamples (i.e. in at least $27$ of the $30$ subsamples).
+
+Pairs failing the non-degeneracy condition are classified as **degenerate-stable partitions** and reported separately.
+
+### 6.3 Rule Precedence & Secondary Reporting
+- The original unconstrained Rule (i) results are preserved and reported as secondary diagnostic context.
+- **Rule (iii) (Paper-Level Macro Claim)** is amended to operate strictly on the non-degenerate Rule (i') criterion: the macro claim is supported if and only if at least 3 of the 12 methods satisfy Rule (i') on at least 3 cohorts, and the paired cohort-level bootstrap 95% CI of the gap (excluding degenerate pairs) excludes zero.
+
