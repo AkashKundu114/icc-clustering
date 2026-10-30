@@ -9,8 +9,8 @@ Zero hand-typed numbers: all values are computed dynamically from source CSVs/JS
 """
 
 import json
-import math
 from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
@@ -842,10 +842,10 @@ def generate_table15():
         means = json.load(f)["means"]
 
     def fmt_ci(key):
-        l, h = ab_boot[key]["ci_95"]
-        sign_l = "+" if l >= 0 else ""
-        sign_h = "+" if h >= 0 else ""
-        return f"$[{sign_l}{l:.3f}, {sign_h}{h:.3f}]$"
+        ci_l, ci_h = ab_boot[key]["ci_95"]
+        sign_l = "+" if ci_l >= 0 else ""
+        sign_h = "+" if ci_h >= 0 else ""
+        return f"$[{sign_l}{ci_l:.3f}, {sign_h}{ci_h:.3f}]$"
 
     diff_v5_v2 = round(means["Full_ICC_v2"] - means["BGSS_StdConsensus"], 3)
 

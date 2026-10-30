@@ -1,6 +1,7 @@
+import json
 import os
 import re
-import json
+
 
 def extract_text_from_pdf(pdf_path):
     try:
@@ -51,7 +52,7 @@ def run_checks():
 
     # 3. Load stats.json
     with open("results/stats.json", "r", encoding="utf-8") as f:
-        stats = json.load(f)
+        _ = json.load(f)
 
     # 4. Verify core statistical values appear in PDF text
     checks = [

@@ -20,9 +20,10 @@ Writes results to:
 
 import json
 from pathlib import Path
+
 import numpy as np
 import pandas as pd
-from scipy.stats import rankdata, friedmanchisquare, wilcoxon
+from scipy.stats import friedmanchisquare, rankdata, wilcoxon
 
 ROOT = Path(__file__).resolve().parent.parent
 PASS_F = ROOT / "results" / "passF"

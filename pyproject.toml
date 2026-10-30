@@ -119,3 +119,13 @@ pythonpath = [
     ".",
     "src",
 ]
+markers = [
+    "unit: Fast mathematical and algorithmic unit tests",
+    "integration: Multi-model benchmarks, dataset loading, and scalability sweeps",
+    "paper: Manuscript consistency and bibliographic verification",
+]
+filterwarnings = [
+    "ignore::sklearn.exceptions.ConvergenceWarning",
+    "ignore:Graph is not fully connected:UserWarning",
+    "ignore:`beta` is not used by ICC-v2:DeprecationWarning",
+]

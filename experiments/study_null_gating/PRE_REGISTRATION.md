@@ -3,7 +3,7 @@
 **Document ID:** `STUDY-3P-PREREG-01`  
 **Date:** October 17, 2026  
 **Status:** FROZEN PRIOR TO BENCHMARK EXECUTION  
-**Authors:** Research Orchestrator & Autonomous Scientific Subagents  
+**Authors:** Core Research Team  
 
 ---
 

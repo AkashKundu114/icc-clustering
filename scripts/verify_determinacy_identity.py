@@ -10,6 +10,7 @@ Compares:
 
 import numpy as np
 
+
 def verify_identity_case(N, M, K, seed=42):
     rng = np.random.default_rng(seed)
     

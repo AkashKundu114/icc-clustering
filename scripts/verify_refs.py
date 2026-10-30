@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
 """Verify BibTeX entries against CrossRef / arXiv. Reports only what the APIs return."""
-import argparse, csv, re, sys, time, unicodedata, difflib, os
+import argparse
+import csv
+import difflib
+import os
+import re
+import sys
+import time
+import unicodedata
 import xml.etree.ElementTree as ET
-import requests, bibtexparser
+
+import bibtexparser
+import requests
 
 MAILTO = "akashkundu1152@gmail.com"   # set this
 HDR = {"User-Agent": f"bib-verifier/1.0 (mailto:{MAILTO})"}
@@ -106,7 +115,7 @@ def to_bibtex(rec, key):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("bib", nargs="?")
+    ap.add_argument("bib", nargs="?", default="refs.bib")
     ap.add_argument("--out", default="results/refs_report.csv")
     ap.add_argument("--manual", default="refs_manual.csv")  # key,url,verified_by,date
     ap.add_argument("--doi"); ap.add_argument("--arxiv"); ap.add_argument("--title")
@@ -130,21 +139,29 @@ def main():
         doi = re.sub(r"^https?://(dx\.)?doi\.org/", "", e.get("doi", "")).strip()
         aid = e.get("eprint", "")
         rec, how = None, ""
-        if key in manual: how = "manual"
-        elif doi: rec, how = crossref_by_doi(doi), "doi"
-        elif aid: rec, how = arxiv_rec(aid), "arxiv"
+        if key in manual:
+            how = "manual"
+        elif doi:
+            rec, how = crossref_by_doi(doi), "doi"
+        elif aid:
+            rec, how = arxiv_rec(aid), "arxiv"
         else:
-            rec = crossref_by_title(e.get("title", ""), last_names(e.get("author", ""))[0:1] and
-                                    e.get("author", "").split(",")[0]); how = "title-search"
+            first_author = last_names(e.get("author", ""))[0:1] and e.get("author", "").split(",")[0]
+            rec = crossref_by_title(e.get("title", ""), first_author)
+            how = "title-search"
         flags = []
-        if how == "manual": status = "MANUAL"
-        elif not rec: status = "NOT_FOUND"
+        if how == "manual":
+            status = "MANUAL"
+        elif not rec:
+            status = "NOT_FOUND"
         else:
             flags = compare(e, rec)
             status = "MISMATCH" if HARD & set(flags) else "WARN" if flags else "OK"
-            if how == "title-search" and status == "OK": status = "CHECK_ID"
+            if how == "title-search" and status == "OK":
+                status = "CHECK_ID"
         dup = seen.get(norm(e.get("title", "")))
-        if dup: flags.append(f"DUPLICATE_OF_{dup}")
+        if dup:
+            flags.append(f"DUPLICATE_OF_{dup}")
         seen[norm(e.get("title", ""))] = key
         r = rec or {}
         rows.append(dict(key=key, how=how, status=status, flags=";".join(flags),
@@ -155,12 +172,17 @@ def main():
                          api_doi=r.get("doi", "")))
         time.sleep(0.3)
     with open(a.out, "w", newline="", encoding="utf-8") as fh:
-        w = csv.DictWriter(fh, fieldnames=list(rows[0].keys())); w.writeheader(); w.writerows(rows)
+        w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()))
+        w.writeheader()
+        w.writerows(rows)
     counts = {}
-    for r in rows: counts[r["status"]] = counts.get(r["status"], 0) + 1
+    for r in rows:
+        counts[r["status"]] = counts.get(r["status"], 0) + 1
     print(counts)
     bad = [r["key"] for r in rows if r["status"] in ("MISMATCH", "NOT_FOUND", "CHECK_ID")]
-    if bad: print("FAIL:", ", ".join(bad)); sys.exit(1)
+    if bad:
+        print("FAIL:", ", ".join(bad))
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()

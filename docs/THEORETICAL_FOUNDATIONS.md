@@ -190,8 +190,8 @@ To bound False Discovery Rate (FDR) in feature selection, target-decoy screening
 $$W_d = |T_d| - |\tilde{T}_d|$$
 Features with $W_d > \tau_{\text{FDR}}$ are retained, ensuring rigorous control over false candidate discoveries.
 
-### 9.3 Episodic Semantic Agent Memory (`src/cicc/memory.py`)
-Incoming memory items are embedded and routed to clusters in $\mathcal{O}(L)$ time. When a query yields an empty conformal set ($\mathcal{C}(\mathbf{x}) = \emptyset$), the system abstains from forcing cluster assignment, triggering creation of an episodic novelty cluster.
+### 9.3 Dynamic Incremental Memory Routing (`src/cicc/memory.py`)
+Incoming streaming items are embedded and routed to cluster anchors in $\mathcal{O}(L)$ time. When a query yields an empty conformal set ($\mathcal{C}(\mathbf{x}) = \emptyset$), the system abstains from forcing cluster assignment, triggering creation of an incremental novelty cluster.
 
 ---
 

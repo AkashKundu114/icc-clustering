@@ -14,10 +14,12 @@ Executes Item 2b, 2c, 2d:
 
 from itertools import combinations
 from pathlib import Path
-from icc.datasets.registry import load_dataset
+
 import numpy as np
 import pandas as pd
 from sklearn.metrics import adjusted_rand_score
+
+from icc.datasets.registry import load_dataset
 
 ROOT = Path(__file__).resolve().parent.parent
 PARTITIONS_DIR = ROOT / "results" / "stability" / "partitions"
@@ -228,7 +230,6 @@ def main():
         boot_gaps = []
         for _ in range(10000):
             b_cohorts = rng.choice(cohorts, size=len(cohorts), replace=True)
-            sub = filtered_df[filtered_df["dataset"].isin(b_cohorts)]
             # cohort-level mean gap
             c_gaps = []
             for c in b_cohorts:
