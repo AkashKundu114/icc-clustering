@@ -7,7 +7,6 @@ Official reference implementation of the manuscript:
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Tests: Passing](https://img.shields.io/badge/pytest-84%2F84%20passed-brightgreen.svg)]()
-[![References: 80.3% Recent (2024-2026) | Cite-Once Enforced](https://img.shields.io/badge/references-80.3%25%20recent%20(53%2F66%20verified)-success.svg)]()
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![XERJ Corpus Hub contributor](https://hub.xerj.org/contributors/AkashKundu114/badge.svg)](https://hub.xerj.org/contributors/AkashKundu114)
 
