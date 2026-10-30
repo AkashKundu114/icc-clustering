@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "icc"
 version = "2.2.0"
-description = "Reference implementation: Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes"
+description = "Reference implementation: Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis"
 readme = "README.md"
 authors = [
     {name = "Akash Kundu", email = "akashkundu1152@gmail.com"}
