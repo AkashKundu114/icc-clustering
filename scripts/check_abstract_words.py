@@ -4,7 +4,9 @@ from pathlib import Path
 
 def main():
     text = Path('paper/main.tex').read_text(encoding='utf-8')
-    m = re.search(r'\\begin\{abstract\}(.*?)\\end\{abstract\}', text, re.DOTALL)
+    m = re.search(r'\\abstract\{(.*?)\}\s*\n\s*\\keywords', text, re.DOTALL)
+    if not m:
+        m = re.search(r'\\begin\{abstract\}(.*?)\\end\{abstract\}', text, re.DOTALL)
     if m:
         raw_abstract = m.group(1).strip()
         # Count words in abstract
