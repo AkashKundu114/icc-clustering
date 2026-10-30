@@ -1,14 +1,21 @@
 # Manuscript Revision Log and Verification Ledger
 
-**Manuscript Title:** *Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps*  
-**Short Title / Running Head:** *Why Consensus Clustering Can Fail in High Dimensions*  
+**Manuscript Title:** *Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis*  
+**Short Title / Running Head:** *Cluster Stability and Feature-Gated Bipartite Ensemble Learning*  
 **Target Venue:** Springer Nature (*Data Mining and Knowledge Discovery* / DAMI)  
 **Lead Contributor:** Akash Kundu (Techno India University)  
 **Date:** October 2026  
 
 ---
 
-## Revision Loop: Title Alignment & Stability-Accuracy Gap (Items 1–7)
+## Autonomous Revision Loop: Title, Scaling Table, Degeneracy Check, Stability Definition
+
+- [x] **Item 0: Formal Title and Neutral Terminology (`commit staged`)** -- Updated title to *"Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis"* across `paper/main.tex`, `springer_manuscript/main.tex`, running head (`[Cluster Stability and Feature-Gated Bipartite Ensemble Learning]`), `README.md`, `CITATION.cff`, `pyproject.toml`, `submission/COVER_LETTER.md`, and repository metadata; added keywords: `cluster stability, ensemble learning, consensus clustering, high-dimensional noisy data, bipartite anchor graphs, feature gating, subsample stability, null control`; systematically purged informal terms ("Stable but Wrong" -> "stability-accuracy discordance (SAD) criterion", "stability trap" -> "stability-accuracy discordance", "entrapment"/"trapped" -> "convergence to partitions unrelated to reference labels", "pathology" -> "behavior", "massive" -> "large", "severe" -> "substantial", "proving" -> "indicating"); abstract strictly calibrated to 248 words (<= 250). Compiled clean PDF with zero `??`, zero `[?`, zero `± nan`.
+
+---
+
+## Prior Revision Loop: Title Alignment & Stability-Accuracy Gap (Items 1–7)
+
 
 - [x] **Item 1: Title and Metadata Synchronization (`commit 040ecb4`)** -- Updated title to *"Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps"* across `paper/main.tex`, `springer_manuscript/main.tex`, running head (`[Why Consensus Clustering Can Fail in High Dimensions]`), `README.md`, `pyproject.toml`, and repository metadata; added keywords: `"stability-accuracy gap"`, `"consensus clustering"`, `"high-dimensional noise"`.
 - [x] **Item 2: Algorithm Relabeling in Text, Tables, and Figures (`commit 040ecb4`)** -- Relabeled "ICC-v2" $\to$ "GAC pipeline" / "GAC (Ours)" and "ICC-v1" $\to$ "ungated anchor consensus" / "Ungated AC" across all LaTeX manuscript sources, table macros in `scripts/make_tables.py`, and plotting scripts (`plot_exp1_figures.py`, `plot_exp2_figures.py`, `plot_exp3_figures.py`, `plot_exp4_figures.py`, `plot_anchor_fidelity.py`, `plot_exp5.py`); regenerated all 60 publication figures and verified 100% synchronization across `paper/figures/` and `springer_manuscript/figures/`; added historical disclaimer in Code availability: *"The repository name icc-clustering is historical and unrelated to the Iterative Consensus Clustering of Race and Meyer."* without renaming repository.

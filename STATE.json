@@ -14,7 +14,7 @@
     "env_verified_file": "docs/ENV.md"
   },
   "track_a_paper1": {
-    "title": "Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps",
+    "title": "Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis",
     "repo": "https://github.com/AkashKundu114/icc-clustering",
     "current_branch": "main",
     "target_venue": "Springer Nature (Data Mining and Knowledge Discovery / DAMI)",

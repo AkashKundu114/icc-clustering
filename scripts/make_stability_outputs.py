@@ -100,7 +100,7 @@ def generate_latex_table(df: pd.DataFrame):
         r"\caption{Stratified Subsample Perturbation Stability and Null Control Across Six High-Dimensional Biomedical Cohorts ($D/N > 20$, 30 Stratified $80\%$ Subsamples). "
         r"Reports Empirical Accuracy on Subsamples ($\text{Acc}$, Mean ARI vs. True Labels), Subsample Stability ($\text{Stab}$, Mean Pairwise ARI on Overlapping Samples Across 435 Subsample Pairs), "
         r"Stability-Accuracy Gap ($\Delta = \text{Stab} - \text{Acc}$), and Permuted Null Control Stability ($\text{Null}$, Columns Permuted Independently Across Samples). "
-        r"Bold gap entries ($\mathbf{\Delta}$) satisfy pre-specified Decision Rule~(i) ($\text{Stab} \geq 0.50$ and $\text{Acc} \leq 0.05$), denoting severe `Stable but Wrong' entrapment. "
+        r"Bold gap entries ($\mathbf{\Delta}$) satisfy pre-specified Decision Rule~(i) ($\text{Stab} \geq 0.50$ and $\text{Acc} \leq 0.05$), satisfying the stability-accuracy discordance (SAD) criterion. "
         r"The rightmost column reports full-dataset Seed Stability ($\text{Seed}^*$), which is uninformative for deterministic solvers.}",
         r"\label{tab:real_data_stability}",
         r"\centering",
@@ -210,7 +210,7 @@ def generate_figure(df: pd.DataFrame, method_stats: dict):
     ax1.text(
         -0.03,
         0.82,
-        "PRE-SPECIFIED RULE (i):\nSTABLE BUT WRONG ZONE\n(Subsample Stab $\\geq 0.50$, Acc $\\leq 0.05$)",
+        "PRE-SPECIFIED RULE (i):\nSAD DISCORDANCE ZONE\n(Subsample Stab $\\geq 0.50$, Acc $\\leq 0.05$)",
         fontsize=9.5,
         fontweight="bold",
         color="#cc0000",

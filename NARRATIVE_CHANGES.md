@@ -5,6 +5,20 @@ This document records all scientific, empirical, and textual narrative revisions
 
 ---
 
+## Formal Title and Terminology Modernization (Item 0)
+- **Updated Formal Title:** *"Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis"*
+- **Running Head:** *Cluster Stability and Feature-Gated Bipartite Ensemble Learning*
+- **Purge of Informal / Sensational Terminology:**
+  - "Stable but Wrong" criterion -> "stability-accuracy discordance (SAD) criterion"
+  - "stability trap" -> "stability-accuracy discordance"
+  - "entrapment" / "trapped in spurious consensus" -> "convergence to partitions unrelated to the reference labels"
+  - "pathology" -> "behavior"
+  - Replaced dramatic adjectives ("massive" -> "large", "severe" -> "substantial", "firmly" -> "excluding zero").
+  - Changed "proving that high stability does not indicate correctness" -> "indicating that high stability does not imply correctness".
+- **Abstract Word Count & Scoping:** Abstract strictly calibrated to 248 words (<= 250 words) without claiming "stable clustering" as an intrinsic property of the GAC pipeline.
+
+---
+
 ## 0. Title Alignment and Reframing: "Stable but Wrong"
 - **New Title:** *"Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps"*
 - **Short Title / Running Head:** *Why Consensus Clustering Can Fail in High Dimensions*
