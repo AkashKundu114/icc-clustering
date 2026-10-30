@@ -1,0 +1,65 @@
+name: Benchmark & Paper Reproduction
+
+on:
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: 'Reproduction execution scope'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - tables
+          - figures
+          - benchmarks
+          - verify
+          - smoke
+  schedule:
+    # Run weekly every Sunday at 00:00 UTC to guard against dependency drift
+    - cron: '0 0 * * 0'
+
+env:
+  OMP_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  VECLIB_MAXIMUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+
+jobs:
+  reproduce:
+    name: Reproduce Paper Artifacts (${{ inputs.scope || 'all' }})
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Core Package and Dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install -e ".[dev]"
+
+      - name: Run Scientific Consistency Checker
+        run: |
+          python tools/check_consistency.py
+
+      - name: Execute Reproduction Pipeline (${{ inputs.scope || 'all' }})
+        run: |
+          python scripts/reproduce.py --scope ${{ inputs.scope || 'all' }}
+
+      - name: Upload Generated Reproduction Tables & Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: reproduced-paper-artifacts
+          path: |
+            results/tables/*.tex
+            results/tables/*.csv
+            results/benchmarks_reproduced.csv
+          if-no-files-found: ignore
