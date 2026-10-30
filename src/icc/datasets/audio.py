@@ -70,7 +70,13 @@ def load_isolet(
             return X, y, metadata
 
     print("[*] Fetching Isolet from OpenML (name='isolet', version=1)...")
-    raw = fetch_openml("isolet", version=1, parser="auto")
+    try:
+        raw = fetch_openml("isolet", version=1, parser="auto")
+    except Exception:
+        try:
+            raw = fetch_openml(data_id=300, parser="auto")
+        except Exception as err:
+            raise RuntimeError(f"Failed to fetch Isolet from OpenML: {err}") from err
 
     raw_X = np.asarray(raw.data, dtype=np.float64)
     raw_y = np.asarray(raw.target)
