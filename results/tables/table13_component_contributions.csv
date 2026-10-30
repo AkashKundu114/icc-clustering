@@ -1,0 +1,7 @@
+Ablation Knockout Step,Subgroup ARI,Paired Impact (V5 - Vx),95% Cluster Bootstrap CI
+Full GAC Pipeline (V5),0.217,Baseline,[Reference]
+Remove BGSS Gating (V5 -> V3),0.046,Delta = +0.171,"[+0.026, +0.315]"
+Remove Bipartite Graph (V5 -> V2),0.077,Delta = +0.139,"[+0.004, +0.321]"
+Remove Ensembling (V5 -> V1),0.070,Delta = +0.147,"[+0.015, +0.343]"
+Remove Anchor Cert. (V5 -> V4),0.198,Delta = +0.019,"[-0.039, +0.082]"
+Remove All Modules (V5 -> V0),0.037,Delta = +0.180,"[+0.023, +0.346]"

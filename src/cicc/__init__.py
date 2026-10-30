@@ -5,7 +5,7 @@ A unified framework combining:
 1. Bipartite anchor graph consensus clustering.
 2. Target-decoy / knockoff feature gating with False Discovery Rate (FDR) control.
 3. Finite-sample split-conformal cluster assignment with valid coverage guarantees.
-4. Conformal abstention for novel cluster discovery and agent long-term memory.
+4. Conformal abstention for novel cluster discovery and dynamic streaming memory.
 """
 
 from .conformal import ConformalClusterer, ConformalResult

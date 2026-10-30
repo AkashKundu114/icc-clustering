@@ -1,3 +1,17 @@
+"""
+Quickstart demonstration of Invariant Core Consensus (ICC-v2).
+
+Demonstrates the core 4-step unsupervised clustering and inductive projection lifecycle:
+1. Synthetic data generation with low-dimensional cluster manifold embedded in high-dimensional noise.
+2. Estimator calibration via Bimodality-Gated Subspace Selection and Bipartite Anchor Consensus.
+3. Partition quality evaluation via Adjusted Rand Index (ARI) and Normalized Mutual Information (NMI).
+4. Fast closed-form inductive out-of-sample projection on unseen query points without retraining.
+5. Extraction of low-dimensional spectral embedding coordinates.
+
+Usage:
+    python examples/quickstart.py
+"""
+
 import numpy as np
 
 from icc import ICC
@@ -44,6 +58,7 @@ def main():
     emb = model.transform()
     print(f"Spectral Embedding Coordinates Shape:     {emb.shape}")
     print("=" * 60)
+
 
 if __name__ == "__main__":
     main()

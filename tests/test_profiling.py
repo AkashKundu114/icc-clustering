@@ -1,6 +1,15 @@
 """
-Unit and integration tests for Anchor-Space Perturbation Profiling (ASPP)
-and its integration into InvariantCoreConsensusV2.
+Unit and integration tests for Anchor-Space Perturbation Profiling (ASPP).
+
+Validates the perturbation profiling engine for assessing cluster reliability:
+1. ASPP configuration initialization, parameter defaults, and custom overrides.
+2. Standalone profiling measuring Perturbation Stability Index (PSI) and reliability classes
+   across perturbation families (subsampling, feature masking, measurement noise).
+3. Integrated profiling inside InvariantCoreConsensusV2 via the enable_aspp flag.
+4. Inductive inference with stability-weighted confidence: confidence = margin * (1 - PSI).
+5. Exact deterministic reproducibility across repeated runs with identical random seeds.
+6. Technical batch effect perturbation profiling when batch identifiers are supplied.
+7. Clean package-level export parity.
 """
 
 import numpy as np
@@ -13,6 +22,13 @@ from icc.consensus_v2 import InvariantCoreConsensusV2
 
 
 def test_aspp_config_defaults_and_overrides():
+    """
+    Verify ASPPConfig default hyperparameter values and custom constructor overrides.
+    
+    Checks that all standard perturbation families (sampling, feature, measurement,
+    algorithmic, technical) are registered by default, and that reliability classification
+    thresholds (hi=0.70, lo=0.45) and response variance bounds are enforced.
+    """
     cfg = ASPPConfig()
     assert set(cfg.families) == set(ASPP_FAMILIES)
     assert cfg.repetitions == 2
@@ -31,8 +47,19 @@ def test_aspp_config_defaults_and_overrides():
 
 
 def test_aspp_standalone_profiler():
+    """
+    Verify standalone execution of AnchorSpacePerturbationProfiler on fitted models.
+    
+    Applies multi-family perturbations (sampling, feature, measurement) to fitted clusters.
+    Verifies that:
+    1. Returns a structured DataFrame with one row per cluster.
+    2. Perturbation Stability Index (PSI) values lie strictly in [0, 1].
+    3. Categorical reliability classifications belong to the standard taxonomy:
+       {'globally_invariant', 'conditionally_invariant', 'perturbation_fragile', 'ambiguous'}.
+    4. Retention rates and anchor co-association stability metrics are populated.
+    """
     rng = np.random.default_rng(42)
-    # 3 well-separated clusters with informative + noise features
+    # Generate 3 distinct clusters in 2D signal space with 10 noise dimensions
     X1 = rng.normal(loc=[-4, 0], scale=0.5, size=(25, 2))
     X2 = rng.normal(loc=[4, 0], scale=0.5, size=(25, 2))
     X3 = rng.normal(loc=[0, 4], scale=0.5, size=(25, 2))
@@ -47,7 +74,7 @@ def test_aspp_standalone_profiler():
     )
     model.fit(X)
 
-    # Standalone profiler
+    # Standalone profiler execution
     aspp_cfg = ASPPConfig(
         families=("sampling", "feature", "measurement"),
         repetitions=1,
@@ -67,18 +94,24 @@ def test_aspp_standalone_profiler():
         "sampling_anchor_coassoc", "feature_anchor_coassoc", "measurement_anchor_coassoc",
     })
 
-    # Validate value constraints
+    # Validate mathematical range constraints
     assert np.all(df["PSI"] >= 0.0) and np.all(df["PSI"] <= 1.0)
     for cat in df["reliability"]:
         assert cat in {"globally_invariant", "conditionally_invariant", "perturbation_fragile", "ambiguous"}
 
-    # Assert profiler properties
+    # Validate profiler state properties
     assert profiler.psi_ is not None and len(profiler.psi_) == 3
     assert profiler.reliability_categories_ is not None and len(profiler.reliability_categories_) == 3
     assert profiler.aspp_summary_ is not None
 
 
 def test_aspp_integrated_enable_flag():
+    """
+    Verify integrated perturbation profiling via model constructor enable_aspp=True.
+    
+    Ensures that when enabled, fitting the model automatically triggers perturbation
+    profiling and populates fingerprints_, psi_, and reliability_categories_ on the model.
+    """
     rng = np.random.default_rng(101)
     X = rng.normal(size=(60, 8))
 
@@ -112,6 +145,15 @@ def test_aspp_integrated_enable_flag():
 
 
 def test_predict_with_stability_inductive():
+    """
+    Verify inductive prediction modulated by cluster stability scores.
+    
+    Validates that:
+    1. Returns a dictionary containing labels, confidence, margin, psi, and reliability.
+    2. Confidence and prediction margin are strictly bounded in [0, 1].
+    3. Mathematical property holds: confidence = margin * (1 - PSI), meaning confidence
+       cannot exceed the raw margin score.
+    """
     rng = np.random.default_rng(202)
     X_train = np.vstack([
         rng.normal(loc=[-3, -3], scale=0.6, size=(30, 2)),
@@ -160,15 +202,21 @@ def test_predict_with_stability_inductive():
     assert psi.shape == (20,)
     assert len(reliability) == 20
 
-    # Confidence and margin must be bounded in [0, 1]
+    # Bounds check
     assert np.all(confidence >= 0.0) and np.all(confidence <= 1.0)
     assert np.all(margin >= 0.0) and np.all(margin <= 1.0)
 
-    # Confidence must not exceed raw margin since confidence = margin * (1 - psi)
+    # Invariant: confidence = margin * (1 - psi) <= margin
     assert np.all(confidence <= margin + 1e-7)
 
 
 def test_aspp_reproducibility():
+    """
+    Verify bitwise determinism and reproducibility across repeated profiling runs.
+    
+    Fitting two independent models with identical configurations and seeds must produce
+    identical labels, identical PSI vectors, and identical reliability categories.
+    """
     rng1 = np.random.default_rng(999)
     X = rng1.normal(size=(40, 6))
 
@@ -192,6 +240,12 @@ def test_aspp_reproducibility():
 
 
 def test_aspp_with_batch_vector():
+    """
+    Verify technical perturbation profiling across experimental batch partitions.
+    
+    Simulates cross-batch label preservation when batch vectors are provided,
+    evaluating stability against technical batch confounding.
+    """
     rng = np.random.default_rng(555)
     X = rng.normal(size=(50, 6))
     batches = np.repeat([0, 1], 25)
@@ -213,5 +267,8 @@ def test_aspp_with_batch_vector():
 
 
 def test_root_import_parity():
+    """
+    Verify ASPP classes are accessible directly from the top-level icc package namespace.
+    """
     assert RootASPPConfig is ASPPConfig
     assert RootProfiler is AnchorSpacePerturbationProfiler

@@ -1,5 +1,12 @@
 """
-Unit tests for Experiment 1: Multi-Classifier Generalization Extension.
+Unit and integration tests for multi-classifier inductive generalization.
+
+Validates the downstream supervised learning extension:
+1. Multi-classifier instance configuration: Support Vector Machines (SVM), Random Forests (RF),
+   Multi-Layer Perceptrons (MLP), and K-Nearest Neighbors (KNN).
+2. Algorithmic core subset extraction: isolating high-confidence pseudo-labeled training
+   exemplars with balanced cluster representation while filtering noisy halo samples.
+3. Smoke test verification of the generalization experiment pipeline.
 """
 
 import numpy as np
@@ -21,7 +28,12 @@ except (ImportError, Exception):
 
 @pytest.mark.skipif(not HAS_EXPERIMENT1, reason="Classifier dependencies unavailable or blocked by system policy")
 def test_classifier_instances():
-    """Verify all 4 classifiers are configured with expected parameters."""
+    """
+    Verify parameter initialization across downstream classifier architectures.
+    
+    Ensures that SVM, RF, MLP, and KNN estimators are configured with appropriate
+    reproducibility seeds, tree counts, network topologies, and neighbor counts.
+    """
     clfs = get_classifier_instances(seed=42)
     assert set(clfs.keys()) == {"SVM", "RF", "MLP", "KNN"}
     assert clfs["RF"].n_estimators == 100
@@ -32,7 +44,13 @@ def test_classifier_instances():
 
 @pytest.mark.skipif(not HAS_EXPERIMENT1, reason="Classifier dependencies unavailable or blocked by system policy")
 def test_extract_core_subset():
-    """Verify extract_core_subset returns balanced representation across all classes."""
+    """
+    Verify core sample distillation enforces cluster-balanced representation.
+    
+    Ensures that when raw core masks omit a cluster or under-represent low-prevalence
+    subgroups, the fallback logic selects the most stable points per cluster to guarantee
+    that downstream classifiers receive training exemplars for all K classes.
+    """
     rng = np.random.default_rng(42)
     X = rng.normal(size=(60, 10))
     y = np.repeat([0, 1, 2], 20)
@@ -50,7 +68,12 @@ def test_extract_core_subset():
 
 @pytest.mark.skipif(not HAS_EXPERIMENT1, reason="Classifier dependencies unavailable or blocked by system policy")
 def test_multiclassifier_smoke(tmp_path):
-    """Run a fast 1-trial smoke sweep across D_noise=[0] to verify schema and execution."""
+    """
+    Smoke test the multi-classifier generalization sweep end-to-end.
+    
+    Executes a fast 1-trial evaluation across classifiers, verifying CSV persistence,
+    column schema completeness, and performance metrics across both ALL and CORE training sets.
+    """
     out_csv = tmp_path / "test_mc_results.csv"
     df = run_pseudolabel_generalization(
         noise_dims=[0],
