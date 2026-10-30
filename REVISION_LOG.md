@@ -117,3 +117,4 @@
   6. `ref_stats.py`: 53 of 66 references (80.3%) from 2024–2026 ($> 80.0\%$).
   7. `verify_refs.py`: Exit code 0 (`{'OK': 58, 'MANUAL': 8}`).
   8. `package_submission.py`: Rebuilt `paper/springer_nature_submission_package.zip` (43.38 MB).
+- [x] **Item 10: Abstract & Keyword Harmonization for DAMI / Springer Nature** -- Verified Springer *Data Mining and Knowledge Discovery* (DAMI) author guidelines (150–250 words abstract, 4–6 keywords). Reduced keywords from 8 to 5: "Cluster stability, Consensus clustering, Ensemble learning, Bipartite anchor graphs, Feature gating". Tightened abstract to 224 raw words (185 words in PDF text), strictly within the 150–250 word limit across all counting methods. Rebuilt `paper/main.pdf`, `springer_manuscript/main.pdf`, and refreshed `paper/springer_nature_submission_package.zip`.
