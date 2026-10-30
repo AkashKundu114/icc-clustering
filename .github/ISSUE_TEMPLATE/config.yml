@@ -1,0 +1,17 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "Academic & Corresponding Author Contact"
+    url: "mailto:kalyan.biltu@gmail.com"
+    about: "For academic inquiries regarding the manuscript, theoretical foundations, or collaborative research."
+  - name: "Lead Developer & Implementation Contact"
+    url: "mailto:akashkundu1152@gmail.com"
+    about: "For questions regarding codebase implementation, packaging, or technical inquiries."
+  - name: "Peer Reviewer & Reproducibility Guide"
+    url: "https://github.com/AkashKundu114/icc-clustering/blob/main/docs/REPRODUCIBILITY.md"
+    about: "Step-by-step reproduction instructions for all 16 tables and 10 figures in the paper."
+  - name: "Project Website & Visualizations"
+    url: "https://akashkundu.me/projects/icc-clustering"
+    about: "Explore theoretical overviews, benchmark summaries, and interactive materials."
+  - name: "Security Vulnerability Disclosure"
+    url: "https://github.com/AkashKundu114/icc-clustering/security/policy"
+    about: "Privately report security concerns and vulnerabilities per our security policy."
