@@ -9,7 +9,7 @@ To maintain repository compactness and comply with journal pre-publication polic
 - All files remain fully available and intact in the local research environment.
 
 ## Manuscript Details
-- **Title:** Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis
+- **Title:** Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes
 - **Target Journal:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)
 - **Document Class:** `\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}` (v3.1, Dec 2024)
 - **Bibliography Style:** `sn-mathphys-num.bst` (Vancouver / numerical citation order)

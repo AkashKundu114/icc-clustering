@@ -1,7 +1,7 @@
-# Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis
+# Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes
 
 Official reference implementation of the manuscript:  
-**"Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis"** (Under Review).
+**"Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes"** (Under Review).
 
 [![CI](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml/badge.svg)](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
@@ -204,7 +204,7 @@ For academic mentors, peer reviewers, and reproducibility auditors inspecting th
 ```bibtex
 @article{kundu2026when,
   author    = {Akash Kundu},
-  title     = {Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis},
+  title     = {Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes},
   journal   = {Preprint / Submitted for Peer Review},
   year      = {2026},
   url       = {https://github.com/AkashKundu114/icc-clustering}

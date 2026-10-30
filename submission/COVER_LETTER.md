@@ -7,13 +7,13 @@ Springer Nature
 
 **Date:** October 30, 2026  
 
-**Subject:** Submission of Research Manuscript: *"Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis"*  
+**Subject:** Submission of Research Manuscript: *"Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes"*  
 
 ---
 
 Dear Editor-in-Chief and Editorial Board,
 
-We are pleased to submit our original research manuscript titled **"Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis"** for consideration for publication as a regular research paper in *Data Mining and Knowledge Discovery* (DAMI).
+We are pleased to submit our original research manuscript titled **"Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes"** for consideration for publication as a regular research paper in *Data Mining and Knowledge Discovery* (DAMI).
 
 ### Context and Core Problem
 Consensus clustering synthesizes multiple base partitions to discover stable latent groupings. However, in modern high-dimensional noise regimes ($D \gg N$), distance concentration causes a counter-intuitive behavior: **stability-accuracy discordance**. Base clustering algorithms repeatedly converge on spurious noise boundaries with high apparent stability ($\text{Stability} \ge 0.50$ to $1.00$), while true partition recovery collapses ($\text{ARI} \le 0.05$). On real high-dimensional benchmarks ($D/N > 20$), our pre-specified stratified subsampling protocol demonstrates that the stability–accuracy gap reaches up to $+0.973$ (e.g., Spectral clustering on Prostate: stability $0.971$, ARI $-0.002$), while column-permuted null controls collapse to zero (mean $+0.007$).

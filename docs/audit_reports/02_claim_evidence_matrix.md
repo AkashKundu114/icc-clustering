@@ -1,6 +1,6 @@
 # Claim -> Evidence Matrix
 
-**Canonical Manuscript Title:** Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis  
+**Canonical Manuscript Title:** Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes  
 **Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
 **Canonical Active Release:** v2.1.0  
 

@@ -1,6 +1,6 @@
 # Independent Research Audit & Adversarial Verification Reports
 
-**Canonical Manuscript Title:** Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis  
+**Canonical Manuscript Title:** Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes  
 **Academic Lineage:** Initial University Allotment Title: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data" (`CSE_PROJECT_68`, Faculty Mentor: Prof. Kalyan Kumar Das); Early Proposal Blueprint: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"  
 **Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`), manuscript `paper/main.tex`.  
 **Canonical Release Version:** v2.1.0  

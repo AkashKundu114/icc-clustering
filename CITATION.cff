@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software or benchmark suite in your research, please cite as follows."
-title: "Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis"
+title: "Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes"
 version: 2.2.0
 date-released: "2026-10-30"
 authors:
