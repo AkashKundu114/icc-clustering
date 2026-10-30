@@ -5,13 +5,13 @@ The Editor-in-Chief
 *Data Mining and Knowledge Discovery* (DAMI)  
 Springer Nature  
 
-**Date:** October 29, 2026  
+**Date:** October 30, 2026  
 
-**Subject:** Submission of Research Manuscript: *"Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps"*  
+**Subject:** Submission of Research Manuscript: *"Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes"*  
 
 Dear Editor-in-Chief and Editorial Board,
 
-We are pleased to submit our original research manuscript titled **"Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps"** for consideration for publication as a regular research paper in *Data Mining and Knowledge Discovery* (DAMI).
+We are pleased to submit our original research manuscript titled **"Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes"** for consideration for publication as a regular research paper in *Data Mining and Knowledge Discovery* (DAMI).
 
 ### Context and Core Problem
 Consensus clustering synthesizes multiple base partitions to discover stable latent groupings. However, in modern high-dimensional noise regimes ($D \gg N$), distance concentration causes a counter-intuitive failure mode: the **stability trap**. Base clustering algorithms repeatedly converge on spurious noise boundaries with high apparent stability ($\text{Stability} > 0.80$), while true partition recovery collapses to zero ($\text{ARI} \to 0.0$). On real benchmarks, we document that this stability-accuracy gap $\Delta = \text{Stability} - \text{ARI}$ reaches up to $0.852$ (e.g. Spectral on Colon: stability $0.852$, ARI $0.000$).
@@ -25,8 +25,8 @@ In this manuscript, we provide a thorough empirical and geometric dissection ans
 
 ### Research Integrity & Reproducibility
 - **Zero Fabrication:** All numerical claims originate from frozen per-seed execution stores and automated macro bindings (`paper/numbers.tex`).
-- **Literature Vintage:** 75.0% (39 of 52) of references are from 2024–2026, verified via automated CrossRef and arXiv REST APIs. Every reference is cited strictly once at first mention.
-- **Code and Data Availability:** The complete open-source Python library (`icc`, `cicc`), unit test suite (92 passing), and deterministic reproduction scripts are available at https://github.com/AkashKundu114/icc-clustering (release tag `v2.2.0`) under an open-source MIT license. The repository name `icc-clustering` is historical and unrelated to the Iterative Consensus Clustering of Race and Meyer.
+- **Literature Vintage:** 80.3% (53 of 66) of references are from 2024–2026, verified via automated CrossRef and arXiv REST APIs. Every reference is cited strictly once at first mention.
+- **Code and Data Availability:** The complete open-source Python library (`icc`, `cicc`), unit test suite (94 passing), and deterministic reproduction scripts are available at https://github.com/AkashKundu114/icc-clustering (release tag `v2.2.0`) under an open-source MIT license. The repository name `icc-clustering` is historical and unrelated to the Iterative Consensus Clustering of Race and Meyer.
 
 This manuscript represents original work that has not been published previously and is not under consideration for publication elsewhere. All authors have approved the manuscript and agree with its submission to *Data Mining and Knowledge Discovery*.
 
@@ -34,10 +34,12 @@ Thank you very much for your time and consideration of our work.
 
 Sincerely,
 
-**Akash Kundu** (Corresponding Author)  
+**Prof. Kalyan Kumar Das** (Corresponding Author, Research Supervisor)  
 Department of Computer Science and Engineering  
 Techno India University, Kolkata, India  
-Email: akashkundu1152@gmail.com  
+Email: kalyan.biltu@gmail.com  
+ORCID: https://orcid.org/0009-0004-8333-8900  
 
 *On behalf of co-authors:*  
-Trinankur Guha, Rupankar Ghatak, Anubhab Naskar, and Prof. Kalyan Kumar Das (Faculty Mentor).
+- **Akash Kundu** (Lead Developer & Author for Code/Reproduction Materials Requests: akashkundu1152@gmail.com, Techno India University; ORCID: https://orcid.org/0009-0003-8246-7316)  
+- **Prof. Anirban Mukhopadhyay** (Senior Collaborator: anirban@klyuniv.ac.in, University of Kalyani; ORCID: https://orcid.org/0000-0001-8128-3521)

@@ -7,7 +7,7 @@ This file tracks active and resolved blocking conditions, external human decisio
 ## Active Blockers
 
 1. **BLOCKER-COAUTHORS:**
-   - *Description:* Written approval from all co-authors (Akash Kundu, Trinankur Guha, Rupankar Ghatak, Anubhab Naskar, Prof. Kalyan Kumar Das) is required prior to formal journal submission.
+   - *Description:* Written approval from all co-authors (Prof. Kalyan Kumar Das, Akash Kundu, Prof. Anirban Mukhopadhyay) is required prior to formal journal submission.
    - *Status:* PENDING_USER_SIGN_OFF
    - *Action:* Autonomous agent will prepare complete `submission/` package locally and await user submission.
 

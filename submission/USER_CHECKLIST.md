@@ -6,12 +6,15 @@ Before initiating the final upload on the target portal or platform, the human i
 
 ### Phase 1: Author Consents & Approvals
 - [ ] Confirm and obtain written sign-off from all co-authors:
-  - Akash Kundu (Corresponding Author)
-  - Trinankur Guha
-  - Rupankar Ghatak
-  - Anubhab Naskar
-  - Prof. Kalyan Kumar Das (Faculty Mentor)
-- [ ] Confirm corresponding author contact details: `akashkundu1152@gmail.com`.
+  - Prof. Kalyan Kumar Das (Corresponding Author & Research Supervisor)
+  - Akash Kundu (Contributing Author & Lead Developer)
+  - Prof. Anirban Mukhopadhyay (Contributing Author)
+- [ ] Confirm corresponding author contact details: `kalyan.biltu@gmail.com`.
+- [ ] Confirm code/data/materials request contact details: kashkundu1152@gmail.com.
+- [x] Author ORCID iDs verified:
+  - Prof. Kalyan Kumar Das: `0009-0004-8333-8900`
+  - Akash Kundu: `0009-0003-8246-7316`
+  - Prof. Anirban Mukhopadhyay: `0000-0001-8128-3521`
 
 ---
 
@@ -30,7 +33,7 @@ In `paper/main.tex` and all submission packages, all required declarations are a
 - [x] `Ethics approval and consent to participate`: Declared.
 - [x] `Consent for publication`: Declared.
 - [x] `Use of artificial intelligence tools`: Disclosed generically (no commercial model names).
-- [x] `Authors' contributions`: Specified for all 5 authors.
+- [x] `Authors' contributions`: Specified for all 3 authors.
 - [x] `Data availability` and `Code availability`: Active with release tag `v2.2.0`.
 
 ---

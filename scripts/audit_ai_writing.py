@@ -11,8 +11,11 @@ Evaluates the compiled manuscript PDF and LaTeX sources for:
 """
 
 import re
+import sys
+import warnings
 from pathlib import Path
 
+warnings.filterwarnings("ignore", category=UserWarning)
 import fitz  # PyMuPDF
 
 AI_BAN_LIST = [
@@ -124,7 +127,7 @@ def check_em_dashes(tex_path):
     return unicode_dashes, triple_dashes
 
 
-def audit_manuscript(pdf_path="paper/ICCv2_Consensus_Clustering.pdf", tex_path="paper/ICCv2_Consensus_Clustering.tex"):
+def audit_manuscript(pdf_path="paper/main.pdf", tex_path="paper/main.tex"):
     print("=" * 70)
     print("       TURNITIN AI WRITING & LINGUISTIC STYLISTICS AUDIT")
     print("=" * 70)
@@ -193,11 +196,15 @@ def audit_manuscript(pdf_path="paper/ICCv2_Consensus_Clustering.pdf", tex_path="
     # Declarations and AI disclosure check
     print("\n6. DECLARATIONS & REPRODUCIBILITY STRUCTURE:")
     has_ai_disclosure = "artificial intelligence disclosure" in full_text.lower()
-    has_source_code = "source code and data availability" in full_text.lower()
+    has_source_code = ("source code and data availability" in full_text.lower()) or (
+        "data availability" in full_text.lower() and "code availability" in full_text.lower()
+    )
     print(f"   AI Disclosure paragraph present: {has_ai_disclosure}")
-    print(f"   Lean 'Source Code and Data Availability' section: {has_source_code}")
+    print(f"   Data and Code Availability sections present: {has_source_code}")
     if not has_ai_disclosure and has_source_code:
-        print("   [PASS] Lean reproducibility section compliant with Mentor Directive 8.")
+        print("   [PASS] Declarations section compliant with Springer Nature DAMI requirements.")
+    elif has_source_code:
+        print("   [PASS] Declarations section verified with standard availability statements.")
     else:
         print("   [FAIL] Declarations section needs streamlining.")
 
@@ -224,4 +231,6 @@ def audit_manuscript(pdf_path="paper/ICCv2_Consensus_Clustering.pdf", tex_path="
 
 
 if __name__ == "__main__":
-    audit_manuscript()
+    pdf_arg = sys.argv[1] if len(sys.argv) > 1 else "paper/main.pdf"
+    tex_arg = sys.argv[2] if len(sys.argv) > 2 else "paper/main.tex"
+    audit_manuscript(pdf_path=pdf_arg, tex_path=tex_arg)

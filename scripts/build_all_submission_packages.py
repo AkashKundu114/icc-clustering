@@ -24,9 +24,21 @@ def get_referenced_figures(tex_path: Path):
     cites = re.findall(r"\\includegraphics(?:\[.*?\])?\{([^}]+)\}", tex)
     clean_figs = set()
     for c in cites:
+        if c.strip() == "Orcidlogo" or c.startswith("Orcidlogo"):
+            continue
         fig_name = c.replace("figures/", "").strip()
         clean_figs.add(fig_name)
     return sorted(clean_figs)
+
+
+def get_referenced_tables(tex_path: Path):
+    tex = tex_path.read_text(encoding="utf-8")
+    inputs = re.findall(r"\\input\{([^}]+)\}", tex)
+    clean_tabs = set()
+    for inp in inputs:
+        if inp.startswith("gen/"):
+            clean_tabs.add(inp.replace("gen/", "").strip())
+    return sorted(clean_tabs)
 
 
 def build_packages():
@@ -37,17 +49,17 @@ def build_packages():
     tectonic_exe = root / "tools" / "bin" / "tectonic.exe"
 
     ref_figs = get_referenced_figures(paper_dir / "main.tex")
-    print(f"[1/6] Discovered {len(ref_figs)} actively referenced figures in paper/main.tex:")
+    ref_tabs = get_referenced_tables(paper_dir / "main.tex")
+    print(f"[1/6] Discovered {len(ref_figs)} actively referenced figures and {len(ref_tabs)} tables in paper/main.tex:")
     for f in ref_figs:
-        print(f"  - {f}")
+        print(f"  - fig: {f}")
+    for t in ref_tabs:
+        print(f"  - tab: {t}")
 
-    # Copy main.pdf and refs_report.csv to submission root
+    # Copy main.pdf to submission root
     if (paper_dir / "main.pdf").exists():
         shutil.copy2(paper_dir / "main.pdf", sub_dir / "main.pdf")
         print(f"  Copied main.pdf ({sub_dir / 'main.pdf'})")
-    if (root / "results" / "refs_report.csv").exists():
-        shutil.copy2(root / "results" / "refs_report.csv", sub_dir / "refs_report.csv")
-        print(f"  Copied refs_report.csv ({sub_dir / 'refs_report.csv'})")
 
     # =========================================================================
     # PACKAGE 1: Overleaf Package
@@ -64,6 +76,8 @@ def build_packages():
     shutil.copy2(paper_dir / "main.bbl", overleaf_dir / "main.bbl")
     shutil.copy2(paper_dir / "numbers.tex", overleaf_dir / "numbers.tex")
     shutil.copy2(paper_dir / "sn-jnl.cls", overleaf_dir / "sn-jnl.cls")
+    for orcid_ext in ["eps", "pdf", "png"]:
+        shutil.copy2(paper_dir / f"Orcidlogo.{orcid_ext}", overleaf_dir / f"Orcidlogo.{orcid_ext}")
 
     # bst files in root and in bst/
     (overleaf_dir / "bst").mkdir(exist_ok=True)
@@ -71,12 +85,14 @@ def build_packages():
         shutil.copy2(bst_file, overleaf_dir / bst_file.name)
         shutil.copy2(bst_file, overleaf_dir / "bst" / bst_file.name)
 
-    # gen/ tables
+    # gen/ tables (only actively referenced tables)
     (overleaf_dir / "gen").mkdir(exist_ok=True)
-    for gen_file in (paper_dir / "gen").glob("*.tex"):
-        shutil.copy2(gen_file, overleaf_dir / "gen" / gen_file.name)
+    for tab_name in ref_tabs:
+        src_tab = paper_dir / "gen" / tab_name
+        if src_tab.exists():
+            shutil.copy2(src_tab, overleaf_dir / "gen" / tab_name)
 
-    # figures/
+    # figures/ (only actively referenced figures)
     (overleaf_dir / "figures").mkdir(exist_ok=True)
     for fig_name in ref_figs:
         src_fig = paper_dir / "figures" / fig_name
@@ -106,7 +122,6 @@ This package is configured for 1-click import into Overleaf:
     res_ol = subprocess.run([str(tectonic_exe), str(overleaf_dir / "main.tex")], capture_output=True, text=True)
     assert res_ol.returncode == 0, f"Overleaf package compilation failed:\n{res_ol.stderr}\n{res_ol.stdout}"
     print("  [OK] Overleaf package compiled cleanly (returncode 0).")
-    # Remove compiled pdf from package before zipping
     if (overleaf_dir / "main.pdf").exists():
         os.remove(overleaf_dir / "main.pdf")
 
@@ -122,63 +137,43 @@ This package is configured for 1-click import into Overleaf:
     print(f"  Created {overleaf_zip.name} ({ol_size_mb:.2f} MB)")
 
     # =========================================================================
-    # PACKAGE 2: Springer Nature DAMI Submission Package
+    # PACKAGE 2: Springer Nature DAMI Submission Package (NO EXTRA FILES)
     # =========================================================================
-    print("\n[3/6] Building Springer Nature Package (submission/springer_nature_package)...")
+    print("\n[3/6] Building Clean Springer Nature Package (submission/springer_nature_package)...")
     springer_dir = sub_dir / "springer_nature_package"
     if springer_dir.exists():
         shutil.rmtree(springer_dir)
     springer_dir.mkdir(parents=True)
 
-    # Core source files
+    # Core source files ONLY
     shutil.copy2(paper_dir / "main.tex", springer_dir / "main.tex")
     shutil.copy2(paper_dir / "references.bib", springer_dir / "references.bib")
     shutil.copy2(paper_dir / "main.bbl", springer_dir / "main.bbl")
     shutil.copy2(paper_dir / "numbers.tex", springer_dir / "numbers.tex")
     shutil.copy2(paper_dir / "sn-jnl.cls", springer_dir / "sn-jnl.cls")
-
+    shutil.copy2(paper_dir / "sn-mathphys-num.bst", springer_dir / "sn-mathphys-num.bst")
     (springer_dir / "bst").mkdir(exist_ok=True)
-    for bst_file in paper_dir.glob("*.bst"):
-        shutil.copy2(bst_file, springer_dir / bst_file.name)
-        shutil.copy2(bst_file, springer_dir / "bst" / bst_file.name)
+    shutil.copy2(paper_dir / "sn-mathphys-num.bst", springer_dir / "bst" / "sn-mathphys-num.bst")
 
+    for orcid_ext in ["eps", "pdf", "png"]:
+        shutil.copy2(paper_dir / f"Orcidlogo.{orcid_ext}", springer_dir / f"Orcidlogo.{orcid_ext}")
+
+    # gen/ tables (strictly the 15 referenced tables)
     (springer_dir / "gen").mkdir(exist_ok=True)
-    for gen_file in (paper_dir / "gen").glob("*.tex"):
-        shutil.copy2(gen_file, springer_dir / "gen" / gen_file.name)
+    for tab_name in ref_tabs:
+        src_tab = paper_dir / "gen" / tab_name
+        if src_tab.exists():
+            shutil.copy2(src_tab, springer_dir / "gen" / tab_name)
 
+    # figures/ (strictly the 15 referenced figures)
     (springer_dir / "figures").mkdir(exist_ok=True)
     for fig_name in ref_figs:
         src_fig = paper_dir / "figures" / fig_name
         if src_fig.exists():
             shutil.copy2(src_fig, springer_dir / "figures" / fig_name)
 
-    # Editorial accompanying documents
-    shutil.copy2(sub_dir / "COVER_LETTER.md", springer_dir / "COVER_LETTER.md")
-    shutil.copy2(sub_dir / "USER_CHECKLIST.md", springer_dir / "USER_CHECKLIST.md")
-    shutil.copy2(sub_dir / "JOURNAL_SHORTLIST.md", springer_dir / "JOURNAL_SHORTLIST.md")
-    shutil.copy2(sub_dir / "refs_report.csv", springer_dir / "refs_report.csv")
-
-    readme_springer = """# Springer Nature DAMI Submission Package
-
-This bundle is prepared for official submission to *Data Mining and Knowledge Discovery* (DAMI) via the Springer Nature SNAPP / Editorial Manager portal.
-
-### Included Documents:
-1. `main.tex`: Master manuscript source using `sn-jnl.cls` (Springer Nature Journal Class).
-2. `references.bib` & `main.bbl`: 66 verified bibliographic records (80.3% vintage 2024–2026).
-3. `numbers.tex` & `gen/`: Empirical data bindings and tables.
-4. `figures/`: High-resolution figures cited in the manuscript.
-5. `COVER_LETTER.md`: Official cover letter addressed to the Editor-in-Chief.
-6. `USER_CHECKLIST.md`: Author pre-submission checklist.
-7. `refs_report.csv`: Complete CrossRef/arXiv API verification audit.
-
-### Portal Submission Instructions:
-- Upload this zip archive (`springer_nature_package.zip`) or upload the contents to the submission system.
-- The compiled reviewer reference PDF is located at `submission/main.pdf`.
-"""
-    (springer_dir / "README.md").write_text(readme_springer, encoding="utf-8")
-
     # Test compile Springer package with Tectonic
-    print("  Testing compilation of Springer Nature package with Tectonic...")
+    print("  Testing compilation of clean Springer Nature package with Tectonic...")
     res_sp = subprocess.run([str(tectonic_exe), str(springer_dir / "main.tex")], capture_output=True, text=True)
     assert res_sp.returncode == 0, f"Springer package compilation failed:\n{res_sp.stderr}\n{res_sp.stdout}"
     print("  [OK] Springer Nature package compiled cleanly (returncode 0).")
@@ -211,9 +206,9 @@ This bundle is prepared for official submission to *Data Mining and Knowledge Di
     main_tex = main_tex.replace(r"\input{numbers.tex}", numbers_content)
     main_tex = main_tex.replace(r"\input{paper/numbers.tex}", numbers_content)
 
-    for gen_file in (paper_dir / "gen").glob("*.tex"):
-        gen_content = gen_file.read_text(encoding="utf-8")
-        include_str = f"\\input{{gen/{gen_file.name}}}"
+    for tab_name in ref_tabs:
+        gen_content = (paper_dir / "gen" / tab_name).read_text(encoding="utf-8")
+        include_str = f"\\input{{gen/{tab_name}}}"
         main_tex = main_tex.replace(include_str, gen_content)
 
     (arxiv_dir / "main.tex").write_text(main_tex, encoding="utf-8")
@@ -221,6 +216,8 @@ This bundle is prepared for official submission to *Data Mining and Knowledge Di
     shutil.copy2(paper_dir / "main.bbl", arxiv_dir / "main.bbl")
     shutil.copy2(paper_dir / "references.bib", arxiv_dir / "references.bib")
     shutil.copy2(paper_dir / "sn-jnl.cls", arxiv_dir / "sn-jnl.cls")
+    for orcid_file in paper_dir.glob("Orcidlogo.*"):
+        shutil.copy2(orcid_file, arxiv_dir / orcid_file.name)
 
     # bst files
     for bst_file in paper_dir.glob("*.bst"):

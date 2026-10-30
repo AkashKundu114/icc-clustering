@@ -1,6 +1,6 @@
 # Final Submission Blockers & Human Action Register (FINAL_BLOCKERS.md)
 
-**Manuscript Title:** *Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps*  
+**Manuscript Title:** *Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes*  
 **Repository:** `AkashKundu114/icc-clustering`  
 **Target Venue:** Springer Nature *Data Mining and Knowledge Discovery* (DAMI)  
 **Lead Contributor:** Akash Kundu (Techno India University)  
@@ -23,11 +23,9 @@ In strict adherence to academic ethics and journal publication policies, the fol
 - **Status:** **PENDING HUMAN ACTION**
 - **Description:** Springer Nature and COPE (Committee on Publication Ethics) guidelines mandate that all listed authors must formally approve the final manuscript draft and consent to submission.
 - **Required Action:** The corresponding author (Akash Kundu) must obtain explicit, written sign-off (e.g., via email confirmation) from each co-author:
-  1. Akash Kundu (Corresponding Author, Lead Investigator, Software Architect)
-  2. Trinankur Guha (Co-Author)
-  3. Rupankar Ghatak (Co-Author)
-  4. Anubhab Naskar (Co-Author)
-  5. Prof. Kalyan Kumar Das (Faculty Mentor & Research Supervisor)
+  1. Prof. Kalyan Kumar Das (Corresponding Author & Research Supervisor)
+  2. Akash Kundu (Contributing Author, Lead Investigator, Software Architect)
+  3. Prof. Anirban Mukhopadhyay (Contributing Author)
 - **Reference Document:** [`submission/USER_CHECKLIST.md`](file:///d:/Final%20Year%20Project/submission/USER_CHECKLIST.md) (Phase 1).
 
 ---
@@ -39,7 +37,7 @@ In strict adherence to academic ethics and journal publication policies, the fol
   - `\textbf{Ethics approval and consent to participate}`: Declared.
   - `\textbf{Consent for publication}`: Declared.
   - `\textbf{Use of artificial intelligence tools}`: Disclosed.
-  - `\textbf{Authors' contributions}`: Specified for all 5 authors.
+  - `\textbf{Authors' contributions}`: Specified for all 3 authors.
   *(Funding, Data availability, and Code availability are also active in the text).*
 - **Verification:** Recompiled with Tectonic into `submission/main.pdf` and bundled into `submission/source.zip` (24.10 MB). Zero unresolved markers.
 
