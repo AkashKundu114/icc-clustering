@@ -156,7 +156,7 @@ def main():
 
     advantage = scores_train_icc["ari"] - max(scores_km["ari"], scores_sp["ari"])
     print(f"\n[+] ICC-v2 train ARI minus best of K-Means/Spectral: {advantage:+.4f}")
-    print("[+] (Interpret only if the margin is large relative to seed-to-seed variation; see docs/audit_reports/.)\n")
+    print("[+] (Interpret only if the margin is large relative to seed-to-seed variation; see docs/THEORETICAL_FOUNDATIONS.md and results/.)\n")
 
 
 if __name__ == "__main__":

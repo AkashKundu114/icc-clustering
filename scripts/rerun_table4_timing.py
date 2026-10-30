@@ -6,17 +6,16 @@ for 5 seeds each (42, 101, 202, 303, 404) on an idle system, logging CPU frequen
 background load, and swap usage.
 """
 
+import cProfile
 import gc
+import io
 import json
-import os
+import pstats
 import sys
 import time
 import tracemalloc
-import cProfile
-import pstats
-import io
 from pathlib import Path
-import numpy as np
+
 import pandas as pd
 import psutil
 
@@ -24,8 +23,8 @@ import psutil
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from experiments.exp4_scalability_and_sensitivity.src.scaling_benchmark import generate_benchmark_synthetic
 from experiments.exp3_real_world_benchmarks.src.benchmark_models import run_icc_v2
+from experiments.exp4_scalability_and_sensitivity.src.scaling_benchmark import generate_benchmark_synthetic
 
 CSV_PATH = ROOT / "experiments" / "exp4_scalability_and_sensitivity" / "data" / "exp4_sample_scaling_results.csv"
 BACKUP_PATH = ROOT / "experiments" / "exp4_scalability_and_sensitivity" / "data" / "exp4_sample_scaling_results_backup.csv"

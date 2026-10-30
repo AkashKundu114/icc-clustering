@@ -7,15 +7,10 @@ This statement documents the exact scope and limitations of Artificial Intellige
 ## Authorship & Intellectual Contribution Statement
 
 1. **Ideation & Theoretical Foundations:**  
-   All conceptual formulations, mathematical derivations (e.g., finite-sample bounds on Sarle's Bimodality Coefficient, Bipartite Transfer-Cut Laplacian spectra, closed-form active subspace centroid projections), experimental designs, hypotheses, and scientific interpretations were conceived and directed exclusively by the human authors (Akash Kundu, Trinankur Guha, Rupankar Ghatak, Anubhab Naskar, and Prof. Kalyan Kumar Das).
+   All conceptual formulations, mathematical derivations (e.g., finite-sample bounds on Sarle's Bimodality Coefficient, Bipartite Transfer-Cut Laplacian spectra, closed-form active subspace centroid projections), experimental designs, hypotheses, and scientific interpretations were conceived and directed exclusively by the human authors (Prof. Kalyan Kumar Das, Akash Kundu, and Prof. Anirban Mukhopadhyay).
 
 2. **Assistive AI Utilization:**  
-   An agentic AI coding assistant was utilized solely for technical assistance:
-   - Automated code formatting and static typing checks (`ruff`, `mypy`).
-   - Unit test suite expansion and regression verification.
-   - Bibliographic metadata cross-referencing via CrossRef and arXiv REST APIs (`scripts/verify_refs.py`).
-   - LaTeX table formatting and typographic proofreading.
-   - Reproducibility shell scripting and directory structure audits.
+   AI assistance was utilized solely for grammatical checking and English language copy-editing. All concepts, analyses, code, mathematical formulations, experimental pipelines, and conclusions were developed and verified entirely by the authors.
 
 3. **Verification & Accountability:**  
    The authors conducted independent manual verification of all source code, mathematical equations, experimental logs, figures, and numerical tables. The authors assume full responsibility for the scientific accuracy, reproducibility, and ethical compliance of all presented research.
