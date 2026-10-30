@@ -1,6 +1,6 @@
 # Final Independent Verification Audit Report (FINAL_INDEPENDENT_VERIFICATION.md)
 
-**Manuscript Title:** *Stable but Wrong: Why Consensus Clustering Can Fail in High Dimensions, and What Helps*  
+**Manuscript Title:** *Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes*  
 **Short Title / Running Head:** *Why Consensus Clustering Can Fail in High Dimensions*  
 **Target Journal:** Springer Nature *Data Mining and Knowledge Discovery* (DAMI)  
 **Lead Contributor & Software Architect:** Akash Kundu (Techno India University)  
