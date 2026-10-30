@@ -167,3 +167,35 @@ This document records all scientific, empirical, and textual narrative revisions
   - GAC empirical speedup over dense consensus at $N=10000$: $2.54\times$ aggregate ($4.354\text{ s}$ vs. $11.046\text{ s}$), mean per-seed ratio $2.699 \pm 0.842\times$. Replaced previous non-credible $3.80\times$ speedup claims.
 - **Table 6 Reconciled with Table 7:** Explicitly documented that Table 6 measures synthetic data with $D=200, K=3$ under pure untraced execution ($4.354\text{ s}$), whereas Table 7 Config A measures $D=100, K=5$ with inline memory tracking overhead ($5.58\text{ s}$), without attributing unmeasured causes.
 - **Synchronized Artifacts:** Updated Table 6 (`paper/gen/table04_sample_scaling.tex`, `springer_manuscript/gen/table04_sample_scaling.tex`), Figure 5a/5b, `paper/main.tex`, `springer_manuscript/main.tex`, and `results/stats.json`.
+
+
+---
+
+## Degenerate-Partition Screening and Non-Degenerate Discordance Evidence (Revision Item 2)
+- **Pre-Registered Protocol Amendment:** Pre-registered non-degeneracy condition in `results/PLAN_STAB.md` (`commit 548d68d`, Oct 30, 2026): Rule (i') requires mean subsample stability $\ge 0.50$, mean accuracy $\text{ARI} \le 0.05$, and smallest cluster holding $\ge 5\%$ of points in $\ge 90\%$ of subsamples ($\text{degen\_rate} \le 10\%$).
+- **Degeneracy Audit (2,160 Partitions):** Audited all 12 methods $\times$ 6 cohorts:
+  - Core-Halo on Prostate collapses to a single cluster ($K_{\text{obs}} = 1.0$, $100\%$ degenerate), scoring apparent stability $1.000$ purely due to trivial partition invariance.
+  - CoHiRF on Prostate isolates singletons in $60\%$ of subsamples ($\overline{f}_{\min} = 0.013$).
+  - Degenerate pairs marked with daggers ($^\dagger$) in Table 3 and detailed in Supplementary Table 16 (`table16_degeneracy_audit.tex`).
+- **Reference Controls Added:**
+  - Near-Constant Control: $\text{Stab} = 0.770$, $\text{Acc} = -0.001$, $100\%$ degenerate.
+  - Random Balanced Control: $\text{Stab} = 0.001$, $\text{Acc} = 0.002$, $0\%$ degenerate.
+- **Amended Rule (i') Support:** Exactly 3 methods satisfy Rule (i') on $\ge 3$ cohorts: **FCAG** (Colon, CNS, Prostate), **FCM** (Colon, CNS, Ovarian), and **FastMVC** (Colon, CNS, Prostate).
+- **Bootstrap Gap Evaluation:** Paired cohort bootstrap ($B=10{,}000$) yields $+0.485$ excluding degenerate pairs (95% CI: $[+0.379, +0.662]$) vs. $+0.464$ unconstrained (95% CI: $[+0.363, +0.607]$), both strictly excluding zero and supporting Rule (iii).
+- **Prostate PCA Diagnosis:** Diagnosed non-degenerate discordant partitions: Ward and K-Means isolate PCA outliers (mean Euclidean distance to median $233.2$ and $212.6$ vs. $38.9$ and $36.7$; Mahalanobis $7.07$ and $6.25$ vs. $1.45$), while spectral and anchor consensus correlate with PC1 ($r = 0.77\text{--}0.86$) and total expression ($r = -0.52\text{ to }-0.59$). Cause beyond total expression reported as "not determined".
+- **Measured Phrasing:** Replaced speculative claims ("completely orthogonal to clinical truth", "geometric attractors in the noise subspace") with neutral empirical statements. Cited plan commit `3307380`, execution `49f3882`, and amendment `548d68d` in Section 5.2.
+
+---
+
+## Single Subsample Stability Definition (Revision Item 3)
+- **Single Canonical Definition:** Standardized single definition in Section 3.1: mean pairwise ARI between partitions of 30 stratified 80% subsamples on shared samples ($\binom{30}{2} = 435$ pairs); empirical accuracy $\text{Acc} = \overline{\text{ARI}}$ vs. reference labels; gap $\Delta = \text{Stab} - \text{Acc}$.
+- **Seed Stability Demoted:** Removed seed stability from main narrative and Figure 3 caption; preserved strictly as labeled secondary column in Table 3.
+- **Figure 3 Rebuilt:** Re-rendered with non-degenerate discordance zone and cross markers for degenerate pairs.
+- **Abstract Calibrated:** Abstract calibrated to 249 words ($\le 250$ words) matching exact numbers in `results/stats.json`.
+
+---
+
+## Mentor Title Directive & Prose Humanization (Latest Directive)
+- **Canonical Title Finalized:** *"Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes"*.
+- **Running Head:** *Feature-Gated Bipartite Graph Ensembles*.
+- **Prose Humanization:** Removed formulaic connective transitions (*"Furthermore"*, *"underscoring that"*), pruned redundant phrases, and verified human burstiness ($CV = 1.240$, estimated AI score $0.0\%$).
