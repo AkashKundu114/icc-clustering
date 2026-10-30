@@ -1,6 +1,6 @@
 # Manuscript Claim-to-Evidence Traceability Register (CLAIM_EVIDENCE.md)
 
-**Manuscript Title:** *Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes*  
+**Manuscript Title:** *Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis*  
 **Short Title / Running Head:** *Why Consensus Clustering Can Fail in High Dimensions*  
 **Target Venue:** Springer Nature *Data Mining and Knowledge Discovery* (DAMI)  
 **Lead Contributor & Software Architect:** Akash Kundu (Techno India University)  

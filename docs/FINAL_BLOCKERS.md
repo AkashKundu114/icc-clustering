@@ -1,6 +1,6 @@
 # Final Submission Blockers & Human Action Register (FINAL_BLOCKERS.md)
 
-**Manuscript Title:** *Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes*  
+**Manuscript Title:** *Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis*  
 **Repository:** `AkashKundu114/icc-clustering`  
 **Target Venue:** Springer Nature *Data Mining and Knowledge Discovery* (DAMI)  
 **Lead Contributor:** Akash Kundu (Techno India University)  

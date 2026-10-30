@@ -4,7 +4,7 @@
 **Final Year Project Code:** `CSE_PROJECT_68`  
 **Original Degree Project Title (University Allotment):** *Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data*  
 **Early Proposal Blueprint Title (Capstone Proposal):** *Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes*  
-**Canonical Manuscript Title (Springer Nature DAMI):** *When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination*  
+**Canonical Manuscript Title (Springer Nature DAMI):** *Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis*  
 **Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`).  
 **Canonical Release Version:** v2.1.0  
 **Student Team:** Akash Kundu (Lead), Trinankur Guha, Rupankar Ghatak, Anubhav Naskar  
@@ -30,7 +30,7 @@ During the early capstone phase, the proposal was titled:
 > **"Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes (ICC-v2)"**
 
 Through rigorous empirical examination, pre-registered testing, and frozen Pass F benchmark audits, this research evolved into its canonical journal manuscript:
-> **"When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"**  
+> **"Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis"**  
 > Published in the **Springer Nature Journal *Data Mining and Knowledge Discovery* (DAMI)**.
 
 ---
