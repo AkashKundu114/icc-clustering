@@ -112,3 +112,14 @@ This log records every task executed, evidence gathered, verified outcomes, and 
     - **Kill Criterion 2 (Computation & Memory):** Single-fit execution time on extreme dimensions ($N=253, D=15{,}154$) bounded at **0.84 seconds** ($\ll 10$ minutes cap). Host peak RAM $< 2.0$ GB ($\ll 12.0$ GB cap). Zero failures across all 360 runs.
   - **Test Suite & Static Analysis:** 29/29 unit tests passing (`pytest tests/`), `ruff check` passing (0 errors), `mypy` passing (0 issues in 17 source files).
   - **Ledger & Artifacts:** Updated `docs/DESIGN_LOG.md`, `CHANGELOG.md`, `results/dev_pilots.csv`, and `results/dev_summary.json`. Round 1 officially cleared.
+
+
+---
+
+## 2026-10-30 Session 6 (Track B Phase B4 Complete: Rounds 2–5 Cleared & Pre-Freeze Audit)
+
+- **Track B (`d:\nullconsensus`): Rounds 2, 3, 4 Execution & Pre-Freeze Checkpoint**
+  - **Round 2 (Hyperparameter Robustness Grid):** Evaluated 324 configurations across temperature $\tau \in \{0.5, 1.0, 2.0\}$, anchor count $L \in \{20, 40, 60\}$, and subspace fraction $\alpha \in \{0.10, 0.15, 0.20\}$ across 4 datasets and 3 seeds in 4.12 minutes (`scripts/run_round2_grid.py`). Zero failures. Proved stability across all parameter slices without performance cliffs; confirmed default values ($\tau=1.0, L=40, \alpha=0.15$) achieve optimal balance (Leukemia: 0.8550, SRBCT: 0.5104, Colon: 0.1002, Synthetic: 0.4859).
+  - **Round 3 (Count-Aware HurdleGate Calibration - Hypothesis H2):** Benchmarked `mode="hurdle"` vs `mode="nullgate"` vs `icc_v2` vs `kmeans` across 80 model fits on real scRNA-seq (`zheng68k`) and zero-inflated Poisson manifolds with 50%, 70%, 85% dropouts (`scripts/run_round3_hurdle.py`). On `zheng68k`, Hurdle mode scored ARI = **0.2906** (vs 0.1166 for NullGate and 0.1679 for ICC-v2). Overall mean count ARI: Hurdle = **0.2006** vs ICC-v2 = **0.0509** ($\Delta\text{ARI} = \mathbf{+0.1497} \ge +0.0500$). Hypothesis H2 strongly supported.
+  - **Round 4 (Scalability & Memory Stress-Test - Kill Criterion 2):** Evaluated extreme dimensions up to pre-registered cap ($N=2{,}000, D=15{,}000$, 30 million elements) via `scripts/run_round4_stress.py`. Single-fit execution time was **4.19 seconds** (143x faster than 600s threshold); peak memory was **1.01 GB** ($<9\%$ of 12.0 GB RAM threshold). Zero failures.
+  - **Round 5 (Final DEV Checkpoint & Phase B5 Ready):** All 4 design iteration rounds completed within the strict 5-round cap. Codebase verified with 29/29 passing unit tests (`pytest tests/`), zero ruff warnings, zero mypy errors. Ready for git tagging `freeze-v1` to unlock Phase B5/B6.
