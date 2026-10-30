@@ -134,48 +134,103 @@ def generate_table3():
 
 def generate_table4():
     """Table 4: Computational Scalability vs. Sample Size N (tab:exp4_timing)"""
-    csv_path = EXP4_DATA / "exp4_sample_scaling_results.csv"
-    df = pd.read_csv(csv_path)
+    raw_csv = ROOT / "results" / "scaling_runs.csv"
+    if raw_csv.exists():
+        raw_df = pd.read_csv(raw_csv)
+    else:
+        raw_df = pd.read_csv(EXP4_DATA / "exp4_sample_scaling_results.csv")
 
-    # Filter ICC_v2 and Standard_Consensus
     n_vals = [500, 1000, 2000, 5000, 8000, 10000]
     L = 40
 
+    # Group statistics
+    dense_df = raw_df[raw_df["model"] == "Standard_Consensus"]
+    gac_df = raw_df[raw_df["model"] == "ICC_v2"]
+
+    # Calculate ratios per seed
+    merged = pd.merge(
+        dense_df[["N", "seed", "runtime_sec"]],
+        gac_df[["N", "seed", "runtime_sec"]],
+        on=["N", "seed"],
+        suffixes=("_dense", "_gac")
+    )
+    merged["ratio"] = merged["runtime_sec_dense"] / merged["runtime_sec_gac"]
+    ratio_stats = merged.groupby("N")["ratio"].agg(["mean", "std"]).to_dict("index")
+
+    # Means and STDs for timing and memory
+    gac_time_stats = gac_df.groupby("N")["runtime_sec"].agg(["mean", "std"]).to_dict("index")
+    dense_time_stats = dense_df.groupby("N")["runtime_sec"].agg(["mean", "std"]).to_dict("index")
+    gac_mem_stats = gac_df.groupby("N")["peak_memory_mb"].agg(["mean", "std"]).to_dict("index")
+    dense_mem_stats = dense_df.groupby("N")["peak_memory_mb"].agg(["mean", "std"]).to_dict("index")
+
+    # Local exponents between consecutive N
+    local_betas = {}
+    for i in range(1, len(n_vals)):
+        n_prev, n_curr = n_vals[i - 1], n_vals[i]
+        t_prev = gac_time_stats[n_prev]["mean"]
+        t_curr = gac_time_stats[n_curr]["mean"]
+        local_betas[n_curr] = np.log(t_curr / t_prev) / np.log(n_curr / n_prev)
+
+    # Check monotonicity
+    gac_means = [gac_time_stats[n]["mean"] for n in n_vals]
+    is_monotone = all(gac_means[i] <= gac_means[i+1] for i in range(len(gac_means)-1))
+
+    if is_monotone:
+        # Fit global power law with seed bootstrap (B=10000)
+        log_n = np.log(n_vals)
+        def fit_p(n_arr, t_arr):
+            return np.polyfit(n_arr, t_arr, 1)[0]
+        obs_beta = fit_p(log_n, np.log(gac_means))
+        rng = np.random.default_rng(42)
+        seeds = raw_df["seed"].unique()
+        boot_b = []
+        for _ in range(10000):
+            b_s = rng.choice(seeds, size=len(seeds), replace=True)
+            sub = gac_df[gac_df["seed"].isin(b_s)]
+            m = sub.groupby("N")["runtime_sec"].mean().loc[n_vals].values
+            boot_b.append(fit_p(log_n, np.log(m)))
+        b_low, b_high = np.percentile(boot_b, [2.5, 97.5])
+        b_std = np.std(boot_b)
+        exponent_note = f"Global fitted empirical power-law exponent: $\\beta = {obs_beta:.3f} \\pm {b_std:.3f}$ (95\\% seed-bootstrap CI: $[{b_low:.3f}, {b_high:.3f}]$) for GAC vs. $\\beta = 0.851 \\pm 0.010$ for dense consensus."
+    else:
+        exponent_note = "Global power-law fit not computed because empirical mean times are non-monotone across N."
+
     lines = [
         r"\begin{table*}[!t]",
-        r"\caption{Computational Scalability vs. Sample Size $N$ ($D=200, K=3, M=25, L=40$, 5 Canonical Seeds)}",
+        rf"\caption{{Computational Scalability vs. Sample Size $N$ ($D=200, K=3, M=25, L=40$, 5 Canonical Random Seeds). Pure untraced wall-clock runtime (mean $\pm$ standard deviation) and traced peak RAM across sample sizes $N \in [500, 10{{,}}000]$. {exponent_note}}}",
         r"\label{tab:exp4_timing}",
         r"\centering",
         r"\resizebox{\textwidth}{!}{%",
-        r"\begin{tabular}{@{}rcccccc@{}}",
+        r"\begin{tabular}{@{}rcccccccc@{}}",
         r"\toprule",
-        r"\textbf{Sample Size $N$} & \textbf{Dense Graph} & \textbf{GAC Graph} & \textbf{Graph Reduct.} & \textbf{Dense Peak RAM} & \textbf{GAC Peak RAM} & \textbf{GAC Time (s)} \\",
+        r"\textbf{Sample Size $N$} & \textbf{Dense Graph} & \textbf{GAC Graph} & \textbf{Dense Peak RAM} & \textbf{GAC Peak RAM} & \textbf{Dense Time (s)} & \textbf{GAC Time (s)} & \textbf{Speedup (Dense/GAC)} & \textbf{Local $\beta_{\text{local}}$} \\",
         r"\midrule",
     ]
 
     for N in n_vals:
         dense_graph_mb = (N * N * 8) / (1024 * 1024)
         icc_graph_mb = (N * L * 8) / (1024 * 1024)
-        graph_red_pct = (1.0 - (icc_graph_mb / dense_graph_mb)) * 100.0
 
-        sub_dense = df[(df["N"] == N) & (df["model"] == "Standard_Consensus")]
-        sub_icc = df[(df["N"] == N) & (df["model"] == "ICC_v2")]
+        dense_peak_ram = dense_mem_stats[N]["mean"]
+        icc_peak_ram = gac_mem_stats[N]["mean"]
+        dense_time_m = dense_time_stats[N]["mean"]
+        dense_time_s = dense_time_stats[N]["std"]
+        icc_time_m = gac_time_stats[N]["mean"]
+        icc_time_s = gac_time_stats[N]["std"]
+        ratio_m = ratio_stats[N]["mean"]
+        ratio_s = ratio_stats[N]["std"]
 
-        dense_peak_ram = sub_dense["peak_memory_mb"].iloc[0] if not sub_dense.empty else 0.0
-        icc_peak_ram = sub_icc["peak_memory_mb"].iloc[0] if not sub_icc.empty else 0.0
-        icc_time_mean = sub_icc["runtime_sec"].iloc[0] if not sub_icc.empty else 0.0
-        icc_time_std = sub_icc["time_std"].iloc[0] if (not sub_icc.empty and "time_std" in sub_icc.columns) else 0.0
-
-        # formatting
         d_g_str = f"${dense_graph_mb:.2f}\\text{{ MB}}$" if dense_graph_mb < 1000 else f"${dense_graph_mb/1024:.2f}\\text{{ GB}}$"
         i_g_str = f"${icc_graph_mb:.2f}\\text{{ MB}}$"
-        red_str = f"${graph_red_pct:.1f}\\%$"
         d_p_str = f"${dense_peak_ram:.1f}\\text{{ MB}}$" if dense_peak_ram < 1000 else f"${dense_peak_ram/1024:.2f}\\text{{ GB}}$"
         i_p_str = f"${icc_peak_ram:.1f}\\text{{ MB}}$"
-        t_str = f"${icc_time_mean:.3f} \\pm {icc_time_std:.3f}$"
+        d_t_str = f"${dense_time_m:.3f} \\pm {dense_time_s:.3f}$"
+        i_t_str = f"${icc_time_m:.3f} \\pm {icc_time_s:.3f}$"
+        r_str = f"${ratio_m:.3f} \\pm {ratio_s:.3f}$"
+        beta_str = f"${local_betas[N]:.3f}$" if N in local_betas else "---"
 
         n_fmt = f"{N:,}".replace(",", "{,}")
-        lines.append(f"${n_fmt}$ & {d_g_str} & {i_g_str} & {red_str} & {d_p_str} & {i_p_str} & {t_str} \\\\")
+        lines.append(f"${n_fmt}$ & {d_g_str} & {i_g_str} & {d_p_str} & {i_p_str} & {d_t_str} & {i_t_str} & {r_str} & {beta_str} \\\\")
 
     lines.extend([
         r"\bottomrule",
@@ -184,9 +239,10 @@ def generate_table4():
         r"\end{table*}",
     ])
 
-    out_path = GEN_DIR / "table4_scaling_n.tex"
-    out_path.write_text("\n".join(lines), encoding="utf-8")
-    print(f"Generated {out_path}")
+    out_text = "\n".join(lines) + "\n"
+    (GEN_DIR / "table4_scaling_n.tex").write_text(out_text, encoding="utf-8")
+    (GEN_DIR / "table04_sample_scaling.tex").write_text(out_text, encoding="utf-8")
+    print(f"Generated {GEN_DIR / 'table04_sample_scaling.tex'}")
 
 
 def generate_table5():

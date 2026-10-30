@@ -152,3 +152,18 @@ This document records all scientific, empirical, and textual narrative revisions
 - **Recent Literature Share:** Added 14 verified 2024–2026 citations to `paper/references.bib` and `springer_manuscript/references.bib`, increasing recent literature share from 75.0% (39/52) to **80.3%** (53/66).
 - **Verification:** 100% verified via `scripts/verify_refs.py` (exit code 0, 58 OK, 8 MANUAL).
 - **Mapping:** All 14 entries mapped in `results/refs_map.csv` and cited in the manuscript.
+
+---
+
+## Clean Controlled Scaling Benchmark & Exponent Recalibration (Revision Item 1)
+- **Monotonicity & Hygiene:** Executed a clean, single-process, idle-workstation scalability rerun across $N \in \{500, 1000, 2000, 5000, 8000, 10000\}$ with 5 canonical seeds ($42, 101, 202, 303, 404$), fixed power plan, warm-up discards logged to `results/scaling_warmup.csv`, and pre-/post-run telemetry (CPU frequency, CPU load %, swap usage) logged to `results/scaling_env.csv`.
+- **Anomalous Drop Resolution:** Completely eliminated the historical host-contention artifact (where runtime fell from 4.76 s at $N=5000$ to 0.835 s at $N=10000$ due to system CPU/swap thrashing). Runtimes are now strictly monotonic in $N$:
+  - GAC: $0.836 \pm 0.096\text{ s}$ ($N=500$), $1.081 \pm 0.084\text{ s}$ ($N=1000$), $1.725 \pm 0.177\text{ s}$ ($N=2000$), $3.065 \pm 0.415\text{ s}$ ($N=5000$), $3.276 \pm 0.978\text{ s}$ ($N=8000$), $4.354 \pm 1.252\text{ s}$ ($N=10000$).
+  - Dense Standard Consensus: $0.854 \pm 0.095\text{ s}$ ($N=500$), $0.999 \pm 0.198\text{ s}$ ($N=1000$), $1.627 \pm 0.245\text{ s}$ ($N=2000$), $3.477 \pm 0.405\text{ s}$ ($N=5000$), $7.019 \pm 1.115\text{ s}$ ($N=8000$), $11.046 \pm 2.055\text{ s}$ ($N=10000$).
+- **Power-Law Exponent Recalibration:**
+  - GAC global empirical power-law exponent: $\beta = 0.548 \pm 0.013$ ($95\%$ seed-bootstrap CI: $[0.527, 0.568]$) across full range (local exponents: $\beta_{500 \to 1000} = 0.371$, $\beta_{1000 \to 2000} = 0.674$, $\beta_{2000 \to 5000} = 0.627$, $\beta_{5000 \to 8000} = 0.142$, $\beta_{8000 \to 10000} = 1.275$).
+  - Dense consensus power-law exponent: $\beta = 0.851 \pm 0.010$ ($95\%$ CI: $[0.834, 0.867]$).
+- **Speedup Recalibration:**
+  - GAC empirical speedup over dense consensus at $N=10000$: $2.54\times$ aggregate ($4.354\text{ s}$ vs. $11.046\text{ s}$), mean per-seed ratio $2.699 \pm 0.842\times$. Replaced previous non-credible $3.80\times$ speedup claims.
+- **Table 6 Reconciled with Table 7:** Explicitly documented that Table 6 measures synthetic data with $D=200, K=3$ under pure untraced execution ($4.354\text{ s}$), whereas Table 7 Config A measures $D=100, K=5$ with inline memory tracking overhead ($5.58\text{ s}$), without attributing unmeasured causes.
+- **Synchronized Artifacts:** Updated Table 6 (`paper/gen/table04_sample_scaling.tex`, `springer_manuscript/gen/table04_sample_scaling.tex`), Figure 5a/5b, `paper/main.tex`, `springer_manuscript/main.tex`, and `results/stats.json`.

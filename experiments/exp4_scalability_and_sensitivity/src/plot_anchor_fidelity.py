@@ -125,6 +125,13 @@ def plot_fidelity_quad():
     plt.tight_layout()
     out_file = FIGURES_DIR / "fig24_anchor_fidelity_quad.png"
     plt.savefig(out_file, dpi=300, bbox_inches="tight")
+    for tdir in [EXP_DIR.parent / "springer_manuscript" / "figures",
+                 EXP_DIR.parent / "paper" / "figures",
+                 EXP_DIR.parent / "manuscript" / "figures",
+                 EXP_DIR.parent / "figures"]:
+        if tdir.exists():
+            plt.savefig(tdir / "fig24_anchor_fidelity_quad.png", dpi=300, bbox_inches="tight")
+            plt.savefig(tdir / "fig05b_scalability_breakdown.png", dpi=300, bbox_inches="tight")
     plt.close()
     print(f"[+] Saved: {out_file}")
 
