@@ -1,6 +1,6 @@
 # Claim -> Evidence Matrix
 
-**Canonical Manuscript Title:** When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination  
+**Canonical Manuscript Title:** Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis  
 **Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)  
 **Canonical Active Release:** v2.1.0  
 

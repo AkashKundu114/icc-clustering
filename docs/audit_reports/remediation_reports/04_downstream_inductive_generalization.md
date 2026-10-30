@@ -1,7 +1,7 @@
 # Research Audit Report 04: Downstream Inductive Generalization & Point-of-Care Projection
 
 **Audit Target:** Inductive Generalization Claims in `experiments/exp1_generalization/` and Manuscript Section 6  
-**Canonical Manuscript Title:** When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination  
+**Canonical Manuscript Title:** Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis  
 **Academic Lineage:** Initial University Allotment Title: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data" (`CSE_PROJECT_68`, Mentor: Prof. Kalyan Kumar Das); Early Proposal Blueprint: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"  
 **Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`), manuscript `paper/main.tex`.  
 **Canonical Active Release:** v2.1.0  

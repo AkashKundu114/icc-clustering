@@ -5,7 +5,7 @@
 **Repository:** `icc-clustering` / `d:\Final Year Project`  
 **Original Degree Project Title (University Allotment):** *Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data* (`CSE_PROJECT_68`, Mentor: Prof. Kalyan Kumar Das)  
 **Early Proposal Blueprint Title (Capstone Proposal):** *Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes*  
-**Canonical Manuscript Title (Springer Nature DAMI):** *When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination*  
+**Canonical Manuscript Title (Springer Nature DAMI):** *Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis*  
 **Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`), manuscript `paper/main.tex`.  
 **Canonical Release Version:** v2.1.0  
 **Re-Review Status:** **Phase 12 Final Synthesis & Pass F Frozen Audit Verification**  
@@ -89,7 +89,7 @@ The Section 5.2 factorial component ablation across the 6 high-dimensional cance
 ## 5. Strategic Publication Decision: Springer Nature Journal (DAMI)
 
 All publication efforts are unified under the canonical manuscript in `paper/`:
-- **Title:** "When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination"
+- **Title:** "Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis"
 - **Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI)
 - **Document Class:** `sn-jnl.cls` with `sn-mathphys-num.bst`
 - **Release Version:** v2.1.0

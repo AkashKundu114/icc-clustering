@@ -1,6 +1,6 @@
 # Inductive Consensus Clustering (ICC-v2): Documentation & Research Dossier
 
-**Canonical Manuscript Title:** When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination  
+**Canonical Manuscript Title:** Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis  
 **Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`)  
 **Canonical Release Version:** v2.1.0  
 **Repository Package:** `icc` (v2.1.0) and `cicc` (Conformal Inductive Consensus Clustering)
@@ -196,7 +196,7 @@ If referencing the theoretical proofs, audit methodology, or empirical benchmark
 ```bibtex
 @article{kundu2026when,
   author    = {Akash Kundu and Trinankur Guha and Rupankar Ghatak and Anubhav Naskar},
-  title     = {When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination},
+  title     = {Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis},
   journal   = {Data Mining and Knowledge Discovery},
   publisher = {Springer Nature},
   year      = {2026},

@@ -1,4 +1,4 @@
-# Submission Cover Letter
+# Cover Letter for Springer Nature (*Data Mining and Knowledge Discovery* / DAMI)
 
 **To:**  
 The Editor-in-Chief  
@@ -9,37 +9,37 @@ Springer Nature
 
 **Subject:** Submission of Research Manuscript: *"Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis"*  
 
+---
+
 Dear Editor-in-Chief and Editorial Board,
 
 We are pleased to submit our original research manuscript titled **"Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis"** for consideration for publication as a regular research paper in *Data Mining and Knowledge Discovery* (DAMI).
 
 ### Context and Core Problem
-Consensus clustering synthesizes multiple base partitions to discover stable latent groupings. However, in modern high-dimensional noise regimes ($D \gg N$), distance concentration causes a counter-intuitive failure mode: the **stability-accuracy discordance**. Base clustering algorithms repeatedly converge on spurious noise boundaries with high apparent stability ($\text{Stability} > 0.80$), while true partition recovery collapses to zero ($\text{ARI} \to 0.0$). On real benchmarks, we document that this stability-accuracy gap $\Delta = \text{Stability} - \text{ARI}$ reaches up to $0.852$ (e.g. Spectral on Colon: stability $0.852$, ARI $0.000$).
+Consensus clustering synthesizes multiple base partitions to discover stable latent groupings. However, in modern high-dimensional noise regimes ($D \gg N$), distance concentration causes a counter-intuitive behavior: **stability-accuracy discordance**. Base clustering algorithms repeatedly converge on spurious noise boundaries with high apparent stability ($\text{Stability} \ge 0.50$ to $1.00$), while true partition recovery collapses ($\text{ARI} \le 0.05$). On real high-dimensional benchmarks ($D/N > 20$), our pre-specified stratified subsampling protocol demonstrates that the stability–accuracy gap reaches up to $+0.973$ (e.g., Spectral clustering on Prostate: stability $0.971$, ARI $-0.002$), while column-permuted null controls collapse to zero (mean $+0.007$).
 
-### Contributions & Key Findings
-In this manuscript, we provide a thorough empirical and geometric dissection answering precisely *why* consensus clustering fails in high dimensions and *what helps*:
-1. **Stability-Accuracy Discordance on Real and Synthetic Manifolds:** We document the stability-accuracy gap across 13 diverse benchmark datasets and controlled distractor regimes, proving that consensus stability alone is fundamentally uninformative in high dimensions without explicit feature gating.
-2. **What Helps: Random Subspaces and Bipartite Anchor Consensus:** We demonstrate that the primary empirical gains in cluster recovery stem from random-subspace ensembling combined with bipartite anchor consensus (+0.118 ARI gain), which scales co-association in linear $O(NL)$ space.
-3. **What Gating Adds:** Bimodality-Gated Subspace Selection (BGSS) adds a focused $+0.062$ ARI gain over random gating ($95\%\ \text{CI}: [+0.021, +0.108]$, Wilcoxon $p = 0.031$), concentrated specifically in small-sample cohorts with pronounced marginal bimodal signal (Leukemia: $0.436$, SRBCT: $0.347$).
-4. **Honest Boundary Characterization:** We identify and document the exact boundaries of marginal gating: non-linear multi-feature XOR parity (Madelon), large-$K$ multi-class coordinate blending, and ultra-sparse count dropouts.
+### Contributions and Key Findings
+In this manuscript, we provide a thorough empirical and geometric dissection answering precisely how consensus clustering behaves in high dimensions and what helps:
+1. **Stability-Accuracy Discordance on Real and Synthetic Manifolds:** Under stratified subsampling, classical and graph-based baselines repeatedly converge to mutually agreeing partitions that do not reflect clinical reference labels. Across six high-$D$ biomedical cohorts, three methods (FCAG, FCM, FastMVC) satisfy our pre-specified non-degenerate discordance criterion on $\ge 3$ cohorts, with a paired bootstrap confirming a strictly positive overall gap of $+0.485$ (95% CI: $[+0.379, +0.662]$; unconstrained $+0.464$, 95% CI: $[+0.363, +0.607]$).
+2. **What Helps: Random Subspaces and Bipartite Anchor Consensus:** We evaluate the Gated Anchor Consensus (GAC) pipeline, demonstrating that the primary empirical gains in cluster recovery stem from random-subspace ensembling combined with bipartite anchor consensus ($+0.118$ ARI gain over ambient consensus), while Bimodality-Gated Subspace Selection (BGSS) provides a targeted $+0.062$ enhancement (95% CI: $[+0.013, +0.142]$) in bimodal signal regimes.
+3. **Scalability and Bipartite Compression:** Bipartite anchor graphs compress co-association memory from quadratic $O(N^2)$ to linear $O(NL)$, reducing graph memory by $99.6\%$ at $N=10{,}000$ and enabling million-sample clustering in $141\text{ s}$. Under clean, single-process, untraced benchmark runs, GAC scales sub-linearly with power-law empirical exponent $\beta = 0.55 \pm 0.01$ (95% CI: $[0.53, 0.57]$), achieving a $2.54\times$ speedup over ambient standard consensus.
+4. **Empirical Boundaries and Negative Results:** In the spirit of scientific transparency, we document where consensus and feature gating fail: determinacy-based landmark certification yields an empirical null result over uniform random anchors ($\Delta = +0.019$, 95\% CI: $[-0.039, +0.082]$); on datasets with diffuse unimodal noise (Prostate, CNS), zero-inflated scRNA-seq counts, and non-linear parity (Madelon XOR), gating cannot isolate informative coordinates without detectable marginal separation.
 
-### Research Integrity & Reproducibility
-- **Zero Fabrication:** All numerical claims originate from frozen per-seed execution stores and automated macro bindings (`paper/numbers.tex`).
-- **Literature Vintage:** 80.3% (53 of 66) of references are from 2024–2026, verified via automated CrossRef and arXiv REST APIs. Every reference is cited strictly once at first mention.
-- **Code and Data Availability:** The complete open-source Python library (`icc`, `cicc`), unit test suite (94 passing), and deterministic reproduction scripts are available at https://github.com/AkashKundu114/icc-clustering (release tag `v2.2.0`) under an open-source MIT license. The repository name `icc-clustering` is historical and unrelated to the Iterative Consensus Clustering of Race and Meyer.
+### Declarations and Verification Standards
+- **Originality and Exclusivity:** This manuscript represents entirely original work and has not been published previously, nor is it currently under consideration elsewhere.
+- **Reproducibility and Code Availability:** Complete software implementations, benchmark datasets, test suites, and reproduction scripts are maintained under the MIT License at https://github.com/AkashKundu114/icc-clustering (release tag `v2.2.0`).
+- **Authorship and Approval:** All listed authors (K. K. Das, A. Kundu, A. Mukhopadhyay) have reviewed, contributed to, and approved the final submitted manuscript.
 
-This manuscript represents original work that has not been published previously and is not under consideration for publication elsewhere. All authors have approved the manuscript and agree with its submission to *Data Mining and Knowledge Discovery*.
-
-Thank you very much for your time and consideration of our work.
+We thank the editorial board and reviewers in advance for their time, consideration, and constructive evaluation.
 
 Sincerely,
 
-**Prof. Kalyan Kumar Das** (Corresponding Author, Research Supervisor)  
-Department of Computer Science and Engineering  
-Techno India University, Kolkata, India  
-Email: kalyan.biltu@gmail.com  
-ORCID: https://orcid.org/0009-0004-8333-8900  
+**Prof. Kalyan Kumar Das** (Corresponding Author)  
+Department of Computer Science and Engineering, University of Kalyani  
+Email: `kalyan.biltu@gmail.com`  
 
-*On behalf of co-authors:*  
-- **Akash Kundu** (Lead Developer & Author for Code/Reproduction Materials Requests: akashkundu1152@gmail.com, Techno India University; ORCID: https://orcid.org/0009-0003-8246-7316)  
-- **Prof. Anirban Mukhopadhyay** (Senior Collaborator: anirban@klyuniv.ac.in, University of Kalyani; ORCID: https://orcid.org/0000-0001-8128-3521)
+**Akash Kundu** (First Author & Lead Implementer)  
+Email: `akashkundu1152@gmail.com`  
+
+**Prof. Anirban Mukhopadhyay**  
+Email: `anirban@cse.klyuniv.ac.in`  

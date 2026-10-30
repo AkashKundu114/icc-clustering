@@ -1,6 +1,9 @@
 # Data cache and raw downloads (large binary files)
 data/cache/
 data/raw/
+data/paul15/
+*.h5
+*.h5ad
 !data/cache/.gitkeep
 !data/raw/.gitkeep
 

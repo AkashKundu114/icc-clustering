@@ -2,7 +2,7 @@
 
 **Course / Degree Project (Original Allotment):** *Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data* (`CSE_PROJECT_68`)  
 **Early Proposal Blueprint Title (Capstone Proposal):** *Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes*  
-**Canonical Manuscript Title (Springer Nature DAMI):** *When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination*  
+**Canonical Manuscript Title (Springer Nature DAMI):** *Cluster Stability and Feature-Gated Bipartite Ensemble Learning for High-Dimensional Noisy Data: An Empirical Analysis*  
 **Algorithmic Framework / Package:** Inductive Consensus Clustering / Invariant Core Consensus (ICC-v2, v2.1.0) and `cicc` (Conformal Inductive Consensus Clustering)  
 **Team Members:** Akash Kundu (Lead), Trinankur Guha, Rupankar Ghatak, Anubhav Naskar  
 **Faculty Mentor:** Prof. Kalyan Kumar Das  
