@@ -1,6 +1,6 @@
 # Inductive Consensus Clustering (`icc`): Research Documentation
 
-**Canonical Manuscript Title:** Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes  
+**Canonical Manuscript Title:** An Empirical Analysis of Stability-Accuracy Discordance in High-Dimensional Consensus Clustering: Evidence from Biomedical Cohorts  
 **Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`)  
 **Canonical Release Version:** v2.2.0  
 **Repository Packages:** `icc` (v2.2.0) and `cicc` (Conformal Inductive Consensus Clustering)  

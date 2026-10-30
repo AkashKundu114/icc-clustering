@@ -1,7 +1,7 @@
-# Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes
+# An Empirical Analysis of Stability-Accuracy Discordance in High-Dimensional Consensus Clustering: Evidence from Biomedical Cohorts
 
 Official reference implementation of the manuscript:  
-**"Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes"** (Springer Nature *Data Mining and Knowledge Discovery* / DAMI, Under Review).
+**"An Empirical Analysis of Stability-Accuracy Discordance in High-Dimensional Consensus Clustering: Evidence from Biomedical Cohorts"** (Springer Nature *Data Mining and Knowledge Discovery* / DAMI, Under Review).
 
 [![CI](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml/badge.svg)](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue.svg)](https://www.python.org/)
@@ -206,7 +206,7 @@ When compared against classical dimension reduction baselines under an identical
 ```bibtex
 @article{kundu2026featuregated,
   author    = {Akash Kundu},
-  title     = {Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes},
+  title     = {An Empirical Analysis of Stability-Accuracy Discordance in High-Dimensional Consensus Clustering: Evidence from Biomedical Cohorts},
   journal   = {Data Mining and Knowledge Discovery (Under Review)},
   year      = {2026},
   url       = {https://github.com/AkashKundu114/icc-clustering}
