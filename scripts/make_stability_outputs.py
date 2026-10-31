@@ -71,7 +71,7 @@ MODEL_DISPLAY = {
     "FastMVC": "FastMVC (2024)",
     "CoHiRF": "CoHiRF",
     "UngatedAC": "Ungated AC",
-    "GAC": "GAC (Ours)",
+    "GAC": "GAC",
     "DEC": "DEC",
 }
 

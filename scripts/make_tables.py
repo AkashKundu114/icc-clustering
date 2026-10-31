@@ -353,7 +353,7 @@ def generate_table7():
         r"\textbf{FastMVC}",
         r"\textbf{CoHiRF}",
         r"\textbf{Ungated AC}",
-        r"\textbf{GAC (Ours)}",
+        r"\textbf{GAC}",
     ]
 
     # Filter to available models
@@ -505,7 +505,7 @@ def generate_table8():
         r"\textbf{StdCons All}",
         r"\textbf{StdCons VarFilt}",
         r"\textbf{StdCons PCA}",
-        r"\textbf{GAC (Ours)}",
+        r"\textbf{GAC}",
     ]
 
     datasets = ["cns", "colon", "leukemia", "ovarian", "prostate", "srbct"]
