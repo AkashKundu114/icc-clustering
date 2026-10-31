@@ -1,7 +1,7 @@
 # An Empirical Analysis of Stability-Accuracy Discordance in High-Dimensional Consensus Clustering: Evidence from Biomedical Cohorts
 
 Official reference implementation of the manuscript:  
-**"An Empirical Analysis of Stability-Accuracy Discordance in High-Dimensional Consensus Clustering: Evidence from Biomedical Cohorts"** (Springer Nature *Data Mining and Knowledge Discovery* / DAMI, Under Review).
+**"An Empirical Analysis of Stability-Accuracy Discordance in High-Dimensional Consensus Clustering: Evidence from Biomedical Cohorts"** (Springer Nature *Data Mining and Knowledge Discovery* / DAMI, Under Preparation).
 
 [![CI](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml/badge.svg)](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
@@ -237,7 +237,7 @@ If you use this software, benchmark suite, or theoretical derivations in your re
 @article{das2026empirical,
   author    = {Kalyan Kumar Das and Akash Kundu and Anirban Mukhopadhyay},
   title     = {An Empirical Analysis of Stability-Accuracy Discordance in High-Dimensional Consensus Clustering: Evidence from Biomedical Cohorts},
-  journal   = {Data Mining and Knowledge Discovery (Under Review)},
+  journal   = {Data Mining and Knowledge Discovery (Under Preparation)},
   year      = {2026},
   url       = {https://github.com/AkashKundu114/icc-clustering}
 }
