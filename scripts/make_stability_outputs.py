@@ -422,7 +422,7 @@ def generate_figure(df: pd.DataFrame, method_stats: dict, audit_df: pd.DataFrame
     ax1.text(
         -0.03,
         0.82,
-        "PRE-SPECIFIED RULE (i'):\nNON-DEGENERATE SAD ZONE\n(Subsample Stab $\\geq 0.50$, Acc $\\leq 0.05$,\nMin Cluster $\\geq 5$%)",
+        "RULE (i') [ADDED POST HOC]:\nNON-DEGENERATE ZONE\n(Subsample Stab $\\geq 0.50$, Acc $\\leq 0.05$,\nMin Cluster $\\geq 5$%)",
         fontsize=9.0,
         fontweight="bold",
         color="#cc0000",
