@@ -189,4 +189,4 @@ def load_coil20(
     ----------
     Nene et al. "Columbia Object Image Library (COIL-20)." Columbia University, 1996.
     """
-    raise NotImplementedError("Dataset loader not yet implemented. Enable in Phase 4.")
+    raise NotImplementedError("Dataset loader not yet implemented. Reserved interface for future benchmark extensions.")

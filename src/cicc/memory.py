@@ -1,5 +1,5 @@
 """
-Inductive Consensus Dynamic Memory Architecture
+Inductive Consensus Memory for AI Agents
 ========================================
 Maintains long-term episodic and semantic memory using stability-weighted anchor centroids
 and conformal coverage gating. Provides:
@@ -31,7 +31,7 @@ class MemoryItem:
 
 class InductiveConsensusMemory:
     """
-    Inductive Consensus Dynamic Episodic Memory.
+    Inductive Consensus Long-Term Agent Memory.
 
     Parameters
     ----------
@@ -94,7 +94,7 @@ class InductiveConsensusMemory:
         memory_id : Optional[str]
             Unique identifier.
         metadata : Optional[Dict[str, Any]]
-            Associated metadata (e.g., sequence identifier, timestamps, sample attributes).
+            Associated metadata (e.g., conversation ID, tool outputs, speaker).
 
         Returns
         -------

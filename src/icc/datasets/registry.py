@@ -243,5 +243,5 @@ def load_dataset(
             return load_tabula_muris(cache_dir=c_dir, force_download=force_download)
 
     raise NotImplementedError(
-        f"Dataset '{name}' in domain '{info.domain}' is registered but has no active loader. Enable in Phase 4."
+        f"Dataset '{name}' in domain '{info.domain}' is registered but has no active loader. Reserved interface for future benchmark extensions."
     )

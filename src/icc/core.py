@@ -1,12 +1,14 @@
 """
-Experiment 0: Core Building Blocks for High-Dimensional Stability Testing.
+Foundational mathematical primitives, synthetic high-dimensional benchmark generators,
+base clusterer interfaces, and consensus co-association operators.
 
 Features:
-- Parametric synthetic benchmark generator with signal manifold + 5 nuisance noise regimes
+- Parametric synthetic benchmark generator with signal manifold and 5 nuisance noise regimes
+  (Gaussian, Student-t, correlated passenger blocks, heteroscedastic scale, sparse zero-inflated)
 - Support for balanced and imbalanced cluster size distributions (e.g. ALLAML N=72, 47 vs 25)
 - Standardized clusterer wrappers: KMeans, GMM, Ward, Spectral, FCM
-- Resilient dual-backend architecture: prefers scikit-learn, with automated seamless
-  fallback to high-performance NumPy/SciPy if scikit-learn C-extensions are blocked or unavailable
+- Resilient dual-backend architecture: scikit-learn with automated seamless
+  vectorized NumPy/SciPy fallback
 - Canonical partition encoding and co-association matrix calculation
 """
 
