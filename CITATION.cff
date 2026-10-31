@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software or benchmark suite in your research, please cite as follows."
-title: "Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes"
+title: "An Empirical Analysis of Stability-Accuracy Discordance in High-Dimensional Consensus Clustering: Evidence from Biomedical Cohorts"
 version: 2.2.0
 date-released: "2026-10-30"
 authors:
