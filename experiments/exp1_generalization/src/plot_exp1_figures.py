@@ -46,7 +46,7 @@ def plot_exp1_figures():
         ax1.plot(df_gen["d_noise"], df_gen["mean_icc_50"], marker="d", color="#2ca02c",
                  linewidth=2.6, markersize=8, label="Calibrated Core (50%)")
 
-        ax1.set_title(r"(a) Out-of-Sample Generalization on Held-Out Test Set (20%)", fontsize=13.0, fontweight="bold")
+        ax1.set_title(r"Out-of-Sample Generalization on Held-Out Test Set (20%)", fontsize=12.0, fontweight="bold")
         ax1.set_xlabel(r"Nuisance Distractor Dimensions ($D_{\text{noise}}$)", fontsize=12.0, fontweight="bold")
         ax1.set_ylabel("Test Accuracy on Raw Held-Out Data", fontsize=12.0, fontweight="bold")
         ax1.tick_params(labelsize=11.0)
@@ -74,7 +74,7 @@ def plot_exp1_figures():
         ax2.set_xticks(range(len(df_gen)))
         ax2.set_xticklabels([str(d) for d in df_gen["d_noise"]], fontsize=11.0, fontweight="bold")
         ax2.tick_params(axis="y", labelsize=11.0)
-        ax2.set_title(r"(b) Sample Complexity Tradeoff: 50% Core vs 100% Full Training Set", fontsize=13.0, fontweight="bold")
+        ax2.set_title(r"Sample Complexity Tradeoff (50% Core vs. 100% Full)", fontsize=12.0, fontweight="bold")
         ax2.set_xlabel(r"Nuisance Distractor Dimensions ($D_{\text{noise}}$)", fontsize=12.0, fontweight="bold")
         ax2.set_ylabel("Absolute Test Accuracy Gain (% points)", fontsize=12.0, fontweight="bold")
         ax2.set_ylim(-26, 4)
@@ -148,7 +148,7 @@ def plot_exp1_figures():
         ax1.plot(df_p["d_noise"], df_p["test_acc_core_pseudo"], marker="d", color="#2ca02c",
                  linewidth=2.6, markersize=8, label="Train on Core Pseudo-Labels Only (Ungated AC)")
 
-        ax1.set_title(r"(a) Unsupervised Pseudo-Label Generalization to Test Set", fontsize=13.0, fontweight="bold")
+        ax1.set_title(r"Unsupervised Pseudo-Label Generalization to Test Set", fontsize=12.0, fontweight="bold")
         ax1.set_xlabel(r"Nuisance Distractor Dimensions ($D_{\text{noise}}$)", fontsize=12.0, fontweight="bold")
         ax1.set_ylabel("Test Accuracy on Unseen Test Split", fontsize=12.0, fontweight="bold")
         ax1.tick_params(labelsize=11.0)
@@ -176,7 +176,7 @@ def plot_exp1_figures():
         ax2.set_xticks(range(len(df_p)))
         ax2.set_xticklabels([str(d) for d in df_p["d_noise"]], fontsize=11.0, fontweight="bold")
         ax2.tick_params(axis="y", labelsize=11.0)
-        ax2.set_title(r"(b) Core Filtering Advantage under Corrupted Pseudo-Labels", fontsize=13.0, fontweight="bold")
+        ax2.set_title(r"Core Filtering Advantage under Corrupted Pseudo-Labels", fontsize=12.0, fontweight="bold")
         ax2.set_xlabel(r"Nuisance Distractor Dimensions ($D_{\text{noise}}$)", fontsize=12.0, fontweight="bold")
         ax2.set_ylabel("Core Pseudo-Label Gain (% points)", fontsize=12.0, fontweight="bold")
         ax2.set_ylim(-12, 7.0)
