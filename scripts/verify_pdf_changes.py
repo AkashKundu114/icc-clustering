@@ -15,8 +15,8 @@ checks = [
     # Smaller leftovers
     ("Section 3 def subsample explanation", "subsample stability collapses alongside it" in full_text and "accuracy collapse rather than stability" in full_text),
     ("Section 6.2 associated with", "associated with base-clusterer instability on Leukemia" in full_text),
-    ("Section 6.3 Holm clarification", "Holm-Bonferroni step-down correction is applied to the family of 11 pairwise benchmark comparisons" in full_text),
-    ("Code availability v1.0.0", "v1.0.0 release tag; archived on Zenodo upon publication" in full_text),
+    ("Section 6.3 Holm clarification", "Holm-Bonferroni step-down correction is applied to the pre-specified" in full_text and "11 pairwise benchmark comparisons" in full_text),
+    ("Code availability v1.0.0", "v1.0.0 release tag" in full_text),
     # Latest batch fixes
     ("No unresolved cross-references in text", "Section ??" not in full_text),
     ("Holm resolved Section 6.2 and 7.3", "BGSS gating (Section 6.2) and the factorial interaction (Section 7.3)" in full_text),
@@ -25,6 +25,11 @@ checks = [
     ("Seed* cited in Section 3.1", "Seed" in full_text and "Table 3" in full_text),
     ("Chakraborty DOI and arXiv", "2602.11500" in full_text or "10.48550" in full_text),
     ("Table 4 Discordant Cohorts header", "Discordant Cohorts" in full_text),
+    # Final ten-minute fixes
+    ("Prostate footnote listing 7 algorithms", "seven algorithms meeting Rule" in full_text and "DEC, FCAG, FastMVC, GAC, K-Means, Spectral" in full_text),
+    ("Table 13 retitled without pre-specified", "Table 13: Statistical Testing Parameters and Configurations" in full_text),
+    ("No Supplementary Table references", "Supplementary Table" not in full_text),
+    ("Fig 2b gap stays below 0.2", "stays below 0.2 across noise scales" in full_text),
 ]
 
 all_passed = True
