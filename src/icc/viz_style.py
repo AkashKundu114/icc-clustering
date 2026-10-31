@@ -15,7 +15,8 @@ import matplotlib.pyplot as plt
 MODEL_PALETTE = {
     "ICC_v2": "#d62728",
     "ICC-v2": "#d62728",
-    "ICC_v2 (Ours)": "#d62728",
+    "GAC Pipeline": "#d62728",
+    "GAC": "#d62728",
     "ICC_v2_exact": "#1f77b4",
     "ICC_v1": "#e377c2",
     "ICC-v1": "#e377c2",
@@ -45,7 +46,8 @@ MODEL_PALETTE = {
 MODEL_MARKERS = {
     "ICC_v2": "*",
     "ICC-v2": "*",
-    "ICC_v2 (Ours)": "*",
+    "GAC Pipeline": "*",
+    "GAC": "*",
     "ICC_v1": "o",
     "ICC-v1": "o",
     "FCAG": "s",
@@ -71,7 +73,8 @@ MODEL_MARKERS = {
 MODEL_LINESTYLES = {
     "ICC_v2": "-",
     "ICC-v2": "-",
-    "ICC_v2 (Ours)": "-",
+    "GAC Pipeline": "-",
+    "GAC": "-",
     "ICC_v1": "--",
     "ICC-v1": "--",
     "FCAG": "-.",
