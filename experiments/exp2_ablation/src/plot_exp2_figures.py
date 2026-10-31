@@ -37,7 +37,7 @@ VARIANT_LABELS = {
     "V2_VSSG_StdConsensus": "V2: BGSS + Std Consensus (Control 2)",
     "V3_Anchors_Only": "V3: Core Anchors Only (Ambient)",
     "V4_VSSG_Random_Anchors": "V4: BGSS + Random Anchors",
-    "V5_Full_ICC_v2": "V5: Full GAC Pipeline [Ours]"
+    "V5_Full_ICC_v2": "V5: Full GAC Pipeline"
 }
 
 

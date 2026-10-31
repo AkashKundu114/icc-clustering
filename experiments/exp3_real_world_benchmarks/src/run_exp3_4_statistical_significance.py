@@ -147,7 +147,17 @@ def plot_fig17_cd_diagram(
     ax_bar = fig.add_subplot(gs[0])
     ax_cd = fig.add_subplot(gs[1])
 
-    sorted_models = mean_ranks.index.tolist()
+    MODEL_DISPLAY_NAMES = {
+        "ICC_v2": "GAC Pipeline",
+        "ICC_v1": "Anchor Consensus (Ungated)",
+        "Standard_Consensus": "Std Consensus",
+        "Li_et_al_2019": "Core-Halo Cons.",
+        "DEC": "DEC (ICML 2016)",
+        "FCAG": "FCAG (TPAMI 2024)",
+        "FastMVC": "FastMVC (TKDE 2023)",
+    }
+    raw_models = mean_ranks.index.tolist()
+    sorted_models = [MODEL_DISPLAY_NAMES.get(m, m) for m in raw_models]
     sorted_r = mean_ranks.values
     k_models = len(sorted_models)
 
@@ -157,9 +167,9 @@ def plot_fig17_cd_diagram(
     y_pos = np.arange(k_models)
     colors = []
     for m in sorted_models:
-        if m == "ICC_v2":
+        if m in ("ICC_v2", "GAC Pipeline"):
             colors.append("#d62728")
-        elif m == "ICC_v1":
+        elif m in ("ICC_v1", "Anchor Consensus (Ungated)"):
             colors.append("#2ca02c")
         elif m in ("FCAG", "FastMVC"):
             colors.append("#8c564b")

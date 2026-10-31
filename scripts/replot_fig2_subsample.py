@@ -65,8 +65,8 @@ for clus in algos:
              color=PALETTE.get(clus, "#000"), linewidth=2.0, markersize=6)
 
 for ax, title, ylab in [
-    (ax1, r"(a) Clustering Accuracy (ARI vs. Ground Truth)", "Adjusted Rand Index (ARI)"),
-    (ax2, r"(b) Subsample Stability (Stratified 80% Resampling)", "Subsample Stability (ARI)"),
+    (ax1, r"Clustering Accuracy (ARI vs. Ground Truth)", "Adjusted Rand Index (ARI)"),
+    (ax2, r"Subsample Stability (Stratified 80% Resampling)", "Subsample Stability (ARI)"),
 ]:
     ax.set_title(title, fontsize=12.0, fontweight="bold", pad=10)
     ax.set_xlabel(r"Noise Dimensions ($D_{\text{noise}}$)", fontsize=11.0, fontweight="bold")
