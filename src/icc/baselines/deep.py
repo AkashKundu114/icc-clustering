@@ -238,6 +238,137 @@ def build_autoencoder(
     return autoencoder, encoder
 
 
+
+def _run_dec_torch_gpu(
+    X_arr: np.ndarray,
+    k: int,
+    seed: int,
+    pretrain_epochs: int,
+    finetune_epochs: int,
+    t0: float,
+    **kwargs,
+) -> Tuple[np.ndarray, float, ModelMetadata]:
+    """Execute DEC using PyTorch on CUDA GPU for hardware-accelerated clustering."""
+    import torch
+    import torch.nn as nn
+    import torch.optim as optim
+
+    device = torch.device("cuda")
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    np.random.seed(seed)
+
+    N, D = X_arr.shape
+    default_dims = [D, 500, 500, 2000, 10]
+    dims = kwargs.get("dims", default_dims)
+    if len(dims) < 2 or dims[0] != D:
+        dims = default_dims
+
+    lr_pretrain = kwargs.get("lr_pretrain", 0.001)
+    lr_finetune = kwargs.get("lr_finetune", 0.001)
+    tol = kwargs.get("tol", 0.001)
+
+    enc_layers: List[nn.Module] = []
+    for i in range(len(dims) - 2):
+        enc_layers.append(nn.Linear(dims[i], dims[i + 1]))
+        enc_layers.append(nn.ReLU())
+    enc_layers.append(nn.Linear(dims[-2], dims[-1]))
+    encoder = nn.Sequential(*enc_layers).to(device)
+
+    dec_layers: List[nn.Module] = []
+    rev_dims = dims[::-1]
+    for i in range(len(rev_dims) - 2):
+        dec_layers.append(nn.Linear(rev_dims[i], rev_dims[i + 1]))
+        dec_layers.append(nn.ReLU())
+    dec_layers.append(nn.Linear(rev_dims[-2], rev_dims[-1]))
+    decoder = nn.Sequential(*dec_layers).to(device)
+
+    autoencoder = nn.Sequential(encoder, decoder)
+    opt_ae = optim.Adam(autoencoder.parameters(), lr=lr_pretrain)
+
+    X_t = torch.tensor(X_arr, dtype=torch.float32, device=device)
+
+    if pretrain_epochs > 0:
+        for _ in range(pretrain_epochs):
+            opt_ae.zero_grad()
+            rec = autoencoder(X_t)
+            loss = nn.functional.mse_loss(rec, X_t)
+            loss.backward()
+            opt_ae.step()
+
+    with torch.no_grad():
+        z_np = encoder(X_t).cpu().numpy()
+
+    if _SKLEARN_AVAILABLE:
+        try:
+            kmeans = _SkKMeans(n_clusters=k, n_init=20, random_state=seed)
+            y_pred = kmeans.fit_predict(z_np)
+            centers = kmeans.cluster_centers_
+        except Exception:
+            from icc.core import run_clusterer
+
+            y_pred = run_clusterer("kmeans", z_np, k, seed=seed)
+            centers = np.array([z_np[y_pred == c].mean(axis=0) if np.any(y_pred == c) else z_np[c] for c in range(k)])
+    else:
+        from icc.core import run_clusterer
+
+        y_pred = run_clusterer("kmeans", z_np, k, seed=seed)
+        centers = np.array([z_np[y_pred == c].mean(axis=0) if np.any(y_pred == c) else z_np[c] for c in range(k)])
+
+    cluster_centers = nn.Parameter(torch.tensor(centers, dtype=torch.float32, device=device))
+    opt_dec = optim.Adam(list(encoder.parameters()) + [cluster_centers], lr=lr_finetune)
+
+    y_pred_last = np.copy(y_pred)
+    for epoch in range(finetune_epochs):
+        with torch.no_grad():
+            z = encoder(X_t)
+            dist = torch.sum((z.unsqueeze(1) - cluster_centers.unsqueeze(0)) ** 2, dim=2)
+            num = (1.0 + dist) ** (-1.0)
+            q = num / torch.sum(num, dim=1, keepdim=True)
+            q_np = q.cpu().numpy()
+
+            col_sums = q_np.sum(axis=0) + 1e-10
+            weight = q_np ** 2 / col_sums
+            p_np = weight / (weight.sum(axis=1, keepdims=True) + 1e-10)
+            p_t = torch.tensor(p_np, dtype=torch.float32, device=device)
+
+            y_pred = q_np.argmax(axis=1)
+            delta_label = np.sum(y_pred != y_pred_last).astype(float) / N
+            y_pred_last = np.copy(y_pred)
+            if epoch > 0 and delta_label < tol:
+                break
+
+        opt_dec.zero_grad()
+        z = encoder(X_t)
+        dist = torch.sum((z.unsqueeze(1) - cluster_centers.unsqueeze(0)) ** 2, dim=2)
+        num = (1.0 + dist) ** (-1.0)
+        q = num / torch.sum(num, dim=1, keepdim=True)
+        kl_loss = torch.sum(p_t * (torch.log(p_t + 1e-10) - torch.log(q + 1e-10)))
+        kl_loss.backward()
+        opt_dec.step()
+
+    torch.cuda.synchronize()
+    with torch.no_grad():
+        z = encoder(X_t)
+        dist = torch.sum((z.unsqueeze(1) - cluster_centers.unsqueeze(0)) ** 2, dim=2)
+        q = (1.0 + dist) ** (-1.0)
+        final_labels = q.argmax(dim=1).cpu().numpy().astype(np.int64)
+
+    runtime_seconds = time.perf_counter() - t0
+    metadata = ModelMetadata(
+        N,
+        method="DEC",
+        n_samples=N,
+        n_features=D,
+        n_clusters=k,
+        latent_dim=dims[-1],
+        pretrain_epochs=pretrain_epochs,
+        finetune_epochs=finetune_epochs,
+        device="gpu",
+    )
+    return final_labels, runtime_seconds, metadata
+
+
 def run_dec(
     X: np.ndarray,
     k: int,
@@ -298,6 +429,18 @@ def run_dec(
         raise ValueError(f"Number of samples N={N} cannot be smaller than number of clusters k={k}")
     if k < 2:
         raise ValueError(f"Number of clusters k must be >= 2, got {k}")
+    device_opt = kwargs.get("device", "auto")
+    use_gpu = False
+    if device_opt in ("auto", "gpu", "cuda"):
+        try:
+            import torch
+            if torch.cuda.is_available():
+                use_gpu = True
+        except Exception:
+            pass
+
+    if use_gpu:
+        return _run_dec_torch_gpu(X_arr, k, seed, pretrain_epochs, finetune_epochs, t0, **kwargs)
 
     backend_type, tf_module, keras_module, layers_mod, models_mod, optimizers_mod, losses_mod = _import_deep_backend()
 
@@ -459,7 +602,7 @@ def run_idec(
     Guo et al. "Improved deep embedded clustering with local structure preservation."
     IJCAI, 2017.
     """
-    raise NotImplementedError("IDEC deep clustering baseline not yet implemented. Enable in Phase 4.")
+    raise NotImplementedError("IDEC deep clustering baseline not yet implemented. Reserved interface for future benchmark extensions.")
 
 
 def run_contrastive_clustering(
@@ -475,7 +618,7 @@ def run_contrastive_clustering(
     ----------
     Li, Hu, Liu, Peng, Zhou, Peng. "Contrastive clustering." AAAI, 2021.
     """
-    raise NotImplementedError("Contrastive Clustering baseline not yet implemented. Enable in Phase 4.")
+    raise NotImplementedError("Contrastive Clustering baseline not yet implemented. Reserved interface for future benchmark extensions.")
 
 
 def run_scan(
@@ -491,4 +634,4 @@ def run_scan(
     ----------
     Van Gansbeke et al. "SCAN: Learning to classify images without labels." ECCV, 2020.
     """
-    raise NotImplementedError("SCAN baseline not yet implemented. Enable in Phase 4.")
+    raise NotImplementedError("SCAN baseline not yet implemented. Reserved interface for future benchmark extensions.")

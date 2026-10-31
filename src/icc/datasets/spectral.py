@@ -197,4 +197,4 @@ def load_pavia_university(
     y : np.ndarray of shape (~42776,)
     metadata : dict
     """
-    raise NotImplementedError("Dataset loader not yet implemented. Enable in Phase 4.")
+    raise NotImplementedError("Dataset loader not yet implemented. Reserved interface for future benchmark extensions.")

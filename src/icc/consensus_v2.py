@@ -77,9 +77,9 @@ class InvariantCoreConsensusV2:
     anchor_indices_ : np.ndarray
         Indices of selected core anchors.
     feature_scores_ : np.ndarray of shape (D,)
-        Saliency / bimodality scores for all input features (used in Exp 2.1 interpretability).
+        Saliency / bimodality scores for all input features (saliency scores and active feature subset indices selected by BGSS).
     selected_features_ : np.ndarray
-        Feature indices included in the active candidate pool (used in Exp 2.1 interpretability).
+        Feature indices included in the active candidate pool (saliency scores and active feature subset indices selected by BGSS).
     anchor_centroids_ : np.ndarray of shape (K, D)
         Cluster centroids in feature space for out-of-sample inductive projection.
     U_emb_ : np.ndarray of shape (N, K)
@@ -564,3 +564,7 @@ class InvariantCoreConsensusV2:
             "psi": psi_assigned,
             "reliability": reliability,
         }
+
+
+# Canonical algorithm alias matching paper terminology:
+GAC = InvariantCoreConsensusV2

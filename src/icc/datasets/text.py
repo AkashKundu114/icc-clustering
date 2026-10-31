@@ -129,4 +129,4 @@ def load_rcv1(
     ----------
     Lewis et al. "RCV1: A new benchmark collection for text categorization research." JMLR, 2004.
     """
-    raise NotImplementedError("Dataset loader not yet implemented. Enable in Phase 4.")
+    raise NotImplementedError("Dataset loader not yet implemented. Reserved interface for future benchmark extensions.")

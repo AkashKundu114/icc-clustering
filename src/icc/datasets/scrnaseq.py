@@ -219,4 +219,4 @@ def load_tabula_muris(
     ----------
     Tabula Muris Consortium. "Single-cell transcriptomics of 20 mouse organs." Nature, 2018.
     """
-    raise NotImplementedError("Dataset loader not yet implemented. Enable in Phase 4.")
+    raise NotImplementedError("Dataset loader not yet implemented. Reserved interface for future benchmark extensions.")
