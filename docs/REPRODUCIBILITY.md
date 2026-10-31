@@ -1,6 +1,6 @@
 # Peer Reviewer & Reproducibility Guide
 
-**Manuscript Title:** Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes  
+**Manuscript Title:** An Empirical Analysis of Stability-Accuracy Discordance in High-Dimensional Consensus Clustering: Evidence from Biomedical Cohorts  
 **Target Publication Venue:** Springer Nature (*Data Mining and Knowledge Discovery* / DAMI)  
 **Reference Implementation:** `icc` (Release v2.2.0)  
 

@@ -1,7 +1,7 @@
-# Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes
+# An Empirical Analysis of Stability-Accuracy Discordance in High-Dimensional Consensus Clustering: Evidence from Biomedical Cohorts
 
 Official reference implementation of the manuscript:  
-**"Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes"** (Springer Nature *Data Mining and Knowledge Discovery* / DAMI, Under Review).
+**"An Empirical Analysis of Stability-Accuracy Discordance in High-Dimensional Consensus Clustering: Evidence from Biomedical Cohorts"** (Springer Nature *Data Mining and Knowledge Discovery* / DAMI, Under Review).
 
 [![CI](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml/badge.svg)](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
@@ -13,9 +13,9 @@ Official reference implementation of the manuscript:
 
 ## 1. Overview & Theoretical Architecture
 
-Consensus clustering synthesizes diverse base clusterings into an aggregated partition to improve stability and robustness. However, in high-dimensional noise regimes ($D \gg N$), distance concentration degrades base partition quality, while classical $O(N^2)$ co-association matrices prevent out-of-sample inductive inference.
+Subsample stability is widely assumed to indicate clustering reliability, and consensus clustering is assumed to resist high-dimensional noise. However, in high-dimensional regimes ($D \gg N$), distance concentration degrades base partition quality, causing classical consensus pipelines to settle stably on distractor noise manifolds.
 
-**Inductive Consensus Clustering (ICC-v2)** resolves these challenges through five mathematically coupled mechanisms:
+**Gated Anchor Consensus (GAC)** (implemented in this repository as `ICC` / `InvariantCoreConsensusV2`) resolves these challenges through five coupled mechanisms:
 
 1. **Bimodality-Gated Subspace Selection (BGSS):**  
    Performs unsupervised linear $O(N \cdot D)$ feature screening via Sarle's Bimodality Coefficient ($BC$) with finite-sample null correction:
@@ -55,7 +55,7 @@ python -m pytest tests/ -q
 
 > **Determinism Note:** To ensure bitwise reproducibility across CPU architectures, BLAS thread concurrency is pinned to single-threaded execution (`OMP_NUM_THREADS=1`, `MKL_NUM_THREADS=1`, `OPENBLAS_NUM_THREADS=1`).
 
-For an exhaustive mapping of every manuscript table (Table 1 through 16) and figure (Figure 1 through 9) to underlying data files in `results/passF`, see the [Peer Reviewer & Reproducibility Guide](docs/REPRODUCIBILITY.md).
+For an exhaustive mapping of every manuscript table (Table 1 through 16) and figure (Figure 1 through 10) to underlying data files in `results/passF`, see the [Peer Reviewer & Reproducibility Guide](docs/REPRODUCIBILITY.md).
 
 ---
 
@@ -65,15 +65,15 @@ All reported values trace directly to frozen Pass F execution logs (`results/pas
 
 Across all 13 benchmark datasets (3,000 individual model fits across 12 clustering pipelines, 30 random seeds on 6 high-D datasets and 10 seeds on 7 general datasets), omnibus Friedman testing confirms no statistically significant difference across the heterogeneous benchmark suite as a whole (Friedman $\chi^2_F = 11.56, p = 0.40$, Nemenyi Critical Difference $CD = 4.62$).
 
-However, on the target ultra-high-dimensional biological cancer cohorts ($D/N > 20$), the ICC-v2 pipeline achieves **Rank #1** (subgroup mean ARI = 0.217, mean rank 2.17):
+However, on the target ultra-high-dimensional biological cancer cohorts ($D/N > 20$), GAC achieves **Rank #1** (subgroup mean ARI = 0.217, mean rank 2.17):
 
 | Method | High-D Mean ARI ($D/N > 20$) | High-D Median ARI | High-D Rank (6 Datasets) | Overall Rank (13 Datasets) | Grand Mean ARI (13 Datasets) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **ICC-v2 (Ours)** | **0.217** | **0.061** | **2.17** | 5.62 | **0.152** |
+| **GAC (Gated Anchor Consensus)** | **0.217** | **0.061** | **2.17** | 5.62 | **0.152** |
 | **FCAG** | 0.066 | -0.0004 | 7.83 | 7.77 | 0.116 |
 | **Standard K-Means** | 0.056 | 0.053 | 5.67 | **5.15** | 0.124 |
 | **FastMVC** | 0.049 | 0.004 | 6.83 | 7.38 | 0.110 |
-| **ICC-v1 (Ungated Anchor)** | 0.046 | 0.021 | 5.67 | 6.92 | 0.091 |
+| **Ungated Anchor Consensus** | 0.046 | 0.021 | 5.67 | 6.92 | 0.091 |
 | **DEC (Deep Embedded)** | 0.045 | 0.025 | 6.17 | 5.23 | 0.125 |
 | **FCM (Fuzzy C-Means)** | 0.044 | 0.029 | 5.83 | 7.08 | 0.070 |
 | **Standard Consensus** | 0.037 | 0.026 | 7.17 | 5.23 | 0.126 |
@@ -91,6 +91,21 @@ Under an identical 30-seed matched feature budget ($\lfloor 0.15 D \rfloor$ sele
 - **PCA + Standard Consensus:** Mean ARI = 0.038 (Median = 0.019)
 - **Variance Filter + Standard Consensus:** Mean ARI = 0.032 (Median = 0.019)
 
+### $2 \times 2$ Factorial Decomposition (Table 12)
+To dissect the interaction between feature gating (ambient vs. matched random vs. BGSS) and consensus representation (dense $O(N^2)$ co-association vs. bipartite anchor graph), we evaluate all 8 factorial arms across the 6 high-dimensional cohorts:
+
+| Gating Strategy | Dense Consensus ($O(N^2)$) | Bipartite Anchor Consensus ($O(NL)$) | Matched Random Gating Baselines |
+| :--- | :---: | :---: | :---: |
+| **Ungated / Ambient Space** | $V_0 = 0.037$ | $V_3 = 0.046$ | — |
+| **Random Subspace Gating** | Rand Dense = $0.046$ | Rand Bip Core = $0.047$ | Rand Bip Uniform = $0.053$ |
+| **BGSS Bimodality Gating** | $V_2 = 0.077$ | **$V_5 = 0.217$** ($V_4 = 0.198$) | — |
+
+**Key Diagnostic Findings:**
+- **Representation Interaction:** BGSS gating yields its primary accuracy gains when combined with bipartite anchor consensus ($V_5 = 0.217$, $+0.170$ over ambient $V_3$). Under dense consensus, BGSS yields $V_2 = 0.077$.
+- **Leukemia Diagnostic & Mechanism:** On Leukemia, dense consensus with BGSS collapses to $V_2 = 0.042$ (below ungated $V_0 = 0.162$) because $23/30$ seeds ($76.7\%$) form small clusters ($N=9\text{--}16$) unrelated to diagnostic classes (mean ARI $-0.044$). Bipartite anchor consensus ($V_5$) reduces this collapse mode to $8/30$ seeds ($26.7\%$), with $22/30$ seeds $>0.50$ (mean $0.600$).
+- **Multiplicity & Cohort Concentration:** The paired gain of $V_5$ over matched random gating is $[+0.036, +0.310]$ ($95\%$ bootstrap CI), with Wilcoxon $p = 0.031$ uncorrected for the three comparisons ($n=6$). The gain is driven by Leukemia ($+0.398$) and SRBCT ($+0.447$), while the other four cohorts span $+0.004$ to $+0.078$.
+- **Biological Marker Recovery (Golub et al., 1999):** Unsupervised BGSS screening recovers $27/50$ ($54.0\%$) of the hallmark ALL/AML discriminating genes in its top $15\%$ ranked features ($p = 1.38 \times 10^{-10}$, hypergeometric test), significantly exceeding uniform random selection ($7.50$ expected, $15.0\%$) and sample variance filtering ($8/50$, $16.0\%$).
+
 ---
 
 ## 4. Quickstart Guide (4 Steps)
@@ -99,7 +114,7 @@ The following self-contained snippet reproduces synthetic high-dimensional data 
 
 ```python
 import numpy as np
-from icc import ICC
+from icc import ICC, GAC
 from icc.metrics import evaluate_all
 
 # Step 1: Generate synthetic high-dimensional data (N=150, D=300, K=3)
@@ -110,8 +125,8 @@ y_train = np.array([0] * 50 + [1] * 50 + [2] * 50)
 X_train[:50, :15] += 2.5
 X_train[50:100, :15] -= 2.5
 
-# Step 2: Fit the ICC estimator
-model = ICC(n_clusters=3, n_base_models=25, n_anchors=30, random_state=42)
+# Step 2: Fit the GAC estimator (aliased to ICC / InvariantCoreConsensusV2)
+model = GAC(n_clusters=3, n_base_models=25, n_anchors=30, random_state=42)
 labels = model.fit_predict(X_train)
 
 # Step 3: Evaluate clustering recovery
@@ -208,7 +223,7 @@ python scripts/reproduce.py --scope smoke
 
 - [Reviewer & Reproducibility Guide](docs/REPRODUCIBILITY.md): Push-button reproduction commands, table/figure mappings, and verification checklists.
 - [Dataset Guide & Verified Licenses](docs/DATA.md): Comprehensive metadata, open-access licenses, and cryptographic checksums for all 13 benchmark datasets.
-- [API Reference](docs/api.md): Complete Python API documentation for `ICC`, `BGSS`, `BipartiteConsensus`, and conformal uncertainty modules.
+- [API Reference](docs/api.md): Complete Python API documentation for `ICC`, `GAC`, `BGSS`, `BipartiteConsensus`, and conformal uncertainty modules.
 - [Theoretical Foundations](docs/THEORETICAL_FOUNDATIONS.md): Mathematical formulations, Transfer-Cut spectral derivations, and finite-sample Sarle's BC bounds.
 - [Computational Environment](docs/ENV.md): Hardware specifications, operating system details, and determinism configurations.
 
@@ -219,9 +234,9 @@ python scripts/reproduce.py --scope smoke
 If you use this software, benchmark suite, or theoretical derivations in your research, please cite:
 
 ```bibtex
-@article{das2026featuregated,
+@article{das2026empirical,
   author    = {Kalyan Kumar Das and Akash Kundu and Anirban Mukhopadhyay},
-  title     = {Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes},
+  title     = {An Empirical Analysis of Stability-Accuracy Discordance in High-Dimensional Consensus Clustering: Evidence from Biomedical Cohorts},
   journal   = {Data Mining and Knowledge Discovery (Under Review)},
   year      = {2026},
   url       = {https://github.com/AkashKundu114/icc-clustering}
