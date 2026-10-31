@@ -157,20 +157,22 @@ for idx, (m, r) in enumerate(right_models):
     ax_cd.text(k_models + 0.80, y_line, f"({r:.2f}) {m}", ha="left", va="center", fontweight="bold", fontsize=9.0, color=c)
     ax_cd.plot(r, axis_y, marker="o", color=c, markersize=5.0)
 
-# Equivalence clique bar connecting methods whose difference <= CD
+# Equivalence clique bar connecting all 12 methods (spread = 7.77 - 5.15 = 2.62 <= CD = 4.62)
 clique_y = axis_y - 6.0
-best_rank = sorted_r[0]
-clique_end = min(k_models * 1.0, best_rank + cd)
-ax_cd.plot([best_rank, clique_end], [clique_y, clique_y], color="#343a40", linewidth=3.5, alpha=0.8)
+best_rank = sorted_r[0]    # 5.15 (K-Means)
+worst_rank = sorted_r[-1]  # 7.77 (FCAG)
+ax_cd.plot([best_rank, worst_rank], [clique_y, clique_y], color="#343a40", linewidth=4.0, solid_capstyle="round")
+ax_cd.plot([best_rank, best_rank], [clique_y - 0.18, clique_y + 0.18], color="#343a40", linewidth=2.0)
+ax_cd.plot([worst_rank, worst_rank], [clique_y - 0.18, clique_y + 0.18], color="#343a40", linewidth=2.0)
 ax_cd.text(
-    (best_rank + clique_end) / 2.0,
-    clique_y - 0.35,
-    rf"Equivalence Group ($\Delta R \leq CD = {cd:.2f}$)",
+    (best_rank + worst_rank) / 2.0,
+    clique_y - 0.38,
+    rf"Single Equivalence Group: all 12 methods ($\Delta R = {worst_rank - best_rank:.2f} \leq CD = {cd:.2f}$)",
     ha="center",
     va="top",
-    fontsize=8.5,
-    fontstyle="italic",
-    color="#343a40",
+    fontsize=9.0,
+    fontweight="bold",
+    color="#212529",
 )
 
 ax_cd.set_title(rf"(b) Demšar Critical Difference Diagram ($\alpha=0.05$, $k={k_models}$)", fontweight="bold", fontsize=11.0, pad=10)

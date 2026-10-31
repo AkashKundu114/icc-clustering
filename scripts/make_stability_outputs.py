@@ -242,7 +242,7 @@ def generate_degeneracy_table(audit_df: pd.DataFrame):
     for d in DATASETS:
         d_name = DISPLAY_NAMES[d]
         header_cols.append(f"\\multicolumn{{2}}{{c}}{{\\textbf{{{d_name}}}}}")
-    header_cols.append(r"\multicolumn{2}{c}{\textbf{Rules Met}}")
+    header_cols.append(r"\multicolumn{2}{c}{\textbf{Discordant Cohorts (Rules Met)}}")
 
     cmidrules = " ".join([f"\\cmidrule(lr){{{2+2*i}-{3+2*i}}}" for i in range(len(DATASETS))])
     cmidrules += f" \\cmidrule(lr){{{2+2*len(DATASETS)}-{3+2*len(DATASETS)}}}"
@@ -254,7 +254,7 @@ def generate_degeneracy_table(audit_df: pd.DataFrame):
         r"\caption{Subsample Partition Degeneracy and Smallest-Cluster Size Audit Across Six Biomedical Cohorts (30 Stratified $80\%$ Subsamples per Method). "
         r"Reports Mean Smallest-Cluster Size Fraction ($\text{Min\%} = 100 \times \overline{f}_{\min}$) and Subsample Degeneracy Rate ($\text{Degen\%}$, Percentage of Subsamples where Smallest Cluster Holds $< 5\%$ of Points). "
         r"Daggers ($^\dagger$) highlight degenerate configurations failing the amended non-degeneracy condition (Rule~(i'), $\text{Degen\%} \le 10\%$). "
-        r"The rightmost columns report the count of cohorts (out of 6) where each method satisfies Rule~(i) (unconstrained) and Rule~(i') (non-degenerate).}",
+        r"The rightmost columns report the count of cohorts (out of 6) where each method satisfies the stability-accuracy discordance criterion under Rule~(i) (unconstrained: $\text{Stab} \ge 0.50, \text{Acc} \le 0.05$) and Rule~(i') (non-degenerate: $\text{Stab} \ge 0.50, \text{Acc} \le 0.05$, and $\text{Degen\%} \le 10\%$).}",
         r"\label{tab:degeneracy_audit}",
         r"\centering",
         r"\resizebox{\textwidth}{!}{%",
@@ -418,17 +418,21 @@ def generate_figure(df: pd.DataFrame, method_stats: dict, audit_df: pd.DataFrame
         ax1.scatter([], [], color=c, label=m_disp, marker=marker, s=80, edgecolors="black", linewidths=0.8)
 
     # Highlight Pre-registered Non-Degenerate "Stable but Wrong" Zone (Stab >= 0.50, Acc <= 0.05)
-    ax1.axvspan(-0.15, 0.05, ymin=0.50, ymax=1.05, color="#ffdddd", alpha=0.35, zorder=1)
+    ax1.axvspan(-0.16, 0.05, ymin=0.50, ymax=1.05, color="#ffdddd", alpha=0.35, zorder=1)
     ax1.text(
-        -0.03,
+        -0.155,
         0.82,
-        "RULE (i') [ADDED POST HOC]:\nNON-DEGENERATE ZONE\n(Subsample Stab $\\geq 0.50$, Acc $\\leq 0.05$,\nMin Cluster $\\geq 5$%)",
-        fontsize=9.0,
+        "Rule (i') Non-Degenerate Zone\n(Added Post Hoc)\n"
+        r"$\bullet$ Subsample Stab $\geq 0.50$" "\n"
+        r"$\bullet$ Subsample Acc $\leq 0.05$" "\n"
+        r"$\bullet$ Min Cluster $\geq 5\%$",
+        fontsize=8.0,
         fontweight="bold",
-        color="#cc0000",
-        ha="center",
+        color="#8b0000",
+        ha="left",
         va="center",
-        bbox=dict(boxstyle="round,pad=0.4", facecolor="#fff5f5", edgecolor="#cc0000", alpha=0.9),
+        bbox=dict(boxstyle="round,pad=0.5", facecolor="#ffffff", edgecolor="#cc0000", linewidth=1.2, alpha=0.96),
+        zorder=15,
     )
 
     # Shaded Permuted Null Baseline Band
@@ -439,9 +443,9 @@ def generate_figure(df: pd.DataFrame, method_stats: dict, audit_df: pd.DataFrame
     ax1.axhline(null_mean, color="#666666", linestyle=":", linewidth=1.2, zorder=2, label=f"Permuted Null Stability (Mean={null_mean:+.3f})")
 
     # Diagonal reference: Stability = Accuracy
-    ax1.plot([-0.1, 0.7], [-0.1, 0.7], "--", color="gray", linewidth=1.5, alpha=0.7, label=r"Perfect Alignment ($\text{Stab} = \text{Acc}$)")
+    ax1.plot([-0.16, 0.7], [-0.16, 0.7], "--", color="gray", linewidth=1.5, alpha=0.7, label=r"Perfect Alignment ($\text{Stab} = \text{Acc}$)")
 
-    ax1.set_xlim(-0.10, 0.65)
+    ax1.set_xlim(-0.16, 0.65)
     ax1.set_ylim(-0.05, 1.05)
     ax1.set_xlabel(r"Subsample Accuracy ($\overline{\text{ARI}}$ vs. Reference Clinical Labels)", fontsize=11.5, fontweight="bold")
     ax1.set_ylabel(r"Subsample Stability (Mean Overlap Pairwise ARI Across 435 Pairs)", fontsize=11.5, fontweight="bold")
