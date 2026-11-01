@@ -11,19 +11,18 @@ Quantifies:
 - Memory footprint delta M_exact vs M_reduced
 """
 
-import os
 import time
 import tracemalloc
 from pathlib import Path
+
 import numpy as np
 import pandas as pd
-import scipy.cluster.hierarchy as sch
 import scipy.linalg as sla
 from scipy.stats import kurtosis, skew
 
-from icc.core import build_dataset, run_clusterer, pairwise_coassoc
-from icc.metrics import evaluate_all
 from icc.consensus_v2 import InvariantCoreConsensusV2
+from icc.core import build_dataset, run_clusterer
+from icc.metrics import evaluate_all
 
 EXP_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = EXP_DIR / "data"

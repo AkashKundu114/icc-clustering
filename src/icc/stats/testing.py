@@ -2,9 +2,9 @@
 Statistical hypothesis testing, effect sizes, and multi-algorithm comparison tests.
 """
 
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Tuple
+
 import numpy as np
-import pandas as pd
 from scipy import stats
 
 

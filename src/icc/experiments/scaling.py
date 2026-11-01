@@ -5,25 +5,13 @@ scaling sample sizes N in [200, 10000] and feature dimensions D in [100, 20000].
 """
 
 import os
-import sys
 import time
 import tracemalloc
-from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
-# Add project root to sys.path
-root_dir = Path(__file__).resolve().parent.parent.parent.parent
-sys.path.insert(0, str(root_dir))
-
-from icc.core import run_clusterer, pairwise_coassoc
-from sklearn.metrics import adjusted_rand_score
-from .benchmark_models import (
-    run_standard_consensus,
-    run_li_et_al_2019,
-    run_icc_v1,
-    run_icc_v2
-)
+from .benchmark_models import run_icc_v1, run_icc_v2, run_li_et_al_2019, run_standard_consensus
 
 SAMPLE_SCALING_CSV = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "exp4_sample_scaling_results.csv")
 DIM_SCALING_CSV = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "exp4_dim_scaling_results.csv")
@@ -63,7 +51,6 @@ def benchmark_model_execution(model_name, model_fn, X, k, seed=42):
     except MemoryError:
         t_total = np.nan
         peak_mb = np.nan
-        pred = None
         lc = 0
         oom = True
     finally:

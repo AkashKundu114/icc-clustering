@@ -3,7 +3,6 @@ Regression test suite for data leakage, label isolation, and inductive preproces
 """
 
 import numpy as np
-import pytest
 
 from icc.consensus import InvariantCoreConsensusV2
 from icc.data.preprocessing import bimodality_coefficient, build_dataset
@@ -16,7 +15,7 @@ def test_test_data_does_not_influence_training_preprocessing():
     X_test = rng.normal(loc=100.0, scale=1.0, size=(20, X_train.shape[1]))
 
     model = InvariantCoreConsensusV2(n_clusters=3, random_state=42)
-    train_labels = model.fit_predict(X_train)
+    _ = model.fit_predict(X_train)
 
     # Record fitted state
     orig_anchor_centroids = np.copy(model.anchor_centroids_)
@@ -49,9 +48,7 @@ def test_ground_truth_labels_are_not_used_in_unsupervised_selection():
 
 def test_deterministic_split_and_reproducibility():
     """Verify reproducible splitting and that no sample overlaps cross train/test splits."""
-    N, D = 100, 50
-    rng = np.random.default_rng(42)
-    X = rng.normal(size=(N, D))
+    N = 100
 
     indices = np.arange(N)
     rng_split = np.random.default_rng(999)

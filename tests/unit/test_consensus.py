@@ -13,11 +13,11 @@ Covers:
 import numpy as np
 import pytest
 
-from icc.experiments.benchmark_models import InvariantCoreConsensusV2 as Exp3ICC2
-from icc.experiments.benchmark_models import run_icc_v2
 from icc import InvariantCoreConsensusV2 as RootICC2
 from icc.consensus_v2 import InvariantCoreConsensusV2
 from icc.core import build_dataset
+from icc.experiments.benchmark_models import InvariantCoreConsensusV2 as Exp3ICC2
+from icc.experiments.benchmark_models import run_icc_v2
 
 
 def _synthetic_data():

@@ -2,9 +2,8 @@
 Integration test for the shared ExperimentRunner.
 """
 
-from pathlib import Path
 import tempfile
-import numpy as np
+from pathlib import Path
 
 from icc.experiments.runner import ExperimentRunner
 
