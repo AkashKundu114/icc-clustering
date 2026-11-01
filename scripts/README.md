@@ -65,11 +65,18 @@ The canonical scripts in this directory are organized into functional modules:
 - [`run_clean_scaling_benchmark.py`](run_clean_scaling_benchmark.py): Measures runtime and memory scaling across varying sample sizes $N$ and dimensions $D$.
 - [`run_exp5_controlled_scaling.py`](run_exp5_controlled_scaling.py): Controlled scaling benchmark estimating the empirical scaling exponent $\beta \approx 1.05$.
 - [`run_phase3_experiments.py`](run_phase3_experiments.py): Executes Phase 3 experiments including large-$K$ anchor budgets, distance geometries, and sensitivity sweeps.
+- [`analyze_bgss_meta.py`](analyze_bgss_meta.py): DerSimonian-Laird random-effects meta-analysis, Cochran's $Q$, $I^2$ heterogeneity, and leave-out sensitivity tests.
 - [`audit_degeneracy.py`](audit_degeneracy.py): Analyzes null feature gating and cluster degeneracy protection.
 
 ### 5. Visualization & Submission Packaging
 - [`plot_conceptual_framework.py`](plot_conceptual_framework.py): Renders the multi-panel motivational conceptual diagram (Figure 1) at publication resolution (300 DPI).
+- [`plot_fig08_cd_diagram.py`](plot_fig08_cd_diagram.py): Generates the Critical Difference diagram across benchmark algorithms.
+- [`replot_fig2_subsample.py`](replot_fig2_subsample.py): Regenerates Figure 2 empirical subsampling stability curves.
 - [`package_submission.py`](package_submission.py): Packages the complete LaTeX manuscript source, figures, tables, and bibliography for Springer Nature submission.
+
+### 6. Extended Scientific Audit & Verification Pipelines
+- [`cohort_audit/`](cohort_audit/): Modular pipeline for biological dataset provenance, sample identifier linkage, OpenML metadata auditing, and duplicate profile detection.
+- [`overnight/`](overnight/): Comprehensive benchmark execution suite for EXP6 (cohort expansion), EXP7 (modern baselines), and EXP8 (unknown-$K$ discovery).
 
 ---
 

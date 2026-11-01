@@ -1,0 +1,39 @@
+dataset_a,dataset_b,dim_a,dim_b,shared_features,max_pearson_r,mean_pearson_r,exact_matches_r_ge_99,high_corr_matches_r_90_99,verdict
+exp3_indian_pines,main_indian_pines,200,200,200,1.0049861669540405,0.03957011550664902,2000,0,"Strong Sample Overlap (2000 exact, 0 correlated)"
+exp3_madelon,main_madelon,500,500,500,1.002004008016033,2.6897707536843515e-06,500,0,100% Bit-for-Bit Duplicate Matrix
+exp3_isolet,main_isolet,617,617,617,1.0014485461892717,0.0008456743704776262,2000,0,"Strong Sample Overlap (2000 exact, 0 correlated)"
+exp3_yale_b,main_yale_b,1024,1024,1024,1.0008888244628906,0.0015745495911687613,1000,0,"Strong Sample Overlap (1000 exact, 0 correlated)"
+exp3_colon,main_colon,2000,2000,2000,1.0005002501250657,0.0005133708769273304,62,0,100% Bit-for-Bit Duplicate Matrix
+exp3_colon,raw_colon,2000,2000,2000,1.000500250124998,0.0005133708088879015,62,0,"Strong Sample Overlap (62 exact, 0 correlated)"
+main_colon,raw_colon,2000,2000,2000,1.000500250124998,0.0005133708088879015,62,0,"Strong Sample Overlap (62 exact, 0 correlated)"
+exp3_zheng68k,main_zheng68k,765,765,765,1.0004767179489136,0.00031700090039521456,691,9,"Strong Sample Overlap (691 exact, 9 correlated)"
+exp3_srbct,main_srbct,2308,2308,2308,1.0004334633723482,0.0003483228804553597,83,0,100% Bit-for-Bit Duplicate Matrix
+exp3_leukemia,main_leukemia,7129,7129,7129,1.0001402918069657,0.002321810667681593,72,0,100% Bit-for-Bit Duplicate Matrix
+exp3_cns,main_cns,7129,7129,7129,1.0001402918069635,0.011455404152255993,60,0,100% Bit-for-Bit Duplicate Matrix
+exp3_cns,exp3_glioma,7129,7129,7129,1.0001402918069635,0.011455404152255993,60,0,100% Bit-for-Bit Duplicate Matrix
+exp3_glioma,main_cns,7129,7129,7129,1.0001402918069635,0.011455404152255993,60,0,100% Bit-for-Bit Duplicate Matrix
+exp3_prostate,main_prostate,12600,12600,12600,1.0000793713786855,0.054605974302225635,102,0,100% Bit-for-Bit Duplicate Matrix
+exp3_ovarian,main_ovarian,15154,15154,15154,1.0000659935326421,0.0015956641090788637,253,0,100% Bit-for-Bit Duplicate Matrix
+raw_gcm,raw_leukemia,16063,7129,7129,0.9991724149145337,0.6586137797253793,26,10,"Probe-Mapped Subspace Overlap (26 near-identical, 10 correlated)"
+exp3_newsgroups20,main_newsgroups20,10000,10000,10000,0.9867033362388611,-0.005083644296973944,0,680,High Cross-Study Correlation
+raw_cns,raw_gcm,7129,16063,7107,0.9853840736659987,0.6017932080626481,0,8,"Probe-Mapped Subspace Overlap (0 near-identical, 8 correlated)"
+raw_cns,raw_leukemia,7129,7129,7129,0.915650905501012,0.7045311462513809,0,1,High Cross-Study Correlation
+main_srbct,raw_srbct,2308,2308,2308,0.6831018959417898,0.0008775880476579671,0,0,Weak / Expected Biological Background Correlation
+exp3_srbct,raw_srbct,2308,2308,2308,0.6831018959417898,0.0008775880476579671,0,0,Weak / Expected Biological Background Correlation
+exp3_lung_cancer,raw_gcm,16063,16063,16063,0.57644567101857,-0.032972903660994535,0,0,Weak / Expected Biological Background Correlation
+exp3_glioma,exp3_leukemia,7129,7129,7129,0.4632198388026459,0.0034572381752030925,0,0,Weak / Expected Biological Background Correlation
+exp3_glioma,main_leukemia,7129,7129,7129,0.4632198388026459,0.0034572381752030925,0,0,Weak / Expected Biological Background Correlation
+exp3_cns,main_leukemia,7129,7129,7129,0.4632198388026459,0.0034572381752030925,0,0,Weak / Expected Biological Background Correlation
+exp3_cns,exp3_leukemia,7129,7129,7129,0.4632198388026459,0.0034572381752030925,0,0,Weak / Expected Biological Background Correlation
+exp3_leukemia,main_cns,7129,7129,7129,0.4632198388026459,0.003457238175203093,0,0,Weak / Expected Biological Background Correlation
+main_cns,main_leukemia,7129,7129,7129,0.4632198388026459,0.0034572381752030925,0,0,Weak / Expected Biological Background Correlation
+main_cns,raw_cns,7129,7129,7129,0.4048750923580862,-0.01066110270411456,0,0,Weak / Expected Biological Background Correlation
+exp3_cns,raw_cns,7129,7129,7129,0.4048750923580862,-0.01066110270411456,0,0,Weak / Expected Biological Background Correlation
+exp3_glioma,raw_cns,7129,7129,7129,0.4048750923580862,-0.01066110270411456,0,0,Weak / Expected Biological Background Correlation
+exp3_leukemia,raw_leukemia,7129,7129,7129,0.29611126089898887,-0.0031111183223276363,0,0,Weak / Expected Biological Background Correlation
+main_leukemia,raw_leukemia,7129,7129,7129,0.29611126089898887,-0.0031111183223276363,0,0,Weak / Expected Biological Background Correlation
+main_leukemia,raw_cns,7129,7129,7129,0.21227894413617313,-0.004710257479512711,0,0,Weak / Expected Biological Background Correlation
+exp3_leukemia,raw_cns,7129,7129,7129,0.21227894413617313,-0.004710257479512711,0,0,Weak / Expected Biological Background Correlation
+exp3_cns,raw_leukemia,7129,7129,7129,0.20287491628495913,-0.0015716287110841337,0,0,Weak / Expected Biological Background Correlation
+exp3_glioma,raw_leukemia,7129,7129,7129,0.20287491628495913,-0.0015716287110841337,0,0,Weak / Expected Biological Background Correlation
+main_cns,raw_leukemia,7129,7129,7129,0.20287491628495913,-0.0015716287110841337,0,0,Weak / Expected Biological Background Correlation
