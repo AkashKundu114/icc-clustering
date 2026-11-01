@@ -1,0 +1,61 @@
+method_id,parameter_name,parameter_type,default_value,search_space,tuning_criterion,label_free,manuscript_reference,discrepancy_notes
+kmeans,k,Architecture,K_target,Fixed to ground-truth class count,Oracle / Protocol definition,TRUE,Section 4 / Table 2,Model order fixed across all comparative baselines
+kmeans,n_init,Optimization,1,Fixed,Single initialization per seed draw,TRUE,Table 2,n_init=1 matches ensemble diversity protocol
+kmeans,max_iter,Optimization,300,Fixed,Standard scikit-learn tolerance (tol=1e-4),TRUE,Table 2,None
+ward,n_clusters,Architecture,K_target,Fixed to ground-truth class count,Oracle / Protocol definition,TRUE,Section 4 / Table 2,Model order fixed
+ward,linkage,Architecture,ward,Fixed,Minimum variance criterion,TRUE,Table 2,None
+ward,jitter,Optimization,1e-4,Fixed,Deterministic tie-breaking for identical distances,TRUE,Code implementation,Prevents platform-dependent ordering
+spectral,n_clusters,Architecture,K_target,Fixed to ground-truth class count,Oracle / Protocol definition,TRUE,Section 4 / Table 2,Model order fixed
+spectral,affinity,Architecture,nearest_neighbors,Fixed,K-nearest neighbor graph,TRUE,Table 2,None
+spectral,n_neighbors,Architecture,10,Fixed,Heuristic graph sparsity,TRUE,Table 2,None
+fcm,n_clusters,Architecture,K_target,Fixed to ground-truth class count,Oracle / Protocol definition,TRUE,Section 4 / Table 2,Model order fixed
+fcm,m,Optimization,2.0,Fixed,Standard quadratic fuzzifier,TRUE,Table 2,None
+fcm,max_iter,Optimization,100,Fixed,Convergence threshold tol=1e-4,TRUE,Table 2,None
+standard_consensus,k,Architecture,K_target,Fixed to ground-truth class count,Oracle / Protocol definition,TRUE,Section 4 / Table 2,Model order fixed
+standard_consensus,n_base_models,Architecture,25,Fixed (M=25),Consensus ensemble size protocol,TRUE,Section 4 / Table 2,None
+standard_consensus,linkage,Architecture,average,Fixed,Fred & Jain (2005) co-association distance linkage,TRUE,Section 4 / Table 2,None
+li_et_al_2019,k,Architecture,K_target,Fixed to ground-truth class count,Oracle / Protocol definition,TRUE,Section 4 / Table 2,Model order fixed
+li_et_al_2019,n_base_models,Architecture,25,Fixed (M=25),Consensus ensemble size protocol,TRUE,Section 4 / Table 2,None
+li_et_al_2019,tau_stab,Architecture,median,Fixed (50th percentile),Empirical sample stability median,TRUE,Section 4 / Table 2,None
+icc_v1,k,Architecture,K_target,Fixed to ground-truth class count,Oracle / Protocol definition,TRUE,Section 4 / Table 2,Model order fixed
+icc_v1,n_base_models,Architecture,25,Fixed (M=25),Consensus ensemble size protocol,TRUE,Section 4 / Table 2,None
+icc_v1,n_anchors,Architecture,40,Fixed (L=40),Anchor budget protocol,TRUE,Section 4 / Table 2,None
+icc_v1,core_quantile,Architecture,0.50,Fixed (tau_core=0.50),Upper 50% stability certification,TRUE,Section 4 / Table 2,None
+icc_v2,k,Architecture,K_target,Fixed to ground-truth class count,Oracle / Protocol definition,TRUE,Section 4 / Table 2,Model order fixed
+icc_v2,n_base_models,Architecture,25,Fixed (M=25),Consensus ensemble size protocol,TRUE,Section 4 / Table 2,None
+icc_v2,n_anchors,Architecture,40,Fixed (L=40),Anchor budget protocol,TRUE,Section 4 / Table 2,None
+icc_v2,core_quantile,Architecture,0.50,Fixed (tau_core=0.50),Upper 50% stability certification,TRUE,Section 4 / Table 2,None
+icc_v2,pool_mode,Architecture,legacy,Fixed (top 15% bimodal),Sarle's Bimodality Coefficient ranking,TRUE,Section 3.2,None
+icc_v2,subspace_rate,Architecture,0.30,Fixed (30% features per draw),Random subspace budget,TRUE,Section 3.2,None
+icc_v2,dense_threshold,Architecture,2000,Fixed (N=2000),Linear vs dense co-association threshold,TRUE,Section 3.3,None
+random_gating,pool_mode,Architecture,random,Fixed (matched 15% budget),Uniform random feature candidate pool,TRUE,Section 4.1,Controls for feature budget
+sparse_kmeans,k,Architecture,K_target,Fixed to ground-truth class count,Oracle / Protocol definition,TRUE,Section 4 / Table 2,Model order fixed
+sparse_kmeans,s_rule,Optimization,witten_scaled,['witten_scaled', 'table2'],L1 penalty rule: max(1.1, 0.15*sqrt(D)+1.0),TRUE,Table 2,DISCREPANCY: Code default uses witten_scaled while Table 2 mentions table2
+sparse_kmeans,max_iter,Optimization,15,Fixed,Alternating optimization iterations,TRUE,Table 2,None
+sparse_kmeans,n_init,Optimization,5,Fixed,Number of internal K-means initializations,TRUE,Table 2,None
+hdbscan,min_cluster_size,Architecture,5,Fixed,Density neighborhood parameter,TRUE,Section 4 / Table 2,Does not take target K
+hdbscan,min_samples,Architecture,None,Fixed,Defaults to min_cluster_size,TRUE,Section 4 / Table 2,None
+hdbscan,metric,Architecture,euclidean,Fixed,Pairwise distance metric,TRUE,Section 4 / Table 2,None
+leiden_snn,n_pca_components,Optimization,30,Fixed,PCA dimensionality reduction prior to SNN,TRUE,Section 4 / Table 2,Prevents distance concentration in high-D
+leiden_snn,n_neighbors,Architecture,15,Fixed,Nearest neighbors for SNN Jaccard graph,TRUE,Section 4 / Table 2,None
+leiden_snn,resolution,Optimization,1.0,Fixed,CPMVertexPartition modularity resolution,TRUE,Section 4 / Table 2,Does not take fixed K
+gmm_fixed,k,Architecture,K_target,Fixed to ground-truth class count,Oracle / Protocol definition,TRUE,Section 4 / Table 2,Model order fixed
+gmm_fixed,covariance_type,Architecture,diag,['diag', 'full'],Forces diag when D > 50 to avoid singularity,TRUE,Section 4 / Table 2,None
+gmm_fixed,reg_covar,Optimization,1e-4,Fixed,Covariance regularization floor,TRUE,Code implementation,Prevents degenerate singular covariances
+gmm_bic,candidate_k,Architecture,[2, 3, 4, 5, 6, 7, 8, 9, 10],Grid search in [2, 10],Unsupervised BIC minimization,TRUE,Section 4.3,Selects K without labels
+gmm_icl,candidate_k,Architecture,[2, 3, 4, 5, 6, 7, 8, 9, 10],Grid search in [2, 10],Unsupervised ICL minimization,TRUE,Section 4.3,Selects K without labels
+fcag,k,Architecture,K_target,Fixed to ground-truth class count,Oracle / Protocol definition,TRUE,Section 4 / Table 2,Model order fixed
+fcag,n_anchors,Architecture,100,Fixed (min(100, N)),k-means++ anchor selection budget,TRUE,Section 4 / Table 2,None
+fcag,s,Architecture,5,Fixed,Nearest anchors connected per sample,TRUE,Section 4 / Table 2,None
+fastmvc_surrogate,k,Architecture,K_target,Fixed to ground-truth class count,Oracle / Protocol definition,TRUE,Section 4 / Table 2,Model order fixed
+fastmvc_surrogate,n_views,Architecture,15,Fixed,Number of random subspace views,TRUE,Section 4 / Table 2,Surrogate proxy parameter
+fastmvc_surrogate,subspace_rate,Architecture,0.50,Fixed,Fraction of features per subspace view,TRUE,Section 4 / Table 2,Surrogate proxy parameter
+fastmvc_surrogate,n_anchors,Architecture,100,Fixed (min(100, N)),k-means++ anchor selection budget,TRUE,Section 4 / Table 2,Surrogate proxy parameter
+dec,k,Architecture,K_target,Fixed to ground-truth class count,Oracle / Protocol definition,TRUE,Section 4 / Table 2,Model order fixed
+dec,encoder_dims,Architecture,[D, 500, 500, 2000, 10],Fixed,Fully connected autoencoder architecture,TRUE,Section 4 / Table 2,Xie et al. (2016) specification
+dec,lr,Optimization,0.001,Fixed,Adam optimizer learning rate,TRUE,Section 4 / Table 2,None
+dec,batch_size,Optimization,256,Fixed,Mini-batch training size,TRUE,Section 4 / Table 2,None
+dec,max_iter,Optimization,20000,Fixed,Maximum training steps with tol=0.001 delta stop,TRUE,Section 4 / Table 2,None
+icc_autok,candidate_k,Architecture,[2, 3, 4, 5, 6, 7, 8],Grid search in [2, 8],Unsupervised PAC minimization in [0.10, 0.90],TRUE,Section 4.3,Senbabaoglu et al. (2014) objective
+icc_autok,u1,Architecture,0.10,Fixed,Lower ambiguity threshold for consensus CDF,TRUE,Section 4.3,None
+icc_autok,u2,Architecture,0.90,Fixed,Upper ambiguity threshold for consensus CDF,TRUE,Section 4.3,None

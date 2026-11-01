@@ -1,0 +1,205 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DMKDExperimentExecutionManifest",
+  "description": "Formal JSON Schema specification for experiment execution manifests in the ICC-clustering reproducibility audit.",
+  "type": "object",
+  "required": [
+    "manifest_version",
+    "experiment_id",
+    "timestamp_utc",
+    "git_provenance",
+    "execution_environment",
+    "installed_packages",
+    "input_datasets",
+    "algorithm_configurations",
+    "seed_schedule",
+    "execution_summary",
+    "output_artifacts"
+  ],
+  "properties": {
+    "manifest_version": {
+      "type": "string",
+      "enum": ["1.0.0"]
+    },
+    "experiment_id": {
+      "type": "string",
+      "pattern": "^(EXP[1-8]|CONF_[A-Z0-9_]+)$"
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "git_provenance": {
+      "type": "object",
+      "required": [
+        "commit_hash",
+        "branch",
+        "is_dirty",
+        "remote_url"
+      ],
+      "properties": {
+        "commit_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "branch": {
+          "type": "string"
+        },
+        "is_dirty": {
+          "type": "boolean"
+        },
+        "remote_url": {
+          "type": "string"
+        }
+      }
+    },
+    "execution_environment": {
+      "type": "object",
+      "required": [
+        "python_version",
+        "os_name",
+        "os_release",
+        "architecture",
+        "cpu_logical_cores",
+        "thread_controls"
+      ],
+      "properties": {
+        "python_version": {
+          "type": "string"
+        },
+        "os_name": {
+          "type": "string"
+        },
+        "os_release": {
+          "type": "string"
+        },
+        "architecture": {
+          "type": "string"
+        },
+        "cpu_logical_cores": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "memory_total_gb": {
+          "type": "number",
+          "minimum": 0
+        },
+        "thread_controls": {
+          "type": "object",
+          "required": [
+            "omp_num_threads",
+            "mkl_num_threads",
+            "openblas_num_threads"
+          ],
+          "properties": {
+            "omp_num_threads": { "type": "string" },
+            "mkl_num_threads": { "type": "string" },
+            "openblas_num_threads": { "type": "string" }
+          }
+        }
+      }
+    },
+    "installed_packages": {
+      "type": "object",
+      "required": [
+        "numpy",
+        "scipy",
+        "scikit_learn",
+        "pandas"
+      ],
+      "properties": {
+        "numpy": { "type": "string" },
+        "scipy": { "type": "string" },
+        "scikit_learn": { "type": "string" },
+        "pandas": { "type": "string" },
+        "torch": { "type": ["string", "null"] },
+        "fastcluster": { "type": ["string", "null"] },
+        "hdbscan": { "type": ["string", "null"] },
+        "igraph": { "type": ["string", "null"] },
+        "leidenalg": { "type": ["string", "null"] }
+      },
+      "additionalProperties": { "type": "string" }
+    },
+    "input_datasets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "dataset_name",
+          "accession",
+          "sha256_checksum",
+          "sample_count_n",
+          "feature_count_d",
+          "cluster_count_k"
+        ],
+        "properties": {
+          "dataset_name": { "type": "string" },
+          "accession": { "type": "string" },
+          "source_url": { "type": "string" },
+          "sha256_checksum": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "sample_count_n": { "type": "integer", "minimum": 1 },
+          "feature_count_d": { "type": "integer", "minimum": 1 },
+          "cluster_count_k": { "type": "integer", "minimum": 2 },
+          "label_provenance": { "type": "string" }
+        }
+      }
+    },
+    "algorithm_configurations": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["hyperparameters", "is_deterministic"],
+        "properties": {
+          "hyperparameters": { "type": "object" },
+          "is_deterministic": { "type": "boolean" },
+          "implementation_module": { "type": "string" }
+        }
+      }
+    },
+    "seed_schedule": {
+      "type": "object",
+      "required": ["master_seed", "seeds_evaluated"],
+      "properties": {
+        "master_seed": { "type": "integer" },
+        "seeds_evaluated": {
+          "type": "array",
+          "items": { "type": "integer" },
+          "minItems": 1
+        }
+      }
+    },
+    "execution_summary": {
+      "type": "object",
+      "required": [
+        "total_trials",
+        "successful_trials",
+        "failed_trials",
+        "total_wall_clock_sec"
+      ],
+      "properties": {
+        "total_trials": { "type": "integer", "minimum": 0 },
+        "successful_trials": { "type": "integer", "minimum": 0 },
+        "failed_trials": { "type": "integer", "minimum": 0 },
+        "total_wall_clock_sec": { "type": "number", "minimum": 0.0 }
+      }
+    },
+    "output_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "file_path",
+          "sha256_checksum",
+          "file_size_bytes",
+          "row_count"
+        ],
+        "properties": {
+          "file_path": { "type": "string" },
+          "sha256_checksum": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "file_size_bytes": { "type": "integer", "minimum": 0 },
+          "row_count": { "type": "integer", "minimum": 0 }
+        }
+      }
+    }
+  }
+}
