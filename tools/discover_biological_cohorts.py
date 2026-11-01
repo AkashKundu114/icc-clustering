@@ -93,7 +93,7 @@ def clean(value: Any) -> str:
     if value is None:
         return ""
     if isinstance(value, list):
-        return "; ".join(clean(v) for v in value)
+        return "; ".join(c for v in value if (c := clean(v)))
     return re.sub(r"\s+", " ", str(value)).strip()
 
 
