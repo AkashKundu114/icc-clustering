@@ -11,9 +11,10 @@ Verifies:
 """
 
 import hashlib
+
 import numpy as np
-import pytest
-from icc.datasets.registry import get_dataset_info, list_datasets
+
+from icc.datasets.registry import list_datasets
 
 
 def test_ten_category_a_independent_cohorts():
@@ -85,7 +86,7 @@ def test_zero_supervised_feature_leakage():
     X_scaled = scaler.fit_transform(X)
 
     # Modifying y must not change scaled features
-    y_perturbed = 1 - y
+    _y_perturbed = 1 - y  # noqa: F841
     X_scaled_2 = scaler.fit_transform(X)
 
     assert np.allclose(X_scaled, X_scaled_2), "Unsupervised scaling must be independent of labels"

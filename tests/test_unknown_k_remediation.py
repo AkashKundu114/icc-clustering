@@ -9,8 +9,8 @@ Verifies:
 """
 
 import numpy as np
-import pytest
-from icc.autok import compute_anchor_pac, run_icc_autok
+
+from icc.autok import run_icc_autok
 from icc.consensus_v2 import InvariantCoreConsensusV2
 
 

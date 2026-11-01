@@ -8,7 +8,7 @@ Verifies:
 """
 
 import numpy as np
-import pytest
+
 from icc.baselines.anchor import run_fastmvc
 
 
@@ -26,7 +26,6 @@ def test_fastmvc_surrogate_tag_and_doc():
 
 def test_proposition_one_analytical_bound():
     """F-24: Proposition 1 critical separation bound Delta/sigma0 >= 1.854."""
-    from scipy.optimize import root_scalar
 
     # For symmetric 2-component Gaussian mixture N(-delta, 1) + N(delta, 1):
     # BC(delta) = (skewness^2 + 1) / kurtosis = 1 / (1 + 2*delta^4 / (1 + delta^2)^2)
