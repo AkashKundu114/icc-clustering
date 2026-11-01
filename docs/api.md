@@ -147,3 +147,32 @@ Dynamic incremental clustering memory for streaming query evaluation with instan
 
 - `store(text, embedding, metadata=None) -> MemoryItem`: Indexes new memory item, dynamically consolidating into existing cluster or triggering novel cluster creation upon conformal abstention ($C(x) = \emptyset$).
 - `query_similar(embedding, top_k=5) -> List[MemoryItem]`: Retrieves nearest indexed memory items.
+
+
+---
+
+## 5. Statistical Hypothesis Testing (`icc.stats`)
+
+```python
+from icc.stats import (
+    bonferroni_correction,
+    friedman_test,
+    hodges_lehmann_estimator,
+    nemenyi_critical_distance,
+    tost_equivalence_test,
+    wilcoxon_signed_rank_test,
+)
+```
+
+- `wilcoxon_signed_rank_test(x: np.ndarray, y: Optional[np.ndarray] = None) -> Dict[str, float]`:
+  Computes Wilcoxon signed-rank test for paired samples or one sample vs zero.
+- `bonferroni_correction(p_values: np.ndarray) -> np.ndarray`:
+  Applies Bonferroni multiple testing correction, capping adjusted p-values at 1.0.
+- `hodges_lehmann_estimator(diffs: np.ndarray, alpha: float = 0.05) -> Tuple[float, Tuple[float, float]]`:
+  Computes non-parametric pseudo-median difference and asymptotic confidence interval.
+- `tost_equivalence_test(diffs: np.ndarray, margin: float = 0.02, alpha: float = 0.05) -> Dict[str, Any]`:
+  Two One-Sided Tests (TOST) for operational equivalence within $[-\text{margin}, +\text{margin}]$.
+- `friedman_test(*args: np.ndarray) -> Dict[str, float]`:
+  Computes Friedman non-parametric two-way ANOVA by ranks.
+- `nemenyi_critical_distance(k: int, n: int, alpha: float = 0.05) -> float`:
+  Computes Nemenyi post-hoc critical distance for comparing mean ranks across datasets.

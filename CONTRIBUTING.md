@@ -1,6 +1,6 @@
-# Contributing to Inductive Consensus Clustering (ICC-v2)
+# Contributing to Invariant Core Consensus (ICC)
 
-Thank you for your interest in contributing to **Inductive Consensus Clustering (ICC-v2)**! This repository hosts the open-source reference implementation, test harness, and benchmarking suite for Invariant Core Consensus (ICC).
+Thank you for your interest in contributing to **Invariant Core Consensus (ICC)**! This repository hosts the open-source reference implementation, test harness, and benchmarking suite for Invariant Core Consensus (ICC) and Conformal Inductive Consensus Clustering (CICC).
 
 We welcome contributions ranging from bug fixes and documentation improvements to new baseline comparisons, additional benchmark datasets, and performance optimizations.
 
@@ -15,26 +15,27 @@ We welcome contributions ranging from bug fixes and documentation improvements t
 6. [Code Style & Quality Standards](#code-style--quality-standards)
 7. [Submitting a Pull Request](#submitting-a-pull-request)
 8. [Reproducibility & Benchmark Artifacts](#reproducibility--benchmark-artifacts)
+9. [AI Navigation & XERJ Indexing](#ai-navigation--xerj-indexing)
 
 ---
 
 ## Code of Conduct
 
-All contributors and participants are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). Please report any violations or concerns to `akashkundu1152@gmail.com` or `akashkundu1152@gmail.com`.
+All contributors and participants are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). Please report any violations or concerns to `akashkundu1152@gmail.com`.
 
 ---
 
 ## Getting Started & Development Setup
 
 ### Prerequisites
-* Python 3.10+ (tested on Python 3.10, 3.11, 3.12, and 3.14)
+* Python 3.10 through 3.14 (fully verified on Python 3.10, 3.11, 3.12, 3.13, and 3.14 across Linux and Windows)
 * Git
 
 ### Step-by-Step Environment Setup
 1. **Fork and clone the repository**:
    ```bash
-   git clone https://github.com/your-username/inductive-consensus-clustering.git
-   cd inductive-consensus-clustering
+   git clone https://github.com/AkashKundu114/icc-clustering.git
+   cd icc-clustering
    ```
 
 2. **Create and activate a clean virtual environment**:
@@ -58,131 +59,48 @@ All contributors and participants are expected to adhere to our [Code of Conduct
    ```bash
    python -c "import icc; print(icc.__version__)"
    python demo.py
+   python -m pytest tests/
    ```
-
----
-
-## Development Workflow
-
-1. **Branch Naming**:
-   Create a dedicated branch for your feature or bugfix from `main`:
-   * `feat/short-description` (for new features or methods)
-   * `fix/bug-description` (for bug fixes)
-   * `exp/experiment-name` (for empirical extensions or evaluations)
-   * `docs/improvement-name` (for documentation updates)
-
-   ```bash
-   git checkout -b feat/support-sparse-matrices
-   ```
-
-2. **Commit Conventions**:
-   Write clear, imperative commit messages (e.g., `Add sparse matrix support for VSSG feature gating`, `Fix off-by-one indexing in bipartite anchor graph`).
 
 ---
 
 ## Testing & Verification
 
-Every contribution must pass the automated test harness.
+All contributions must pass the automated test battery:
 
-* **Run all tests (94 passing)**:
-  ```bash
-  python -m pytest tests -q
-  ```
+```bash
+# Run all unit, integration, and regression tests
+python -m pytest tests/
 
-* **Verify bibliography against live APIs**:
-  ```bash
-  make refs-check
-  # or: python scripts/verify_refs.py refs.bib --out results/refs_report.csv --manual refs_manual.csv
-  ```
+# Run Python version compatibility test suite
+python -m pytest tests/regression/test_python_compatibility.py -v
 
-* **Run tests with coverage tracking**:
-  ```bash
-  python -m pytest tests --cov=src/icc --cov-report=term-missing
-  ```
+# Run linting and code formatting checks
+python -m ruff check src/ tests/
 
-* **Run the quick interactive demo**:
-  ```bash
-  python demo.py
-  ```
-
-* **Verify numerical macro consistency with results registry**:
-  ```bash
-  python tests/test_macro_consistency.py
-  python tests/test_pdf_allowlist.py
-  ```
-
----
-
-## Adding New Baselines & Datasets
-
-### 1. Adding a New Baseline Algorithm
-1. Implement the baseline function inside the appropriate sub-module under `src/icc/baselines/`:
-   * `classical.py`: Single-model classical clustering (e.g., agglomerative, density-based).
-   * `consensus.py`: Ensemble consensus methods.
-   * `anchor.py`: Scalable bipartite or anchor-based clustering.
-   * `deep.py`: Unsupervised deep clustering models.
-2. Standard function signature:
-   ```python
-   def run_my_baseline(X: np.ndarray, k: int, seed: int = 42) -> tuple[np.ndarray, float, dict]:
-       """
-       Parameters
-       ----------
-       X : np.ndarray of shape (N, D)
-       k : int (number of clusters)
-       seed : int
-
-       Returns
-       -------
-       labels : np.ndarray of shape (N,)
-       runtime_seconds : float
-       metadata : dict
-       """
-       ...
-   ```
-3. Register the method in `src/icc/baselines/__init__.py` and `configs/baselines.yaml`.
-
-### 2. Adding a New Benchmark Dataset
-1. Register the dataset metadata in `configs/datasets.yaml`.
-2. Add the loader function in `src/icc/datasets/` ensuring it returns `X: np.ndarray` (standardized float64) and `y: np.ndarray` (integer labels in `[0, K-1]`).
+# Run static type checking
+python -m mypy src
+```
 
 ---
 
 ## Code Style & Quality Standards
 
-We use [Ruff](https://github.com/astral-sh/ruff) for fast, unified linting and formatting.
-
-* **Check linting and formatting**:
-  ```bash
-  ruff check .
-  ```
-
-* **Automatically apply safe fixes**:
-  ```bash
-  ruff check --fix .
-  ruff format .
-  ```
+- Adhere to PEP 8 styling conventions enforced by Ruff.
+- Maximum line length: 120 characters.
+- Ensure strict type hints checked by Mypy.
+- Preserve backward-compatibility for public APIs and shims.
 
 ---
 
-## Submitting a Pull Request
+## AI Navigation & XERJ Indexing
 
-Before opening a pull request, ensure:
-- [ ] All 84 unit and integration tests pass (`pytest tests -q`).
-- [ ] Code formatting and lint checks pass without errors (`ruff check .`).
-- [ ] Any newly introduced public functions or classes have descriptive NumPy-style docstrings.
-- [ ] If modifying algorithmic logic, verify that benchmark reproducibility is maintained.
+This repository is indexed in the [XERJ Corpus Hub](https://hub.xerj.org/contributors/AkashKundu114) for AST-aware symbol lookups, semantic code search, and token-efficient reference retrieval:
 
----
+```bash
+# Autoindex codebase with XERJ
+xerj autoindex . --approve proceed --disable-feedback
 
-## Reproducibility & Benchmark Artifacts
-
-* If changes affect figures or benchmark CSVs, regenerate and synchronize figure assets:
-  ```bash
-  python scripts/sync_figures.py
-  ```
-* Verify and synchronize single source of truth macros:
-  ```bash
-  python scripts/make_numbers.py
-  ```
-
-Thank you for helping push the frontiers of robust, scalable consensus clustering!
+# Look up symbol definitions
+xerj def "<symbol_name>"
+```

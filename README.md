@@ -4,9 +4,11 @@ A high-performance Python framework for scalable, noise-robust consensus cluster
 
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Tests: Passing](https://img.shields.io/badge/pytest-118%2F118%20passing-brightgreen.svg)](tests/)
+[![Tests: Passing](https://img.shields.io/badge/pytest-133%2F133%20passing-brightgreen.svg)](tests/)
+[![CI/CD](https://img.shields.io/badge/CI%2FCD-Ubuntu%20%7C%20Windows-blue.svg)](.github/workflows/ci.yml)
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![Type Checked: Mypy](https://img.shields.io/badge/mypy-checked-blue.svg)](https://mypy-lang.org/)
+[![XERJ Corpus Hub contributor](https://hub.xerj.org/contributors/AkashKundu114/badge.svg)](https://hub.xerj.org/contributors/AkashKundu114)
 
 ---
 
@@ -40,22 +42,25 @@ Consensus clustering synthesizes diverse base clusterings into an aggregated par
 icc-clustering/
 ├── src/
 │   ├── icc/                    # Core ICC framework
-│   │   ├── algorithms/         # Clustering algorithm implementations (Anchor, Cohirf, Deep, etc.)
-│   │   ├── consensus/          # Consensus engines (ICC-v2, GAC, ASPP, Auto-K, CICC)
-│   │   ├── data/               # Dataset loaders, cohorts, and preprocessing (BGSS)
-│   │   ├── evaluation/         # Clustering evaluation metrics (ARI, NMI, AMI, ACC, FM)
-│   │   ├── experiments/        # Experiment runner and benchmarking harnesses
-│   │   ├── stats/              # Statistical tests (Hodges-Lehmann, TOST, Friedman)
+│   │   ├── algorithms/         # Comparative baseline shims (re-exporting from baselines/)
+│   │   ├── baselines/          # Canonical comparative baseline implementations (14 algorithms)
+│   │   ├── benchmarks/         # Canonical benchmark runner and scaling harnesses
+│   │   ├── consensus/          # Canonical consensus engines (ICC-v2, GAC, ASPP, Auto-K, CICC)
+│   │   ├── data/               # Dataset shims, preprocessing (BGSS), and synthetic generators
+│   │   ├── datasets/           # Canonical 13-benchmark dataset loader and registry suite
+│   │   ├── evaluation/         # Dual-backend clustering evaluation metrics (ARI, NMI, AMI, ACC, FM)
+│   │   ├── experiments/        # Backward-compatibility shims for benchmarks/
+│   │   ├── stats/              # Statistical tests (Hodges-Lehmann, TOST, Friedman, Wilcoxon, Bonferroni)
 │   │   └── utils/              # Logging, timer, and seeding utilities
 │   └── cicc/                   # Conformal Inductive Consensus Clustering
 │       ├── conformal.py        # Split-conformal prediction sets
 │       ├── decoy.py            # Target-decoy knockoff FDR screening
 │       ├── inductive.py        # Inductive out-of-sample projection
 │       └── memory.py           # Dynamic incremental memory routing
-├── tests/                      # Modular test suite (118 tests, 100% pass rate)
+├── tests/                      # Modular test suite (133 tests, 100% pass rate)
 │   ├── unit/                   # Fast algorithmic unit tests
 │   ├── integration/            # Dataset loading and pipeline integration tests
-│   └── regression/             # Scalability, anchor fidelity, and boundary tests
+│   └── regression/             # Scalability, anchor fidelity, Python 3.10-3.14 compatibility tests
 ├── scripts/                    # Command-line utility and benchmarking scripts
 │   ├── run.py                  # CLI experiment runner
 │   ├── prepare_data.py         # Data preparation and preprocessing CLI
@@ -68,7 +73,7 @@ icc-clustering/
     ├── setup.md                # Installation and environment guide
     ├── usage.md                # Usage tutorials and examples
     ├── api.md                  # Python API reference
-    ├── theory.md # Mathematical formulations and proofs
+    ├── theory.md               # Mathematical formulations and proofs
     ├── data.md                 # Benchmark dataset specifications
     ├── reproducibility.md      # Determinism and reproduction guide
     └── development.md          # Development and contribution guide
@@ -79,6 +84,8 @@ icc-clustering/
 ## Installation
 
 ### Standard Installation
+Supported across Python 3.10, 3.11, 3.12, 3.13, and 3.14 on Linux, macOS, and Windows:
+
 ```bash
 git clone https://github.com/AkashKundu114/icc-clustering.git
 cd icc-clustering
@@ -93,14 +100,27 @@ pip install -e ".[deep]"
 # Single-cell & genomics tools (Scanpy, AnnData)
 pip install -e ".[bio]"
 
-# Development, testing, and linting
+# Development, testing, and linting toolchains
 pip install -e ".[dev]"
+
+# Complete installation with all components
+pip install -e ".[all]"
 ```
 
 Verify installation:
 ```bash
 python -m pytest tests/
 ```
+
+---
+
+## Continuous Integration & Matrix Testing
+
+Automated CI/CD pipelines run on GitHub Actions across **Python 3.10, 3.11, 3.12, 3.13, and 3.14** on both `ubuntu-latest` and `windows-latest`:
+- Strict PEP 8 linting and formatting verification with Ruff.
+- Static type checking with Mypy.
+- Complete regression and unit test suite execution (133 tests).
+- End-to-end interactive demo execution.
 
 ---
 
