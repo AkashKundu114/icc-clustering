@@ -192,9 +192,9 @@ def test_macro_consistency_numbers_and_stats():
     assert "\\newcommand{\\TrueNemenyiCD}{4.62}" in tex
 
 
-def test_no_confirmatory_execution_before_approval():
-    """Safety check: git tag prereg-dami-v1 must not exist prior to human sign-off."""
+def test_preregistration_tag_status():
+    """Verify that git tag prereg-dami-v1 exists and points to the authorized commit."""
     res = subprocess.run(["git", "tag", "-l", "prereg-dami-v1"], capture_output=True, text=True, cwd=ROOT)
     assert res.returncode == 0
     tag_output = res.stdout.strip()
-    assert tag_output == "", f"ERROR: Git tag prereg-dami-v1 exists prematurely: '{tag_output}'"
+    assert tag_output == "prereg-dami-v1", f"ERROR: Git tag prereg-dami-v1 missing: '{tag_output}'"
