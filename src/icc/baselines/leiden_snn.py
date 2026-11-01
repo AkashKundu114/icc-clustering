@@ -10,6 +10,7 @@ References:
 """
 
 import time
+import warnings
 from typing import Optional, Tuple
 
 import numpy as np
@@ -43,6 +44,66 @@ def _build_snn_matrix(X: np.ndarray, n_neighbors: int = 15) -> np.ndarray:
     return W
 
 
+def run_spectral_snn(
+    X: np.ndarray,
+    k: int = 4,
+    n_pca_components: int = 30,
+    n_neighbors: int = 15,
+    seed: int = 42,
+    **kwargs,
+) -> Tuple[np.ndarray, float, ModelMetadata]:
+    """
+    Execute Spectral Clustering on SNN similarity graph (explicit baseline).
+
+    Parameters
+    ----------
+    X : np.ndarray of shape (N, D)
+        Input feature matrix.
+    k : int, default=4
+        Number of clusters.
+    n_pca_components : int, default=30
+        Number of leading PCs.
+    n_neighbors : int, default=15
+        Number of nearest neighbors.
+    seed : int, default=42
+        Random seed.
+    """
+    t0 = time.perf_counter()
+    X_arr = np.asarray(X, dtype=np.float64)
+    N, D = X_arr.shape
+
+    if D > n_pca_components and N > n_pca_components:
+        pca = PCA(n_components=n_pca_components, random_state=seed)
+        X_reduced = pca.fit_transform(X_arr)
+    else:
+        X_reduced = X_arr
+
+    W = _build_snn_matrix(X_reduced, n_neighbors=n_neighbors)
+
+    from sklearn.cluster import SpectralClustering
+
+    k_eff = max(2, min(k, N - 1))
+    sc = SpectralClustering(
+        n_clusters=k_eff,
+        affinity="precomputed",
+        random_state=seed,
+        n_init=5,
+    )
+    W_reg = W + np.eye(N) * 1e-4
+    labels = sc.fit_predict(W_reg)
+
+    runtime_sec = time.perf_counter() - t0
+    metadata = ModelMetadata(
+        k_eff,
+        method="Spectral-SNN",
+        n_samples=N,
+        n_features=D,
+        n_clusters=k_eff,
+        n_neighbors=n_neighbors,
+    )
+    return labels, runtime_sec, metadata
+
+
 def run_leiden_snn(
     X: np.ndarray,
     target_k: Optional[int] = None,
@@ -50,10 +111,11 @@ def run_leiden_snn(
     n_neighbors: int = 15,
     resolution: float = 1.0,
     seed: int = 42,
+    allow_fallback: bool = False,
     **kwargs,
 ) -> Tuple[np.ndarray, float, ModelMetadata]:
     """
-    Execute Leiden community detection on PCA-SNN graph.
+    Execute authentic Leiden community detection on PCA-SNN graph.
 
     Parameters
     ----------
@@ -69,6 +131,10 @@ def run_leiden_snn(
         Leiden modularity resolution parameter.
     seed : int, default=42
         Random seed.
+    allow_fallback : bool, default=False
+        If True, falls back to Spectral-SNN when igraph/leidenalg are missing,
+        explicitly recording method="Spectral-SNN-Fallback".
+        If False, marks baseline as UNAVAILABLE.
     """
     t0 = time.perf_counter()
     if target_k is None and "k" in kwargs:
@@ -86,7 +152,7 @@ def run_leiden_snn(
     # 2. Build SNN Graph
     W = _build_snn_matrix(X_reduced, n_neighbors=n_neighbors)
 
-    # 3. Community detection via igraph / leidenalg if available, else spectral clustering on SNN
+    # 3. Community detection via igraph / leidenalg
     try:
         import igraph as ig
         import leidenalg
@@ -105,34 +171,61 @@ def run_leiden_snn(
             seed=seed,
         )
         labels = np.array(part.membership, dtype=int)
-    except Exception:
-        # Fallback: Normalized spectral clustering directly on SNN graph W
-        from sklearn.cluster import SpectralClustering
-
-        k = target_k if target_k is not None and target_k >= 2 else 4
-        k = min(k, N - 1)
-        sc = SpectralClustering(
-            n_clusters=k,
-            affinity="precomputed",
-            random_state=seed,
-            n_init=5,
+        k_found = len(np.unique(labels))
+        runtime_sec = time.perf_counter() - t0
+        metadata = ModelMetadata(
+            k_found,
+            method="LeidenSNN",
+            n_samples=N,
+            n_features=D,
+            n_clusters=k_found,
+            resolution=resolution,
+            status="SUCCESS",
         )
-        # Ensure positive connectivity
-        W_reg = W + np.eye(N) * 1e-4
-        labels = sc.fit_predict(W_reg)
+        return labels, runtime_sec, metadata
 
-    unique_c = np.unique(labels)
-    k_found = len(unique_c)
+    except ImportError as e:
+        if not allow_fallback:
+            warnings.warn(
+                f"LeidenSNN unavailable: {e}. Mark baseline as unavailable rather than "
+                "silently substituting an alternative algorithm.",
+                UserWarning,
+                stacklevel=2,
+            )
+            runtime_sec = time.perf_counter() - t0
+            metadata = ModelMetadata(
+                0,
+                method="LeidenSNN (UNAVAILABLE)",
+                n_samples=N,
+                n_features=D,
+                n_clusters=0,
+                status=f"UNAVAILABLE: {e}",
+            )
+            # Return dummy zero labels indicating uncomputed
+            return np.zeros(N, dtype=int), runtime_sec, metadata
 
-    runtime_sec = time.perf_counter() - t0
-    metadata = ModelMetadata(
-        k_found,
-        method="LeidenSNN",
-        n_samples=N,
-        n_features=D,
-        n_clusters=k_found,
-        resolution=resolution,
-    )
-    metadata._data["n_clusters"] = k_found
-
-    return labels, runtime_sec, metadata
+        # Explicit fallback when requested by user
+        warnings.warn(
+            "LeidenSNN falling back to Spectral Clustering on SNN graph. "
+            "Reported method will be 'Spectral-SNN-Fallback'.",
+            UserWarning,
+            stacklevel=2,
+        )
+        k_eff = target_k if target_k is not None and target_k >= 2 else 4
+        labels, rt_spec, meta_spec = run_spectral_snn(
+            X_arr,
+            k=k_eff,
+            n_pca_components=n_pca_components,
+            n_neighbors=n_neighbors,
+            seed=seed,
+        )
+        runtime_sec = time.perf_counter() - t0
+        metadata = ModelMetadata(
+            meta_spec.n_clusters if hasattr(meta_spec, "n_clusters") else k_eff,
+            method="Spectral-SNN-Fallback",
+            n_samples=N,
+            n_features=D,
+            n_clusters=k_eff,
+            status="FALLBACK_SPECTRAL",
+        )
+        return labels, runtime_sec, metadata

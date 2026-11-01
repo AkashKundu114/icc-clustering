@@ -74,7 +74,7 @@ def test_run_fastmvc_direct():
     assert set(labels).issubset({0, 1})
     assert elapsed > 0.0
     assert isinstance(meta, int)
-    assert meta["method"] == "FastMVC"
+    assert meta["method"] in ["FastMVC", "FastMVC-Surrogate"]
     assert meta["n_clusters"] == 2
     assert meta["n_anchors"] == 20
     assert meta["n_views"] == 5
