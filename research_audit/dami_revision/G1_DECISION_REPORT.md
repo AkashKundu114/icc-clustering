@@ -157,12 +157,19 @@ Review the deliverables below and provide explicit authorization to:
 3. Authorize the unsealing and execution of confirmatory experiment suites E1–E8.
 
 **Deliverables Summary:**
-- [x] Revised `HYPOTHESES_AND_ANALYSIS_PLAN.md` (v2.1)
-- [x] Revised `PREREGISTRATION.md` (v2.1)
-- [x] `HYPOTHESIS_TEST_MAPPING.csv`
-- [x] `MULTIPLICITY_FAMILY_SPECIFICATION.md` (v2.1)
-- [x] `POWER_AND_PRECISION_ASSESSMENT.md` (v2.1)
-- [x] `G1_INDEPENDENT_REVIEW.md`
-- [x] `G1_DECISION_REPORT.md`
+- [x] Revised `HYPOTHESES_AND_ANALYSIS_PLAN.md` (v2.1 Reconciled Protocol)
+- [x] Revised `PREREGISTRATION.md` (v2.1 Reconciled Preregistration)
+- [x] `HYPOTHESIS_TEST_MAPPING.csv` (Machine-readable hypothesis-test-estimand mapping)
+- [x] `MULTIPLICITY_FAMILY_SPECIFICATION.md` (v2.1 Multiplicity architecture & error control)
+- [x] `POWER_AND_PRECISION_ASSESSMENT.md` (v2.1 Power, precision & sample size assessment)
+- [x] `G1_REPOSITORY_RECONCILIATION.md` (Phase A provenance, branch, and store audit)
+- [x] `CONFIRMATORY_COHORT_REGISTRY.csv` (18-candidate cohort lifecycle tracking)
+- [x] `COHORT_INDEPENDENCE_AUDIT.md` (Phase D cohort overlap, independence, and quarantine rules)
+- [x] `COHORT_EXCLUSION_LOG.csv` (Formal exclusion ledger for non-compliant datasets)
+- [x] `MANUSCRIPT_CLAIMS_CONSISTENCY_AUDIT.md` (Phase F manuscript numbers, claims & affiliations audit)
+- [x] `G1_INDEPENDENT_REVIEW.md` (Phase G adversarial statistical & methodological peer reviews)
+- [x] `G1_FINDING_DISPOSITION.csv` (15-item remediation tracking ledger across all audit findings)
+- [x] `G1_DECISION_REPORT.md` (Phase H Gate G1 decision & compliance report)
+- [x] `tests/test_g1_protocol_remediation.py` (Automated pytest verification suite)
 
 *Report submitted on branch `research/dami-revision`.*
