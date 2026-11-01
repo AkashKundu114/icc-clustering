@@ -40,7 +40,7 @@ def _build_snn_matrix(X: np.ndarray, n_neighbors: int = 15) -> np.ndarray:
                 if union > 0:
                     W[i, j] = float(inter) / float(union)
 
-    W = (0.5 * (W + W.T)).astype(np.float32)
+    W = (0.5 * (W + W.T)).astype(np.float32)  # type: ignore[assignment]
     return W
 
 
