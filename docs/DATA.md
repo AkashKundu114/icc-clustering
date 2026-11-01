@@ -1,23 +1,6 @@
-# Benchmark Dataset Metadata & Verification Ledger (docs/DATA.md)
+# Benchmark Dataset Specifications (docs/DATA.md)
 
-**Canonical Manuscript Title:** Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes  
-**Academic Lineage:** Initial University Allotment Title: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data" (`CSE_PROJECT_68`, Mentor: Prof. Kalyan Kumar Das); Early Proposal Blueprint: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"  
-**Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`)  
-**Canonical Release Version:** v2.1.0  
-**Audit Verification:** Pass F Frozen Experimental Audit (2026-10-23)  
-**Status:** All 13 benchmark sources verified, HTTP 200 OK, SHA-256 arrays cryptographically anchored in `data/cache/`.
-
----
-
-## 1. Single Source of Truth Empirical Summary (from `paper/numbers.tex`)
-
-The benchmark evaluation comprises 13 benchmark datasets, 2,750 individual model fits, and 11 baseline solvers:
-- **Ultra-High-Dimensional Biological Cancer Subgroup ($D/N > 20$, 6 Datasets):** ICC-v2 commands **Rank #1** with Mean ARI = **0.217** (median 0.036), substantially outperforming Standard Consensus (0.037), DEC (0.045), and K-Means (0.056).
-  - **Golub Leukemia:** ARI = **0.600 +/- 0.367**, 54.0% oncogenic marker recovery (27 of top 50 known driver markers).
-  - **Khan SRBCT:** ARI = **0.546 +/- 0.102**, isolating 4 pediatric tumor malignancies.
-  - **Ovarian Proteomics:** ARI = **0.050**, with a **5.1x speedup** over dense consensus.
-- **Aggregate Multi-Domain Benchmark Suite (13 Datasets):** Grand Mean ARI across all 13 datasets is **0.152** (overall rank **5.23** of 11). Omnibus Friedman test: $\chi^2_F = 9.59, p = 0.48$, Nemenyi critical difference $\text{CD} = 4.19$ (no statistically significant difference globally across the heterogeneous multi-domain suite).
-- **Asymptotic Scalability:** $N = 10^6$ in **55.6 s** (3.05 GB peak RSS, 240 MB graph memory, **99.6% reduction** over dense 8 TB matrix).
+This document specifies the 13 benchmark datasets, source repositories, preprocessing protocols, and dimensions used across the ICC benchmark evaluation suite.
 
 ---
 

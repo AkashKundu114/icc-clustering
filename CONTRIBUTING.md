@@ -1,6 +1,6 @@
 # Contributing to Inductive Consensus Clustering (ICC-v2)
 
-Thank you for your interest in contributing to **Inductive Consensus Clustering (ICC-v2)**! This repository hosts the official reference implementation, full reproducibility test harness, and experiment suite for our paper submitted to **Springer Nature (*Data Mining and Knowledge Discovery* / DAMI)**.
+Thank you for your interest in contributing to **Inductive Consensus Clustering (ICC-v2)**! This repository hosts the open-source reference implementation, test harness, and benchmarking suite for Invariant Core Consensus (ICC).
 
 We welcome contributions ranging from bug fixes and documentation improvements to new baseline comparisons, additional benchmark datasets, and performance optimizations.
 

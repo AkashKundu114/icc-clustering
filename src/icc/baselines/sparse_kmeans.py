@@ -117,7 +117,7 @@ def run_sparse_kmeans(
     s_rule : str, default='witten_scaled'
         Sparsity scaling rule when s is not directly specified:
         - 'witten_scaled': s = max(1.1, 0.15 * sqrt(D) + 1.0) [code implementation]
-        - 'table2': s = max(1.1, 1.1 + 0.5 * (sqrt(D) - 1.1)) [manuscript Table 2]
+        - 'table2': s = max(1.1, 1.1 + 0.5 * (sqrt(D) - 1.1)) [benchmark Table 2]
     max_iter : int, default=15
         Alternating optimization iterations.
     seed : int, default=42

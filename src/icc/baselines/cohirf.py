@@ -81,13 +81,7 @@ class CoHiRF(BaseEstimator, ClusterMixin):
                 feat_idx = rng.choice(D, size=d_rf, replace=False)
                 X_sub = X_rep[:, feat_idx]
                 k_m = min(self.n_clusters, n_rep)
-                km = KMeans(
-                    n_clusters=k_m,
-                    n_init=1,
-                    max_iter=30,
-                    tol=1e-3,
-                    random_state=rng.randint(0, 1000000)
-                )
+                km = KMeans(n_clusters=k_m, n_init=1, max_iter=30, tol=1e-3, random_state=rng.randint(0, 1000000))
                 partitions[:, m] = km.fit_predict(X_sub)
 
             # 2. Form consensus co-association on representatives
@@ -95,7 +89,7 @@ class CoHiRF(BaseEstimator, ClusterMixin):
                 co_assoc = np.zeros((n_rep, n_rep), dtype=np.float32)
                 for m in range(self.repetitions):
                     p = partitions[:, m]
-                    co_assoc += (p[:, None] == p[None, :])
+                    co_assoc += p[:, None] == p[None, :]
                 co_assoc /= float(self.repetitions)
 
                 adj = (co_assoc >= self.consensus_threshold).astype(np.int32)
@@ -118,7 +112,7 @@ class CoHiRF(BaseEstimator, ClusterMixin):
                     sub_pts = X_rep[members]
                     center = np.mean(sub_pts, axis=0, keepdims=True)
                     # ||x - mu||^2 = ||x||^2 - 2 x.mu + ||mu||^2 (avoids large intermediate matrix allocation)
-                    sq_norms = np.sum(sub_pts ** 2, axis=1)
+                    sq_norms = np.sum(sub_pts**2, axis=1)
                     dots = (sub_pts @ center.T).ravel()
                     dists = sq_norms - 2.0 * dots
                     best_local = members[np.argmin(dists)]
@@ -135,11 +129,7 @@ class CoHiRF(BaseEstimator, ClusterMixin):
         X_rep = X[representatives]
         k_final = min(self.n_clusters, len(representatives))
         if len(representatives) > k_final:
-            final_km = KMeans(
-                n_clusters=k_final,
-                n_init=5,
-                random_state=rng.randint(0, 1000000)
-            )
+            final_km = KMeans(n_clusters=k_final, n_init=5, random_state=rng.randint(0, 1000000))
             rep_labels = final_km.fit_predict(X_rep)
         else:
             rep_labels = np.arange(len(representatives)) % self.n_clusters

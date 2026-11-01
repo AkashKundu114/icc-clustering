@@ -48,7 +48,7 @@ def evaluate_hdbscan_metrics(
     labels_arr = np.asarray(labels)
     N = len(labels_arr)
 
-    noise_mask = (labels_arr == -1)
+    noise_mask = labels_arr == -1
     noise_count = int(np.sum(noise_mask))
     noise_ratio = float(noise_count / N) if N > 0 else 0.0
     coverage = float(1.0 - noise_ratio)
@@ -124,6 +124,7 @@ def run_hdbscan(
     # Combat ambient distance concentration if requested
     if n_pca_components is not None and D > n_pca_components and N > n_pca_components:
         from sklearn.decomposition import PCA
+
         pca = PCA(n_components=n_pca_components, random_state=seed)
         X_clust = pca.fit_transform(X_arr)
     else:

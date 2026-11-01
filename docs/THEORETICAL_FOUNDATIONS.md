@@ -1,10 +1,4 @@
-# Theoretical Foundations and Mathematical Proofs of ICC-v2
-
-**Canonical Manuscript Title:** Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes  
-**Academic Lineage:** Initial University Allotment Title: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data" (`CSE_PROJECT_68`, Faculty Mentor: Prof. Kalyan Kumar Das); Early Proposal Blueprint: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"  
-**Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`)  
-**Canonical Active Release:** v2.1.0  
-**Repository Package:** `icc` and `cicc` (Conformal Inductive Consensus Clustering)
+# Theoretical Foundations and Mathematical Formulations of ICC-v2
 
 This document provides formal mathematical formulations, definitions, assumptions, propositions, theorems, and proofs underlying **Inductive Consensus Clustering (ICC-v2)**, **Anchor-Space Perturbation Profiling (ASPP)**, and **Conformal Inductive Consensus Clustering (CICC)**.
 

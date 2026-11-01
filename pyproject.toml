@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "icc"
 version = "2.2.0"
-description = "Reference implementation: Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes"
+description = "Invariant Core Consensus: Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Regimes"
 readme = "README.md"
 authors = [
     {name = "Akash Kundu", email = "akashkundu1152@gmail.com"}
@@ -58,9 +58,7 @@ dev = [
     "black",
     "ruff",
     "mypy>=1.0.0",
-    "pymupdf>=1.23.0",
     "requests>=2.28.0",
-    "bibtexparser>=1.4.0,<2.0.0",
 ]
 # All optional dependencies combined
 all = [
@@ -74,9 +72,7 @@ all = [
     "black",
     "ruff",
     "mypy>=1.0.0",
-    "pymupdf>=1.23.0",
     "requests>=2.28.0",
-    "bibtexparser>=1.4.0,<2.0.0",
 ]
 
 [project.urls]
@@ -85,7 +81,9 @@ Repository = "https://github.com/AkashKundu114/icc-clustering.git"
 Issues = "https://github.com/AkashKundu114/icc-clustering/issues"
 
 [project.scripts]
+icc = "icc.__main__:main"
 icc-demo = "icc.__main__:main"
+icc-run = "scripts.run:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -94,9 +92,7 @@ where = ["src"]
 line-length = 120
 target-version = "py310"
 exclude = [
-    "archives",
     "data",
-    "paper",
     ".pytest_cache",
     ".ruff_cache",
     ".mypy_cache",
@@ -125,7 +121,7 @@ pythonpath = [
 markers = [
     "unit: Fast mathematical and algorithmic unit tests",
     "integration: Multi-model benchmarks, dataset loading, and scalability sweeps",
-    "paper: Manuscript consistency and bibliographic verification",
+    "regression: Regression, fidelity, and theoretical boundary verification",
 ]
 filterwarnings = [
     "ignore::sklearn.exceptions.ConvergenceWarning",

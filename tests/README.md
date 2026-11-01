@@ -1,99 +1,63 @@
 # Test Automation Suite
 
-This directory contains the unit, integration, and build-time consistency test suites for the reference implementation of:
+This directory contains the unit, integration, and regression test suites for **Invariant Core Consensus (ICC)**.
 
-> **Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes**  
-> *Target Venue:* Springer Nature (*Data Mining and Knowledge Discovery* / DAMI)  
-> *Release Version:* v2.1.0  
-> *Total Tests:* 98 passing (100% pass rate)
+All 118 tests pass with a 100% pass rate.
 
 ---
 
-## Architecture Overview
+## Directory Architecture
 
-The test suite is structured into four functional tiers:
+The test suite is organized into three distinct tiers:
 
-1. **Algorithm and Core Mechanics**: Tests for the Invariant Core Consensus v2 (ICC-v2) solver, bipartite graph construction, spectral embedding backends, synthetic data generators, and mathematical co-association invariants.
-2. **Conformal and Inductive Generalization**: Tests for Conformal Inductive Consensus Clustering (CICC), target-decoy feature gating with FDR control, closed-form out-of-sample projection, and downstream multi-classifier generalization.
-3. **Baselines, Metrics, and Datasets**: Tests covering 10+ baseline clustering algorithms, evaluation metrics with dual-backend parity (scikit-learn and pure NumPy/SciPy fallback), and dataset registry loading and caching.
-4. **Reproducibility and Macro Traceability**: Strict build-time validation asserting that every macro in `paper/numbers.tex`, every table in the manuscript, and every numerical value in compiled artifacts matches the frozen experimental results store.
-
----
-
-## Test Catalog
-
-The test suite contains 15 modular test files:
-
-| Test File | Focus Area | Canonical Modules Covered |
-| :--- | :--- | :--- |
-| `test_consensus_v2.py` | Core ICC-v2 Algorithm | `icc.consensus_v2.InvariantCoreConsensusV2`, bipartite graph, candidate pool modes (`legacy`, `bc_frac`, `random_frac`, `robust`, `null_calibrated`), spectral embeddings (`legacy`, `transfer_cut`), and beta deprecation. |
-| `test_cicc.py` | Conformal & Memory | `cicc.decoy.DecoyFeatureGating` (FDR control), `cicc.conformal.ConformalClusterer` (finite-sample coverage), `cicc.inductive.InductiveConsensusClusterer`, and `cicc.memory.InductiveConsensusMemory`. |
-| `test_inductive_projection.py` | Inductive Projection | Geometry-calibrated out-of-sample projection (`.predict`, `.predict_proba`), subspace gating advantage under noise, and temperature scaling monotonicity. |
-| `test_aspp.py` | Perturbation Profiling | `icc.aspp.AnchorSpacePerturbationProfiler`, `icc.aspp.ASPPConfig`, perturbation stability index (PSI), and reliability categorization. |
-| `test_baselines.py` | Baseline Algorithms | Baseline registry dispatch (`list_models`, `get_model`), classical solvers (K-Means, Ward, Spectral, FCM), consensus baselines, anchor solvers (FCAG, FastMVC), and deep clustering interfaces. |
-| `test_metrics.py` | Evaluation Metrics | `icc.metrics.evaluate_all`, `evaluate_all_with_ci`, dual-backend fallback parity (scikit-learn vs pure NumPy/SciPy), ARI, NMI, AMI, V-Measure, and Fowlkes-Mallows index. |
-| `test_datasets.py` | Dataset Registry | Unified dataset registry (13 benchmark datasets across 6 domains), metadata validation against `configs/datasets.yaml`, cache loaders, and preprocessing pipeline. |
-| `test_core_and_generators.py` | Generators & Core Math | Synthetic benchmark generator (`build_dataset` across 5 noise regimes), pairwise co-association properties, base clustering engines, and legacy ICC-v1 solver. |
-| `test_edge_cases.py` | Numerical Robustness | Robustness against zero-variance features, duplicate instances, tiny sample size limits ($N=10$), extreme dimension ratio ($D/N=250$), metric boundaries, and MCAR missing data imputation. |
-| `test_macro_consistency.py` | Macro & Manuscript Traceability | Single-source-of-truth verification ensuring all LaTeX macros in `numbers.tex`, Table 4, Table 5, and Fig. 8 scaling curves reconcile with frozen Pass F result stores. |
-| `test_pdf_allowlist.py` | PDF Numerical Audit | Regex-level text audit of compiled `paper/main.pdf` ensuring zero ungrounded decimals, purging stale tokens, and confirming Figure 7 critical difference ranks. |
-| `test_anchor_fidelity.py` | Scalability & Fidelity | Scalability sweep verification, approximation fidelity bounds between bipartite anchor consensus and exact dense consensus graph. |
-| `test_scaling_timing.py` | Scalability Timing & Isolation | End-to-end stage verification, untraced wall-clock runtime validation, and tracemalloc memory isolation. |
-| `test_exp1_multiclassifier.py` | Downstream Generalization | Downstream inductive classifier generalization across SVM, Random Forest, Multi-Layer Perceptron (MLP), and K-Nearest Neighbors (KNN). |
-| `test_verify_refs.py` | Reference Verification Pipeline | Mocked CrossRef & arXiv API verification, field mismatch detection, fuzzy search fallback, published version redirects, and CLI integrity. |
-
----
-
-## Execution Guide
-
-### Running the Complete Suite
-
-To run all 94 tests with coverage reporting:
-
-```powershell
-pytest tests/
-```
-
-### Running Fast Focused Suites
-
-To run specific modules or functional groups:
-
-```powershell
-# 1. Core ICC-v2 solver and bipartite graph tests
-pytest tests/test_consensus_v2.py
-
-# 2. Conformal prediction and out-of-sample projection
-pytest tests/test_cicc.py tests/test_inductive_projection.py
-
-# 3. ASPP perturbation profiling
-pytest tests/test_aspp.py
-
-# 4. Baselines and evaluation metrics
-pytest tests/test_baselines.py tests/test_metrics.py
-
-# 5. Numerical robustness and edge cases
-pytest tests/test_edge_cases.py
-
-# 6. Build-time macro and manuscript consistency
-pytest tests/test_macro_consistency.py tests/test_pdf_allowlist.py
-
-# 7. Automated CrossRef/arXiv reference verification test suite
-pytest tests/test_verify_refs.py
-```
-
-### Verbose Output Without Coverage
-
-```powershell
-pytest tests/ -v --no-cov
+```text
+tests/
+├── unit/                       # Fast unit tests (< 0.1s each)
+│   ├── test_core.py            # Synthetic generators and core baseline mechanics
+│   ├── test_consensus.py       # ICC-v2 and GAC ensemble solvers
+│   ├── test_aspp.py            # Anchor-Space Perturbation Profiler and PSI
+│   ├── test_metrics.py         # Evaluation metrics with dual-backend fallback
+│   ├── test_autok.py           # Auto-K model order selection
+│   ├── test_cicc.py            # Conformal clustering and target-decoy FDR
+│   ├── test_algorithms.py      # Baseline clustering algorithms dispatch
+│   ├── test_inductive.py       # Inductive out-of-sample projection
+│   └── test_edge_cases.py      # Numerical edge cases, zero-variance, missing data
+├── integration/                # Pipeline and system integration tests
+│   ├── test_datasets.py        # Dataset registry and cache integrity
+│   ├── test_cohort_discovery.py # GEO metadata parsing and validation
+│   ├── test_cohort_provenance.py# Cohort independence and sample integrity
+│   ├── test_pipeline.py        # End-to-end preprocessing, training, evaluation
+│   └── test_runner.py          # CLI runner and YAML config loading
+└── regression/                 # Regression and theoretical boundary tests
+    ├── test_anchor_fidelity.py # Anchor approximation fidelity bounds
+    ├── test_scaling_timing.py  # Wall-clock scaling and memory allocation
+    ├── test_theory_boundaries.py # Analytical separation bounds and surrogate disclosure
+    ├── test_algorithm_fidelity.py# Algorithm parity and fallback warnings
+    └── test_leakage.py         # Train/test leakage prevention checks
 ```
 
 ---
 
-## Test Environment Requirements
+## Running Tests
 
-- **Python Version**: 3.10 or higher (tested on Python 3.10, 3.11, 3.12, 3.13, 3.14)
-- **Core Dependencies**: `numpy`, `scipy`, `pandas`, `scikit-learn`, `pytest`, `pytest-cov`, `pyyaml`
-- **Optional Dependencies**:
-  - `pymupdf` (for `test_pdf_allowlist.py`)
-  - `scanpy`, `anndata` (for un-cached scRNA-seq tests; skipped gracefully if absent)
-  - `torch`, `tensorflow`, `keras` (for deep baselines; skipped gracefully if absent)
+### Run Full Test Suite
+```bash
+python -m pytest tests/
+```
+
+### Run Specific Test Tiers
+```bash
+# Unit tests only
+python -m pytest tests/unit/
+
+# Integration tests only
+python -m pytest tests/integration/
+
+# Regression tests only
+python -m pytest tests/regression/
+```
+
+### Run with Coverage
+```bash
+python -m pytest tests/ --cov=src --cov-report=term-missing
+```

@@ -1,12 +1,6 @@
-# ICC-v2 Python API Reference
+# ICC Python API Reference
 
-**Canonical Manuscript Title:** Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes  
-**Academic Lineage:** Initial University Allotment Title: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data" (`CSE_PROJECT_68`, Faculty Mentor: Prof. Kalyan Kumar Das); Early Proposal Blueprint: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"  
-**Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`)  
-**Canonical Active Release:** v2.1.0  
-**Repository Package:** `icc` (v2.1.0) and `cicc` (Conformal Inductive Consensus Clustering)
-
-The `icc` and `cicc` packages provide an unsupervised, scikit-learn compatible clustering estimator, split-conformal prediction sets, target-decoy feature selection, and dynamic incremental memory routing for high-dimensional noise regimes ($D \gg N$).
+The icc and cicc packages provide an unsupervised, scikit-learn compatible clustering estimator, split-conformal prediction sets, target-decoy feature selection, and dynamic incremental memory routing for high-dimensional noise regimes ( \gg N$).
 
 ---
 

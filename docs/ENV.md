@@ -14,7 +14,6 @@
 **GPU VRAM:** 7.93 GB
 **Internet Connectivity (CrossRef API):** PASS (HTTP 200)
 **Git Version:** git version 2.56.0.windows.4
-**Tectonic Engine:** Present (D:\Final Year Project\tools\bin\tectonic.exe)
 
 ## Resource Limits & Safety Caps
 - **Max RAM per process:** 13.0 GB (hard abort threshold)

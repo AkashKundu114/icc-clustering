@@ -94,9 +94,7 @@ class InductiveConsensusClusterer:
 
         # Split into Discovery (1 - cal_ratio) and Calibration (cal_ratio)
         indices = np.arange(N)
-        idx_disc, idx_cal = train_test_split(
-            indices, test_size=cal_ratio, random_state=self.random_state
-        )
+        idx_disc, idx_cal = train_test_split(indices, test_size=cal_ratio, random_state=self.random_state)
         X_disc = X_norm[idx_disc]
         X_cal = X_norm[idx_cal]
         N_disc = len(X_disc)
@@ -146,9 +144,7 @@ class InductiveConsensusClusterer:
 
         # 4. Target-decoy feature selection via finite-sample FDR control
         if self.enable_decoy_gating:
-            self.decoy_gating_ = DecoyFeatureGating(
-                fdr_target=self.fdr_target, random_state=self.random_state
-            )
+            self.decoy_gating_ = DecoyFeatureGating(fdr_target=self.fdr_target, random_state=self.random_state)
             self.decoy_gating_.fit(X_disc, disc_labels)
             self.selected_features_ = self.decoy_gating_.selected_indices_
         else:
@@ -158,7 +154,7 @@ class InductiveConsensusClusterer:
         # Compute nearest centroid labels on calibration set
         centroids = np.zeros((self.n_clusters, D))
         for k in range(self.n_clusters):
-            mask = (disc_labels == k)
+            mask = disc_labels == k
             if np.any(mask):
                 c = np.mean(X_disc[mask], axis=0)
                 norm_c = np.linalg.norm(c)
@@ -168,9 +164,7 @@ class InductiveConsensusClusterer:
         cal_labels = np.argmax(cos_cal, axis=1)
 
         # 6. Split-conformal calibration for finite-sample coverage guarantees
-        self.conformal_calibrator_ = ConformalClusterer(
-            alpha=self.alpha, random_state=self.random_state
-        )
+        self.conformal_calibrator_ = ConformalClusterer(alpha=self.alpha, random_state=self.random_state)
         self.conformal_calibrator_.fit_calibrate(
             X_disc=X_disc,
             labels_disc=disc_labels,

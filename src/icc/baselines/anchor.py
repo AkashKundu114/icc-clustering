@@ -243,7 +243,7 @@ def run_fastmvc(
     NOTE: This is an internal random-subspace bipartite anchor-graph proxy
     inspired by FastMICE (Huang et al., IEEE TKDE 2023), but it is NOT an
     identical implementation of their official algorithmic pipeline.
-    Manuscript tables and text should refer to it as 'FastMVC-Surrogate'.
+    Benchmark tables and documentation should refer to it as 'FastMVC-Surrogate'.
 
     Pipeline:
     1. Select m anchor points via k-means++ across the global sample space.

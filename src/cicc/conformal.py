@@ -36,6 +36,7 @@ class ConformalResult:
     average_set_size : float
         Mean prediction set cardinality across query instances.
     """
+
     prediction_sets: List[List[int]]
     probabilities: np.ndarray
     set_sizes: np.ndarray
@@ -107,7 +108,7 @@ class ConformalClusterer:
         # Calculate unit-normalized cluster centroids
         self.centroids_ = np.zeros((self.n_clusters_, D))
         for k in range(self.n_clusters_):
-            mask = (labels_disc == unique_labels[k])
+            mask = labels_disc == unique_labels[k]
             if np.any(mask):
                 c = np.mean(X_disc[mask], axis=0)
                 norm_c = np.linalg.norm(c)
@@ -174,9 +175,9 @@ class ConformalClusterer:
             prediction_sets.append(included)
 
         set_sizes = np.array([len(s) for s in prediction_sets], dtype=int)
-        is_singleton = (set_sizes == 1)
-        is_ambiguous = (set_sizes > 1)
-        is_abstention = (set_sizes == 0)
+        is_singleton = set_sizes == 1
+        is_ambiguous = set_sizes > 1
+        is_abstention = set_sizes == 0
 
         empirical_cov = None
         if y_test is not None:

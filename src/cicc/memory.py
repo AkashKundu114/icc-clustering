@@ -19,6 +19,7 @@ import numpy as np
 @dataclass
 class MemoryItem:
     """An individual episodic memory record."""
+
     id: str
     text: str
     embedding: np.ndarray
@@ -194,7 +195,7 @@ class InductiveConsensusMemory:
         q = self._normalize(np.asarray(query_embedding, dtype=np.float64).ravel())
         C_mat = np.stack(self.centroids)
         cluster_sims = C_mat @ q
-        top_clusters = np.argsort(cluster_sims)[::-1][:min(3, len(self.centroids))]
+        top_clusters = np.argsort(cluster_sims)[::-1][: min(3, len(self.centroids))]
 
         # Gather candidate memories from top clusters
         candidates: List[MemoryItem] = []

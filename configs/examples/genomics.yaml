@@ -1,0 +1,19 @@
+# Example: Biomedical High-Dimensional Cohort Benchmark
+name: "genomics_benchmark"
+output_dir: "results/genomics"
+
+algorithms:
+  - "icc_v2"
+  - "kmeans"
+  - "ward"
+  - "spectral"
+  - "fcag"
+  - "sparse_kmeans"
+
+datasets:
+  - "colon"
+  - "leukemia"
+
+seeds:
+  - 42
+  - 123

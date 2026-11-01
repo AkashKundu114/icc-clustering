@@ -1,15 +1,32 @@
 """
-Invariant Core Consensus (ICC): Algorithmic Package.
+Invariant Core Consensus (ICC): High-Dimensional Consensus Clustering & Benchmarking Suite.
 """
 
-__version__ = "2.2.0"
-
+from .algorithms import (
+    get_algorithm,
+    list_algorithms,
+)
 from .aspp import ASPP_FAMILIES, AnchorSpacePerturbationProfiler, ASPPConfig
+from .baselines import (
+    get_model,
+    list_models,
+)
 from .consensus import InvariantCoreConsensus
-from .consensus_v2 import InvariantCoreConsensusV2
-from .core import build_dataset, canonical, pairwise_coassoc, run_clusterer
+from .consensus.autok import AutoKResult, compute_anchor_pac, run_icc_autok
+from .consensus_v2 import GAC, InvariantCoreConsensusV2
+from .core import run_clusterer
+from .data import (
+    bimodality_coefficient,
+    build_dataset,
+    canonical,
+    list_datasets,
+    load_dataset,
+    make_noise,
+    make_signal,
+    pairwise_coassoc,
+)
 from .diagnostics import dominant_partition_stats, partition_entropy
-from .metrics import (
+from .evaluation import (
     adjusted_mutual_info_score,
     adjusted_rand_score,
     evaluate_all,
@@ -18,6 +35,12 @@ from .metrics import (
     normalized_mutual_info_score,
     v_measure_score,
 )
+from .experiments import (
+    ExperimentResult,
+    ExperimentRunner,
+)
+
+__version__ = "2.2.0"
 
 ICC = InvariantCoreConsensusV2
 ICCv2 = InvariantCoreConsensusV2
@@ -34,9 +57,16 @@ __all__ = [
     "ASPPConfig",
     "AnchorSpacePerturbationProfiler",
     "ASPP_FAMILIES",
+    "AutoKResult",
+    "run_icc_autok",
+    "compute_anchor_pac",
+    "bimodality_coefficient",
     "build_dataset",
-    "run_clusterer",
+    "make_signal",
+    "make_noise",
+    "canonical",
     "pairwise_coassoc",
+    "run_clusterer",
     "adjusted_rand_score",
     "normalized_mutual_info_score",
     "adjusted_mutual_info_score",
@@ -44,7 +74,14 @@ __all__ = [
     "fowlkes_mallows_score",
     "evaluate_all",
     "evaluate_all_with_ci",
-    "canonical",
     "partition_entropy",
     "dominant_partition_stats",
+    "get_algorithm",
+    "list_algorithms",
+    "get_model",
+    "list_models",
+    "load_dataset",
+    "list_datasets",
+    "ExperimentRunner",
+    "ExperimentResult",
 ]

@@ -8,6 +8,8 @@ data/paul15/
 !data/raw/.gitkeep
 
 # Experiment caches
+results/experiments/*.json
+!results/experiments/.gitkeep
 experiments/**/data/*.npz
 experiments/**/data/cache/*.npz
 experiments/**/data/*.h5ad

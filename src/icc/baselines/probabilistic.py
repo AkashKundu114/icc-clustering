@@ -182,7 +182,7 @@ def run_gmm_bic(
         # Fallback to single component if all candidate models failed
         return run_gmm(X_arr, k=2, covariance_type=cov_type, seed=seed)
 
-    best_k = min(bic_scores, key=bic_scores.get)
+    best_k = min(bic_scores.keys(), key=lambda k: bic_scores[k])
     best_gmm = fitted_models[best_k]
     labels = best_gmm.predict(X_arr)
     probs = best_gmm.predict_proba(X_arr)
@@ -272,7 +272,7 @@ def run_gmm_icl(
     if not icl_scores:
         return run_gmm(X_arr, k=2, covariance_type=cov_type, seed=seed)
 
-    best_k = min(icl_scores, key=icl_scores.get)
+    best_k = min(icl_scores.keys(), key=lambda k: icl_scores[k])
     best_gmm = fitted_models[best_k]
     labels = best_gmm.predict(X_arr)
 
@@ -293,3 +293,4 @@ def run_gmm_icl(
     metadata._data["candidate_k"] = candidate_k
 
     return labels, runtime_sec, metadata
+

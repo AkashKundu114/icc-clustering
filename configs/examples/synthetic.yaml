@@ -1,0 +1,22 @@
+# Example: High-Dimensional Synthetic Noise Regime
+name: "synthetic_noise_experiment"
+output_dir: "results/synthetic"
+
+algorithms:
+  - "icc_v2"
+  - "kmeans"
+  - "spectral"
+  - "fcag"
+  - "sparse_kmeans"
+
+datasets:
+  - "synthetic_gaussian"
+
+seeds:
+  - 101
+  - 102
+  - 103
+
+synthetic_noise_dim: 1000
+synthetic_n_samples: 300
+synthetic_k: 3

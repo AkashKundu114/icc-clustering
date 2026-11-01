@@ -1,0 +1,35 @@
+# Default Configuration for ICC Clustering Benchmark
+name: "default_benchmark"
+output_dir: "results/experiments"
+
+# Algorithms to evaluate
+algorithms:
+  - "icc_v2"
+  - "kmeans"
+  - "ward"
+  - "spectral"
+  - "fcag"
+  - "sparse_kmeans"
+
+# Datasets
+datasets:
+  - "synthetic_gaussian"
+
+# Random seeds for multi-run stability
+seeds:
+  - 42
+  - 43
+  - 44
+
+# Synthetic data configuration
+synthetic_noise_dim: 500
+synthetic_n_samples: 150
+synthetic_k: 3
+
+# ICC-v2 specific hyperparameters
+icc_v2:
+  n_base_models: 25
+  n_anchors: 50
+  subspace_rate: 0.25
+  core_quantile: 0.50
+  bipartite_normalize: true

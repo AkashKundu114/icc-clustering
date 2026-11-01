@@ -238,7 +238,6 @@ def build_autoencoder(
     return autoencoder, encoder
 
 
-
 def _run_dec_torch_gpu(
     X_arr: np.ndarray,
     k: int,
@@ -328,7 +327,7 @@ def _run_dec_torch_gpu(
             q_np = q.cpu().numpy()
 
             col_sums = q_np.sum(axis=0) + 1e-10
-            weight = q_np ** 2 / col_sums
+            weight = q_np**2 / col_sums
             p_np = weight / (weight.sum(axis=1, keepdims=True) + 1e-10)
             p_t = torch.tensor(p_np, dtype=torch.float32, device=device)
 
@@ -434,6 +433,7 @@ def run_dec(
     if device_opt in ("auto", "gpu", "cuda"):
         try:
             import torch
+
             if torch.cuda.is_available():
                 use_gpu = True
         except Exception:
@@ -602,7 +602,9 @@ def run_idec(
     Guo et al. "Improved deep embedded clustering with local structure preservation."
     IJCAI, 2017.
     """
-    raise NotImplementedError("IDEC deep clustering baseline not yet implemented. Reserved interface for future benchmark extensions.")
+    raise NotImplementedError(
+        "IDEC deep clustering baseline not yet implemented. Reserved interface for future benchmark extensions."
+    )
 
 
 def run_contrastive_clustering(
@@ -618,7 +620,9 @@ def run_contrastive_clustering(
     ----------
     Li, Hu, Liu, Peng, Zhou, Peng. "Contrastive clustering." AAAI, 2021.
     """
-    raise NotImplementedError("Contrastive Clustering baseline not yet implemented. Reserved interface for future benchmark extensions.")
+    raise NotImplementedError(
+        "Contrastive Clustering baseline not yet implemented. Reserved interface for future benchmark extensions."
+    )
 
 
 def run_scan(

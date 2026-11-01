@@ -1,6 +1,5 @@
 """
 Centralized Academic & Scientific Visualization Style for ICC Publications.
-Adheres strictly to Springer Nature (DAMI), Nature, and NeurIPS standards.
 
 Provides:
 - set_academic_style(): Configures matplotlib rcParams (serif typography, CM mathtext, clean grid).
@@ -98,7 +97,6 @@ MODEL_LINESTYLES = {
 def set_academic_style():
     """
     Applies publication-grade typography, line widths, and axes formatting
-    meeting Springer Nature (Data Mining and Knowledge Discovery / DAMI) requirements.
     """
     plt.style.use("default")
     plt.rcParams.update(

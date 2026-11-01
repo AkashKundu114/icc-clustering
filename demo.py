@@ -27,7 +27,6 @@ from icc.metrics import evaluate_all
 def main():
     print("=" * 75)
     print("      INVARIANT CORE CONSENSUS (ICC-v2) -- INTERACTIVE DEMO")
-    print("      Springer Nature Data Mining and Knowledge Discovery (DAMI)")
     print("=" * 75)
 
     # 1. Generate High-D Data
