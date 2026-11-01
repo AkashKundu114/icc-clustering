@@ -161,9 +161,10 @@ def run_icc_autok(
         labels = model.fit_predict(X_arr)
         all_labels[k] = labels
 
-        # Extract anchor embedding projection if available, or compute nearest anchor matrix
-        if model.U_emb_ is not None and model.U_emb_.shape[0] == N:
-            # Normalized spectral embedding in R^k
+        # Authentic bipartite anchor co-occurrence projection B in R^(N x L)
+        if getattr(model, "B_norm_", None) is not None and model.B_norm_.shape[0] == N:
+            pac, area = compute_anchor_pac(model.B_norm_, n_pairs=n_pairs, random_state=seed)
+        elif model.U_emb_ is not None and model.U_emb_.shape[0] == N:
             U = model.U_emb_
             U_norm = U / (np.linalg.norm(U, axis=1, keepdims=True) + 1e-12)
             pac, area = compute_anchor_pac(U_norm, n_pairs=n_pairs, random_state=seed)
@@ -205,7 +206,7 @@ def run_icc_autok(
 
     # Model selection decision rule: minimum PAC with Occam's parsimony tolerance (+0.02)
     min_pac = min(pac_scores.values())
-    best_k_pac = min(k for k, p in pac_scores.items() if p <= min_pac + 0.02)
+    best_k_pac = min(pac_scores, key=pac_scores.get)
 
     # Secondary decision rule: maximum Silhouette
     best_k_sil = max(silhouette_scores.keys(), key=lambda k: silhouette_scores[k])

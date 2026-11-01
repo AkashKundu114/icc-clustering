@@ -238,7 +238,12 @@ def run_fastmvc(
     **kwargs,
 ) -> Tuple[np.ndarray, float, ModelMetadata]:
     """
-    Execute Fast Multi-view Clustering (FastMVC, Huang et al., IEEE TKDE 2023).
+    Execute Fast Multi-view Clustering Surrogate (FastMVC-Surrogate).
+
+    NOTE: This is an internal random-subspace bipartite anchor-graph proxy
+    inspired by FastMICE (Huang et al., IEEE TKDE 2023), but it is NOT an
+    identical implementation of their official algorithmic pipeline.
+    Manuscript tables and text should refer to it as 'FastMVC-Surrogate'.
 
     Pipeline:
     1. Select m anchor points via k-means++ across the global sample space.
@@ -353,7 +358,8 @@ def run_fastmvc(
     runtime_seconds = time.perf_counter() - t0
     metadata = ModelMetadata(
         m,
-        method="FastMVC",
+        method="FastMVC-Surrogate",
+        is_surrogate=True,
         n_samples=N,
         n_features=D,
         n_clusters=k,
