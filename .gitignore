@@ -89,15 +89,10 @@ tools/bin/
 *.exe
 !tools/check_consistency.py
 
-# Manuscript & Publication artifacts
-submission/arxiv_package/
-submission/overleaf_package/
-submission/springer_nature_package/
-submission/arxiv_source/
-submission/source/
-springer_manuscript/*
+# Publication, manuscript, and LaTeX build artifacts
+submission/
 manuscript/
-paper.tex
+paper/
 *.tex
 *.pdf
 *.zip
@@ -107,13 +102,8 @@ paper.tex
 *.cls
 *.sty
 *.eps
-!paper/numbers.tex
-!springer_manuscript/numbers.tex
-!paper/README.md
-!paper/figures/README.md
-!paper/figures/.gitkeep
 
-# Figures and visual binaries (track publication figures in paper/figures)
+# Figures and visual binaries
 **/figures/*
 !**/figures/README.md
 !**/figures/.gitkeep
@@ -121,9 +111,6 @@ paper.tex
 *.jpg
 *.jpeg
 *.svg
-!paper/figures/*.png
-!paper/figures/*.jpg
-!paper/figures/*.jpeg
 
 # Confirmatory raw prediction binaries and large unlabeled matrices
 results/confirmatory/predictions/

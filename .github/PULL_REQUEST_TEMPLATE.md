@@ -5,7 +5,7 @@ Please summarize the changes made and the motivation behind them. If this addres
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New baseline algorithm or dataset integration
 - [ ] Performance optimization (algorithmic or memory)
-- [ ] Documentation or research artifact update (manuscript/figures)
+- [ ] Documentation or technical benchmark update
 - [ ] Other (please describe):
 
 ## Checklist

@@ -115,9 +115,9 @@ methods:
     function: "run_icc_v1"
     requires_gpu: false
     citation:
-      first_author: "Ours"
+      first_author: "ICC-Clustering"
       year: 2026
-      venue: "IEEE TKDE Under Review"
+      venue: "Software Repository"
 
   icc_v2:
     name: "icc_v2"
@@ -130,9 +130,9 @@ methods:
     function: "run_icc_v2"
     requires_gpu: false
     citation:
-      first_author: "Ours"
+      first_author: "ICC-Clustering"
       year: 2026
-      venue: "IEEE TKDE Under Review"
+      venue: "Software Repository"
 
   # ============================================================================
   # NEW DEEP CLUSTERING BASELINES (Phase 4: Enabled: false)

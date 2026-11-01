@@ -208,7 +208,7 @@ def test_download_manifest_checksum_mismatch(tmp_path: Path):
 # =============================================================================
 
 def classify_label_type(label_name: str, label_description: str) -> str:
-    """Classifies label according to research_audit/cohort_discovery/COHORT_DISCOVERY_ELIGIBILITY_SPEC.md."""
+    """Classifies label according to cohort discovery eligibility specifications."""
     text = f"{label_name} {label_description}".lower().replace("_", " ")
     
     # B4: Clinical outcome / survival endpoints (FORBIDDEN for clustering evaluation)

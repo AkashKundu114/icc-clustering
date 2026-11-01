@@ -245,13 +245,13 @@ def main() -> int:
     p_discover.add_argument("--retmax", type=int, default=500, help="Maximum results per query (default 500)")
     p_discover.add_argument("--email", help="NCBI contact email (recommended)")
     p_discover.add_argument("--delay", type=float, default=0.35, help="Pause between ESummary batches")
-    p_discover.add_argument("--out", default="research_audit/cohort_discovery")
+    p_discover.add_argument("--out", default="data/cohort_discovery")
     p_discover.set_defaults(func=discover)
 
     p_download = sub.add_parser("download", help="Download reviewed files with SHA-256 verification")
     p_download.add_argument("--manifest", required=True)
     p_download.add_argument("--raw-dir", default="data/raw/cohort_discovery")
-    p_download.add_argument("--report", default="research_audit/cohort_discovery/download_manifest.csv")
+    p_download.add_argument("--report", default="data/cohort_discovery/download_manifest.csv")
     p_download.add_argument("--timeout", type=int, default=3600)
     p_download.set_defaults(func=download_manifest)
 
