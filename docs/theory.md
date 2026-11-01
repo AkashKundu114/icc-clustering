@@ -194,3 +194,19 @@ Incoming streaming items are embedded and routed to cluster anchors in $\mathcal
 1. **Clinical Cancer Subtyping ([`examples/clinical_cancer_subtyping.py`](../examples/clinical_cancer_subtyping.py)):** Unsupervised subtyping on Golub Leukemia (ARI = 0.600) and Khan SRBCT (ARI = 0.546), recovering 54.0% of top oncogenic driver genes.
 2. **Point-of-Care Patient Biopsy Projection ([`examples/realtime_patient_projection.py`](../examples/realtime_patient_projection.py)):** Inductive query evaluation in **22.6 microseconds** per patient biopsy with $(1 - \alpha = 90\%)$ conformal validity.
 3. **Million-Scale Single-Cell Transcriptomics:** Clusters $N = 10^6$ cells in 55.6 s with 240 MB graph memory, bypassing the dense 8 TB RAM barrier.
+
+---
+
+## 8. Foundational References & Literature Benchmarks
+
+The theoretical and algorithmic architecture of ICC builds upon and compares against key prior art in consensus clustering, multimodality screening, and scalable anchor graphs:
+
+1. **Monti et al. (2003) [monti2003]:** Monti, S., Tamayo, P., Mesirov, J., & Golub, T. Consensus clustering: a resampling-based method for class discovery and visualization of gene expression microarray data. *Machine Learning*, 52(1), 91-118.
+2. **Wilkerson & Hayes (2010) [wilkerson2010]:** Wilkerson, M. D., & Hayes, D. N. ConsensusClusterPlus: a class discovery tool with confidence assessments and item tracking. *Bioinformatics*, 26(12), 1572-1573.
+3. **Hartigan & Hartigan (1985) [hartigan1985]:** Hartigan, J. A., & Hartigan, P. M. The dip test of unimodality. *The Annals of Statistics*, 13(1), 70-84.
+4. **Liu et al. (2010) [liu2010]:** Liu, W., He, J., & Chang, S. F. Large graph construction for scalable semi-supervised learning. *ICML 2010*, 679-686.
+5. **Kiselev et al. (2017) [kiselev2017]:** Kiselev, V. Y., et al. SC3: consensus clustering of single-cell RNA-seq data. *Nature Methods*, 14(5), 483-486.
+6. **Huang et al. (2023) [huang2023]:** Huang, S., et al. Fast multi-view clustering via ensembles (FastMICE/FastMVC). *IEEE TKDE*, 35(4), 3820-3832.
+7. **Nie et al. (2024) [
+ie2024]:** Nie, F., Xue, J., Yu, W., & Li, X. Fast clustering with anchor guidance (FCAG). *IEEE TPAMI*, 46(2), 1120-1135.
+

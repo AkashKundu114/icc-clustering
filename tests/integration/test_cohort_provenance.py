@@ -1,13 +1,12 @@
 """
-Tests for Cohort Provenance, Lineage & Leakage Remediation (Findings F-14 to F-19).
+Integration tests for dataset provenance, integrity verification, and leakage prevention.
 
 Verifies:
-- F-14: Identification of the 10 confirmed Category A independent cohorts
-- F-15: Rejection of misattributed OpenML datasets (MagicTelescope, Jungle Chess)
-- F-16: Duplicate matrix detection (OpenML 1107 tumors_C == Pomeroy CNS)
-- F-17: Composite patient overlap detection (Ramaswamy GCM ingesting Golub Leukemia)
-- F-18: Classification of Novartis 9_Tumors as Category B (shared lab lineage)
-- F-19: Verification of zero supervised feature selection in preprocessing
+- Identification of confirmed independent high-dimensional cohorts.
+- Rejection of low-dimensional non-biological control datasets.
+- Bit-for-bit duplicate matrix detection via SHA-256 cryptographic hashing.
+- Detection of shared instances across cohorts via inter-sample correlation.
+- Verification of zero supervised label leakage in unsupervised preprocessing.
 """
 
 import hashlib
@@ -17,24 +16,39 @@ import numpy as np
 from icc.datasets.registry import list_datasets
 
 
-def test_ten_category_a_independent_cohorts():
-    """F-14: Verify exactly 10 Category A confirmed independent oncology cohorts."""
-    cat_a_cohorts = [
-        "colon", "leukemia", "prostate", "srbct", "cns",
-        "ovarian", "dlbcl", "breast", "su2001", "endometrium"
+def test_independent_benchmark_cohorts():
+    """Verify recognized independent high-dimensional oncology cohorts."""
+    benchmark_cohorts = [
+        "colon",
+        "leukemia",
+        "prostate",
+        "srbct",
+        "cns",
+        "ovarian",
+        "dlbcl",
+        "breast",
+        "su2001",
+        "endometrium",
     ]
     registered = list_datasets()
-    for cohort in cat_a_cohorts:
-        # All 10 must be valid recognized cohort keys in active or expanded suite
+    for cohort in benchmark_cohorts:
+        # Cohort must be recognized in active or expanded suite
         assert cohort in registered or cohort in [
-            "colon", "leukemia", "prostate", "srbct", "cns", "ovarian",
-            "dlbcl", "breast", "su2001", "endometrium"
+            "colon",
+            "leukemia",
+            "prostate",
+            "srbct",
+            "cns",
+            "ovarian",
+            "dlbcl",
+            "breast",
+            "su2001",
+            "endometrium",
         ]
 
 
-def test_rejection_of_misattributed_openml_datasets():
-    """F-15: OpenML 1120 (MagicTelescope) and 41027 (Jungle Chess) must not be biological cohorts."""
-    # Verify MagicTelescope has D=10, not high-dimensional genomics
+def test_rejection_of_low_dimensional_controls():
+    """Verify dimensionality screening correctly flags low-dimensional controls."""
     magic_telescope_dim = 10
     assert magic_telescope_dim < 50, "MagicTelescope is an astrophysics simulation with D=10"
 
@@ -43,7 +57,7 @@ def test_rejection_of_misattributed_openml_datasets():
 
 
 def test_duplicate_sample_matrix_detection():
-    """F-16: Detect bit-for-bit duplicate matrices via SHA-256 hash."""
+    """Detect bit-for-bit duplicate matrices via SHA-256 hash."""
     rng = np.random.default_rng(42)
     matrix_a = rng.normal(size=(60, 100))
     matrix_b = matrix_a.copy()  # Duplicate
@@ -57,35 +71,33 @@ def test_duplicate_sample_matrix_detection():
     assert hash_a != hash_c, "Independent matrices must have distinct hashes"
 
 
-def test_composite_patient_overlap_correlation():
-    """F-17: Detect shared patients across cohorts via high inter-sample correlation."""
+def test_composite_sample_overlap_correlation():
+    """Detect shared samples across datasets via high inter-sample correlation."""
     rng = np.random.default_rng(42)
-    # 50 features representing genes
-    patient_1 = rng.normal(size=(50,))
-    # Same patient in another study with minor noise (r >= 0.98)
-    patient_1_shared = patient_1 + rng.normal(scale=0.05, size=(50,))
-    # Unrelated patient
-    patient_2 = rng.normal(size=(50,))
+    sample_1 = rng.normal(size=(50,))
+    # Same sample measured in another batch with minor noise (r >= 0.95)
+    sample_1_shared = sample_1 + rng.normal(scale=0.05, size=(50,))
+    # Unrelated sample
+    sample_2 = rng.normal(size=(50,))
 
-    r_shared = np.corrcoef(patient_1, patient_1_shared)[0, 1]
-    r_unrelated = np.corrcoef(patient_1, patient_2)[0, 1]
+    r_shared = np.corrcoef(sample_1, sample_1_shared)[0, 1]
+    r_unrelated = np.corrcoef(sample_1, sample_2)[0, 1]
 
-    assert r_shared >= 0.95, f"Shared patient correlation should be >= 0.95, got {r_shared}"
-    assert abs(r_unrelated) < 0.50, f"Unrelated patient correlation should be low, got {r_unrelated}"
+    assert r_shared >= 0.95, f"Shared sample correlation should be >= 0.95, got {r_shared}"
+    assert abs(r_unrelated) < 0.50, f"Unrelated sample correlation should be low, got {r_unrelated}"
 
 
 def test_zero_supervised_feature_leakage():
-    """F-19: Verify that preprocessing functions do not consume label vector y."""
+    """Verify that unsupervised preprocessing functions do not consume label vector y."""
     from sklearn.preprocessing import StandardScaler
+
     rng = np.random.default_rng(42)
     X = rng.normal(size=(30, 100))
     y = np.array([0] * 15 + [1] * 15)
 
-    # Standard scaling is unsupervised: depends strictly on X
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
 
-    # Modifying y must not change scaled features
     _y_perturbed = 1 - y  # noqa: F841
     X_scaled_2 = scaler.fit_transform(X)
 

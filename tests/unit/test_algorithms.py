@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 
 from icc.baselines import ModelMetadata, get_model, list_models
-from icc.experiments.benchmark_models import MODELS
+from icc.benchmarks.benchmark_models import MODELS
 
 try:
     import keras  # noqa: F401

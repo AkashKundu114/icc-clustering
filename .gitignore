@@ -1,3 +1,6 @@
+# Generated benchmark results and temporary run outputs
+results/
+
 # Data cache and raw downloads (large binary files)
 data/cache/
 data/raw/

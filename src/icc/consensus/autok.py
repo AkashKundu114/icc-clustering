@@ -23,7 +23,7 @@ from typing import Dict, List, Tuple
 import numpy as np
 from sklearn.metrics import calinski_harabasz_score, davies_bouldin_score, silhouette_score
 
-from icc.consensus_v2 import InvariantCoreConsensusV2
+from .icc import InvariantCoreConsensusV2
 
 
 @dataclass

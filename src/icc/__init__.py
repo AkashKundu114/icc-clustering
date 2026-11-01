@@ -11,9 +11,18 @@ from .baselines import (
     get_model,
     list_models,
 )
-from .consensus import InvariantCoreConsensus
+from .benchmarks import (
+    BenchmarkResult,
+    BenchmarkRunner,
+    ExperimentResult,
+    ExperimentRunner,
+)
+from .consensus import (
+    GAC,
+    InvariantCoreConsensus,
+    InvariantCoreConsensusV2,
+)
 from .consensus.autok import AutoKResult, compute_anchor_pac, run_icc_autok
-from .consensus_v2 import GAC, InvariantCoreConsensusV2
 from .core import run_clusterer
 from .data import (
     bimodality_coefficient,
@@ -34,10 +43,6 @@ from .evaluation import (
     fowlkes_mallows_score,
     normalized_mutual_info_score,
     v_measure_score,
-)
-from .experiments import (
-    ExperimentResult,
-    ExperimentRunner,
 )
 
 __version__ = "2.2.0"
@@ -82,6 +87,8 @@ __all__ = [
     "list_models",
     "load_dataset",
     "list_datasets",
+    "BenchmarkRunner",
+    "BenchmarkResult",
     "ExperimentRunner",
     "ExperimentResult",
 ]

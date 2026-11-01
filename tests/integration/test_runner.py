@@ -1,14 +1,14 @@
 """
-Integration test for the shared ExperimentRunner.
+Integration test for BenchmarkRunner and backward-compatible ExperimentRunner.
 """
 
 import tempfile
 from pathlib import Path
 
-from icc.experiments.runner import ExperimentRunner
+from icc.benchmarks.runner import BenchmarkRunner, ExperimentRunner
 
 
-def test_experiment_runner_end_to_end():
+def test_benchmark_runner_end_to_end():
     with tempfile.TemporaryDirectory() as tmpdir:
         config = {
             "name": "test_run",
@@ -19,7 +19,7 @@ def test_experiment_runner_end_to_end():
             "output_dir": tmpdir,
         }
 
-        runner = ExperimentRunner(config, output_dir=tmpdir)
+        runner = BenchmarkRunner(config, output_dir=tmpdir)
         results = runner.run_all()
 
         assert len(results) == 2
@@ -30,3 +30,23 @@ def test_experiment_runner_end_to_end():
 
         out_files = list(Path(tmpdir).glob("*.json"))
         assert len(out_files) == 1
+
+
+def test_legacy_experiment_runner_alias():
+    """Verify ExperimentRunner is an exact functional alias of BenchmarkRunner."""
+    assert ExperimentRunner is BenchmarkRunner
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        config = {
+            "name": "test_legacy_run",
+            "algorithms": ["kmeans"],
+            "datasets": ["synthetic_test"],
+            "seeds": [42],
+            "synthetic_noise_dim": 10,
+            "output_dir": tmpdir,
+        }
+
+        runner = ExperimentRunner(config, output_dir=tmpdir)
+        results = runner.run_all()
+        assert len(results) == 1
+        assert results[0].status == "SUCCESS"

@@ -1,7 +1,7 @@
 # Setup and Installation Guide
 
 ## Requirements
-- Python >= 3.10 (tested through 3.14)
+- Python >= 3.10 (tested through 3.14 on Linux, macOS, and Windows)
 - Pip >= 22.0
 
 ## Installation
@@ -37,9 +37,20 @@ pip install -e .
    pip install -e ".[all]"
    ```
 
+## System Requirements & Resource Guidelines
+
+### Recommended Hardware
+- **CPU:** Multi-core x86_64 or ARM64 processor (8+ cores recommended for multi-seed benchmark evaluations).
+- **RAM:** Minimum 8 GB (16+ GB recommended for large high-dimensional datasets and scRNA-seq matrices).
+- **GPU (Optional):** NVIDIA GPU with CUDA support for optional deep clustering baselines (DEC, IDEC). All consensus and anchor clustering algorithms run natively and deterministically on CPU.
+
+### Resource Limits and Safeguards
+- **Memory Safeguard:** When executing extensive benchmark sweeps, ensure adequate host swap or container limits (e.g. 13 GB RAM limit threshold).
+- **Disk Space:** At least 5 GB free disk space recommended for caching benchmark datasets and output logs.
+
 ## Verifying Installation
 
 Run the test suite:
 ```bash
-python -m pytest tests/
+python -m pytest tests/ -q
 ```

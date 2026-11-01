@@ -8,14 +8,14 @@ Usage:
 """
 
 import argparse
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Ensure src is on python path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from icc.experiments import ExperimentRunner
+from icc.benchmarks import BenchmarkRunner
 from icc.utils import configure_logging
 
 logger = configure_logging()
@@ -60,10 +60,10 @@ def main():
 
     override_config = {}
     if config_path.exists():
-        runner = ExperimentRunner(config_path, output_dir=args.output_dir)
+        runner = BenchmarkRunner(config_path, output_dir=args.output_dir)
     else:
         logger.warning(f"Config '{config_path}' not found, using default settings.")
-        runner = ExperimentRunner(override_config, output_dir=args.output_dir)
+        runner = BenchmarkRunner(override_config, output_dir=args.output_dir)
 
     if args.algorithms:
         runner.algorithms = args.algorithms

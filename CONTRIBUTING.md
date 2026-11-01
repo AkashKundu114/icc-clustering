@@ -14,7 +14,7 @@ We welcome contributions ranging from bug fixes and documentation improvements t
 5. [Adding New Baselines & Datasets](#adding-new-baselines--datasets)
 6. [Code Style & Quality Standards](#code-style--quality-standards)
 7. [Submitting a Pull Request](#submitting-a-pull-request)
-8. [Reproducibility & Manuscript Artifacts](#reproducibility--manuscript-artifacts)
+8. [Reproducibility & Benchmark Artifacts](#reproducibility--benchmark-artifacts)
 
 ---
 
@@ -174,7 +174,7 @@ Before opening a pull request, ensure:
 
 ---
 
-## Reproducibility & Manuscript Artifacts
+## Reproducibility & Benchmark Artifacts
 
 * If changes affect figures or benchmark CSVs, regenerate and synchronize figure assets:
   ```bash

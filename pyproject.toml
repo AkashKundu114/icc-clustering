@@ -102,6 +102,9 @@ exclude = [
 select = ["E", "F", "I"]
 ignore = ["E501"]
 
+[tool.ruff.lint.per-file-ignores]
+"scripts/*" = ["E402"]
+
 [tool.mypy]
 python_version = "3.10"
 mypy_path = "src"

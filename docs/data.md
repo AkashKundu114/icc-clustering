@@ -1,4 +1,4 @@
-# Benchmark Dataset Specifications (docs/DATA.md)
+# Benchmark Dataset Specifications (docs/data.md)
 
 This document specifies the 13 benchmark datasets, source repositories, preprocessing protocols, and dimensions used across the ICC benchmark evaluation suite.
 

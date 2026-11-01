@@ -1,6 +1,6 @@
 # ==============================================================================
 # Unified Dataset Provenance & Preprocessing Registry (data/registry.yaml)
-# Single Source of Truth for all 13 Benchmark Datasets in Paper 1 (ICC-v2)
+# Single Source of Truth for all 13 Benchmark Datasets in the ICC Benchmark Suite
 # ==============================================================================
 
 version: "2.1.0"

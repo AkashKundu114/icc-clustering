@@ -10,7 +10,7 @@ Thank you for your interest in the Invariant Core Consensus (`icc`) library and 
   - [Setup Guide](docs/setup.md)
   - [Usage Guide](docs/usage.md)
   - [API Reference](docs/api.md)
-  - [Theoretical Foundations](docs/THEORETICAL_FOUNDATIONS.md)
+  - [Theoretical Foundations](docs/theory.md)
 
 - **Bug Reports & Issues:**
   If you find a bug, unexpected behaviour, or an error:
@@ -19,7 +19,7 @@ Thank you for your interest in the Invariant Core Consensus (`icc`) library and 
 
 - **Reproducibility Inquiries:**
   If you encounter discrepancies reproducing benchmark results:
-  - Consult the [Reproducibility Guide](docs/REPRODUCIBILITY.md).
+  - Consult the [Reproducibility Guide](docs/reproducibility.md).
   - Verify that your environment flags match the single-thread determinism constraints (`OMP_NUM_THREADS=1`, `MKL_NUM_THREADS=1`).
 
 ---

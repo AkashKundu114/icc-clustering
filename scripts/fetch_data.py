@@ -1,7 +1,7 @@
 """
 Dataset Fetcher and Verifier.
 
-Downloads, unpacks, and validates all 13 benchmark datasets used across the manuscript.
+Downloads, unpacks, and validates all 13 benchmark datasets used across the benchmark suite.
 Checks expected sample count N, dimension D, and cluster count K.
 
 Usage:

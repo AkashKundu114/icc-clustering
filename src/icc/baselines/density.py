@@ -1,5 +1,5 @@
 """
-HDBSCAN* Density-Based Hierarchical Clustering Baseline.
+HDBSCAN* and DBSCAN Density-Based Clustering Baselines.
 
 References:
     Campello, Moulavi, Zimek. "Density-based clustering based on hierarchical density estimates."
@@ -170,3 +170,45 @@ def run_hdbscan(
     metadata._data["coverage"] = coverage
 
     return labels, runtime_sec, metadata
+
+
+def run_dbscan(
+    X: np.ndarray,
+    k: Optional[int] = None,
+    eps: float = 0.5,
+    min_samples: int = 5,
+    seed: int = 42,
+) -> Tuple[np.ndarray, float, ModelMetadata]:
+    """
+    Run standard DBSCAN density-based clustering.
+    """
+    t0 = time.perf_counter()
+    N, D = X.shape
+    from sklearn.cluster import DBSCAN
+
+    model = DBSCAN(eps=eps, min_samples=min_samples)
+    labels = model.fit_predict(X)
+    runtime_sec = time.perf_counter() - t0
+    unique_clusters = set(labels) - {-1}
+    k_found = max(1, len(unique_clusters))
+    noise_count = int(np.sum(labels == -1))
+    noise_ratio = float(noise_count / N)
+    coverage = float(1.0 - noise_ratio)
+    metadata = ModelMetadata(
+        k_found,
+        method="DBSCAN",
+        n_samples=N,
+        n_features=D,
+        n_clusters=k_found,
+        noise_points=noise_count,
+        noise_ratio=noise_ratio,
+        coverage=coverage,
+    )
+    return labels, runtime_sec, metadata
+
+
+__all__ = [
+    "evaluate_hdbscan_metrics",
+    "run_hdbscan",
+    "run_dbscan",
+]

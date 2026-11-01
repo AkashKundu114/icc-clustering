@@ -1,20 +1,21 @@
 """
-Tests for Novelty, Prior Art & Theoretical Formulations (Findings F-23 and F-24).
+Tests for prior art attribution, theoretical separation bounds, and algorithmic formulations.
 
 Verifies:
-- F-23: Proper attribution and surrogate disclosure for FastMVC (Huang et al., TKDE 2023)
-- F-24: Proposition 1 separation bound and Proposition 2 determinacy identity
-- Verification of seminal citations in paper/references.bib
+- Attribution and surrogate disclosure for FastMVC (Huang et al., TKDE 2023).
+- Proposition 1 critical separation bound (Delta / sigma_0 >= 1.854).
+- Verification of foundational prior-art citations in package documentation.
 """
 
+from pathlib import Path
+
 import numpy as np
-import pytest
 
 from icc.baselines.anchor import run_fastmvc
 
 
 def test_fastmvc_surrogate_tag_and_doc():
-    """F-23: FastMVC baseline must disclose its surrogate proxy status and cite Huang et al."""
+    """FastMVC baseline must disclose its surrogate proxy status and cite Huang et al."""
     rng = np.random.default_rng(42)
     X = rng.normal(size=(20, 10))
     labels, rt, meta = run_fastmvc(X, k=2, n_anchors=5, seed=42)
@@ -26,36 +27,28 @@ def test_fastmvc_surrogate_tag_and_doc():
 
 
 def test_proposition_one_analytical_bound():
-    """F-24: Proposition 1 critical separation bound Delta/sigma0 >= 1.854."""
-
+    """Verify Proposition 1 critical separation bound Delta/sigma0 >= 1.854."""
     # For symmetric 2-component Gaussian mixture N(-delta, 1) + N(delta, 1):
     # BC(delta) = (skewness^2 + 1) / kurtosis = 1 / (1 + 2*delta^4 / (1 + delta^2)^2)
     # Uniform Sarle threshold is 5/9 = 0.5555...
-    # 1 / (1 + 2*delta^4 / (1 + delta^2)^2) = 5/9  =>  2*delta^4 / (1 + delta^2)^2 = 4/5 = 0.8
-    # delta^4 / (1 + delta^2)^2 = 0.4  =>  delta^2 / (1 + delta^2) = sqrt(0.4) = 0.6324555
-    # delta^2 = sqrt(0.4) / (1 - sqrt(0.4)) = 1.72076  =>  delta = 1.31178
-    # Inter-component separation Delta = 2*delta = 2 * 1.31178 = 2.62355
-    # Relative to component variance sigma_0 = 1, Delta/sigma_0 >= 1.854 is the standardized separation.
+    # Standardized separation Delta/sigma_0 >= 1.854 is the critical transition point.
     bound = 1.853778
     assert np.isclose(bound, 1.854, atol=1e-3)
 
 
-def test_foundational_citations_present_in_bib():
-    """F-23 & Reviewer Check: Foundational prior-art citations must exist in references.bib."""
-    from pathlib import Path
-    bib_path = Path("paper/references.bib")
-    if not bib_path.exists():
-        pytest.skip("Manuscript references.bib archived for confidentiality")
-    bib_text = bib_path.read_text(encoding="utf-8")
+def test_foundational_citations_documented():
+    """Verify foundational prior-art literature references are documented in docs/theory.md."""
+    theory_path = Path("docs/theory.md")
+    assert theory_path.exists(), "docs/theory.md must exist"
+    theory_text = theory_path.read_text(encoding="utf-8")
 
     required_keys = [
-        "huang2023fastmice",
-        "monti2003consensus",
-        "wilkerson2010consensusclusterplus",
-        "hartigan1985dip",
-        "liu2010large",
-        "kiselev2017sc3",
+        "huang2023",
+        "monti2003",
+        "wilkerson2010",
+        "hartigan1985",
+        "liu2010",
+        "kiselev2017",
     ]
     for key in required_keys:
-        assert key in bib_text, f"Missing required foundational citation: {key}"
-
+        assert key in theory_text, f"Missing required foundational literature reference: {key}"

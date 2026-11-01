@@ -12,9 +12,9 @@ import tracemalloc
 
 import numpy as np
 
+from icc.benchmarks.benchmark_models import run_icc_v2, run_standard_consensus
+from icc.benchmarks.scaling import generate_benchmark_synthetic
 from icc.consensus_v2 import InvariantCoreConsensusV2
-from icc.experiments.benchmark_models import run_icc_v2, run_standard_consensus
-from icc.experiments.scaling import generate_benchmark_synthetic
 
 
 def test_gac_pipeline_stage_execution_and_counters():

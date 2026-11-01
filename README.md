@@ -68,9 +68,9 @@ icc-clustering/
     ├── setup.md                # Installation and environment guide
     ├── usage.md                # Usage tutorials and examples
     ├── api.md                  # Python API reference
-    ├── THEORETICAL_FOUNDATIONS.md # Mathematical formulations and proofs
-    ├── DATA.md                 # Benchmark dataset specifications
-    ├── REPRODUCIBILITY.md      # Determinism and reproduction guide
+    ├── theory.md # Mathematical formulations and proofs
+    ├── data.md                 # Benchmark dataset specifications
+    ├── reproducibility.md      # Determinism and reproduction guide
     └── development.md          # Development and contribution guide
 ```
 
@@ -157,9 +157,9 @@ Detailed documentation is available in the [`docs/`](docs/) directory:
 - [Setup and Installation Guide](docs/setup.md)
 - [Usage Guide & Code Examples](docs/usage.md)
 - [Python API Reference](docs/api.md)
-- [Theoretical Formulations & Proofs](docs/THEORETICAL_FOUNDATIONS.md)
-- [Benchmark Dataset Specifications](docs/DATA.md)
-- [Reproducibility & Determinism Guide](docs/REPRODUCIBILITY.md)
+- [Theoretical Formulations & Proofs](docs/theory.md)
+- [Benchmark Dataset Specifications](docs/data.md)
+- [Reproducibility & Determinism Guide](docs/reproducibility.md)
 - [Development and Contributing Guide](docs/development.md)
 
 ---
