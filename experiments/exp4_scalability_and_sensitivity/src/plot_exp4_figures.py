@@ -87,8 +87,8 @@ def plot_figure_18():
     ax1.legend(loc="upper left", fontsize=10.5, framealpha=0.92, facecolor="white", edgecolor="#cccccc")
     
     # Annotation on runtime
-    ax1.annotate("GAC Pipeline: 1.9x speedup at N=10,000\n(2.3s vs. 4.4s, 0.96s pure)",
-                 xy=(10000, 2.30), xytext=(1200, 0.5),
+    ax1.annotate("GAC Pipeline: 2.7x speedup at N=10,000\n(4.35s vs. 11.05s untraced)",
+                 xy=(10000, 4.354), xytext=(1200, 1.2),
                  arrowprops=dict(arrowstyle="->", color="#d62728", lw=1.3),
                  fontsize=9.0, fontweight="bold", color="#d62728",
                  bbox=dict(boxstyle="round,pad=0.25", facecolor="#fff0f0", edgecolor="#d62728", alpha=0.9))
@@ -135,6 +135,7 @@ def plot_figure_18():
                  root_dir / "manuscript" / "figures"]:
         if tdir.exists():
             plt.savefig(tdir / "fig18_sample_complexity_scaling.png", dpi=300, bbox_inches="tight")
+            plt.savefig(tdir / "fig05a_sample_complexity_scaling.png", dpi=300, bbox_inches="tight")
     plt.close()
     print(f"[+] Saved: {save_path}")
 

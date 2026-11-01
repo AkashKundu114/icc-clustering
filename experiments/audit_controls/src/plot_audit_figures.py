@@ -182,9 +182,9 @@ def plot_fig17_critical_difference_21datasets():
 
     # Rename models for presentation
     model_map = {
-        "ICC_v2_legacy": "ICC-v2 (Legacy 15%)",
-        "ICC_v2_adaptive": "ICC-v2 (Adaptive Pool)",
-        "ICC_v1": "ICC-v1 (Anchor Only)",
+        "ICC_v2_legacy": "GAC (Fixed 15%)",
+        "ICC_v2_adaptive": "GAC (Adaptive)",
+        "ICC_v1": "Anchor Consensus (Ungated)",
         "Standard_Consensus": "Standard Consensus",
         "Li_et_al_2019": "Li et al. (2019)",
         "K-Means": "K-Means",
@@ -317,9 +317,9 @@ def plot_fig14_benchmark_matrix_21datasets():
         "FCM": "FCM",
         "Standard_Consensus": "Std Cons",
         "Li_et_al_2019": "Li et al.",
-        "ICC_v1": "ICC-v1",
-        "ICC_v2_legacy": "ICC-v2 (15%)",
-        "ICC_v2_adaptive": "ICC-v2 (Adapt)",
+        "ICC_v1": "Anchor Consensus",
+        "ICC_v2_legacy": "GAC (15%)",
+        "ICC_v2_adaptive": "GAC (Adapt)",
     }
     cols = [c for c in model_map.keys() if c in df.columns]
     data = df[cols].rename(columns=model_map)

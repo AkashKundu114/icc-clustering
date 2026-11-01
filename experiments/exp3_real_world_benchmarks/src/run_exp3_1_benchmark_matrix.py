@@ -98,8 +98,8 @@ MODEL_LABELS = [
     "DEC (ICML 2016)",
     "FCAG (TPAMI 2024)",
     "FastMVC (TKDE 2023)",
-    "ICC-v1 (Anchor)",
-    "ICC-v2 (BGSS+Anchor)",
+    "Anchor Consensus (Ungated)",
+    "GAC (BGSS+Anchor)",
 ]
 
 CSV_COLUMNS = [

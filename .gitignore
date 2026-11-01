@@ -1,6 +1,9 @@
 # Data cache and raw downloads (large binary files)
 data/cache/
 data/raw/
+data/paul15/
+*.h5
+*.h5ad
 !data/cache/.gitkeep
 !data/raw/.gitkeep
 
@@ -13,6 +16,8 @@ experiments/**/data/*.mat
 !experiments/**/figures/.gitkeep
 results/study_null_gating/confirmatory_raw/
 results/stability/labels/
+results/stability/runs/
+results/stability/partitions/
 
 # Python bytecode and caches
 __pycache__/
@@ -30,7 +35,6 @@ lib/
 lib64/
 parts/
 sdist/
-var/
 wheels/
 share/python-wheels/
 *.egg-info/
@@ -65,17 +69,27 @@ htmlcov/
 *~
 .DS_Store
 Thumbs.db
+.mcp.json
 
-# Scratch and temporary developer files
-scripts/scratch/
-*.tmp
+# Internal logs and scratchpads
+*.log
+scratch/
+governance/
+reports/
+paper2/
+results_legacy/
 
 # Local tools and binaries
 tools/bin/
 *.exe
 !tools/check_consistency.py
 
-# Manuscript & Publication artifacts (kept local on disk, documented via README for GitHub)
+# Manuscript & Publication artifacts
+submission/arxiv_package/
+submission/overleaf_package/
+submission/springer_nature_package/
+submission/arxiv_source/
+submission/source/
 springer_manuscript/*
 manuscript/
 paper.tex
@@ -120,11 +134,8 @@ data/cache/*
 *.aux
 *.bbl
 *.blg
-*.log
 *.out
 *.toc
 *.synctex.gz
 *.fls
 *.fdb_latexmk
-
-

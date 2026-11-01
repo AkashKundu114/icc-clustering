@@ -6,9 +6,8 @@ The following table lists the security support status for versions of the **Indu
 
 | Version | Supported          | Security Status                                         |
 | ------- | ------------------ | ------------------------------------------------------- |
-| 2.2.x   | :white_check_mark: | Current active release (Springer Nature DAMI Baseline)  |
-| 2.1.x   | :white_check_mark: | Previous release baseline                               |
-| 2.0.x   | :x:                | Deprecated                                              |
+| 2.1.x   | :white_check_mark: | Current active release (Springer Nature DAMI Baseline)  |
+| 2.0.x   | :white_check_mark: | Previous release baseline                               |
 | 1.0.x   | :x:                | Deprecated (v1 anchor-only prototype)                   |
 | < 1.0   | :x:                | Unsupported                                             |
 
@@ -22,9 +21,10 @@ We prioritize the security and integrity of our research software. If you identi
 
 **Please do not open a public GitHub issue for security vulnerabilities.**
 
-Instead, please send an encrypted or direct email to the maintainers:
-* **Lead Maintainer**: Akash Kundu (`akashkundu1152@gmail.com`)
-* **Research Supervisor**: Prof. Kalyan Kumar Das (`kalyan.biltu@gmail.com`)
+Instead, please send an encrypted or direct email to the maintainer:
+* **Primary Contact**: Akash Kundu
+* **Academic Email**: `akashkundu1152@gmail.com`
+* **Personal Email**: `akashkundu1152@gmail.com`
 
 ### What to Include in Your Report
 
@@ -40,7 +40,7 @@ To help us investigate and triage the issue swiftly, please include:
 
 * **Acknowledgment**: We aim to acknowledge receipt of security reports within **48 hours**.
 * **Investigation & Assessment**: We will investigate, verify the issue, and provide an initial assessment within **5 business days**.
-* **Remediation**: Once verified, a patch will be prepared, tested, and released as a patch update (`v2.2.x`).
+* **Remediation**: Once verified, a patch will be prepared, tested, and released as a patch update (`v2.0.x`).
 * **Coordinated Disclosure**: We adhere to coordinated vulnerability disclosure. A public security advisory and changelog credit will be published after the fix has been tagged and deployed.
 
 ---

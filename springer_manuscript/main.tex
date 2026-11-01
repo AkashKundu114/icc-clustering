@@ -1,0 +1,781 @@
+\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}
+\raggedbottom
+
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage[title]{appendix}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{manyfoot}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{subfig}
+
+\theoremstyle{thmstyleone}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{thmstyletwo}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+
+\theoremstyle{thmstylethree}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+
+\input{numbers.tex}
+\hypersetup{
+  pdftitle={Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes},
+  pdfkeywords={cluster stability, ensemble learning, consensus clustering, high-dimensional noisy data, bipartite anchor graphs, feature gating, subsample stability, null control.}
+}
+
+
+\raggedbottom
+
+\gdef\orcidlogo{\unskip\hspace{2pt}\raisebox{-0.1ex}{\includegraphics[height=1.3ex]{Orcidlogo}}\hspace{1pt}}
+
+\begin{document}
+
+\title[Stability-Accuracy Discordance in High-Dimensional Consensus Clustering]{An Empirical Analysis of Stability-Accuracy Discordance in High-Dimensional Consensus Clustering: Evidence from Biomedical Cohorts}
+
+\author*[1]{\fnm{Kalyan Kumar} \sur{Das}\orcid{https://orcid.org/0009-0004-8333-8900}}\email{kalyan.biltu@gmail.com}
+
+\author[1]{\fnm{Akash} \sur{Kundu}\orcid{https://orcid.org/0009-0003-8246-7316}}\email{akashkundu1152@gmail.com}
+
+\author[2]{\fnm{Anirban} \sur{Mukhopadhyay}\orcid{https://orcid.org/0000-0001-8128-3521}}\email{anirban@klyuniv.ac.in}
+
+\affil*[1]{\orgdiv{Department of Computer Science and Engineering}, \orgname{Techno India University}, \orgaddress{\street{EM-4, Sector V, Bidhannagar}, \city{Kolkata}, \postcode{700091}, \state{West Bengal}, \country{India}}}
+
+\affil[2]{\orgdiv{Department of Computer Science and Engineering}, \orgname{University of Kalyani}, \orgaddress{\city{Kalyani, Nadia}, \state{West Bengal}, \country{India}}}
+
+\abstract{Subsample stability is widely assumed to indicate clustering reliability, and consensus clustering to resist high-dimensional noise. We test this premise in isotropic simulations and on six biomedical cohorts ($D/N > 20$), using stratified $80\%$ subsampling ($30$ draws, $435$ pairs), column-permuted null controls, and a non-degeneracy criterion added post hoc to exclude trivial partitions. In simulations, accuracy collapses with noise dimensions and subsample stability collapses alongside it, so evidence for stability--accuracy discordance rests on the real cohorts. There, three of twelve methods (FCAG, FCM, FastMVC) show non-degenerate discordance on three cohorts each. Across these nine cells, mean stability is $0.684$ and mean accuracy is $-0.003$ (permuted null $\approx 0.01$); across all 18 cells, the means are $0.638$ and $0.046$. A cohort-clustered bootstrap confirms a positive gap of $+0.485$ (95\% CI $[+0.379, +0.662]$; unconstrained $+0.464$), showing that reproducibility does not imply correctness.
+
+Using Gated Anchor Consensus (GAC), we test which components recover signal. Bipartite consensus alone ($0.046$) and random feature gating ($0.046$ dense, $0.047$ bipartite) match ambient consensus ($0.037$). Bimodality-Gated Subspace Selection (BGSS) raises ARI to $0.217$ under bipartite consensus ($+0.169$ over matched random gating, 95\% CI $[+0.036, +0.310]$, Wilcoxon $p = 0.031$ uncorrected, $n = 6$), driven by Leukemia and SRBCT, but only to $0.077$ under dense consensus ($+0.031$), where performance is confounded by a degenerate Leukemia result. Determinacy-based anchors add no benefit ($\Delta = +0.019$). Across 13 benchmarks ($3{,}000$ fits), omnibus differences are not significant (Friedman $p = 0.40$). Bipartite compression reduces consensus-graph memory by $99.6\%$ at $N = 10^4$. Stability should be reported with null controls and degeneracy audits, and marginal gating helps only when informative coordinates show detectable multimodality.}
+
+\keywords{Cluster stability, Consensus clustering, Ensemble learning, Bipartite anchor graphs, Feature gating}
+
+\maketitle
+
+\section{Introduction}\label{sec:intro}
+
+Subsample stability is routinely used as evidence that a clustering is reliable, and consensus clustering is widely assumed to protect against noise and poor initialization~\cite{fred2005combining}. This assumption is weakest when the number of features $D$ far exceeds the number of samples $N$, as in genomic cohorts, where distance concentration removes contrast between points~\cite{beyer1999nearest} and base clusterers can fit chance structure in uninformative coordinates. Because independent runs share the same noise realization, they may repeatedly converge to the same arbitrary partition, producing high stability without correctness. Earlier work has cautioned that consensus procedures can suggest structure in null data~\cite{senbabaoglu2014critical}, but the extent of this discordance on real high-dimensional cohorts, and which algorithmic components help, have not been quantified under controlled conditions. We address both questions. First, while isotropic simulations establish that clustering accuracy collapses as noise dimensions grow (with subsample stability collapsing alongside it), our evidence for stability--accuracy discordance rests on the real biomedical cohorts. There, we evaluate six high-dimensional datasets using column-permuted null controls and a non-degeneracy criterion added post hoc (Section~\ref{sec:setup_params}) to exclude trivial partitions. Second, we examine which components of a feature-gated bipartite anchor ensemble (GAC) recover signal, and where each fails. Our results show that high subsample stability does not imply correctness on these cohorts, that random feature gating and anchor-graph compression each fail to improve accuracy on their own, and that the observed benefit of marginal bimodality gating depends on consensus type (with the dense arm confounded by a degenerate Leukemia result) and requires informative coordinates to be detectably multimodal.
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.96\textwidth]{figures/fig01_conceptual_overview.png}
+\caption{Conceptual dilemma of high-dimensional clustering and the stability-accuracy discordance trap. (a) Ground-truth cluster geometry in a low-dimensional signal subspace ($d=2$). (b) Geometric collapse when submerged in high-dimensional distractor noise ($D=2{,}000$), illustrating distance concentration where pairwise contrast disappears ($(d_{\max}-d_{\min})/d_{\min} \to 0$ as $D \to \infty$) and cluster separation collapses. (c) Marginal feature screening (BGSS) separating bimodal signal coordinates from unimodal background noise. (d) Inductive query mapping assigning unseen observations in $O(K \cdot |\mathcal{F}_{\text{active}}|)$ time without consensus graph recomputation (see Section~\ref{sec:methodology} and Algorithm~\ref{alg:iccv2} for the full execution flow).}
+\label{fig:conceptual_overview}
+\end{figure*}
+
+To evaluate what mechanisms recover signal under these conditions, we study \textbf{Gated Anchor Consensus (GAC)} (Fig.~\ref{fig:conceptual_overview}) as an experimental vehicle coupling linear-time marginal screening (BGSS), random-subspace ensembling, and bipartite anchor graphs:
+\begin{itemize}
+ \item \textbf{Bimodality-Gated Subspace Selection (BGSS):} An unsupervised linear-time $O(ND)$ feature filter that ranks dimensions via the finite-sample Bimodality Coefficient (traditionally attributed to Warren Sarle and documented in SAS/STAT~\cite{sas1990stat}; see also Pfister et al.~\cite{pfister2013good}), filtering continuous unimodal noise coordinates prior to base clustering.
+ \item \textbf{Bipartite Anchor Graph Consensus:} A graph compression scheme that builds a rectangular matrix $B \in [0, 1]^{N \times L}$ against $L \ll N$ landmarks, shrinking consensus memory from $O(N^2)$ to $O(NL)$ and solving the generalized eigenproblem on a compact $L \times L$ anchor affinity kernel.
+ \item \textbf{Stability-Weighted Active Centroid Projection:} A closed-form inductive mapping operator assigning unseen observations in $O(K \cdot |\mathcal{F}_{\text{active}}|)$ operations using determinacy-weighted centroids in the gated feature space.
+\end{itemize}
+
+This paper makes the following contributions:
+\begin{enumerate}
+ \item \textbf{A systematic characterization of stability--accuracy discordance.} On six biomedical cohorts ($D/N > 20$; 30 stratified $80\%$ subsamples, 435 pairs), we show that several methods reproduce the same partition under resampling while that partition has near-zero agreement with reference labels ($\text{ARI} \le 0.05$). Three of twelve methods (FCAG, FCM, FastMVC) meet a non-degeneracy-restricted criterion on three cohorts each; across those nine cells, mean stability is $0.684$, mean accuracy is $-0.003$, and column-permuted null stability is $\approx 0.01$, confirming that observed subsample stability is not a permutation artifact, though this structure does not align with diagnostic reference classes. A cohort-clustered bootstrap gives a mean gap of $+0.485$ (95\% CI $[+0.379, +0.662]$; unconstrained $+0.464$, $[+0.363, +0.607]$). The non-degeneracy criterion was added after the original analysis plan and we report results with and without it. Simulations with isotropic noise establish the accompanying accuracy collapse; seed-to-seed agreement is uninformative for deterministic solvers and is not used as evidence of discordance.
+
+ \item \textbf{A controlled decomposition of what recovers signal.} Using GAC as an experimental vehicle, we cross gating (none, random, BGSS) with consensus type (dense, bipartite). Neither bipartite consensus alone ($0.046$ vs. $0.037$) nor random gating ($0.046$ dense, $0.047$ bipartite) improves materially on ambient consensus. BGSS raises ARI to $0.217$ under bipartite consensus ($+0.169$ over matched random gating, 95\% CI $[+0.036, +0.310]$, Wilcoxon $p = 0.031$ uncorrected for the three comparisons, $n = 6$) but only to $0.077$ under dense consensus ($+0.031$, CI $[-0.062, +0.149]$), where performance is dragged down by a degenerate Leukemia result. The gain is concentrated in Leukemia ($+0.398$) and SRBCT ($+0.447$), and determinacy-based anchors add nothing measurable ($\Delta = +0.019$, 95\% CI $[-0.040, +0.082]$).
+
+\item \textbf{A boundary analysis with negative results.} Across 13 benchmarks (3,000 model fits), differences among the twelve methods are not statistically significant (Friedman $p = 0.40$). GAC's gains are concentrated in Leukemia ($0.600$) and SRBCT ($0.546$) and do not extend to cohorts without detectable marginal multimodality (Prostate, CNS), non-linear parity structure (Madelon), sparse count data, or large-$K$ problems. We relate each failure to the assumptions behind marginal bimodality screening.
+
+ \item \textbf{Practical guidance and reproducibility.} We recommend reporting stability together with null-control stability and external validation, and we note that bipartite compression reduces consensus-graph memory by 99.6\% at $N = 10^4$. All data, seeds and code are publicly available.
+\end{enumerate}
+
+Section~\ref{sec:related} reviews related work. Section~\ref{sec:falsification} documents the stability-accuracy discordance across synthetic and biomedical cohorts. Section~\ref{sec:methodology} describes the GAC pipeline (Algorithm~\ref{alg:iccv2}) used for gain decomposition. Section~\ref{sec:setup} outlines experimental protocol and statistical methodology. Section~\ref{sec:evaluation} presents benchmark results, scaling tests, and hypothesis tests. Section~\ref{sec:ablation} details ablation studies and feature saliency checks. Section~\ref{sec:discussion} discusses implications, practical recommendations, limitations, and future work, and Section~\ref{sec:conclusion} concludes.
+
+
+\section{Related Work}\label{sec:related}
+
+\subsection{Stability, Consensus, and Their Limits}\label{sec:rel_stability}
+
+Resampling stability is a standard device for judging whether a clustering is reliable. Fred and Jain~\cite{fred2005combining} introduced evidence accumulation, which combines many base partitions into a co-association matrix, and consensus procedures built on this idea are commonly expected to smooth out initialization noise and local minima. Modern extensions examine stability weighting through doubly stochastic affinity normalization~\cite{cai2025spectral}, auto-weighted graph reconstruction~\cite{yang2025autoweighted}, hypergraph p-Laplacians with feature selection~\cite{hu2024multiview}, and deep active or generative ensemble formulations~\cite{patron2026codac,chen2025ccegan}. Li et al.~\cite{li2019clustering} filter unstable boundary samples through core-halo consensus, using per-sample stability as a quality signal, while deep architectures such as Deep Embedded Clustering (DEC)~\cite{xie2016unsupervised} learn soft cluster assignments end-to-end.
+
+Several studies caution against reading stability as correctness. Senbabaoglu et al.~\cite{senbabaoglu2014critical} showed that consensus clustering can produce persuasive heatmaps and elevated stability even on unimodal null data with no cluster structure. Wani~\cite{wani2024comprehensive} surveys how clustering degrades when noise dominates and dimensionality grows. Jahanian et al.~\cite{jahanian2026highdim} note that unsupervised clustering of high-dimensional data can group observations along technical noise axes rather than underlying pathology, and recent work in statistical clustering validation underscores the necessity of null calibration~\cite{wang2026deep_jasa}. These studies establish that stability can mislead, but they largely do so through simulated nulls or qualitative argument. What remains unquantified is how often discordance occurs on real high-dimensional cohorts, how it compares across method families, and whether it can be separated from trivial or degenerate partitions. Section~\ref{sec:falsification} addresses these gaps with permuted null controls, a non-degeneracy criterion, and cohort-level inference.
+
+\subsection{High-Dimensional Geometry and Feature Selection}\label{sec:rel_geometry}
+
+When $D \gg N$, distance concentration shrinks the relative contrast between points~\cite{beyer1999nearest,peng2024interpreting}, which erodes the affinities that graph-based and centroid-based methods depend on. Theory for subspace and spectral recovery typically requires signal strength to scale with ambient dimension~\cite{zhang2024optimal}, a condition that small clinical cohorts seldom meet. Random subspace ensembles, pioneered by Fern and Brodley~\cite{fern2003random} and surveyed by Wani~\cite{wani2024comprehensive}, promote ensemble diversity by projecting data onto random feature subsets; however, under extreme distractor noise ($D \gg N$), random subspaces draw mostly uninformative coordinates, causing base clusterers to fit chance noise structure. Feature selection for clustering is the usual remedy: Sparse K-Means~\cite{witten2010framework} places an $L_1$ penalty on feature weights, variational frameworks learn continuous coordinate gates for high-dimensional representations~\cite{chen2026data}, and CoHiRF~\cite{belucci2025cohirf} combines random subspaces with hierarchical, unanimity-based aggregation. Our case study examines a cheaper alternative, a univariate bimodality screen based on Sarle's coefficient~\cite{sas1990stat}, and tests where marginal screening helps and where it fails.
+
+\subsection{Anchor-Graph and Bipartite Consensus}\label{sec:rel_anchor}
+
+Anchor-based methods avoid the $O(N^2)$ co-association matrix by relating $N$ samples to $L \ll N$ landmarks. FCAG~\cite{nie2024fast} is the representative approach, and the literature has since grown to cover dynamic, outlier-robust, and constrained Laplacian rank models~\cite{xu2026range,ma2025large,gao2026consistency}, structured bipartite learning~\cite{zhang2025structured,wang2024structured}, bipartite factorization and fast solvers~\cite{tkde2026fast,ma2025fast,zhang2025anchor,xie2025fast}, multi-view and tensor variants~\cite{fettal2026scalable,ren2026multiview,song2026enhanced,ou2024anchor,zhao2024multiview,fan2026robust}, and landmark selection for large or imbalanced data~\cite{guo2026consensus,kong2026adaptive,li2026rfag,chakraborty2026generic}. These methods are designed for scalability, and most operate in the ambient feature space, so they inherit the metric concentration described above. We use a bipartite anchor graph as one component of a controlled pipeline, and we do not claim a new anchor-graph algorithm.
+
+\subsection{Out-of-Sample Extension}\label{sec:rel_inductive}
+
+Graph-based consensus is transductive: assigning a new sample normally requires recomputing the graph on $N + |\mathcal{X}_{\text{test}}|$ points. Standard remedies include Nystr\"om approximations, classifiers trained on consensus pseudo-labels, and closed-form embeddings for co-clustering~\cite{wang2026normalized}. Zhou et al.~\cite{zhou2024comprehensive} survey the trade-offs between spectral and deep out-of-sample mappings. We evaluate a closed-form centroid projection against these alternatives in Section~\ref{sec:evaluation}.
+
+Table~\ref{tab:taxonomy_comparison} summarizes the evaluated consensus methods and their mechanisms for managing high-dimensional noise.
+
+\begin{table*}[!t]
+\caption{Clustering methods considered in this study and their handling of high-dimensional noise}
+\label{tab:taxonomy_comparison}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{Method} & \textbf{Feature Gating} & \textbf{Core Filtering} & \textbf{Inductive} & \textbf{Aux. Mem.} & \textbf{High-$D$ Noise} \\
+\midrule
+Standard Consensus & None & None & No & $O(N^2)$ & Susceptible \\
+Core-Halo Consensus & None & Stability Core & No & $O(N^2)$ & Susceptible \\
+FCAG & None & K-Means Anchors & No & $O(NL)$ & Susceptible \\
+FastMVC & None & K-Means Anchors & No & $O(NL)$ & Susceptible \\
+DEC & Latent AE & None & Neural Net & $O(N \cdot d)$ & Moderate \\
+Sparse K-Means & $L_1$ Penalty & None & Centroid & $O(N \cdot D)$ & Filtered \\
+CoHiRF & Random Subspaces & Unanimous Comp. & Projection & $O(N_{\text{rep}}^2)$ & Resilient \\
+YACHT & None & Dynamic Anchors & No & $O(NL)$ & Susceptible \\
+RANGE & None & Decoupled Anchors & No & $O(NL)$ & Outlier-Robust \\
+Ungated Anchor Consensus (Legacy) & Ambient Random & None & No & $O(N^2)$ & Susceptible \\
+\textbf{GAC (Case Study)} & \textbf{BGSS} & \textbf{Core Anchors} & \textbf{Centroid} & $\mathbf{O(NL)}$ & \textbf{Gated Subspace} \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
+
+
+\section{Stability-Accuracy Discordance in High-Dimensional Consensus Clustering}\label{sec:falsification}
+
+The central question of this paper is whether reproducibility under resampling can be trusted as evidence that a clustering is correct. Stability is widely used for this purpose: a partition that survives subsampling and reseeding is assumed to reflect real structure, and consensus aggregation is assumed to strengthen that guarantee by averaging out initialization noise~\cite{fred2005combining}. In the regime $D \gg N$, both assumptions can fail together. Theoretical guarantees for random projection and ensemble consensus typically presuppose large samples or well-separated subspaces~\cite{zhang2024optimal}, conditions that small clinical cohorts rarely satisfy. This section therefore tests the premise directly, first in controlled simulations and then on six biomedical cohorts.
+
+\paragraph{Definitions.}
+We say a clustering exhibits \emph{stability-accuracy discordance} when its subsample stability is high while its agreement with reference labels is near chance. Subsample stability ($\text{Stab}$) is the mean pairwise ARI on overlapping samples across all $\binom{30}{2} = 435$ pairs of stratified 80\% subsamples. Accuracy ($\text{Acc}$) is the mean ARI of subsample partitions against clinical reference labels, and the stability--accuracy gap is $\Delta = \text{Stab} - \text{Acc}$. Because $\Delta > 0$ can arise trivially by arithmetic when $\text{Acc} \approx 0$, we define excess stability over unstructured noise as $\text{Stab} - \text{Null}$, where $\text{Null}$ denotes stability evaluated on column-permuted data. Following the analysis plan, a method--cohort cell is discordant under Rule~(i) if $\text{Stab} \ge 0.50$ and $\text{Acc} \le 0.05$. Because a degenerate partition (for example, one dominant cluster) attains high stability by construction, Rule~(i') additionally requires the smallest cluster to hold at least 5\% of the subsample in at least 90\% of subsamples. Rules~(i)--(iii) were specified in commit \texttt{3307380}; Rule~(i') was added post hoc in commit \texttt{548d68d} after the Core-Halo collapse on Prostate was observed, and we report outcomes with and without it. Rule~(ii) flags cells where real stability exceeds column-permuted null stability by less than 0.10. Rule~(iii) requires the bootstrap interval of the mean gap to exclude zero. Because $\text{Acc} \approx 0$ makes $\text{Stab} - \text{Acc} \approx \text{Stab}$, we also report $\text{Stab} - \text{Null}$ as the quantity that isolates stability attributable to data structure. Reference controls (a near-constant and a random balanced partition) bracket the metric.
+
+\paragraph{Design.}
+Three safeguards separate genuine discordance from artifacts:
+\begin{itemize}
+    \item \textbf{Null controls.} Each feature column is permuted independently across samples, giving a baseline for the stability that unstructured noise alone produces.
+    \item \textbf{Non-degeneracy audit.} Rule~(i') and the audit in Table~\ref{tab:degeneracy_audit} exclude partitions that are stable only because they are trivial.
+    \item \textbf{Cohort-level inference.} The mean gap is estimated by a dataset-clustered bootstrap ($B = 10{,}000$), so intervals reflect between-cohort variability rather than treating seeds as independent evidence.
+\end{itemize}
+
+\paragraph{Summary of findings.}
+In simulations, ARI collapses toward zero for every method as distractor dimensions grow and subsample stability collapses alongside it (Section~\ref{sec:sim_isotropic}), so simulations document the accuracy collapse rather than stability--accuracy discordance. On six cohorts ($D$ from 2,000 to 15,154), three of twelve methods (FCAG, FCM, FastMVC) meet Rule~(i') on three cohorts each. Across these nine cells, mean subsample stability is $0.684$, mean accuracy is $-0.003$ and mean null stability is $\approx 0.01$. Over all 18 cells for the same three methods, the means are $0.638$ and $0.046$. The gap averages $+0.485$ across non-degenerate cells (95\% CI $[+0.379, +0.662]$) and $+0.464$ unconstrained (95\% CI $[+0.363, +0.607]$). These results motivate Section~\ref{sec:methodology}, where we ask which design choices reduce the gap.
+
+\subsection{Simulation Under Isotropic Distractor Noise}\label{sec:sim_isotropic}
+
+\begin{figure*}[!t]
+\centering
+\subfloat[Clustering Accuracy (ARI vs. Ground Truth) and Subsample Stability Across $D_{\text{noise}}$\label{fig:ari_stability}]{%
+  \includegraphics[width=0.96\textwidth]{figures/fig02a_ari_stability.png}%
+}
+\\[1.5ex]
+\subfloat[Stability$-$Accuracy Gap ($\Delta = \text{Stability} - \text{ARI}$) Across $D_{\text{noise}}$\label{fig:dist_gap}]{%
+  \includegraphics[width=0.48\textwidth]{figures/fig02b_stability_accuracy_gap.png}%
+}
+\hfill
+\subfloat[Noise Distribution Sensitivity Matrix at $D_{\text{noise}}=1{,}000$\label{fig:noise_heatmap}]{%
+  \includegraphics[width=0.48\textwidth]{figures/fig02c_noise_distribution_sensitivity.png}%
+}
+\caption{Clustering under isotropic distractor noise ($N=300, K=3$, 20 stratified 80\% subsample draws per noise level). (a) Accuracy (ARI against ground truth) collapses toward zero for all methods as distractor dimensions grow, and subsample stability collapses alongside it under row resampling (dropping to $\le 0.03$ for K-Means, GMM, FCM, and Ward; Spectral lingers at $0.17$). (b) The subsample stability--accuracy gap ($\Delta = \text{Stability} - \text{ARI}$) stays below 0.2 across noise scales. (c) Heatmap of the gap across five noise distributions at $D_{\text{noise}}=1{,}000$, showing that the stability--accuracy gap remains small ($\le 0.20$) except Ward under sparse noise ($+0.79$, reflecting trivial 1-cluster collapse where a single cluster holds $>97\%$ of points). Thus, evidence for stability--accuracy discordance on non-degenerate partitions rests on real cohorts rather than synthetic distractor simulations.}
+\label{fig:falsification_suite}
+\end{figure*}
+
+\begin{definition}[Subspace Separation Ratio]
+Consider a partition into $K$ disjoint clusters $\{\mathcal{C}_k\}_{k=1}^K$ with centroid vectors $\boldsymbol{\mu}_k$. For sample matrix $X \subset \mathbb{R}^D$, we quantify geometric contrast via the ratio of mean between-cluster centroid distance to mean within-cluster dispersion:
+\begin{equation}
+  \rho_{\text{sep}}(X) = \frac{\frac{2}{K(K-1)}\sum_{k < l} \|\boldsymbol{\mu}_k - \boldsymbol{\mu}_l\|_2}{\frac{1}{K}\sum_{k=1}^K \frac{1}{|\mathcal{C}_k|}\sum_{\mathbf{x}_i \in \mathcal{C}_k} \|\mathbf{x}_i - \boldsymbol{\mu}_k\|_2}.
+\end{equation}
+Values of $\rho_{\text{sep}}(X) > 1$ indicate well-separated cluster geometry, whereas $\rho_{\text{sep}}(X) \le 1$ denotes substantial geometric overlap.
+\end{definition}
+
+When uninformative ambient noise dimensions $D_{\text{noise}}$ expand, Euclidean distance concentration compresses relative distance metrics~\cite{beyer1999nearest,peng2024interpreting}:
+\begin{equation}\label{eq:dist_concentration}
+  \lim_{D \to \infty} \frac{d_{\max} - d_{\min}}{d_{\min}} = 0, \quad \text{and} \quad \lim_{D \to \infty} \frac{\sqrt{\mathrm{Var}(\|\mathbf{x}_i - \mathbf{x}_j\|_2)}}{\mathbb{E}[\|\mathbf{x}_i - \mathbf{x}_j\|_2]} = 0.
+\end{equation}
+As a result, the separation ratio $\rho_{\text{sep}}(X)$ drops to or below 1 (Fig.~\ref{fig:conceptual_overview}(b)), erasing observable margins between classes. Simulations across noise dimensions up to $D_{\text{noise}}=2{,}000$ (Table~\ref{tab:distance_geometries}) illustrate that alternative distance metrics only delay this collapse: Chebyshev ($L_\infty$) spectral clustering retains an ARI of $0.597 \pm 0.091$ at $D_{\text{noise}}=2{,}000$ (and Cosine distance retains $0.308 \pm 0.072$), whereas Euclidean spectral clustering ($0.004 \pm 0.005$) and K-Means ($0.019 \pm 0.018$) collapse. Although Chebyshev distance maintains higher contrast ($C = 1.341 \pm 0.190$ vs. $0.131 \pm 0.012$ for Euclidean), all unsupervised metrics degrade as noise expands unless informative coordinates are isolated before clustering.
+
+\input{gen/table01_distance_geometries.tex}
+
+Under stratified 80\% subsampling (Fig.~\ref{fig:ari_stability}), clustering accuracy collapses toward zero for all methods as distractor dimensions grow. Subsample stability collapses alongside accuracy under row resampling, dropping to $\le 0.03$ for K-Means, GMM, FCM, and Ward (where Ward falls from $1.000$ at $D_{\text{noise}}=0$ to $0.026$ at $D_{\text{noise}}=5{,}000$), while Spectral clustering lingers at $0.173$. Consequently, the subsample stability--accuracy gap $\Delta = \text{Stability} - \text{ARI}$ stays below 0.2 across all noise scales under isotropic noise (Fig.~\ref{fig:dist_gap}) and across four of the five noise distributions at $D_{\text{noise}}=1{,}000$ (Fig.~\ref{fig:noise_heatmap}; $\Delta \in [-0.002, +0.092]$ for centroid and fuzzy methods, $\le 0.06$ for Ward, and $\le 0.20$ for Spectral). The sole exception is Ward linkage under zero-inflated sparse noise ($\Delta = +0.79$), where isolated sparse bursts induce trivial 1-cluster collapse (a single background cluster encompassing $> 97\%$ of points with singleton outliers, failing Rule~(i')), creating artificial stability on uninformative partitions. In contrast to seed-to-seed agreement on unperturbed data---which remains trivially at $1.0$ for deterministic solvers (reported as $\text{Seed}^*$ in Table~\ref{tab:real_data_stability})---subsample stability demonstrates that isotropic noise erases both cluster accuracy and partition reproducibility. The simulations therefore establish the accuracy collapse and demonstrate that alternative distance geometries only delay it (Table~\ref{tab:distance_geometries}); evidence for stability--accuracy discordance rests on the empirical biomedical cohorts evaluated in Section~\ref{sec:real_data_stability}.
+
+\subsection{Evidence from Biomedical Cohorts}\label{sec:real_data_stability}
+
+While synthetic distractor simulations clarify the geometry behind stability-accuracy discordance, does this divergence persist across empirical biomedical datasets? To investigate, we tested six cancer cohorts ($D/N > 20$) ranging from $D=2{,}000$ (Colon) to $D=15{,}154$ (Ovarian) using a stratified $80\%$ subsampling scheme (30 independent subsample draws per algorithm). Using the subsampling protocol and metrics defined in Section~\ref{sec:falsification} ($\text{Stab}$, $\text{Acc}$, $\text{Null}$, and $\Delta = \text{Stab} - \text{Acc}$), we evaluated all 12 algorithms across the six high-dimensional cohorts. Full-cohort seed stability ($\text{Seed}^*$, mean pairwise ARI across 435 seed pairs on the unperturbed data) is reported as an explicit secondary column for stochastic estimators, noting that deterministic estimators trivially achieve $\text{Seed}^* \equiv 1.000$. The resulting empirical patterns appear in Table~\ref{tab:real_data_stability} and Figure~\ref{fig:real_data_stability}, supported by the detailed subsample degeneracy audit in Table~\ref{tab:degeneracy_audit}.
+
+\input{gen/table02_real_data_stability.tex}
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig03_real_data_stability.png}
+\caption{Real-world evidence of stability-accuracy discordance across 6 high-dimensional biomedical cohorts ($D/N > 20$, 30 stratified $80\%$ subsamples per method). (a) Empirical clustering accuracy ($\text{Acc}$, mean ARI vs. clinical reference labels) plotted against subsample stability ($\text{Stab}$, mean pairwise ARI on shared samples across 435 subsample pairs). The shaded region highlights the non-degenerate discordance zone (Rule~(i'), added post hoc: $\text{Stab} \ge 0.50$, $\text{Acc} \le 0.05$, and smallest cluster holding $\ge 5\%$ of points in $\ge 90\%$ of subsamples). Trivial degenerate configurations (Core-Halo and CoHiRF on Prostate) are explicitly marked with crosses. (b) Mean subsample stability-accuracy gap ($\Delta = \text{Subsample Stab} - \text{Acc}$) across the six high-$D$ cohorts with paired cohort-bootstrap 95\% confidence intervals ($B=10{,}000$). Classical and graph-based baselines exhibit substantial gaps (Spectral $\Delta = +0.590$, FastMVC $\Delta = +0.550$, Ward $\Delta = +0.504$, FCAG $\Delta = +0.503$), whereas GAC exhibits a reduced average gap ($\Delta = +0.300$), reflecting higher accuracy on signal-rich cohorts (Leukemia, SRBCT) alongside lower stability where features are aggressively filtered (Colon, Leukemia); bootstrap confidence intervals overlap with several baselines.}
+\label{fig:real_data_stability}
+\end{figure*}
+
+\input{gen/table16_degeneracy_audit.tex}
+
+Unsupervised clustering on high-dimensional data risks grouping observations along technical noise axes rather than underlying pathology~\cite{jahanian2026highdim}. As compiled in Table~\ref{tab:real_data_stability} and Figure~\ref{fig:real_data_stability}, stratified subsampling across the six biomedical cohorts ($D/N > 20$, 30 stratified 80\% draws) reveals three clear behavioral patterns:
+
+\paragraph{1. Discordance Across Classical and Graph Baselines.}
+Under stratified subsampling, classical and graph-based baselines repeatedly converge to mutually agreeing partitions that do not reflect clinical reference labels. Across all six high-$D$ cohorts, three methods satisfy the non-degenerate stability-accuracy discordance criterion (Decision Rule~(i'): subsample stability $\ge 0.50$, empirical accuracy $\le 0.05$, and minority cluster size $\ge 5\%$ in at least $90\%$ of subsamples) across three distinct cohorts: FCAG (Colon, CNS, Prostate), FCM (Colon, CNS, Ovarian), and FastMVC (Colon, CNS, Prostate). Over these nine discordant method-cohort cells, mean stability is $0.684$ while empirical accuracy collapses to chance (mean $\text{Acc} = -0.003$). Averaging across all 18 cells for these three methods (including non-discordant cohorts such as SRBCT and Leukemia) yields an aggregate stability of $0.638$ and accuracy of $0.046$. On Prostate ($D=12{,}600$), seven non-degenerate algorithms meet Rule~(i')\footnote{The seven algorithms meeting Rule~(i') on Prostate are DEC, FCAG, FastMVC, GAC, K-Means, Spectral Clustering, and Ward.}, headed by Ward ($\text{Stab}=0.996, \text{Acc}=0.026, \Delta=+0.970$) and Spectral Clustering ($\text{Stab}=0.971, \text{Acc}=-0.002, \Delta=+0.973$). Two further models fulfill the unconstrained criterion (Rule~(i)) on Prostate but fail non-degeneracy checks (Rule~(i')): Core-Halo collapses to a single trivial group ($K_{\text{obs}}=1.0, \text{Stab}=1.000, \text{Acc}=0.000$), whereas CoHiRF isolates singleton clusters in $60\%$ of its subsamples ($\text{Stab}=0.504, \text{Acc}=0.011$); both appear with daggers ($^\dagger$) in Table~\ref{tab:real_data_stability}.
+
+When evaluated under column-permuted null controls, Prostate stability collapses to near zero (spanning $-0.001$ to $+0.049$). This confirms that the observed subsample stability reflects data-driven structure rather than permutation artifacts, even while partitions exhibit zero agreement with diagnostic truth. To probe what drives these non-degenerate discordant partitions on Prostate, we conducted a geometric diagnostic across principal component projections. For Ward linkage and K-Means, the smaller cluster ($N=11.4 \pm 0.8$ and $N=14.3 \pm 1.2$) consists largely of PCA-space outliers: observations in the minority cluster display average Euclidean distances to the median of $233.2$ and $212.6$ in the top 10 PCs (compared with $38.9$ and $36.7$ for the primary cluster) and Mahalanobis distances of $7.07$ and $6.25$ (versus $1.45$). In contrast, spectral and anchor consensus methods (Spectral, FCAG, FastMVC, GAC, DEC) yield balanced partitions ($N \approx 31$ versus $50$), where cluster membership aligns strongly with the first principal component ($r = 0.77\text{--}0.86$) and moderately with total per-sample expression ($r = -0.52\text{--}-0.59$), showing negligible correlation with PC2 ($r = -0.06\text{--}-0.18$). Because the cohort archive contains no auxiliary clinical or batch annotations beyond binary tumor status, deeper biological origins remain uncharacterized.
+
+To evaluate whether excess stability is statistically robust, we conducted a dataset-clustered bootstrap ($B=10{,}000$ iterations) that resamples cohorts with replacement, pooling paired differences across non-degenerate methods. Across all 60 non-degenerate method--cohort cells evaluated (out of 72 total model--cohort pairs across the 12 methods, excluding the 12 degenerate cells that fail Rule~(i'): K-Means [2], FCM [1], Ambient Consensus [1], Core-Halo [2], CoHiRF [5], and Ungated AC [1]; Table~\ref{tab:degeneracy_audit}), excess stability over unstructured noise ($\text{Stab} - \text{Null}$) averages $+0.472$ (95\% CI: $[+0.368, +0.645]$), rising to $\text{Stab} - \text{Null} \approx 0.671$ ($0.684 - 0.013$) across the nine persistently discordant cells, while permuted-null stability stays near zero ($-0.003$ to $+0.049$). The paired stability--accuracy gap averages $+0.485$ across non-degenerate partitions (95\% CI: $[+0.379, +0.662]$) and $+0.464$ across all partitions (95\% CI: $[+0.363, +0.607]$). Crucially, the excess stability ($\text{Stab} - \text{Null} \ge 0.10$) confirms that base clusterers converge onto data-driven structure rather than permutation artifacts, even as accuracy remains near zero.
+
+\paragraph{2. Behavior of CoHiRF as Run.}
+In our benchmarks, CoHiRF yields a reduced average subsample gap ($\Delta = +0.267$). Under the protocol tested here (an implementation strictly mirroring published guidelines: 25 repetitions, a $0.15$ random subspace ratio, and an $0.80$ unanimity threshold), CoHiRF exhibits low average accuracy ($\text{Acc} = 0.020$) alongside low subsample stability ($\text{Stab} = 0.281$). On Colon, CoHiRF achieves a subsample stability of only $0.068$ ($\text{Acc}=0.013$), conforming to Decision Rule~(ii) where real stability minus null stability falls below $0.10$ ($0.068 - 0.002 = 0.066$), indicating that stability provides little guidance in this regime. As documented in Table~\ref{tab:degeneracy_audit}, CoHiRF also encounters high subsample degeneracy across several benchmarks (degeneracy frequencies of $56.7\%$ on Colon, $93.3\%$ on CNS, $86.7\%$ on Leukemia, $60.0\%$ on Prostate, and $100.0\%$ on Ovarian), where its consensus graph frequently isolates individual outliers instead of coherent clusters.
+
+\paragraph{3. Where Feature Gating Helps, and Boundary Conditions for GAC.}
+The GAC pipeline achieves the top mean subsample accuracy among all benchmarked algorithms ($0.168$ versus $0.051$ for K-Means and $0.049$ for FCAG), curbing the average gap to $+0.300$. On Leukemia ($D=7{,}129$, $\text{Acc} = 0.412, \text{Stab} = 0.334, \Delta = -0.078$) and SRBCT ($D=2{,}308$, $\text{Acc} = 0.493, \text{Stab} = 0.507, \Delta = +0.014$), GAC aligns stability with accuracy: empirical accuracy equals or exceeds subsample stability. In full-cohort evaluations across 30 random seeds, GAC reaches $\text{ARI} = 0.600 \pm 0.367$ on Leukemia and $0.546 \pm 0.102$ on SRBCT. Nevertheless, its operational boundaries should be stated plainly: on Prostate ($D=12{,}600$) and CNS ($D=7{,}129$), GAC also displays stability-accuracy discordance ($\text{Acc} = 0.012$ and $0.007$, $\text{Stab} = 0.860$ and $0.549$, yielding gaps of $\mathbf{+0.847}$ and $\mathbf{+0.542}$). In these datasets, diffuse non-bimodal signal manifolds prevent marginal BGSS from isolating discriminative coordinates, illustrating that univariate moment screening cannot recover clusters when coordinates lack distinct marginal separation.
+
+\section{Case Study: Gated Anchor Consensus (GAC)}\label{sec:methodology}\label{sec:methods}
+
+Section~\ref{sec:falsification} showed that stable partitions in the $D \gg N$ regime can be unrelated to the reference labels. This raises the question of which algorithmic mechanisms, if any, move a consensus pipeline from stable but wrong toward stable and correct. To answer it, we assemble a pipeline whose components can be switched on and off independently, and we use it as an experimental vehicle for the ablations in Section~\ref{sec:ablation}. We call it Gated Anchor Consensus (GAC). We do not propose it as a general-purpose replacement for existing clusterers. Its role in this paper is to let us attribute performance changes to specific design choices: feature gating, random-subspace ensembling, and bipartite anchor compression.
+
+GAC combines four modules (Algorithm~\ref{alg:iccv2}). The first is Bimodality-Gated Subspace Selection (BGSS, Section~\ref{sec:bgss}), an unsupervised $O(ND)$ filter that ranks features by a finite-sample-corrected Sarle's Bimodality Coefficient. BGSS embodies a testable hypothesis: that informative coordinates tend to have multimodal marginals while distractor coordinates tend to be unimodal (Assumption~\ref{assump:multimodal}). The second module generates an ensemble of K-Means partitions on random subspaces drawn from the gated feature pool. The third is a bipartite anchor graph consensus (Section~\ref{sec:anchor_consensus}) that replaces the $N \times N$ co-association matrix with an $N \times L$ matrix against $L \ll N$ landmarks, reducing auxiliary memory from $O(N^2)$ to $O(NL)$. The fourth is a determinacy-weighted centroid projection (Section~\ref{sec:centroid}) that assigns held-out samples without rebuilding the consensus graph.
+
+Each module corresponds to a question we test directly:
+\begin{itemize}
+    \item \textbf{Does feature gating help?} BGSS is compared against matched random gating and against variance, PCA, Laplacian-score, and sparse K-Means selection with identical feature budgets (Section~\ref{sec:benchmarks_suite}).
+    \item \textbf{Does bipartite ensembling help beyond dense consensus?} A $2 \times 2$ factorial design crosses gating with consensus type (Section~\ref{sec:exp2_knockout}).
+    \item \textbf{Does determinacy-based anchor selection help?} Determinacy-filtered anchors are compared with uniform random anchors (Section~\ref{sec:ablation_null}).
+    \item \textbf{Does the compression retain accuracy while reducing memory?} We report memory and runtime, plus inductive accuracy on held-out samples (Section~\ref{sec:scalability}).
+\end{itemize}
+
+Because the aim is attribution, several results reported later are negative or inconclusive: determinacy-based anchors provide no measurable benefit, the BGSS contribution is modest, and omnibus differences among the twelve methods are not significant (Section~\ref{sec:statistical_eval}). We report these alongside the positive results, and the boundary analysis in Section~\ref{sec:limitations} relates each failure to the assumptions behind marginal bimodality screening. The remainder of this section gives the technical definition of each module.
+
+\subsection{Bimodality-Gated Subspace Selection (BGSS)}\label{sec:bgss}
+When distractor dimensions vastly outnumber samples ($D \gg N$), standard variance filters flounder because noise coordinates frequently exhibit variances comparable to or larger than true signal features. To uncover latent cluster structure without labels, BGSS evaluates the marginal multimodality of each feature using \textbf{Sarle's Bimodality Coefficient} ($BC$) with finite-sample corrections:
+\begin{equation}\label{eq:sarle_bc}
+ \hat{b}_d = \frac{\hat{\gamma}_d^2 + 1}{\hat{\kappa}_d + 3 \cdot \frac{(N-1)^2}{(N-2)(N-3)} + \epsilon},
+\end{equation}
+based on Sarle's derivation, where $\hat{\gamma}_d$ denotes sample skewness (bias-corrected for $N \ge 3$), $\hat{\kappa}_d$ represents Fisher's sample excess kurtosis (bias-corrected for $N \ge 4$), the second denominator term aligns excess kurtosis with Pearson kurtosis under a normal null, and $\epsilon = 10^{-5}$ prevents division by zero through a denominator clamp $\max(\cdot, 10^{-5})$. Any feature with negligible dispersion ($\mathrm{Var}(\mathbf{f}_d) < 10^{-12}$) is deterministically set to $\hat{b}_d = 0$.
+
+\begin{proposition}[Conditional Multimodality Separation Bound]\label{prop:multimodal_bound}
+For a standard unimodal Gaussian distractor distribution, $\gamma = 0$ and $\kappa = 0$, yielding $\mathbb{E}[\hat{b}_d] \approx 1/3 \approx 0.333$. For a continuous uniform distribution, $b_d = 5/9 \approx 0.556$. For a balanced two-component Gaussian mixture $0.5\mathcal{N}(-\Delta, \sigma_0^2) + 0.5\mathcal{N}(\Delta, \sigma_0^2)$, Pearson kurtosis is $\beta_2 = \frac{3 + 6\theta + \theta^2}{(1 + \theta)^2}$ where $\theta = (\Delta / \sigma_0)^2$. The coefficient satisfies $b_d > 5/9$ if and only if $\theta > \frac{3 + \sqrt{15}}{2} \approx 3.436$, which corresponds to component separation:
+\begin{equation}
+ \frac{\Delta}{\sigma_0} > \sqrt{\frac{3 + \sqrt{15}}{2}} \approx 1.854.
+\end{equation}
+\end{proposition}
+
+Computing $\hat{b}_d$ requires only a single pass to accumulate sample moments (variance, skewness, and kurtosis) in $O(ND)$ time, bypassing pairwise distance matrices entirely. The efficacy of BGSS relies on the following distributional premise:
+\begin{assumption}[Marginal Distributional Separation]\label{assump:multimodal}
+Coordinates spanning true cluster partitions manifest multimodal marginal profiles ($\hat{b}_d \ge 5/9$), whereas isotropic distractor coordinates adhere to continuous unimodal densities ($\hat{b}_d \le 5/9$).
+\end{assumption}
+
+\begin{remark}[Distributional Edge Cases and Boundary Mechanics]\label{rem:bgss_limits}
+Assumption~\ref{assump:multimodal} delineates four distributional boundary conditions:
+\begin{enumerate}
+ \item \textbf{Heavy-Tailed Unimodality:} While standard unimodal densities remain well below $5/9$ (e.g., lognormal with $\sigma=1$ yields $b_d \approx 0.344$), heavy-tailed distributions can reach the threshold. For example, standard exponential variables exhibit skewness $\gamma = 2$, excess kurtosis $\kappa = 6$, and Pearson kurtosis $\beta_2 = 9$, producing $b_d = (\gamma^2 + 1)/\beta_2 = (2^2 + 1)/9 = 5/9 \approx 0.556$. In like manner, uniform distributions sit exactly at $5/9$, and certain skewed power laws (such as $\mathrm{Beta}(3, 1)$ with $b_d \approx 0.562$) slightly eclipse the cutoff without exhibiting true multimodality.
+ \item \textbf{Sparse Zero-Inflation:} In single-cell RNA sequencing datasets where dropouts exceed $90\%$, heavy point masses at zero artificially inflate sample skewness and kurtosis, occasionally allowing non-informative coordinates to cross the threshold.
+ \item \textbf{Non-Linear Parity Structures:} In parity benchmarks like Madelon (XOR interactions), individual coordinate projections appear unimodal ($\hat{b}_d \le 0.504 < 5/9$), leading univariate filters to discard discriminative features.
+ \item \textbf{Small-Sample Variance:} For small cohorts ($N < 100$), sampling variance in estimated kurtosis impairs screening sensitivity. For separation $\Delta/\sigma_0 = 2.0$, the empirical detection probability $\mathbb{P}(\hat{b}_d \ge 5/9)$ increases from $0.49$ at $N=60$ to $0.78$ at $N=250$. Ranking coordinates by $\hat{b}_d$ and selecting the top $\alpha$ proportion provides a more resilient selection strategy than a rigid hard cutoff.
+\end{enumerate}
+\end{remark}
+
+In practice, instead of enforcing a rigid theoretical threshold $\hat{b}_d \ge 5/9$---which could yield an empty feature set under parity-like noise or small sample sizes---the implementation ranks coordinates descending by $\hat{b}_d$ and extracts a top candidate set of size $\min(D, \max(K, \max(100, \lfloor \alpha \cdot D \rfloor)))$ with default $\alpha = 0.15$. Maintaining a baseline floor of $\min(100, D)$ candidate features guarantees sufficient subspace diversity during ensemble construction. On Leukemia ($D=7{,}129$, $N=72$), an unconstrained cutoff of $\hat{b}_d \ge 5/9$ isolates 1,275 candidate genes, whereas the default fractional rule retains $\lfloor 0.15 \times 7{,}129 \rfloor = 1{,}069$ features.
+
+\subsection{Bipartite Anchor Graph Consensus}\label{sec:anchor_consensus}
+Standard consensus schemes instantiate an explicit $N \times N$ co-association matrix $S$ and execute graph partitioning in $O(N^2)$ to $O(N^3)$ time with $O(N^2)$ auxiliary storage. Instead of materializing all-pairs similarities, GAC determines exact sample determinacy $\sigma_i = \frac{1}{N - 1} \sum_{j \neq i} S_{ij}^2$ via an exact contingency identity.
+
+\begin{proposition}[Exact Determinacy Identity]\label{prop:linear_determinacy}
+Let $P \in \{0, \dots, K-1\}^{M \times N}$ denote the ensemble partition matrix. Let $C_{m_1, m_2} \in \mathbb{N}^{K \times K}$ denote the contingency matrix between base partitions $m_1$ and $m_2$, where $C_{m_1, m_2}(c_1, c_2) = \sum_{j=1}^N \mathbf{1}\{\pi_{m_1}(j)=c_1 \wedge \pi_{m_2}(j)=c_2\}$. Then for every sample $i$, the quadratic determinacy satisfies:
+\begin{equation}
+ \sum_{j=1}^N S_{ij}^2 = \frac{1}{M^2} \sum_{m_1=1}^M \sum_{m_2=1}^M C_{m_1, m_2}(\pi_{m_1}(i), \pi_{m_2}(i)),
+\end{equation}
+which computes sample determinacy $\sigma_i = \frac{1}{N-1}\left(\sum_{j=1}^N S_{ij}^2 - 1\right)$ in $O(M^2 N + M^2 K^2)$ time and $O(N + K^2)$ working memory, without materializing the $N \times N$ matrix $S$.
+\end{proposition}
+
+Given sample determinacy $\boldsymbol{\sigma} \in [0, 1]^N$, GAC pipeline extracts an anchor set $\mathcal{A} = \{a_1, \dots, a_L\}$ of size $L \ll N$ (default $L=40$) by sampling uniformly at random from within the high-determinacy core set $\mathcal{C} = \{i : \sigma_i \ge \tau_{\text{core}}\}$ (in contrast to variant V4, which draws anchors uniformly across the full dataset without determinacy screening). We sample uniformly within the high-determinacy core rather than running $k$-means prototype clustering on the core points (as in FastMVC) or constructing hierarchical $k$-d trees because random subsampling executes in strictly $O(L)$ time with zero pairwise distance evaluations, avoiding the $O(|\mathcal{C}| \cdot D \cdot L)$ cost of preliminary clustering passes in high-dimensional noise regimes. Empirical ablation (Section~\ref{sec:ablation}, Table~\ref{tab:component_contributions}) confirms that determinacy-selected anchors achieve accuracy statistically indistinguishable from uniform random anchors ($V_5$ vs. $V_4$: $\Delta = +0.019$, 95\% CI: $[-0.040, +0.082]$), showing that determinacy-based anchor selection adds no measurable benefit. GAC pipeline then constructs a rectangular bipartite co-association matrix $B \in [0, 1]^{N \times L}$ where $B_{ia} = \frac{1}{M}\sum_{m=1}^M \mathbf{1}\{\pi_m(\mathbf{x}_i) = \pi_m(\mathbf{x}_a)\}$ in $O(N \cdot L)$ memory.
+
+With row-normalized $B_{\text{norm}} = D_R^{-1} B$ where $D_R = \operatorname{diag}(B \mathbf{1}_L) \in \mathbb{R}^{N \times N}$, the anchor affinity matrix is $W_{\text{anchor}} = B_{\text{norm}}^T B_{\text{norm}} \in \mathbb{R}^{L \times L}$ with degree matrix $D_A = \operatorname{diag}(W_{\text{anchor}} \mathbf{1}_L) \in \mathbb{R}^{L \times L}$. Solving the normalized Laplacian eigensystem $L_{\text{anchor}} V = \lambda V$ (where $L_{\text{anchor}} = I - D_A^{-1/2} W_{\text{anchor}} D_A^{-1/2}$) for the $K$ smallest eigenvectors $V \in \mathbb{R}^{L \times K}$ yields the dual sample embedding $U = B_{\text{norm}} V$ (or Transfer-Cut embedding $U = B_{\text{norm}} D_A^{-1/2} V \operatorname{diag}(\max(1-\boldsymbol{\lambda}, 10^{-4}))^{-1/2}$), followed by K-Means clustering.
+
+\begin{theorem}[Computational and Memory Complexity of Bipartite GAC Pipeline]\label{thm:complexity}
+Let $N$ be the sample size, $D$ ambient dimensionality, $M$ ensemble size, $L$ anchor budget ($L \ll N$), $K$ cluster count, and $I_{\text{km}}$ base K-Means iterations. Under bounded anchor budgets ($L = O(1)$), the overall time complexity of the GAC pipeline (Algorithm~\ref{alg:iccv2}) is:
+\begin{equation}\label{eq:complexity}
+\begin{split}
+ T_{\text{GAC}} = O\bigl(&N D + D \log D + M^2 N + M^2 K^2 + M I_{\text{km}} N |\mathcal{F}_{\text{sub}}| K \\
+  &+ M N L + N L^2 + L^3 + N L K + I_{\text{km}} N K^2\bigr),
+\end{split}
+\end{equation}
+which scales linearly with sample size $O(N)$ for fixed ensemble parameters. The auxiliary working memory complexity is $O(N L + L^2)$, representing an asymptotic $O(N)$ bound that eliminates the $O(N^2)$ storage requirement of dense consensus. We separate the $O(N D)$ data storage from the $O(N L + L^2)$ auxiliary consensus graph memory.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Under bounded anchor budgets ($L = O(1)$), summing the computational costs across linear-time moment screening, contingency-based determinacy estimation (Proposition~\ref{prop:linear_determinacy}), subspace base clusterings, bipartite affinity construction, $L \times L$ Laplacian eigensolving, and spectral projection yields the overall bound in Eq.~\eqref{eq:complexity}, which scales strictly as $O(N)$ with sample size. Auxiliary consensus memory is bounded by $O(NL + L^2)$ for storing $B \in \mathbb{R}^{N \times L}$ and $W_{\text{anchor}} \in \mathbb{R}^{L \times L}$, decoupled from raw data storage $O(ND)$. Full stage-by-stage algebraic derivations are compiled in the Supplementary Material.
+\end{proof}
+
+\subsection{Stability-Weighted Active Subspace Centroid Assignment}\label{sec:centroid}
+Unlike transductive consensus frameworks, GAC pipeline extracts geometry-calibrated centroids in the active subspace weighted by point determinacy:
+\begin{equation}\label{eq:centroid_proj}
+ \boldsymbol{\mu}_k = \frac{\sum_{i: y_i = k} \sigma_i \cdot \mathbf{x}_{i, [\mathcal{F}_{\text{active}}]}}{\sum_{i: y_i = k} \sigma_i}, \quad k \in \{1,\dots,K\}.
+\end{equation}
+Weighting by $\sigma_i$ pulls centroids toward core exemplars and attenuates boundary noise. For any new query instance $\mathbf{x}^* \in \mathbb{R}^D$, out-of-sample cluster assignment is computed in $O(K \cdot |\mathcal{F}_{\text{active}}|)$ time:
+\begin{equation}\label{eq:query_assign}
+ y^* = \arg\min_k \|\mathbf{x}^*_{[\mathcal{F}_{\text{active}}]} - \boldsymbol{\mu}_k\|_2,
+\end{equation}
+with posterior probabilities given by softmax temperature scaling: $p(y^*=k \mid \mathbf{x}^*) = \frac{\exp(-\|\mathbf{x}^*_{[\mathcal{F}_{\text{active}}]} - \boldsymbol{\mu}_k\|_2 / T)}{\sum_l \exp(-\|\mathbf{x}^*_{[\mathcal{F}_{\text{active}}]} - \boldsymbol{\mu}_l\|_2 / T)}$, where $T > 0$ is a user-defined scaling temperature. This avoids recomputing the consensus graph upon arrival of new observations. The complete execution flow of the GAC pipeline, synthesizing Stages 1--4 and inductive query prediction, is formalized in Algorithm~\ref{alg:iccv2}.
+
+\begin{algorithm}[!t]
+\caption{Gated Anchor Consensus (GAC) Pipeline}
+\label{alg:iccv2}
+\begin{algorithmic}[1]
+\Require Data matrix $X \in \mathbb{R}^{N \times D}$, ensemble size $M$ (default $25$), target clusters $K$, anchor budget $L \ll N$ (default $40$; recommended $\max(40, 10K)$), core quantile $\tau_{\text{core}}$ (default $0.50$), candidate pool fraction $\alpha$ (default $0.15$).
+\Ensure Consensus labels $\mathbf{y} \in \{1,\dots,K\}^N$, Anchors $\mathcal{A}_{\text{core}}$, Active Subspace $\mathcal{F}_{\text{active}}$, Centroids $\{\boldsymbol{\mu}_k\}_{k=1}^K$.
+\Statex \textbf{// Stage 1: Multimodality Subspace Gating (BGSS)}
+\For{each feature column $d \in \{1,\dots,D\}$}
+ \State Compute finite-sample Sarle's Bimodality Coefficient:
+ \State $b_d \leftarrow \frac{\hat{\gamma}_d^2 + 1}{\hat{\kappa}_d + 3 \cdot \frac{(N-1)^2}{(N-2)(N-3)} + \epsilon}$ (with $b_d \leftarrow 0$ if $\mathrm{Var}(\mathbf{f}_d) < 10^{-12}$).
+\EndFor
+\State Extract candidate pool $\mathcal{F}_{\text{active}}$ by sorting $b_d$ descending and taking the top $\min(D, \max(K, \lfloor \alpha \cdot D \rfloor))$ features (with minimum cap $\min(100, D)$).
+\Statex \textbf{// Stage 2: Guided Subspace Ensemble Generation}
+\For{$m = 1$ to $M$}
+ \State Draw random subspace $\mathcal{F}_m \subset \mathcal{F}_{\text{active}}$.
+ \State Fit base partition $\pi_m \leftarrow \text{Clusterer}(X_{[:, \mathcal{F}_m]}, K)$.
+\EndFor
+\Statex \textbf{// Stage 3: Determinacy-Based Bipartite Anchor Consensus}
+\State Evaluate sample determinacy $\sigma_i \leftarrow \frac{1}{N-1}\sum_{j \neq i} S_{ij}^2$ via Proposition~\ref{prop:linear_determinacy} in $O(M^2 N + M^2 K^2)$ time.
+\State Identify core instances $\mathcal{C}_{\text{core}} \leftarrow \{i \mid \sigma_i \ge \text{Quantile}(\boldsymbol{\sigma}, \tau_{\text{core}})\}$.
+\State Select $L = \min(L, |\mathcal{C}_{\text{core}}|)$ anchors $\mathcal{A}_{\text{core}}$ uniformly from $\mathcal{C}_{\text{core}}$.
+\State Construct bipartite co-association matrix $B \in [0, 1]^{N \times L}$:
+\State $B_{ia} \leftarrow \frac{1}{M}\sum_{m=1}^M \mathbf{1}\{\pi_m(\mathbf{x}_i) = \pi_m(\mathbf{x}_a)\}$.
+\State Row-normalize $B_{\text{norm}} \leftarrow D_R^{-1} B$, where $D_R = \operatorname{diag}(B \mathbf{1}_L)$.
+\State Compute anchor affinity $W_{\text{anchor}} \leftarrow B_{\text{norm}}^T B_{\text{norm}} \in \mathbb{R}^{L \times L}$, and $D_A = \operatorname{diag}(W_{\text{anchor}} \mathbf{1}_L)$.
+\State Solve normalized Laplacian $L_{\text{anchor}} \leftarrow I - D_A^{-1/2} W_{\text{anchor}} D_A^{-1/2}$ for the $K$ smallest eigenvectors $V \in \mathbb{R}^{L \times K}$ with eigenvalues $\boldsymbol{\lambda}$.
+\State Compute embedding $U \leftarrow B_{\text{norm}} V \in \mathbb{R}^{N \times K}$ (or Transfer-Cut embedding $U \leftarrow B_{\text{norm}} D_A^{-1/2} V \operatorname{diag}(\max(1-\boldsymbol{\lambda}, 10^{-4}))^{-1/2}$) and row-normalize.
+\State Extract consensus labels $\mathbf{y} \leftarrow \text{K-Means}(U, K)$.
+\Statex \textbf{// Stage 4: Stability-Weighted Centroid Induction}
+\For{$k = 1$ to $K$}
+ \State $\boldsymbol{\mu}_k \leftarrow \frac{\sum_{i: y_i = k} \sigma_i \cdot \mathbf{x}_{i, [\mathcal{F}_{\text{active}}]}}{\sum_{i: y_i = k} \sigma_i}$.
+\EndFor
+\State \Return $\mathbf{y}, \mathcal{A}_{\text{core}}, \mathcal{F}_{\text{active}}, \{\boldsymbol{\mu}_k\}_{k=1}^K$.
+\Statex \textbf{// Out-of-Sample Inference for Query $\mathbf{x}^* \in \mathbb{R}^D$:}
+\State \textbf{predict}($\mathbf{x}^*$): \Return $\arg\min_k \|\mathbf{x}^*_{[\mathcal{F}_{\text{active}}]} - \boldsymbol{\mu}_k\|_2$.
+\end{algorithmic}
+\end{algorithm}
+
+
+\section{Experimental Setup}\label{sec:setup}
+
+\subsection{Computational Environment}\label{sec:setup_env}
+All empirical evaluations, scalability runs, and ablation experiments were carried out on a workstation featuring an AMD Ryzen 9 8940HX processor (16 physical cores, 32 logical threads, base frequency 2.40~GHz, boosting to 5.20~GHz), 16~GB of DDR5 RAM, and an NVIDIA GeForce RTX 5060 Laptop GPU on Windows 11 (64-bit). The computational stack used Python 3.14.6 supported by foundational numerical libraries: NumPy 2.4.6, SciPy 1.18.0, scikit-learn 1.9.1, and PyTorch 2.16.0.
+
+\subsection{Parameter Configurations}\label{sec:setup_params}\label{sec:setup_parameters}
+All stochastic processes across algorithms were managed through explicit pseudo-random seed schedules:
+\begin{enumerate}
+ \item \textbf{Benchmark and Sub-Experiment Replications:} For the omnibus benchmark evaluation (Table~\ref{tab:benchmark_ari}), algorithms were evaluated across 30 independent random seeds ($\mathcal{S}_{\text{high}} = \{42, 43, \dots, 71\}$) on the six high-$D$ cohorts ($D/N > 20$), and across 10 random seeds ($\mathcal{S}_{\text{other}} = \{42, 43, \dots, 51\}$) on the remaining seven cohorts ($3{,}000$ total model fits). For the modular ablation runs, feature gating comparisons, and anchor sensitivity sweeps (Sections~\ref{sec:benchmarks_suite} and \ref{sec:ablation}), a standard secondary sequence of 30 seeds ($\mathcal{S}_{\text{sub}} = \{0, 1, \dots, 29\}$) was used, with both seed schedules pre-specified to guarantee reproducibility across independent batches (the dense random-gated arm in Table~\ref{tab:factorial} was subsequently evaluated post hoc under matching seeds $\mathcal{S}_{\text{sub}}$ to complete the factorial grid).
+ \item \textbf{Synthetic Scaling Experiments:} In the empirical scaling benchmarks spanning $N \in [10^4, 10^6]$ observations, 3 independent runs per configuration were collected using seed sequence $\mathcal{S}_{\text{scale}} = \{0, 1, 2\}$.
+ \item \textbf{Train/Test Splits for Generalization:} For the out-of-sample inductive generalization tests, 10 stratified random splits (80\% fit, 20\% query) were generated under seeds $\mathcal{S}_{\text{split}} = \{1, 2, \dots, 10\}$.
+ \item \textbf{Global Random State Synchronization:} Prior to each model run, seed values were propagated across Python's \texttt{random} library, NumPy's \texttt{PCG64} \texttt{BitGenerator}, Scikit-learn estimator \texttt{random\_state} seeds, and PyTorch CUDA context generators.
+ \item \textbf{Subsample Stability Protocol on Real Data:} The stratified $80\%$ subsampling protocol, permuted null controls, and decision rules (Rules (i)--(iii)) governing stability-accuracy discordance across the six high-$D$ biomedical cohorts were pre-specified in the project analysis plan (\texttt{commit 3307380}, October 29, 2026) prior to executing the benchmark subsampling runs (\texttt{commit 49f3882}), with the non-degeneracy condition (Rule~(i')) formally added in \texttt{commit 548d68d} (October 30, 2026).
+\end{enumerate}
+
+Table~\ref{tab:method_parameters} outlines the complete operational configurations for GAC and baseline algorithms. Parameters follow established literature conventions or default package settings. Unless altered during specific sensitivity analyses, default hyperparameters for GAC are ensemble count $M = 25$, anchor budget $L = 40$, candidate feature proportion $\alpha = 0.15$, and core determinacy quantile $\tau_{\text{core}} = 0.50$. True cluster count $K$ is provided identically to all algorithms across every dataset.
+
+\paragraph{Hyperparameter Selection Protocol and Baseline Tuning}
+To eliminate risk of optimistic evaluation bias and label leakage, both GAC and all baseline clustering pipelines were executed under fixed default configurations or standard literature recommendations (Table~\ref{tab:method_parameters}), without per-dataset grid searches or label-guided tuning. In Sparse K-Means, the $L_1$ sparsity parameter $s$ was computed through the unsupervised heuristic $s = 1.1 + 0.5(\sqrt{D} - 1.1)$ following Witten and Tibshirani ($1 < s \le \sqrt{D}$) without reference to class labels. In practical unsupervised discovery, class labels are unavailable by definition, making supervised hyperparameter tuning unrealistic. Nevertheless, using standardized default configurations rather than exhaustive per-dataset tuning remains an empirical limitation: methods sensitive to kernel scales or graph construction (e.g., Spectral Clustering) or pretraining schedules (DEC) might achieve higher absolute ARI under dedicated tuning. Evaluating all algorithms under standardized configurations guarantees reproducible comparison. Note on K-Means initialization: while Table~\ref{tab:method_parameters} reports the standard scikit-learn standalone default ($n_{\text{init}}=10$), the 13-benchmark omnibus evaluation in Table~\ref{tab:benchmark_ari} uses single-restart K-Means ($n_{\text{init}}=1$, subgroup mean $0.056$) to provide a direct baseline counterpart to individual ensemble base clusterers, whereas the matched-budget sweeps in Table~\ref{tab:fair_baselines} use $n_{\text{init}}=5$ ($0.051$) following standard feature selection benchmark conventions.
+
+\begin{table*}[!t]
+\caption{Hyperparameter Configurations and Operational Settings Across Evaluated Methods}
+\label{tab:method_parameters}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llp{5.2cm}p{4.2cm}@{}}
+\toprule
+\textbf{Category} & \textbf{Algorithm} & \textbf{Key Hyperparameters and Settings} & \textbf{Operational Role} \\
+\midrule
+\multirow{4}{*}{\textbf{Evaluated Pipeline}} & \multirow{4}{*}{\textbf{GAC}} & Ensemble size $M = 25$; Anchor budget $L = 40$ & Bipartite consensus dimension \\
+  & & Active pool fraction $\alpha = 0.15$; Core threshold $\tau_{\text{core}} = 0.50$ & BGSS multimodality candidate pool \\
+  & & Base clusterers: K-Means on random subspaces $\mathcal{F}_m \subset \mathcal{F}_{\text{active}}$ & Generates partition diversity \\
+  & & Out-of-sample: Stability-weighted centroid projection (Eq.~\eqref{eq:centroid_proj}) & $O(K \cdot |\mathcal{F}_{\text{active}}|)$ inductive mapping \\
+\midrule
+\multirow{4}{*}{\textbf{Classical}} & K-Means & $n\text{\_clusters} = K$, $n\text{\_init} = 10$, $max\text{\_iter} = 300$, k-means++ init & Standard centroid benchmark \\
+  & Ward & $n\text{\_clusters} = K$, $\text{linkage} = \text{'ward'}$, Euclidean affinity & Hierarchical agglomeration \\
+  & FCM & Fuzzifier $m = 2.0$, $max\text{\_iter} = 300$, $\text{tolerance} = 10^{-5}$ & Soft membership baseline \\
+  & Spectral Clustering & $n\text{\_clusters} = K$, $k$-NN affinity ($k = 10$), normalized Laplacian & Graph Laplacian partitioning \\
+\midrule
+\multirow{4}{*}{\textbf{Ensemble}} & Standard Consensus & $M = 25$ base K-Means, random subspaces, full $N \times N$ matrix $S$ & Average-linkage dense consensus \\
+  & Core-Halo Cons. & $M = 25$, core threshold $\tau = 0.50$, core hierarchical clustering & Sample stability-based core partitioning \\
+  & FCAG & $L = 40$ anchors generated via K-Means, bipartite co-association & Scalable bipartite transfer cut \\
+  & FastMVC & $L = 40$ anchor prototypes, multi-view bipartite formulation & Scalable anchor graph consensus \\
+  & Ungated Anchor Consensus (Legacy) & $M = 25$, unguided ambient random subspaces, dense consensus & Baseline without BGSS gating \\
+\midrule
+\textbf{Deep} & DEC & Pretraining 200 epochs, refinement 100 epochs, batch size 256, lr 0.001 & Autoencoder feature learning \\
+\midrule
+\multirow{4}{*}{\textbf{Matched-Budget}} & Sparse K-Means & Unsupervised $L_1$ bound $s = 1.1 + 0.5(\sqrt{D} - 1.1)$, $max\_iter = 8$ & Lasso-penalized feature weighting \\
+\multirow{4}{*}{\textbf{Baselines}} & PCA + K-Means / StdCons & Top components matched to $|\mathcal{F}_{\text{active}}|$, followed by clustering & Linear orthogonal projection \\
+  & VarFilt + K-Means / StdCons & Top variance features matched to $|\mathcal{F}_{\text{active}}|$, followed by clustering & Unsupervised variance screening \\
+  & LapScore + K-Means & Top features ranked by graph Laplacian score matched to $|\mathcal{F}_{\text{active}}|$ & Graph-based locality preservation \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
+
+\subsection{Evaluation Metrics}\label{sec:setup_metrics}
+Clustering partition recovery was quantitatively evaluated against ground-truth class labels using the chance-adjusted Adjusted Rand Index (ARI)~\cite{hubert1985comparing}:
+\begin{equation}\label{eq:ari_def}
+ \text{ARI}(\mathcal{U}, \mathcal{V}) = \frac{\sum_{i=1}^K \sum_{j=1}^C \binom{n_{ij}}{2} - \left[\sum_{i=1}^K \binom{a_i}{2} \sum_{j=1}^C \binom{b_j}{2}\right] / \binom{N}{2}}{\frac{1}{2}\left[\sum_{i=1}^K \binom{a_i}{2} + \sum_{j=1}^C \binom{b_j}{2}\right] - \left[\sum_{i=1}^K \binom{a_i}{2} \sum_{j=1}^C \binom{b_j}{2}\right] / \binom{N}{2}},
+\end{equation}
+where $n_{ij} = |u_i \cap v_j|$, $a_i = \sum_j n_{ij}$, and $b_j = \sum_i n_{ij}$ denote contingency overlaps between predicted clusters $\mathcal{U} = \{u_1, \dots, u_K\}$ and ground-truth classes $\mathcal{V} = \{v_1, \dots, v_C\}$. An ARI of $1.0$ indicates perfect agreement, $0.0$ corresponds to chance expectation under random assignment, and negative values denote recovery worse than chance.
+
+\subsection{Statistical Analysis}\label{sec:setup_stats}
+Because clustering score distributions violate normality (Section~\ref{sec:stats_normality}), we employ non-parametric tests~\cite{demsar2006statistical,wang2026deep_jasa}:
+\begin{itemize}
+ \item \textbf{Friedman Omnibus Rank Test:} Tests the null hypothesis of equal performance among all $k$ algorithms across $N_d$ benchmark datasets: $\chi_F^2 = \frac{12 N_d}{k(k+1)} \left[\sum_{j=1}^k \bar{R}_j^2 - \frac{k(k+1)^2}{4}\right]$.
+ \item \textbf{Nemenyi Post-Hoc Test:} Controls family-wise error rate when evaluating pairwise rank differences following omnibus testing: $\text{CD} = q_\alpha \sqrt{\frac{k(k+1)}{6 N_d}}$.
+ \item \textbf{Wilcoxon Signed-Rank Test with Holm Correction:} Paired non-parametric test comparing median differences between matched seed runs, with Holm-Bonferroni step-down correction for multiple pairwise comparisons.
+ \item \textbf{Dataset-Clustered Bootstrap Confidence Intervals:} Non-parametric bootstrap resampling whole datasets with replacement ($B = 10{,}000$ iterations) to construct 95\% percentile confidence intervals robust to cross-dataset variance.
+ \item \textbf{Vargha-Delaney $A_{12}$ Effect Size:} Non-parametric probability of superiority quantifying the probability that a random run from GAC pipeline yields higher ARI than a baseline: $A_{12} = \frac{R_1 - n_1(n_1+1)/2}{n_1 n_2}$, where $A_{12} = 0.5$ denotes stochastic parity.
+ \item \textbf{Shapiro-Wilk Normality Test:} Evaluates whether per-seed ARI distributions conform to Gaussian distributions: $W = \frac{(\sum_{i=1}^n a_i x_{(i)})^2}{\sum_{i=1}^n (x_i - \bar{x})^2}$.
+\end{itemize}
+
+
+\section{Experimental Evaluation}\label{sec:evaluation}
+
+\subsection{Computational Scalability and Inductive Generalization}\label{sec:scalability}
+
+\begin{figure*}[!t]
+\centering
+\subfloat[Downstream Generalization with Oracle True Labels\label{fig:exp1_oracle}]{%
+ \includegraphics[width=0.78\textwidth]{figures/fig04a_inductive_oracle_generalization.png}%
+}
+\\[1.0ex]
+\subfloat[Downstream Generalization with Unsupervised Pseudo-Labels\label{fig:exp1_pseudo}]{%
+ \includegraphics[width=0.78\textwidth]{figures/fig04b_inductive_pseudolabel_generalization.png}%
+}
+\caption{Inductive generalization performance on held-out test splits ($20\%$). (a) Under oracle true labels, downstream classifiers achieve parity with 100\% full-data training when trained on 50\% high-determinacy core points under low-to-moderate noise ($D_{\text{noise}} \le 50$), while under high noise ($D_{\text{noise}} \ge 1{,}000$), core-only training exhibits a 5--21 percentage point deficit due to reduced effective sample size. (b) Under unsupervised pseudo-labels, performance collapses toward random chance ($33.6\%$--$36.0\%$ vs. $33.3\%$ chance level for $K=3$) when distractor dimensions dominate ($D_{\text{noise}} \ge 1{,}000$), demonstrating that determinacy core filtering alone cannot rescue corrupted pseudo-labels without prior feature gating.}
+\label{fig:exp1_results}
+\end{figure*}
+
+\textbf{Inductive Generalization Assessment:}
+We examined downstream predictive accuracy when training classifiers exclusively on the high-determinacy core $\mathcal{C}_{\text{core}}$ using held-out query instances (20\% split). Under modest noise levels ($D_{\text{noise}} \le 50$, Fig.~\ref{fig:exp1_oracle}), models trained on 50\% core instances match the performance of models trained on 100\% of the data. However, under heavy distractor noise ($D_{\text{noise}} \ge 1{,}000$), restricting training to core samples incurs a 5--21 percentage point deficit because effective sample size shrinks within a noise-dominated regime.
+
+When downstream estimators are trained on unsupervised pseudo-labels under strong noise corruption ($D_{\text{noise}} \ge 1{,}000$, Fig.~\ref{fig:exp1_pseudo}), test accuracy drops to random guessing ($33.6\%$--$36.0\%$ compared to $33.3\%$ chance level for $K=3$). Across Linear SVM, Random Forest, MLP, and $k$-NN architectures, test performance at $D_{\text{noise}} = 3{,}000$ lingers between $32.3\%$ and $38.0\%$, demonstrating that filtering instances by determinacy cannot redeem misassigned pseudo-labels in the absence of feature gating.
+
+\textbf{Out-of-Sample Centroid Extension:}
+Table~\ref{tab:inductive_direct} reports out-of-sample performance for closed-form centroid mapping (Eq.~\eqref{eq:centroid_proj}) alongside alternative projection schemes across 10 random train/test splits (80\% fit, 20\% query).
+
+\input{gen/table03_inductive_generalization.tex}
+
+Computing centroid projections requires $O(K \cdot |\mathcal{F}_{\text{active}}|)$ time per query and agrees with unweighted nearest-centroid assignments on $85.0\%$--$99.2\%$ of test instances across datasets (mean $95.3\%$, with Isolet yielding $85.0\%$ and microarray cohorts spanning $94.1\%$--$99.2\%$; Table~\ref{tab:inductive_direct}). Its generalization ARI aligns closely with Ambient K-Means, Nystr\"om spectral extensions, and Random Forest surrogates, with all paired bootstrap confidence intervals spanning zero ($\Delta = +0.046$, 95\% CI: $[-0.031, +0.124]$ vs. K-Means; $\Delta = -0.023$, 95\% CI: $[-0.083, +0.033]$ vs. Nystr\"om; $\Delta = -0.006$, 95\% CI: $[-0.052, +0.045]$ vs. Random Forest). Inductive centroid projection thus acts as an efficient closed-form approximation that preserves query accuracy without graph recomputation.
+
+\textbf{Scalability vs. Sample Size:}
+We evaluated runtime scaling for GAC as sample size $N$ grew from $500$ to $10{,}000$ (Table~\ref{tab:exp4_timing}, Fig.~\ref{fig:exp4_n}) over 5 independent random seeds ($42, 101, 202, 303, 404$) on dedicated hardware using pure untraced wall-clock measurements (\texttt{time.perf\_counter()}). Peak process RAM was logged independently using \texttt{tracemalloc}. In pure untraced execution, GAC runtime scales smoothly from $0.836 \pm 0.096\text{ s}$ at $N=500$ to $4.354 \pm 1.252\text{ s}$ at $N=10{,}000$, fitting an empirical power-law exponent of $\beta = 0.548 \pm 0.013$ ($95\%$ seed-bootstrap CI: $[0.527, 0.568]$) across this span. By contrast, Standard Consensus runtime climbs from $0.854 \pm 0.095\text{ s}$ at $N=500$ to $11.046 \pm 2.055\text{ s}$ at $N=10{,}000$ ($\beta = 0.851 \pm 0.010$, $95\%$ CI: $[0.834, 0.867]$), giving GAC a $2.54\times$ overall speedup (average per-seed speedup $2.699 \pm 0.842\times$) at $N=10{,}000$. Standard Consensus reaches $2.61\text{ GB}$ peak memory at $N=10{,}000$, whereas GAC requires only $68.8\text{ MB}$ (a $97.4\%$ reduction). Contextualizing this alongside extreme-scale benchmarks: Table~\ref{tab:exp4_timing} evaluates synthetic mixtures with $D=200$ and $K=3$ under pure untraced execution, whereas Table~\ref{tab:exp5_controlled} Config~A examines $D=100$ and $K=5$ with inline memory-tracing active ($5.58 \pm 1.29\text{ s}$ at $N=10{,}000$); the respective timings reflect these differences in dimensionality, cluster count, and measurement overhead. Bipartite compression cuts auxiliary consensus graph storage from $762.9\text{ MB}$ down to $3.05\text{ MB}$ at $N=10{,}000$ (a \MemoryScalingTenKGraphReduction\ reduction, Table~\ref{tab:exp4_timing}; at $N=8{,}000$, graph memory drops from $488.3\text{ MB}$ to $2.44\text{ MB}$, a $99.5\%$ reduction). In total process memory (\texttt{tracemalloc}), GAC lowers memory consumption from $2{,}670.6\text{ MB}$ to $68.8\text{ MB}$ at $N=10{,}000$ (a \MemoryScalingTenKReduction\ reduction) and from $1{,}708.8\text{ MB}$ to $61.4\text{ MB}$ at $N=8{,}000$ (\MemoryScalingEightKReduction\ reduction). Resource profiling across metrics (Fig.~\ref{fig:exp4_quad}) shows that bipartite anchor consensus exhibits runtime comparable to dense consensus at small sample scales ($N \le 5{,}000$, speedups $0.92\times\text{--}1.16\times$ due to baseline overheads) and accelerates substantially as sample size expands, reaching a $2.54\times$ speedup at $N = 10{,}000$ (Table~\ref{tab:exp4_timing}) while maintaining a modest memory footprint.
+
+\begin{figure*}[!t]
+\centering
+\subfloat[Runtime Scaling with Sample Size $N$\label{fig:exp4_n}]{%
+ \includegraphics[width=0.48\textwidth]{figures/fig05a_sample_complexity_scaling.png}%
+}
+\hfill
+\subfloat[Empirical Scalability Breakdown ($N$ from $200$ to $10{,}000$)\label{fig:exp4_quad}]{%
+ \includegraphics[width=0.48\textwidth]{figures/fig05b_scalability_breakdown.png}%
+}
+\caption{Empirical computational scaling and resource efficiency. (a) Pure untraced execution runtime as sample size $N$ increases from $500$ to $10{,}000$, yielding a fitted power-law exponent of $\beta = 0.548 \pm 0.013$ ($95\%$ bootstrap CI: $[0.527, 0.568]$) and a $2.54\times$ speedup over dense consensus at $N=10{,}000$ ($4.354\text{ s}$ vs. $11.046\text{ s}$; per-seed speedup $2.699 \pm 0.842\times$). (b) Four-panel scaling analysis detailing wall-clock execution, empirical speedup acceleration factor, auxiliary consensus graph working memory, and peak dynamic RAM allocation.}
+\label{fig:exp4_scaling_plots}
+\end{figure*}
+
+\input{gen/table04_sample_scaling.tex}
+
+\textbf{Scalability at One Million Samples:}
+To explore runtime boundaries under massive scale, we tested GAC on synthetic Gaussian mixtures up to $N = 1{,}000{,}000$ instances ($D=100, K=5$, Table~\ref{tab:exp5_controlled}, Fig.~\ref{fig:exp5_scaling_plots}). Storing an explicit $N \times N$ consensus matrix in double precision for $N=10^6$ instances requires roughly $8\text{ Terabytes of RAM}$, which is completely infeasible on workstation hardware.
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/fig06_extreme_scale_quad.png}
+\caption{Empirical scalability of GAC pipeline up to 1 million samples ($N=10^6, D=100, K=5, 3\text{ Independent Seeds}$, \texttt{float32} precision). Scaling is approximately linear up to $N=10^5$, with runtime steepening above ($182.64\text{ s}$ for Config A and $141.22\text{ s}$ for Config B) while auxiliary bipartite graph memory is strictly bounded ($160\text{ MB}$ for Config A vs. $8\text{ TB}$ for dense consensus) and total process heap memory grows with raw array storage to $3.84\text{ GB}$ at $N=10^6$.}
+\label{fig:exp5_scaling_plots}
+\end{figure*}
+
+\input{gen/table05_extreme_scaling.tex}
+
+Across 3 independent seeds (Table~\ref{tab:exp5_controlled}), Config A ($M=25, L=40$, \texttt{float32}) processes $N=10^6$ samples in $182.64 \pm 51.01\text{ s}$ with a peak memory footprint of $3.84\text{ GB}$ (auxiliary graph memory requires $N \times L \times 4\text{ bytes} = 160.0\text{ MB}$, compared to roughly $8\text{ TB}$ for double-precision full storage). Between $10^4$ and $10^5$, scaling is sub-linear ($\beta_{10^4 \to 10^5} = 0.426 \pm 0.107$), but growth accelerates between $10^5$ and $10^6$ ($\beta_{10^5 \to 10^6} = 1.085 \pm 0.197$) as intermediate allocations expand into gigabytes, yielding an empirical exponent of $\beta = 0.755 \pm 0.074$ (seed-bootstrap 95\% CI: $[0.648, 0.841]$). Config B ($M=15, L=60$, \texttt{float32}) finishes in $141.22 \pm 34.87\text{ s}$ (bipartite graph memory $240.0\text{ MB}$; local $\beta_{10^4 \to 10^5} = 0.548 \pm 0.060$, $\beta_{10^5 \to 10^6} = 1.198 \pm 0.128$, overall $\beta = 0.873 \pm 0.035$, seed-bootstrap 95\% CI: $[0.825, 0.916]$). While execution time curves upward at the largest scale due to memory bandwidth and cache contention across 100-dimensional arrays, bipartite graph factorization bypasses quadratic $O(N^2)$ memory and completes in under three minutes on a standard laptop workstation.
+
+\subsection{Benchmark Evaluation on 13 Multi-Domain Cohorts}\label{sec:benchmarks_suite}
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.96\textwidth]{figures/fig07_benchmark_matrix_13datasets.png}
+\caption{Empirical Adjusted Rand Index (ARI) distributions across 13 multi-domain benchmark datasets across independent random seeds (30 seeds on high-$D$ cohorts, 10 seeds on others; 3{,}000 total model fits). Boxes span interquartile ranges; dashed red line denotes zero recovery.}
+\label{fig:benchmark_distributions}
+\end{figure*}
+
+To evaluate consensus clustering across diverse noise structures, sample sizes, and dimensionalities, we benchmarked 12 clustering pipelines across 13 real-world datasets spanning Biomedical Microarrays, Single-Cell / Tabular, and Text / Image domains (Table~\ref{tab:benchmark_properties}). Table~\ref{tab:benchmark_ari} presents the comprehensive empirical ARI results across all 3{,}000 model fits (30 seeds on high-$D$ cohorts, 10 seeds on others), with distribution boxplots in Fig.~\ref{fig:benchmark_distributions}. Omnibus benchmark fits evaluate seeds $\{42, \dots, 71\}$ on the high-$D$ cohorts and $\{42, \dots, 51\}$ on other datasets, whereas the modular ablation and factorial experiments in Section~\ref{sec:ablation} evaluate seeds $\{0, \dots, 29\}$.
+
+\begin{table*}[!t]
+\caption{Characteristics and Upstream Repositories of the 13 Multi-Domain Benchmark Datasets}
+\label{tab:benchmark_properties}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llrrrrlp{5.8cm}@{}}
+\toprule
+\textbf{Domain} & \textbf{Dataset} & \textbf{Samples ($N$)} & \textbf{Features ($D$)} & \textbf{Classes ($K$)} & \textbf{Ratio ($D/N$)} & \textbf{Evaluation Focus} & \textbf{Upstream Identifier / Access URL} \\
+\midrule
+\multirow{6}{*}{\textbf{Microarray}} & CNS & $60$ & $7{,}129$ & $2$ & $118.8$ & High-$D$ Distractor Noise & OpenML ID: 45086 (\url{https://www.openml.org/d/45086}) \\
+  & Colon & $62$ & $2{,}000$ & $2$ & $32.3$ & Small-$N$ Variance Bias & OpenML ID: 45087 (\url{https://www.openml.org/d/45087}) \\
+  & Leukemia & $72$ & $7{,}129$ & $2$ & $99.0$ & Extreme High-$D$ Signal & OpenML ID: 1104 (\url{https://www.openml.org/d/1104}) \\
+  & Ovarian & $253$ & $15{,}154$ & $2$ & $59.9$ & Ultra-High Dimensionality & OpenML ID: 45098 (\url{https://www.openml.org/d/45098}) \\
+  & Prostate & $102$ & $12{,}600$ & $2$ & $123.5$ & Small-$N$ Dense Noise & OpenML ID: 45099 (\url{https://www.openml.org/d/45099}) \\
+  & SRBCT & $83$ & $2{,}308$ & $4$ & $27.8$ & Multi-Class Microarray & OpenML ID: 45101 (\url{https://www.openml.org/d/45101}) \\
+\midrule
+\multirow{4}{*}{\textbf{Single-Cell / Tabular}} & Sonar & $208$ & $60$ & $2$ & $0.29$ & Dense Continuous Signals & OpenML ID: 40 (\url{https://www.openml.org/d/40}) \\
+  & Madelon\textsuperscript{*} & $500$ & $500$ & $2$ & $1.00$ & Non-Linear XOR Parity & OpenML ID: 1485 (\url{https://www.openml.org/d/1485}) \\
+  & Isolet & $7{,}797$ & $617$ & $26$ & $0.08$ & Acoustic Signal Structure & OpenML ID: 300 (\url{https://www.openml.org/d/300}) \\
+  & PBMC68k-red & $700$ & $765$ & $10$ & $1.09$ & Sparse Single-Cell scRNA-seq & 10x Genomics via Scanpy (\url{https://scanpy.readthedocs.io}) \\
+\midrule
+\multirow{3}{*}{\textbf{Text / Image}} & 20 Newsgroups & $18{,}846$ & $10{,}000$ & $20$ & $0.53$ & Ultra-Sparse Document Counts & Scikit-learn / CMU (\url{http://qwone.com/~jason/20Newsgroups/}) \\
+  & Indian Pines & $10{,}249$ & $200$ & $16$ & $0.02$ & Hyperspectral Remote Sensing & UPV/EHU Hyperspectral (\url{https://www.ehu.eus/ccwintco}) \\
+  & Extended Yale B & $2{,}414$ & $1{,}024$ & $38$ & $0.42$ & Facial Manifold Clustering & UCSD Vision Archive (\url{http://vision.ucsd.edu/extyaleb}) \\
+\bottomrule
+\multicolumn{8}{@{}l}{\footnotesize \textsuperscript{*}Madelon is evaluated on a deterministic subsample of 500 of the 2,600 samples from OpenML 1485 ($D/N = 1.00$).} \\
+\end{tabular}%
+}
+\end{table*}
+
+\input{gen/table06_omnibus_benchmark_ari.tex}
+
+\textbf{Synthesis of Benchmark Findings:}
+\begin{itemize}
+ \item \textbf{High Grand Mean Driven by Two Cohorts:} While GAC pipeline attains the highest Grand Mean ARI ($0.152$), this gain is driven by large performance on Leukemia ($0.600 \pm 0.367$) and SRBCT ($0.546 \pm 0.102$). On the remaining 11 datasets, GAC pipeline averages $0.076$, trailing Standard Consensus ($0.130$), DEC ($0.129$), and K-Means ($0.124$).
+ \item \textbf{Median Performance:} Over all 13 benchmarks, the median ARI of GAC pipeline is $0.055$.
+ \item \textbf{Omnibus Rank Position:} In overall mean rank across all 13 datasets, K-Means ranks first ($\TableThreeKMeansOverallRank$), followed by Standard Consensus ($\TableThreeStdConsOverallRank$), DEC ($\TableThreeDecOverallRank$), and GAC pipeline ($\TableThreeIccVTwoOverallRank$, Rank 4). Ward ranks fifth ($\TableThreeWardOverallRank$), while the recently introduced CoHiRF obtains an average rank of $\TableThreeCohirfOverallRank$.
+ \item \textbf{Subgroup Rank in High-$D$ ($D/N > 20$):} GAC pipeline ranks first ($R = \TableThreeIccVTwoHighDRank$ exploratory, $n=6$, subgroup mean ARI $\mathbf{\FairBaselinesIccVTwoHighDMean}$), but on Prostate ($0.012$) it underperforms simple baselines ($0.043\text{--}0.049$). CoHiRF attains an average high-$D$ rank of $\TableThreeCohirfHighDRank$ (subgroup mean $0.017$). This outcome is attributable to the method configuration as run (official implementation evaluated under repetitions $= 25$, subspace fraction $= 0.15$, consensus threshold $= 0.80$; Table~\ref{tab:method_parameters}): CoHiRF enforces strict hierarchical consensus over unanimous components without bipartite graph spectral projection, which causes extreme cluster fragmentation when features are heavily contaminated by ambient noise.
+ \item \textbf{Large-$K$ and High-Dimensional Underperformance:} Across benchmarks with large cluster counts ($K \ge 10$) or sparse count distributions, GAC pipeline consistently trails simpler or deep baselines. On Isolet ($K = 26$), GAC pipeline achieves $0.278 \pm 0.030$, falling well below Standard Consensus ($0.477$), DEC ($0.468$), K-Means ($0.448$), and CoHiRF ($0.430 \pm 0.012$). On 20 Newsgroups ($K = 20$), GAC pipeline collapses to $0.000 \pm 0.000$ (versus $0.105 \pm 0.010$ for CoHiRF, which ranks \#1 across all 12 methods, $0.102 \pm 0.005$ for Standard Consensus, $0.063 \pm 0.055$ for K-Means, and $0.008 \pm 0.003$ for DEC). On Indian Pines ($K = 16$), GAC pipeline attains $0.136 \pm 0.030$ (versus $0.220 \pm 0.004$ for Standard Consensus and $0.212 \pm 0.010$ for K-Means). On Yale B ($K = 38$), GAC pipeline yields $0.055 \pm 0.007$ (trailing DEC at $0.130 \pm 0.010$ and Spectral at $0.065 \pm 0.002$). On PBMC68k-reduced ($K = 10$), it reaches only $0.182 \pm 0.062$ (trailing Standard Consensus at $0.555 \pm 0.037$, DEC at $0.512 \pm 0.066$, K-Means at $0.494 \pm 0.034$, and CoHiRF at $0.300 \pm 0.166$). While an initial hypothesis attributed this underperformance to anchor starvation ($L=40$ candidate anchors yielding fewer than two anchors per class on average for $K \ge 20$), scaling the anchor budget to $L = \max(40, 10K)$ ($L \in [160, 380]$, Table~\ref{tab:large_k_anchors}) yields an average change of only $+0.009$ ARI across large-$K$ benchmarks. This refutes anchor starvation as the main cause; the multi-class coordinate-blending explanation is consistent with but not tested by these data (Table~\ref{tab:large_k_anchors}).
+
+\input{gen/table07_large_k_anchor_budget.tex}
+\end{itemize}
+
+\textbf{Comparisons Under Matched Feature Budgets:}
+To verify whether GAC's gains stem from BGSS multimodality filtering rather than arbitrary dimensionality reduction, we benchmarked K-Means and Standard Consensus against standard unsupervised feature selection techniques using identical feature allowances (Table~\ref{tab:fair_baselines}). For each cohort, Variance Filtering, PCA, and Laplacian Score received exactly $|\mathcal{F}_{\text{active}}| = \lfloor \alpha \cdot D \rfloor$ features, while Sparse K-Means estimated its sparse weights under an $L_1$ penalty constraint ($s = 1.1 + 0.5(\sqrt{D} - 1.1)$).
+
+\input{gen/table08_matched_feature_budget.tex}
+
+\paragraph{Experimental Protocol and Evaluation Modules:}
+To guarantee complete traceability and protocol adherence, all targeted evaluation modules follow pre-specified deterministic seed schedules:
+\begin{itemize}
+ \item \textbf{CoHiRF Comparative Evaluation:} Evaluated across all 13 benchmark datasets using 30 independent random seeds ($\{0, \dots, 29\}$) on the six high-$D$ cohorts ($D/N > 20$) and 10 seeds ($\{0, \dots, 9\}$) on the remaining seven cohorts (250 model fits).
+ \item \textbf{Anchor Landmark Selection:} Compares high-determinacy core anchors ($V_5$), uniform random anchors ($V_4$), K-Means centroid anchors, and balanced determinacy anchors across the six high-$D$ cohorts over 30 random seeds ($\{0, \dots, 29\}$, 720 fits).
+ \item \textbf{Feature Gating Evaluation:} Benchmarks BGSS multimodality screening against matched random feature subspace gating across the six high-$D$ cohorts over 30 random seeds ($\{0, \dots, 29\}$, 360 fits).
+ \item \textbf{Distance Metrics and Geometry Simulation:} Evaluates Euclidean, Chebyshev, and Cosine geometries across distractor dimensions $D_{\text{noise}} \in [0, 2000]$ over 5 independent random seeds ($\{42, 101, 202, 303, 404\}$).
+ \item \textbf{Large-$K$ Anchor Budget Scaling:} Evaluates default budget $L=40$ against scaled budget $L=\max(40, 10K)$ on four large-$K$ cohorts (Indian Pines, Isolet, 20 Newsgroups, Extended Yale B) over 10 random seeds ($\{42, \dots, 51\}$).
+ \item \textbf{Hyperparameter Sensitivity Grid:} Evaluates $M \in \{5, 10, 15, 25, 50\} \times L \in \{20, 40, 60, 80\}$ across the six high-$D$ cohorts over 10 random seeds ($\{42, \dots, 51\}$, 1,200 fits).
+\end{itemize}
+
+Across the six high-$D$ cohorts, standard dimensionality reduction approaches (Variance Filtering, PCA, Laplacian Score, and Sparse K-Means) attain mean ARIs between $0.032$ and $0.054$, failing to outperform ambient K-Means ($0.051$ with $n_{\text{init}}=5$ in Table~\ref{tab:fair_baselines}, and $0.056$ with $n_{\text{init}}=1$ in Table~\ref{tab:benchmark_ari}). By contrast, GAC achieves a subgroup mean of $\mathbf{0.217}$, demonstrating that marginal multimodality screening isolates informative subspace variation that variance thresholds and graph-preserving criteria overlook. Evaluating BGSS directly against matched random subspace gating ($|\mathcal{F}_{\text{active}}| = \lfloor \alpha D \rfloor$ across 30 seeds $\{0, \dots, 29\}$ on the six cohorts) shows that random feature gating yields a subgroup mean of $0.047$ under bipartite consensus and $0.046$ under dense consensus, performing comparably to ambient consensus ($0.046$ bipartite, $0.037$ dense). BGSS multimodality gating raises ARI to $0.217$ under bipartite consensus, a paired gain of $+0.169$ over matched random gating (95\% cohort-clustered bootstrap CI $[+0.036, +0.310]$, Wilcoxon $W = 0.0, p = 0.0312$ uncorrected for the three comparisons, $n = 6$), driven by Leukemia ($+0.398$) and SRBCT ($+0.447$). By contrast, under dense consensus BGSS reaches $0.077$, adding only $+0.031$ over random dense gating (95\% CI $[-0.062, +0.149]$, Wilcoxon $p = 1.0$), where dense consensus is associated with base-clusterer instability on Leukemia.
+
+\subsection{Statistical Analysis}\label{sec:statistical_eval}
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/fig08_critical_difference_diagram.png}
+\caption{Dem{\v s}ar Critical Difference diagram for omnibus benchmark evaluation across 13 datasets. Across all benchmarks, mean ranks range from $R=\TableThreeKMeansOverallRank$ (K-Means), $R=\MeanRankStdCons$ (Standard Consensus), and $R=\MeanRankDEC$ (DEC) to $R=\MeanRankICCvTwo$ (GAC pipeline), $R=\TableThreeWardOverallRank$ (Ward), and $R=\TableThreeCohirfOverallRank$ (CoHiRF). Non-parametric Friedman analysis yields $\chi_F^2 = 11.56$ ($p = \TableThreeFriedmanPValue$); all 12 methods are encompassed within a single equivalence clique under critical difference threshold $\text{CD} = \TrueNemenyiCD$.}
+\label{fig:exp3_cd_diagram}
+\end{figure*}
+
+Table~\ref{tab:statistical_params} reports the statistical testing parameters governing hypothesis tests, family-wise error adjustments, and bootstrap resamplings.
+
+\begin{table*}[!t]
+\caption{Statistical Testing Parameters and Configurations}
+\label{tab:statistical_params}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Testing Dimension} & \textbf{Configuration / Setting} & \textbf{Methodological Standard} \\
+\midrule
+Significance Threshold & $\alpha = 0.05$ (two-sided) & Standard scientific null threshold \\
+Family-Wise Error Control & Holm-Bonferroni step-down (benchmark pairwise tests) & Strong control of FWER \\
+Bootstrap Resamples & $B = 10{,}000$ iterations & Dataset-clustered non-parametric bootstrap \\
+Omnibus Rank Test & Friedman test (average ranks for ties) & Global equivalence test \\
+Post-Hoc Critical Difference & Nemenyi test ($CD = \TrueNemenyiCD$) & Omnibus rank comparison \\
+Effect Size Formulation & Vargha-Delaney $A_{12} \in [0, 1]$ & Probability of stochastic superiority \\
+Normality Goodness-of-Fit & Shapiro-Wilk test on per-seed ARI & Validates non-parametric test selection \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
+
+\textbf{Non-Parametric Omnibus Hypothesis Testing:}
+Applying the non-parametric Friedman test across all 12 algorithms and 13 benchmark datasets (3{,}000 total model fits; 30 seeds on $D/N > 20$ cohorts, 10 on others), resolving rank ties via average mid-ranks (\texttt{scipy.stats.rankdata(..., method='average')}) on unrounded mean ARIs, produces:
+\begin{equation}
+ \chi_F^2 = 11.56, \quad p = \TableThreeFriedmanPValue,
+\end{equation}
+placing GAC at an omnibus average rank of $5.62$. When computed directly from 3-decimal rounded summary values, slight rank ties yield $\chi_F^2 = 11.54$ ($p = 0.40$) with a GAC rank of $5.58$. Under either calculation, the omnibus test fails to reject the null hypothesis of equal performance across estimators ($p = \TableThreeFriedmanPValue \gg 0.05$). Looking at global mean ranks, K-Means takes top position ($R = \TableThreeKMeansOverallRank$), followed by Standard Consensus ($R = \TableThreeStdConsOverallRank$), DEC ($R = \TableThreeDecOverallRank$), GAC ($R = \TableThreeIccVTwoOverallRank$, Rank 4), Ward ($R = \TableThreeWardOverallRank$), and CoHiRF ($R = \TableThreeCohirfOverallRank$). The critical difference threshold for post-hoc Nemenyi testing ($\alpha = 0.05$, two-tailed) is $\text{CD} = \TrueNemenyiCD$, linking all 12 pipelines within a single shared equivalence group (Fig.~\ref{fig:exp3_cd_diagram}).
+
+\textbf{High-Dimensional Subgroup Evaluation (Wilcoxon-Holm):}
+Focusing on the exploratory subset of six cohorts with $D/N > 20$ (CNS, Colon, Leukemia, Ovarian, Prostate, SRBCT; $n=6$), GAC ranks first ($R = \TableThreeIccVTwoHighDRank$, subgroup mean $0.217$), followed by K-Means ($R = \TableThreeKMeansHighDRank$), ungated anchor consensus ($R = \TableThreeIccVOneHighDRank$), FCM ($R = \TableThreeFcmHighDRank$), DEC ($R = \TableThreeDecHighDRank$), FastMVC ($R = \TableThreeFastMvcHighDRank$), Ward ($R = \TableThreeWardHighDRank$), Standard Consensus ($R = \TableThreeStdConsHighDRank$), CoHiRF ($R = \TableThreeCohirfHighDRank$), Core-Halo ($R = \TableThreeLiHighDRank$), FCAG ($R = \TableThreeFcagHighDRank$), and Spectral Clustering ($R = \TableThreeSpectralHighDRank$). Nevertheless, paired Wilcoxon signed-rank tests across these six cohorts reveal no statistically significant differences once corrected via Holm-Bonferroni ($p_{\text{adj}} > 0.05$), reflecting the inherently modest statistical power available when $n=6$. Holm-Bonferroni step-down correction is applied to the pre-specified family of 11 pairwise benchmark comparisons between GAC and baseline algorithms in the high-dimensional subgroup evaluation above; exploratory single-contrast hypothesis tests on BGSS gating (Section~\ref{sec:benchmarks_suite}) and the factorial interaction (Section~\ref{sec:exp2_knockout}) are reported uncorrected.
+
+\textbf{Vargha-Delaney $A_{12}$ Effect Sizes:}
+Table~\ref{tab:vargha_delaney} documents Vargha-Delaney $A_{12}$ statistics, quantifying the probability that GAC stochastically outperforms each comparative baseline across the high-dimensional datasets.
+
+\input{gen/table09_vargha_delaney_effect_sizes.tex}
+
+On SRBCT, GAC shows complete stochastic dominance ($A_{12} = 1.000$ across all 10 comparators). On Leukemia, GAC maintains strong superiority ($A_{12} \ge 0.767$ against all baselines). In contrast, on Prostate, K-Means ($A_{12} = 0.070$), Ward ($A_{12} = 0.017$), and FCM ($A_{12} = 0.000$) consistently outperform GAC. On Ovarian, an effect size of $A_{12} \approx 0.467$ indicates near-parity.
+
+\textbf{Seed Stability, Normality Violations, and Discrete Bimodality:}\label{sec:stats_normality}
+Table~\ref{tab:seed_stability} reports distribution profiles, coefficients of variation ($CV = \text{std}/\text{mean}$), Shapiro-Wilk normality tests, and 30-seed discrete bimodality patterns for GAC on the high-dimensional cohorts.
+
+\input{gen/table10_seed_stability_diagnostics.tex}
+
+Shapiro-Wilk tests decisively reject normality across four of the six cohorts ($p < 10^{-4}$ on Colon, Leukemia, Ovarian, and Prostate), highlighting that score distributions violate Gaussian assumptions and justifying the use of non-parametric statistics. This deviation originates in discrete seed bimodality: on Leukemia, 22 of 30 seeds ($73.3\%$) sample informative subspaces that achieve high cluster recovery ($\text{ARI} > 0.50$, median $0.787$), whereas the remaining 8 seeds draw uninformative features and collapse near chance. A similar split occurs on SRBCT, where 21 of 30 seeds ($70.0\%$) exceed $0.50$. In contrast, on the other four cohorts, exactly zero of the 30 seeds surpasses $0.50$.
+
+\clearpage
+\subsection{Operational Parameter Analysis}\label{sec:param_scaling}
+We investigated model behavior across three operational dimensions:
+\begin{enumerate}
+ \item \textbf{Ensemble Size ($M$):} Testing $M \in \{5, 10, 15, 25, 50\}$ across the six high-$D$ cohorts over 10 seeds ($\{42, \dots, 51\}$) shows that mean ARI starts at $0.168\text{--}0.198$ for $M=5$, rises to $0.202\text{--}0.223$ at $M=10$, and levels off for $M \ge 15$ ($M=15$: $0.227$, $M=25$: $0.225$, $M=50$: $0.222$). Thus, modest ensemble sizes ($M \ge 15$) capture the main consensus advantages. On the 30 canonical benchmark seeds ($\{0, \dots, 29\}$), default settings ($M=25, L=40$) yield the reported benchmark mean of $0.217$.
+ \item \textbf{Anchor Budget ($L$):} While increasing landmark count $L$ enriches graph connectivity, solving the anchor Laplacian eigensystem scales cubically ($O(L^3)$). Parameter sweeps over $L \in \{20, 40, 60, 80\}$ reveal essentially flat response surfaces ($\Delta \le 0.003$ for $L \in [20, 80]$ when $M \ge 15$); $L=40$ achieves $0.225 \pm 0.128$ over 10 seeds and $0.217$ across 30 seeds, balancing speed and representation quality.
+ \item \textbf{Power-Law Scaling at Large $N$:} On synthetic scaling cohorts ($N \in [10^4, 10^6]$, Table~\ref{tab:exp5_controlled}), wall-clock time adheres to an empirical power law of $\beta = 0.755 \pm 0.074$ (95\% CI: $[0.648, 0.841]$) for Config A ($M=25, L=40$) and $\beta = 0.873 \pm 0.035$ (95\% CI: $[0.825, 0.916]$) for Config B ($M=15, L=60$). Growth is sub-linear up to $N=10^5$ ($\beta \approx 0.43\text{--}0.55$), becoming steeper past $10^5$ ($\beta \approx 1.09\text{--}1.20$) as memory traffic increases. By circumventing dense $O(N^2)$ storage, bipartite compression scales without issue to one million instances.
+\end{enumerate}
+
+
+\clearpage
+\section{Ablation Study and Modular Decomposition}\label{sec:ablation}
+
+\begin{figure*}[!t]
+\centering
+\subfloat[Ablation Variant ARI Curves\label{fig:exp2_curves}]{%
+ \includegraphics[width=0.48\textwidth]{figures/fig09a_ablation_curves.png}%
+}
+\hfill
+\subfloat[Dual-Regime Ablation Waterfall\label{fig:exp2_waterfall}]{%
+ \includegraphics[width=0.48\textwidth]{figures/fig09b_ablation_waterfall.png}%
+}
+\caption{Component ablation across 6 modular variants (V0 through V5). (a) Recovery curves as distractor dimensions $D_{\text{noise}}$ increase from $0$ to $5{,}000$. (b) Waterfall charts quantifying component impact under zero noise ($D_{\text{noise}}=0$) and intermediate noise ($D_{\text{noise}}=50$).}
+\label{fig:exp2_results}
+\end{figure*}
+
+\subsection{Architectural Knockout Variants}\label{sec:ablation_variants}
+Table~\ref{tab:ablation_spec} defines six knockout variants (V0 through V5) to test each component's role. Fig.~\ref{fig:exp2_curves} traces recovery curves as noise dimensions expand to $D_{\text{noise}}=5{,}000$, with waterfall breakdowns in Fig.~\ref{fig:exp2_waterfall}. Table~\ref{tab:ablation_per_dataset} reports per-dataset scores across the six high-$D$ cohorts over 30 seeds.
+
+\begin{table*}[!t]
+\caption{Ablation Variant Architecture Specification}
+\label{tab:ablation_spec}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Variant} & \textbf{BGSS Gating} & \textbf{Consensus Type} & \textbf{Anchor Graph} & \textbf{Core Cert.} \\
+\midrule
+V0 (Std Cons) & No & \textbf{Yes} (Dense) & No & No \\
+V1 (BGSS+KMeans) & \textbf{Yes} & No (Single Model) & No & No \\
+V2 (BGSS+StdCons) & \textbf{Yes} & \textbf{Yes} (Dense) & No & No \\
+V3 (Anchors Only) & No & \textbf{Yes} & \textbf{Yes} & \textbf{Yes} \\
+V4 (BGSS+RandAnc) & \textbf{Yes} & \textbf{Yes} & \textbf{Yes} & No \\
+V5 (Full GAC Pipeline) & \textbf{Yes} & \textbf{Yes} & \textbf{Yes} & \textbf{Yes} \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
+
+\subsection{Per-Dataset Performance Across High-$D$ Benchmarks}\label{sec:ablation_per_dataset}
+Table~\ref{tab:ablation_per_dataset} details empirical ARI values across variants V0 through V5 across all six high-dimensional ($D/N > 20$) cohorts over 30 independent random seeds.
+
+\input{gen/table11_ablation_variants.tex}
+
+\subsection{Factorial Decomposition}\label{sec:exp2_knockout}
+
+\input{gen/table12_factorial_decomposition.tex}
+
+Table~\ref{tab:factorial} summarizes a $2 \times 2$ comparison of subgroup mean ARI across the six high-dimensional cohorts. Without feature gating, replacing dense consensus ($0.037$) with bipartite consensus ($0.046$) changes ARI by only $+0.009$. With BGSS gating, dense consensus reaches $0.077$ and bipartite consensus $0.217$, an interaction of $V_5 - V_2 = +0.139$ (95\% cohort-clustered bootstrap CI $[+0.007, +0.321]$; Wilcoxon $W = 3.0, p = 0.16, n = 6$), driven by Leukemia ($+0.558$) and SRBCT ($+0.213$).
+
+To separate the effect of multimodality gating from that of feature subsampling, we evaluated matched random gating (the same pool size, $\lfloor \alpha D \rfloor$, drawn at random) over the same 30 seeds. In an earlier draft of this benchmark, the random-gating baseline mistakenly cascaded BGSS filtering inside the randomly drawn feature pool rather than taking the random features unranked; correcting this control arm removed spurious signal inflation on Leukemia and SRBCT, lowering the random bipartite baseline from $0.155$ to $0.047$. Random gating gives $0.046$ under dense consensus and $0.047$ under bipartite consensus with core anchors ($0.053$ with uniform anchors), none materially above ambient consensus. Against these controls, BGSS adds $+0.169$ under bipartite consensus ($V_5$ vs. random; 95\% CI $[+0.036, +0.310]$; positive on all six cohorts, Wilcoxon $W = 0.0, p = 0.031$ uncorrected for the three comparisons, $n = 6$) and $+0.145$ with uniform anchors ($V_4$ vs. random; CI $[+0.006, +0.315]$, $p = 0.31$), but only $+0.031$ under dense consensus ($V_2$ vs. random; CI $[-0.062, +0.149]$, $p = 1.0$). The dense-consensus arm was added post hoc to complete the design. With six cohorts, the smallest attainable two-sided Wilcoxon $p$ is $0.031$, and these tests are not corrected for the three comparisons, so we treat the BGSS effect as suggestive. Most of the $+0.169$ mean gain is concentrated in two cohorts: Leukemia ($+0.398$) and SRBCT ($+0.447$), while the other four cohorts show small differences spanning $+0.004$ to $+0.078$.
+
+On Leukemia, BGSS gating actually hurts dense consensus (V2 vs.\ V0): while ambient dense consensus (V0) achieves a stable $+0.162$ ($29/30$ seeds positive), BGSS dense consensus (V2) drops to $0.042$ because in $23$ of $30$ seeds ($76.7\%$), base K-Means fits latch onto a small cluster ($N = 9\text{--}16$) unrelated to the diagnostic classes, driving ARI below zero (mean $-0.044$ across those 23 seeds). Only $7$ of $30$ seeds ($23.3\%$) align with diagnostic classes (mean ARI $+0.326$, up to $+0.459$). Bipartite anchor consensus with random-subspace ensembling (V5) reduces this collapse rate from $23/30$ ($76.7\%$) to $8/30$ ($26.7\%$), with $22$ of $30$ seeds exceeding $\text{ARI} > 0.50$ (up to $1.000$) and reaching a subgroup mean of $0.600$. Conversely, on Colon and SRBCT, BGSS dense consensus ($V_2$) is competitive or superior against the matched \emph{dense} random arm ($+0.084$ vs. $-0.006$ on Colon, and $+0.333$ vs. $+0.055$ on SRBCT), confirming that the weak overall $V_2$ mean ($0.077$) is driven by the Leukemia collapse rather than a failure of BGSS across all cohorts. Determinacy-based anchors give no measurable benefit ($V_5 - V_4 = +0.019$, CI $[-0.040, +0.082]$, $p = 0.84$). Table~\ref{tab:component_contributions} reports the individual knockout contributions.
+
+\input{gen/table13_component_contributions.tex}
+
+\subsection{High-Determinacy Anchor Selection Null Result}\label{sec:ablation_null}
+A notable empirical finding in Table~\ref{tab:component_contributions} is that filtering anchors by sample determinacy yields no statistically significant advantage over simple uniform random sampling. Full GAC (V5: high-determinacy core landmarks) scores a subgroup mean ARI of $\mathbf{\AblationHighDSubgroupFullIccVTwo}$, whereas V4 (uniform random landmarks without determinacy filtering) reaches $\AblationHighDSubgroupBgssRandomAnchor$. Comparing paired differences across the six cohorts gives:
+\begin{equation}
+\begin{aligned}
+ V_5 - V_4 = +0.019 \quad &(95\%\text{ Cluster Bootstrap CI: } [-0.040, +0.082], \\
+  &\text{Wilcoxon } W=9.0, p=0.84).
+\end{aligned}
+\end{equation}
+Because the 95\% bootstrap confidence interval encompasses zero ($\Delta = +0.019$, 95\% CI $[-0.040, +0.082]$, Wilcoxon $W=9.0, p=0.84$), determinacy screening offers no measurable performance edge over picking landmarks uniformly at random.
+
+To explore other landmark strategies beyond uniform sampling, we benchmarked K-Means centroids and balanced determinacy anchors across all 30 seeds ($\{0, \dots, 29\}$). On the six high-$D$ cohorts, K-Means centroid anchors and balanced determinacy anchors achieve subgroup mean ARIs of $0.124 \pm 0.198$ and $0.119 \pm 0.188$ respectively---noticeably trailing both uniform random observations (V4: $0.198 \pm 0.297$) and core anchors (V5: $0.217 \pm 0.312$). Under extreme noise ($D/N > 20$), Lloyd's iterations settle onto distorted centroids shaped by distractor coordinates, demonstrating that landmark anchors are best sampled directly from real observed points (or high-determinacy subsets) rather than synthesized through distance-based iterative clustering.
+
+\paragraph{Foundational Literature Attribution:}
+In accordance with citation best practices, the original seminal sources for all foundational comparators (MacQueen 1967, Arthur \& Vassilvitskii 2007, Ward 1963, Bezdek 1981, von Luxburg 2007, Breiman 2001, Bengio et al. 2013) are formally compiled in Table~\ref{tab:supp_foundations}.
+
+\input{gen/table14_supplementary_foundations.tex}
+
+\subsection{Unsupervised Feature Saliency and Interpretability Audit}\label{sec:ablation_saliency}
+To evaluate whether the feature dimensions prioritized by BGSS align with biologically verified signal, we examined gene rankings on the Leukemia microarray benchmark ($N=72, D=7{,}129$, Fig.~\ref{fig:bgss_saliency}). Distractor genes center tightly around the unimodal normal expectation ($\mathbb{E}[\hat{b}_d] \approx 0.333$), whereas informative dimensions project into the upper tail ($BC > 5/9 \approx 0.556$). When cross-referenced against the top 50 supervised diagnostic marker genes established for the Leukemia cohort~\cite{golub1999molecular}, the top 1,069 features selected by BGSS ($\alpha = 0.15$) capture \AblationLeukemiaMarkerFiftyCount\ of the 50 markers (\AblationLeukemiaMarkerFiftyFraction\ overlap, Fig.~\ref{fig:bgss_saliency}) purely unsupervised in $O(N \cdot D)$ time. Under random feature selection, drawing 1,069 of 7,129 genes yields an expected overlap of only $1{,}069 \times (50 / 7{,}129) \approx 7.50$ markers ($15.0\%$), confirming strong statistical enrichment under a hypergeometric test ($k=27, n=1{,}069, K=50, N=7{,}129$; $p = 1.38 \times 10^{-10}$). By comparison, selecting the top 1,069 features by sample variance captures only 8 of the 50 markers ($16.0\%$; hypergeometric $p = 0.481$), performing no better than random expectation because uninformative noise coordinates exhibit substantial variance.
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.96\textwidth]{figures/fig10_bgss_interpretability_audit.png}
+\caption{BGSS interpretability audit and diagnostic marker recovery on the Leukemia microarray cohort ($N=72, D=7{,}129$). Demonstrates that unsupervised BGSS captures 27 of the top 50 supervised markers from Golub et al.~\cite{golub1999molecular} ($54.0\%$ vs. $7.50$ [$15.0\%$] expected under random selection; hypergeometric $p = 1.38 \times 10^{-10}$), whereas standard variance filtering captures only 8 of 50 markers ($16.0\%$, hypergeometric $p = 0.481$).}
+\label{fig:bgss_saliency}
+\end{figure*}
+
+
+\section{Discussion}\label{sec:discussion}\label{sec:applications}
+
+\subsection{What the Results Show}\label{sec:disc_results}
+The primary empirical finding of this work is that reproducibility under resampling does not guarantee correctness when $D \gg N$. While controlled simulations with isotropic distractor noise establish that accuracy collapses toward zero under high dimensions (accompanied by a collapse in subsample stability), evidence for stability--accuracy discordance rests on the real biomedical cohorts. There, three of the twelve evaluated methods (FCAG, FCM, FastMVC) exhibit non-degenerate discordance on at least three cohorts. The overall stability--accuracy gap averages $+0.485$ (95\% CI $[+0.379, +0.662]$), whereas column-permuted null stability remains near zero. The geometric diagnostic on Prostate helps explain this breakdown: Ward linkage and K-Means isolate a small group of PCA-space outliers ($N \approx 11$ to $14$), whereas spectral and anchor methods yield balanced partitions aligned with the leading principal component ($r = 0.77\text{--}0.86$) and with total per-sample expression ($r = -0.52\text{--}-0.59$). These partitions achieve high subsample stability because they track a dominant axis of variation in the sample space; however, that axis does not correspond to clinical tumor status.
+
+The GAC case study provides a second, more measured insight into what algorithmic mechanisms recover signal. Bipartite graph compression alone yields only $+0.009$ ($0.037 \to 0.046$), and random feature gating alone achieves comparable baseline performance whether paired with dense consensus ($0.046$) or bipartite consensus ($0.047$). BGSS multimodality gating raises performance substantially in combination with bipartite consensus ($+0.169$ over matched random gating, 95\% CI $[+0.036, +0.310]$, Wilcoxon $p = 0.031$ uncorrected for the three comparisons, $n = 6$), while adding only $+0.031$ under dense consensus (CI $[-0.062, +0.149]$), where the dense arm is confounded by a degenerate Leukemia result (though $V_2$ outperforms the dense random arm on Colon and SRBCT). The benefit we observe thus depends on consensus type. Determinacy-based anchor selection yields no measurable benefit ($\Delta = +0.019$, 95\% CI $[-0.040, +0.082]$). Across 13 multi-domain benchmarks, the twelve clustering methods are statistically indistinguishable (Friedman $p = 0.40, \text{CD} = 4.62$). The performance advantage of GAC is concentrated in Leukemia ($+0.398$) and SRBCT ($+0.447$), where informative coordinates exhibit detectable marginal multimodality, and BGSS recovers 27 of the 50 diagnostic Golub markers ($54.0\%$) without supervision. Where marginal multimodality is absent, as in Prostate and CNS, GAC exhibits the same stability--accuracy discordance as the baseline methods.
+
+\subsection{Recommendations for Practice}\label{sec:disc_recommendations}
+Based on our empirical findings, we offer six concrete recommendations for high-dimensional clustering:
+\begin{enumerate}
+    \item \textbf{Report null-control stability alongside observed stability.} Permuting each feature column independently across samples establishes a baseline floor for the stability produced by unstructured noise alone. The difference between real and null stability is far more informative than raw stability in isolation.
+    \item \textbf{Audit partition degeneracy.} Researchers should routinely report the smallest-cluster size fraction and the proportion of subsamples where it falls below a reasonable threshold (e.g., $5\%$). Trivial partitions achieve elevated stability by construction, as demonstrated by the near-constant reference control (subsample stability $0.63\text{--}0.80$).
+    \item \textbf{Validate externally and inspect what drives the partition.} Wherever independent labels exist, cluster assignments should be compared against them. In exploratory analyses without ground truth, practitioners should examine whether cluster boundaries align with PCA outliers, dominant principal components, total library size, or technical batch covariates before advancing biological interpretations.
+    \item \textbf{Use cohort-level inference.} Different random seeds within a single dataset do not provide independent statistical evidence. Confidence intervals and hypothesis tests should resample across cohorts, as done here with the dataset-clustered bootstrap ($B = 10{,}000$).
+    \item \textbf{Check marginal multimodality before using univariate gating.} Practitioners should inspect the empirical distribution of bimodality coefficients prior to filtering. If the distribution centers near the unimodal normal expectation ($\mathbb{E}[\hat{b}_d] \approx 0.333$) with no discernible upper tail, BGSS is unlikely to provide benefit and should not be expected to rescue cluster recovery.
+    \item \textbf{Treat seed sensitivity as an informative result.} On Leukemia, 8 of 30 random seeds collapse toward chance despite 22 of 30 exceeding $\text{ARI} > 0.50$. Reporting only aggregate means obscures a bimodal outcome distribution, whereas reporting full seed distributions reveals operational fragility.
+\end{enumerate}
+
+\subsection{Limitations}\label{sec:limitations}\label{sec:limits_modes}
+We note several methodological limitations:
+\begin{itemize}
+    \item \textbf{Few cohorts and uncorrected tests.} High-dimensional inference rests on $n = 6$ biomedical cohorts. This sample size restricts statistical power: the $+0.169$ gain rests primarily on two cohorts (Leukemia at $+0.398$ and SRBCT at $+0.447$, versus $+0.004$ to $+0.078$ on the other four), and pairwise Wilcoxon comparisons are uncorrected across the three gating tests ($p = 0.031$ uncorrected, $n=6$), rendering the observed gain and interaction ($p \approx 0.16$) suggestive rather than definitive.
+\item \textbf{Reference labels are a partial standard.} Low ARI against binary tumor status indicates that partitions do not reconstruct clinical diagnostic classes. However, it does not prove that partitions are meaningless; the partitions observed on Prostate may capture genuine, unannotated biological or technical variation. Because benchmark archives lack batch or auxiliary clinical annotations, the precise origin of these partitions remains uncharacterized.
+    \item \textbf{Fixed defaults and known $K$.} All methods were benchmarked under standardized default hyperparameter configurations without per-dataset tuning, and the true cluster count $K$ was provided to every algorithm. Optimizing hyperparameters (e.g., for spectral clustering or DEC) might yield higher absolute performance, and estimating unknown $K$ under noise would likely widen the discordance gaps observed.
+    \item \textbf{Scope of the stability definition.} This study focuses specifically on subsample stability evaluated across overlapping sample pairs. Seed stability on unperturbed full data is uninformative for deterministic algorithms, and alternative definitions of stability (e.g., perturbation of feature space or bootstrap resampling) may behave differently.
+    \item \textbf{Univariate gating constraints.} BGSS cannot detect non-linear dependencies (yielding $\text{ARI} = 0.010 \pm 0.008$ on the Madelon XOR parity benchmark), is distorted by severe zero inflation above approximately $90\%$ dropout (PBMC68k, 20 Newsgroups), and loses screening sensitivity when numerous classes blend into unimodal marginal distributions ($K \ge 16$). Expanding the anchor budget to $L = \max(40, 10K)$ altered ARI by only $+0.009$, confirming that coordinate blending rather than anchor count is the primary constraint.
+    \item \textbf{Scalability evaluation is synthetic.} Large-scale empirical scalability tests were conducted on synthetic Gaussian mixtures ($D = 100$). The fitted power-law exponents ($\beta = 0.755$ and $0.873$) reflect sub-linear growth but not strict $O(N)$ execution in hardware, and the $99.6\%$ reduction applies to consensus-graph memory rather than total process memory (which drops by $97.4\%$ at $N = 10{,}000$).
+    \item \textbf{Pre-specification timeline.} The overarching analysis plan and decision rules were pre-specified prior to executing benchmark subsampling runs, but Rule~(i') was formally introduced subsequently (see Section~\ref{sec:setup_params}). Both unconstrained Rule~(i) and non-degenerate Rule~(i') outcomes are reported so readers can assess their impact directly.
+\end{itemize}
+
+\subsection{Future Work}\label{sec:disc_future}\label{sec:limits_future}
+Future priorities include validating stability--accuracy discordance on larger, multi-center high-dimensional cohorts equipped with comprehensive batch and clinical covariate annotations, directly determining whether discordant clusters reflect technical artifacts or latent sub-phenotypes. From an algorithmic standpoint, natural extensions include kernelized or mutual-information coordinate gates to accommodate non-linear feature interactions, two-part hurdle models to manage extreme zero inflation in single-cell transcriptomics, split-conformal prediction sets to quantify inductive assignment uncertainty, and consensus frameworks that calibrate stability against permuted-null controls by default.
+
+\section{Conclusion}\label{sec:conclusion}
+
+This paper asked whether reproducibility under resampling can be trusted as evidence that a clustering is correct when the number of features far exceeds the number of samples. While simulations demonstrate accuracy collapse under high-dimensional isotropic noise, evidence for stability--accuracy discordance rests on the real biomedical cohorts. On six biomedical cohorts ($D/N > 20$), several methods repeatedly converge onto the same partitions under resampling while agreement with reference labels stays near chance. Across non-degenerate partitions the stability--accuracy gap averages $+0.485$ (95\% CI $[+0.379, +0.662]$; unconstrained $+0.464$, $[+0.363, +0.607]$), while column-permuted null stability remains near zero. Three of twelve methods (FCAG, FCM, FastMVC) meet our non-degenerate discordance criterion on at least three cohorts. On Prostate, the diagnostic analysis shows that these partitions follow a dominant axis of variation in the data (outliers, the first principal component, total expression) rather than tumor status.
+
+The Gated Anchor Consensus (GAC) case study shows which design choices help and which do not. Neither bipartite graph compression alone ($0.037 \to 0.046$) nor random feature gating ($0.046$ dense, $0.047$ bipartite) improves materially over ambient consensus. Bimodality-Gated Subspace Selection adds $+0.169$ over matched random gating under bipartite consensus (95\% CI $[+0.036, +0.310]$, Wilcoxon $p = 0.031$ uncorrected for the three comparisons, $n = 6$) but only $+0.031$ under dense consensus (CI $[-0.062, +0.149]$), where the dense arm is confounded by a degenerate Leukemia result; the observed benefit thus depends on consensus type. Determinacy-based anchor selection gives no measurable benefit ($\Delta = +0.019$, 95\% CI $[-0.040, +0.082]$). The gains concentrate in Leukemia ($+0.398$) and SRBCT ($+0.447$), where informative coordinates are detectably multimodal, while the other four cohorts show smaller changes ($+0.004$ to $+0.078$). Across 13 benchmarks ($3{,}000$ model fits), the twelve methods are statistically indistinguishable (Friedman $p = 0.40$), and GAC fails where marginal multimodality is absent (Prostate, CNS), where structure is non-linear (Madelon), or where data are sparse or have many classes. Bipartite compression reduces consensus-graph memory by $99.6\%$ at $N = 10^4$, but we do not claim linear runtime scaling.
+
+Three practical implications follow. Stability should be reported together with null-control stability and a degeneracy audit. Partitions should be validated externally and inspected for technical drivers before biological interpretation. Univariate feature gating should be used only after checking that the data show multimodal marginals. Limitations include the small number of high-dimensional cohorts, partial reference labels, default hyperparameters with known $K$, and the absence of batch or clinical annotations. Future work should test discordance on larger annotated cohorts, add non-linear gates and zero-inflation models, and build null calibration into standard stability reporting.
+
+\backmatter
+
+\section*{Declarations}
+
+\textbf{Funding}: No external funding was received for this study.
+
+\textbf{Competing Interests}: The authors declare that they have no competing financial or non-financial interests that could have appeared to influence the work reported in this paper.
+
+\textbf{Author Contributions}: All authors contributed to the study conception and design. Kalyan Kumar Das and Akash Kundu developed the experimental codebase, executed the computational simulations and benchmark evaluations, and drafted the initial manuscript. Anirban Mukhopadhyay provided methodological guidance, oversaw the statistical analysis and validation protocols, and critically reviewed and revised the manuscript. All authors read and approved the final manuscript.
+
+\textbf{Data availability}: All 13 benchmark datasets analyzed in this study are publicly accessible from their original upstream open-access repositories:
+\begin{itemize}
+ \item \textbf{Biomedical and Tabular Microarrays:} CNS (OpenML ID: 45086, \url{https://www.openml.org/d/45086}), Colon (OpenML ID: 45087, \url{https://www.openml.org/d/45087}), Leukemia (OpenML ID: 1104, \url{https://www.openml.org/d/1104}), Ovarian (OpenML ID: 45098, \url{https://www.openml.org/d/45098}), Prostate (OpenML ID: 45099, \url{https://www.openml.org/d/45099}), SRBCT (OpenML ID: 45101, \url{https://www.openml.org/d/45101}), Sonar (OpenML ID: 40, \url{https://www.openml.org/d/40}), Madelon (OpenML ID: 1485, \url{https://www.openml.org/d/1485}), and Isolet (OpenML ID: 300, \url{https://www.openml.org/d/300}; UCI ID: 54, \url{https://archive.ics.uci.edu/dataset/54/isolet}).
+ \item \textbf{Text Benchmark:} 20 Newsgroups (CMU 20 Newsgroups corpus: \url{http://qwone.com/~jason/20Newsgroups/}; accessible via \texttt{sklearn.datasets.fetch\_20newsgroups}).
+ \item \textbf{Hyperspectral Benchmark:} Indian Pines (Purdue University LARS / UPV/EHU repository: \url{https://www.ehu.eus/ccwintco/index.php/Hyperspectral_Remote_Sensing_Scenes}).
+ \item \textbf{Facial Image Benchmark:} Extended Yale B (UCSD Computer Vision archive: \url{http://vision.ucsd.edu/extyaleb/CroppedYaleB.zip}; Academic Torrents persistent archive: \url{https://academictorrents.com/details/aad8bf8e6ee5d8a3bf46c7ab5adfacdd8ad36247}).
+ \item \textbf{Single-Cell Genomics Benchmark:} PBMC68k-reduced (10x Genomics 68k PBMCs primary repository: \url{https://www.10xgenomics.com/datasets/fresh-68-k-pbm-cs-donor-a-1-standard-1-1-0}; distributed in Scanpy: \url{https://scanpy.readthedocs.io/en/stable/generated/scanpy.datasets.pbmc68k_reduced.html}).
+\end{itemize}
+Automated download and caching routines for all 13 cohorts are provided via \texttt{scripts/fetch\_data.py}.
+
+\textbf{Code availability}: The complete source code, experimental pipelines, configuration files, and raw result logs are available at \url{https://github.com/AkashKundu114/icc-clustering} and permanently archived on Zenodo at \url{https://doi.org/10.5281/zenodo.23852735}.
+
+\bibliography{references}
+
+\end{document}

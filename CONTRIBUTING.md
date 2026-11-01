@@ -14,27 +14,27 @@ We welcome contributions ranging from bug fixes and documentation improvements t
 5. [Adding New Baselines & Datasets](#adding-new-baselines--datasets)
 6. [Code Style & Quality Standards](#code-style--quality-standards)
 7. [Submitting a Pull Request](#submitting-a-pull-request)
-8. [Reproducibility & Verification](#reproducibility--verification)
+8. [Reproducibility & Manuscript Artifacts](#reproducibility--manuscript-artifacts)
 
 ---
 
 ## Code of Conduct
 
-All contributors and participants are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). Please report any violations or concerns to `akashkundu1152@gmail.com`.
+All contributors and participants are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). Please report any violations or concerns to `akashkundu1152@gmail.com` or `akashkundu1152@gmail.com`.
 
 ---
 
 ## Getting Started & Development Setup
 
 ### Prerequisites
-* Python 3.10+ (tested on Python 3.10, 3.11, 3.12, 3.13, and 3.14)
+* Python 3.10+ (tested on Python 3.10, 3.11, 3.12, and 3.14)
 * Git
 
 ### Step-by-Step Environment Setup
 1. **Fork and clone the repository**:
    ```bash
-   git clone https://github.com/your-username/icc-clustering.git
-   cd icc-clustering
+   git clone https://github.com/your-username/inductive-consensus-clustering.git
+   cd inductive-consensus-clustering
    ```
 
 2. **Create and activate a clean virtual environment**:
@@ -76,7 +76,7 @@ All contributors and participants are expected to adhere to our [Code of Conduct
    ```
 
 2. **Commit Conventions**:
-   Write clear, imperative commit messages (e.g., `Add sparse matrix support for BGSS feature gating`, `Fix off-by-one indexing in bipartite anchor graph`).
+   Write clear, imperative commit messages (e.g., `Add sparse matrix support for VSSG feature gating`, `Fix off-by-one indexing in bipartite anchor graph`).
 
 ---
 
@@ -84,25 +84,32 @@ All contributors and participants are expected to adhere to our [Code of Conduct
 
 Every contribution must pass the automated test harness.
 
-* **Run all tests (84 passing)**:
-   ```bash
-   python -m pytest tests -q
-   ```
+* **Run all tests (94 passing)**:
+  ```bash
+  python -m pytest tests -q
+  ```
 
-* **Verify repository and scientific consistency**:
-   ```bash
-   python tools/check_consistency.py
-   ```
+* **Verify bibliography against live APIs**:
+  ```bash
+  make refs-check
+  # or: python scripts/verify_refs.py refs.bib --out results/refs_report.csv --manual refs_manual.csv
+  ```
 
 * **Run tests with coverage tracking**:
-   ```bash
-   python -m pytest tests --cov=src/icc --cov-report=term-missing
-   ```
+  ```bash
+  python -m pytest tests --cov=src/icc --cov-report=term-missing
+  ```
 
 * **Run the quick interactive demo**:
-   ```bash
-   python demo.py
-   ```
+  ```bash
+  python demo.py
+  ```
+
+* **Verify numerical macro consistency with results registry**:
+  ```bash
+  python tests/test_macro_consistency.py
+  python tests/test_pdf_allowlist.py
+  ```
 
 ---
 
@@ -145,15 +152,15 @@ Every contribution must pass the automated test harness.
 We use [Ruff](https://github.com/astral-sh/ruff) for fast, unified linting and formatting.
 
 * **Check linting and formatting**:
-   ```bash
-   ruff check .
-   ```
+  ```bash
+  ruff check .
+  ```
 
 * **Automatically apply safe fixes**:
-   ```bash
-   ruff check --fix .
-   ruff format .
-   ```
+  ```bash
+  ruff check --fix .
+  ruff format .
+  ```
 
 ---
 
@@ -167,20 +174,15 @@ Before opening a pull request, ensure:
 
 ---
 
-## Reproducibility & Verification
+## Reproducibility & Manuscript Artifacts
 
-* Verify complete scientific invariant and dataset integrity:
-   ```bash
-   python tools/check_consistency.py
-   ```
-* Run fast smoke reproduction suite (< 3s):
-   ```bash
-   python scripts/reproduce.py --scope smoke
-   ```
-* Regenerate paper LaTeX tables (~2s):
-   ```bash
-   python scripts/reproduce.py --scope tables
-   ```
-* Consult the [Peer Reviewer & Reproducibility Guide](docs/REPRODUCIBILITY.md) for full traceability across Tables 1--16 and Figures 1--9.
+* If changes affect figures or benchmark CSVs, regenerate and synchronize figure assets:
+  ```bash
+  python scripts/sync_figures.py
+  ```
+* Verify and synchronize single source of truth macros:
+  ```bash
+  python scripts/make_numbers.py
+  ```
 
 Thank you for helping push the frontiers of robust, scalable consensus clustering!

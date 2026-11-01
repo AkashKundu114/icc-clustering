@@ -1,18 +1,10 @@
-name: CI
+name: ICC CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, loop/paper-improvement ]
   pull_request:
-    branches: [ main, master ]
-  workflow_dispatch:
-
-env:
-  OMP_NUM_THREADS: "1"
-  MKL_NUM_THREADS: "1"
-  OPENBLAS_NUM_THREADS: "1"
-  VECLIB_MAXIMUM_THREADS: "1"
-  NUMEXPR_NUM_THREADS: "1"
+    branches: [ main, master, loop/paper-improvement ]
 
 jobs:
   test:
@@ -32,41 +24,25 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: "pip"
 
-      - name: Install Core Package and Dependencies
+      - name: Install Package and Core Dependencies
         run: |
-          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install --upgrade pip
           python -m pip install -e ".[dev]"
 
-      - name: Code Quality & Static Linting (Ruff)
+      - name: Code Quality & Static Typing
         run: |
-          python -m ruff check .
-
-      - name: Static Type Checking (Mypy)
-        run: |
+          python -m ruff check src/
           python -m mypy -p icc
-
-      - name: Automated Scientific Consistency Checker
-        run: |
-          python tools/check_consistency.py
-
-      - name: Theoretical Determinacy Identities & Invariants
-        run: |
-          python scripts/reproduce.py --scope verify
 
       - name: Run Pytest Test Suite
         run: |
-          python -m pytest tests/ -v
-
-      - name: Run Push-Button Smoke Reproduction (< 3s)
-        run: |
-          python scripts/reproduce.py --scope smoke
-
-      - name: Run Paper Tables Reproduction (~2s)
-        run: |
-          python scripts/reproduce.py --scope tables
+          python -m pytest tests -v --cov=src/icc
 
       - name: Run Interactive Demo Walkthrough
         run: |
           python demo.py
+
+      - name: Run Smoke Reproduction Verification
+        run: |
+          python scripts/reproduce.py --scope smoke

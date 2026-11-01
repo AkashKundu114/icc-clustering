@@ -301,7 +301,7 @@ def plot_generalization(df):
     ax1.plot(df["d_noise"], df["mean_li2019_50"], marker="^", color="#ff7f0e",
              linewidth=2.0, markersize=7, label="Li et al. 2019 Determinacy Core (50%)")
     ax1.plot(df["d_noise"], df["mean_icc_50"], marker="d", color="#2ca02c",
-             linewidth=2.5, markersize=8, label="ICC-v1 Calibrated Core (50%) [Ours]")
+             linewidth=2.5, markersize=8, label="Calibrated Core (50%)")
 
     ax1.set_title("Out-of-Sample Generalization on Held-Out Test Set (20%)", fontsize=12, fontweight="bold")
     ax1.set_xlabel("Noise dimensions ($D_{noise}$)", fontsize=11)
@@ -345,7 +345,7 @@ def plot_generalization(df):
         sax1.plot(df["d_noise"], df["li_test_nmi"], marker="^", color="#ff7f0e",
                   linewidth=2.0, markersize=7, label="Li et al. (2019) Core (50%)")
         sax1.plot(df["d_noise"], df["test_nmi"], marker="d", color="#2ca02c",
-                  linewidth=2.5, markersize=8, label="ICC-v1 Core (50%) [Ours]")
+                  linewidth=2.5, markersize=8, label="Calibrated Core (50%)")
 
         sax1.set_title("Held-Out Test NMI Across Noise Dimensions", fontsize=12, fontweight="bold")
         sax1.set_xlabel("Noise dimensions ($D_{noise}$)", fontsize=11)
@@ -360,7 +360,7 @@ def plot_generalization(df):
         sax2.plot(df["d_noise"], df["li_test_ami"], marker="^", color="#ff7f0e",
                   linewidth=2.0, markersize=7, label="Li et al. (2019) Core (50%)")
         sax2.plot(df["d_noise"], df["test_ami"], marker="d", color="#2ca02c",
-                  linewidth=2.5, markersize=8, label="ICC-v1 Core (50%) [Ours]")
+                  linewidth=2.5, markersize=8, label="Calibrated Core (50%)")
 
         sax2.set_title("Held-Out Test AMI Across Noise Dimensions", fontsize=12, fontweight="bold")
         sax2.set_xlabel("Noise dimensions ($D_{noise}$)", fontsize=11)

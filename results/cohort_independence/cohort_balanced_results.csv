@@ -1,0 +1,37 @@
+model,mean,std,regime,n_eval_units
+FCM,0.1017389334441018,0.12761316285744012,1. Raw Unadjusted (21 Datasets),21
+ICC_v1,0.14471305393743306,0.16777813960662066,1. Raw Unadjusted (21 Datasets),21
+ICC_v2_adaptive,0.14938823330485324,0.20639037752042075,1. Raw Unadjusted (21 Datasets),21
+ICC_v2_legacy,0.1491220080571362,0.16635611219505747,1. Raw Unadjusted (21 Datasets),21
+K-Means,0.13349531870717382,0.15778950653021886,1. Raw Unadjusted (21 Datasets),21
+Li_et_al_2019,0.14915972772576583,0.18046107900414743,1. Raw Unadjusted (21 Datasets),21
+Spectral,0.12594171332995818,0.171728980741711,1. Raw Unadjusted (21 Datasets),21
+Standard_Consensus,0.16016655597308968,0.21782842518666035,1. Raw Unadjusted (21 Datasets),21
+Ward,0.15836765716037388,0.21000858619055845,1. Raw Unadjusted (21 Datasets),21
+FCM,0.0763218345614194,0.1058898239567473,2. Claimed Biological Subset (10 Datasets),10
+ICC_v1,0.10805486644513487,0.16798143628020104,2. Claimed Biological Subset (10 Datasets),10
+ICC_v2_adaptive,0.20474644946319062,0.27147577916920435,2. Claimed Biological Subset (10 Datasets),10
+ICC_v2_legacy,0.16630152421352046,0.2074827715480435,2. Claimed Biological Subset (10 Datasets),10
+K-Means,0.06635213274138471,0.08853912761013215,2. Claimed Biological Subset (10 Datasets),10
+Li_et_al_2019,0.0964056430545445,0.16278457101251578,2. Claimed Biological Subset (10 Datasets),10
+Spectral,0.038194853494521584,0.08923455080069578,2. Claimed Biological Subset (10 Datasets),10
+Standard_Consensus,0.12158012523897743,0.2510724516865459,2. Claimed Biological Subset (10 Datasets),10
+Ward,0.09712175068482706,0.20101389463131314,2. Claimed Biological Subset (10 Datasets),10
+FCM,0.048740128887145164,0.04722151842159657,3. Confirmed Category A Core Oncology (6 Cohorts),6
+ICC_v1,0.05216070127921652,0.08462842184380658,3. Confirmed Category A Core Oncology (6 Cohorts),6
+ICC_v2_adaptive,0.24571219216867565,0.35010946056267045,3. Confirmed Category A Core Oncology (6 Cohorts),6
+ICC_v2_legacy,0.17266376691086238,0.24517047300469016,3. Confirmed Category A Core Oncology (6 Cohorts),6
+K-Means,0.04679265595795298,0.057403433374023066,3. Confirmed Category A Core Oncology (6 Cohorts),6
+Li_et_al_2019,0.04428906171414898,0.07326787157274955,3. Confirmed Category A Core Oncology (6 Cohorts),6
+Spectral,0.034496167051176106,0.06243918321051897,3. Confirmed Category A Core Oncology (6 Cohorts),6
+Standard_Consensus,0.039556664014422836,0.07122559903452534,3. Confirmed Category A Core Oncology (6 Cohorts),6
+Ward,0.0316469347756572,0.05312930928549843,3. Confirmed Category A Core Oncology (6 Cohorts),6
+FCM,0.09094732613259766,0.1197011236242865,4. Cohort-Balanced True Oncology (7 Independent Cohorts),7
+ICC_v1,0.11848043839530512,0.19171974564758343,4. Cohort-Balanced True Oncology (7 Independent Cohorts),7
+ICC_v2_adaptive,0.24365822078484092,0.319650945410807,4. Cohort-Balanced True Oncology (7 Independent Cohorts),7
+ICC_v2_legacy,0.20101787295920906,0.2360469331927992,4. Cohort-Balanced True Oncology (7 Independent Cohorts),7
+K-Means,0.06968165380314074,0.08008311531842396,4. Cohort-Balanced True Oncology (7 Independent Cohorts),7
+Li_et_al_2019,0.11069688986701512,0.18799862140593385,4. Cohort-Balanced True Oncology (7 Independent Cohorts),7
+Spectral,0.02061555610308772,0.06780542644490901,4. Cohort-Balanced True Oncology (7 Independent Cohorts),7
+Standard_Consensus,0.14902807424802947,0.296842549580185,4. Cohort-Balanced True Oncology (7 Independent Cohorts),7
+Ward,0.1194019637426016,0.23718955573665804,4. Cohort-Balanced True Oncology (7 Independent Cohorts),7

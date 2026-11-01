@@ -1,170 +1,91 @@
-# ICC Utility, Benchmarking & Verification Scripts
+# Scripts Directory Catalog
 
-This directory contains standalone execution scripts, replication runners, mathematical verification suites, and performance profiling tools for the Invariant Core Consensus (ICC-v2) clustering framework.
+**Repository:** Feature-Gated Bipartite Graph Ensembles (`icc`)  
+**Paper Title:** Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes  
+**Target Venue:** Springer Nature (*Data Mining and Knowledge Discovery* / DAMI)  
+**Release Version:** v2.2.0  
 
----
-
-## Script Catalog & Execution Guide
-
-### 1. Dataset Management
-
-#### [`download_data.py`](file:///D:/icc-clustering/scripts/download_data.py) *(formerly `fetch_data.py`)*
-Downloads, unpacks, and validates all 13 canonical benchmark datasets across genomics, biomedical, text, audio, image, hyperspectral, and single-cell domains. Verifies sample count $N$, feature dimension $D$, cluster count $K$, and absence of NaNs.
-
-- **Parameters:**
-  - `--dataset <name>`: Download/validate a single dataset by identifier (e.g., `colon`, `leukemia`, `isolet`).
-  - `--summary`: Display tabular overview of all registered datasets without loading arrays into memory.
-- **Outputs:** Cached datasets in `data/` and `experiments/exp3_real_world_benchmarks/data/cache/`.
-- **Usage:**
-  ```powershell
-  python scripts/download_data.py --summary
-  python scripts/download_data.py --dataset leukemia
-  ```
-  *(Note: [`fetch_data.py`](file:///D:/icc-clustering/scripts/fetch_data.py) is retained as a backward-compatible wrapper).*
+This directory contains the production-grade research reproduction scripts for peer reviewers, reproducibility auditors, and researchers. All ad-hoc, temporary, or experimental prototyping scripts have been purged to present a clean, maintainable, and audit-ready research software repository.
 
 ---
 
-### 2. Performance & Scaling Benchmarks
+## Quickstart Reproduction Guide
 
-#### [`benchmark_scaling.py`](file:///D:/icc-clustering/scripts/benchmark_scaling.py) *(formerly `rerun_table4_timing.py`)*
-Measures empirical sample complexity scaling and peak heap memory consumption of ICC-v2 on an idle system across large sample sizes $N \in \{5000, 6000, 8000, 10000\}$ with feature dimension $D=200$ and $K=3$.
+Reviewers can verify all empirical results, theoretical propositions, and manuscript artifacts using the central reproduction CLI:
 
-- **Algorithmic Rationale:** Validates the theoretical $O(N \cdot L)$ time and memory scaling of the anchor bipartite graph compared to the $O(N^2)$ scaling of dense co-association consensus.
-- **Parameters:**
-  - `--n-values`: List of sample sizes $N$ to benchmark (default: `5000 6000 8000 10000`).
-  - `--seeds`: Random seeds for data generation (default: `42 101 202 303 404`).
-  - `--profile-n`: Target $N$ for detailed `cProfile` function hotspot inspection (default: `8000`).
-- **Outputs:**
-  - `experiments/exp4_scalability_and_sensitivity/data/exp4_sample_scaling_results.csv`
-  - `experiments/exp4_scalability_and_sensitivity/data/timing_rerun_environment_log.json`
-  - `experiments/exp4_scalability_and_sensitivity/data/profiler_n8000.txt`
-- **Usage:**
-  ```powershell
-  python scripts/benchmark_scaling.py
-  ```
-  *(Note: [`rerun_table4_timing.py`](file:///D:/icc-clustering/scripts/rerun_table4_timing.py) is retained as a backward-compatible wrapper).*
+```powershell
+# 1. Fast smoke test across synthetic and real benchmark datasets (~2s)
+python scripts/reproduce.py --scope smoke
 
-#### [`benchmark_latency.py`](file:///D:/icc-clustering/scripts/benchmark_latency.py) *(formerly `measure_query_latency.py`)*
-Evaluates closed-form out-of-sample inductive query prediction latency (ms per query) across 6 real-world benchmark cohorts (CNS, Colon, Leukemia, Ovarian, SRBCT, ISOLET).
+# 2. Complete mathematical proofs and 19-point numerical integrity verification (~5s)
+python scripts/reproduce.py --scope verify
 
-- **Algorithmic Rationale:** Demonstrates that projecting a novel sample onto geometry-calibrated anchor centroids runs in $O(K \cdot |\mathcal{S}|)$ time without retraining, achieving sub-millisecond query latency ($< 0.01$ ms/query).
-- **Parameters:**
-  - `--datasets`: List of cohorts to measure (default: `cns colon leukemia ovarian srbct isolet`).
-  - `--repeats`: Repetition count for wall-clock averaging (default: `50`).
-  - `--output-json`: Destination JSON file path (default: `results/query_latency.json`).
-- **Outputs:** `results/query_latency.json`
-- **Usage:**
-  ```powershell
-  python scripts/benchmark_latency.py --repeats 50
-  ```
-  *(Note: [`measure_query_latency.py`](file:///D:/icc-clustering/scripts/measure_query_latency.py) is retained as a backward-compatible wrapper).*
+# 3. Regenerate all 21 LaTeX tables directly from empirical result registries (~5s)
+python scripts/reproduce.py --scope tables
+
+# 4. Synchronize and render all high-resolution figures (~10s)
+python scripts/reproduce.py --scope figures
+
+# 5. Run the complete reproduction pipeline end-to-end
+python scripts/reproduce.py --scope full
+```
 
 ---
 
-### 3. Real-World Replication & Stability Audits
+## Retained Script Catalog
 
-#### [`reproduce_stability.py`](file:///D:/icc-clustering/scripts/reproduce_stability.py) *(formerly `run_real_data_stability.py`)*
-Executes the empirical stability-accuracy analysis across 13 benchmark datasets and 12 clustering algorithms to audit the "stability-accuracy trap".
+The canonical scripts in this directory are organized into functional modules:
 
-- **Mathematical Rationale:**
-  - Evaluates mean ground-truth accuracy: $\text{Mean ARI} = \frac{1}{S} \sum_s \text{ARI}(y_{\text{pred}}^{(s)}, y_{\text{true}})$
-  - Evaluates pairwise partition stability across seeds: $\text{Stability} = \frac{2}{S(S-1)} \sum_{i < j} \text{ARI}(y_{\text{pred}}^{(i)}, y_{\text{pred}}^{(j)})$
-  - Measures the stability gap: $\Delta = \text{Stability} - \text{Accuracy}$
-- **Parameters:**
-  - `--skip-dec`: Skip Deep Embedded Clustering to reduce execution time.
-  - `--only-dataset <name>`: Restrict audit to a single dataset (e.g., `colon`).
-  - `--max-seeds <int>`: Cap seeds per dataset for fast smoke testing.
-- **Outputs:**
-  - `results/stability/real_data_stability_summary.csv`
-  - `results/stability/labels/*.npy`
-- **Usage:**
-  ```powershell
-  python scripts/reproduce_stability.py --skip-dec
-  python scripts/reproduce_stability.py --only-dataset leukemia
-  ```
-  *(Note: [`run_real_data_stability.py`](file:///D:/icc-clustering/scripts/run_real_data_stability.py) is retained as a backward-compatible wrapper).*
+### 1. Central Reproduction & Data Ingestion
+- [`reproduce.py`](reproduce.py): Unified reproduction CLI supporting `--scope smoke`, `verify`, `tables`, `figures`, and `full`.
+- [`fetch_data.py`](fetch_data.py): Downloads, caches, and verifies the dimensional integrity ($N, D, K$) of all 13 benchmark datasets.
+- [`sync_figures.py`](sync_figures.py): Synchronizes and standardizes figure artifacts across manuscript directories (`paper/`, `springer_manuscript/`).
+- [`rename_figs_and_tables.py`](rename_figs_and_tables.py): Enforces consistent figure and table filenames matching paper numbering.
 
-#### [`reproduce.py`](file:///D:/icc-clustering/scripts/reproduce.py)
-Master experiment orchestrator for automated end-to-end replication of manuscript findings across synthetic noise regimes and real benchmarks.
+### 2. Manuscript Tables, Numbers & Statistics
+- [`make_tables.py`](make_tables.py): Programmatically generates all LaTeX tables (Tables 1–21) from frozen result stores.
+- [`make_stats.py`](make_stats.py): Computes omnibus statistical significance tests (Friedman $\chi^2$, Nemenyi critical differences, Wilcoxon signed-rank tests) and writes `results/stats.json`.
+- [`make_numbers.py`](make_numbers.py): Compiles quantitative macros to `paper/numbers.tex`, guaranteeing zero hand-coded statistics in prose.
+- [`make_stability_outputs.py`](make_stability_outputs.py): Aggregates cluster stability metrics and generates stability tables.
+- [`export_stats_to_passf.py`](export_stats_to_passf.py): Exports frozen statistical registries across evaluation passes.
 
-- **Usage:**
-  ```powershell
-  python scripts/reproduce.py --help
-  ```
+### 3. Mathematical & Theoretical Verifications
+- [`verify_prop1.py`](verify_prop1.py): Numerical quadrature and root-finding validating the Proposition 1 separation boundary ($\Delta / \sigma_0 \ge 1.854$).
+- [`verify_determinacy_identity.py`](verify_determinacy_identity.py): Validates Proposition 2 contingency tensor determinacy to machine precision ($< 10^{-14}$).
+- [`verify_bc.py`](verify_bc.py): Analytical derivation and empirical validation of Sarle's Bimodality Coefficient unimodal and bimodal bounds ($BC = 5/9 \approx 0.556$).
+- [`verify_bc_simulation.py`](verify_bc_simulation.py): Monte Carlo simulation auditing finite-sample statistical power and noise sensitivity of Sarle's BC.
+- [`check_numbers.py`](check_numbers.py): 19-point automated numerical integrity audit verifying that compiled PDF statistics match frozen empirical registries.
+- [`verify_refs.py`](verify_refs.py): Automated CrossRef and arXiv bibliographic API verification ensuring citation validity.
 
----
+### 4. Empirical Benchmarks & Experiments
+- [`run_fair_baselines.py`](run_fair_baselines.py): Evaluates feature selection baselines (Variance Filter, Truncated SVD, Laplacian Score, Sparse K-Means) against ICC-v2.
+- [`run_high_d_ablation_2x2.py`](run_high_d_ablation_2x2.py): Executes the $2 \times 2$ factorial ablation cross across high-dimensional genomics cohorts over 10 random seeds.
+- [`run_inductive_direct.py`](run_inductive_direct.py): Evaluates out-of-sample inductive cluster assignment across benchmark datasets and stratified splits.
+- [`run_real_data_stability.py`](run_real_data_stability.py): Evaluates partition stability under bootstrap and subsample perturbations across real-world datasets.
+- [`run_clean_scaling_benchmark.py`](run_clean_scaling_benchmark.py): Measures runtime and memory scaling across varying sample sizes $N$ and dimensions $D$.
+- [`run_exp5_controlled_scaling.py`](run_exp5_controlled_scaling.py): Controlled scaling benchmark estimating the empirical scaling exponent $\beta \approx 1.05$.
+- [`run_phase3_experiments.py`](run_phase3_experiments.py): Executes Phase 3 experiments including large-$K$ anchor budgets, distance geometries, and sensitivity sweeps.
+- [`analyze_bgss_meta.py`](analyze_bgss_meta.py): DerSimonian-Laird random-effects meta-analysis, Cochran's $Q$, $I^2$ heterogeneity, and leave-out sensitivity tests.
+- [`audit_degeneracy.py`](audit_degeneracy.py): Analyzes null feature gating and cluster degeneracy protection.
 
-### 4. Mathematical Identity & Analytical Verifications
+### 5. Visualization & Submission Packaging
+- [`plot_conceptual_framework.py`](plot_conceptual_framework.py): Renders the multi-panel motivational conceptual diagram (Figure 1) at publication resolution (300 DPI).
+- [`plot_fig08_cd_diagram.py`](plot_fig08_cd_diagram.py): Generates the Critical Difference diagram across benchmark algorithms.
+- [`replot_fig2_subsample.py`](replot_fig2_subsample.py): Regenerates Figure 2 empirical subsampling stability curves.
+- [`package_submission.py`](package_submission.py): Packages the complete LaTeX manuscript source, figures, tables, and bibliography for Springer Nature submission.
 
-#### [`verify_identities.py`](file:///D:/icc-clustering/scripts/verify_identities.py) *(formerly `verify_determinacy_identity.py`)*
-Independent mathematical proof and numerical verification of **Proposition 2 (Exact Sample Determinacy Identity)**.
-
-- **Mathematical Rationale:**
-  Proves that sample determinacy can be computed exactly in $O(N \cdot M^2)$ time using contingency matrices without ever instantiating the quadratic $N \times N$ dense co-association matrix $S$:
-  $$\sum_{j=1}^N S_{ij}^2 = \frac{1}{M^2} \sum_{m_1=1}^M \sum_{m_2=1}^M C_{m_1, m_2}(\pi_{m_1}(i), \pi_{m_2}(i))$$
-- **Verification Criteria:** Max numerical discrepancy strictly $< 10^{-12}$ across tiny, moderate, binary, high-cluster, and degenerate identical partition ensembles.
-- **Usage:**
-  ```powershell
-  python scripts/verify_identities.py
-  ```
-  *(Note: [`verify_determinacy_identity.py`](file:///D:/icc-clustering/scripts/verify_determinacy_identity.py) is retained as a backward-compatible wrapper).*
-
-#### [`verify_prop1.py`](file:///D:/icc-clustering/scripts/verify_prop1.py)
-Numerical root-solving and integration verifying **Proposition 1 (Bimodality Coefficient Separation Bound)**. Proves that Sarle's Bimodality Coefficient exceeds the uniform distribution boundary ($b \ge 5/9$) when cluster separation satisfies $\Delta / \sigma_0 \ge \sqrt{(3 + \sqrt{15})/2} \approx 1.854$.
-
-- **Usage:**
-  ```powershell
-  python scripts/verify_prop1.py
-  ```
-
-#### [`verify_bc.py`](file:///D:/icc-clustering/scripts/verify_bc.py)
-Analytical and numerical comparison of Sarle's Bimodality Coefficient across standard distributions (Exponential, Uniform, Lognormal, Beta).
-
-- **Usage:**
-  ```powershell
-  python scripts/verify_bc.py
-  ```
-
-#### [`verify_bc_simulation.py`](file:///D:/icc-clustering/scripts/verify_bc_simulation.py)
-Monte Carlo finite-sample simulation of the empirical null distribution of Sarle's Bimodality Coefficient under unimodal Gaussian noise.
-
-- **Usage:**
-  ```powershell
-  python scripts/verify_bc_simulation.py
-  ```
+### 6. Extended Scientific Audit & Verification Pipelines
+- [`cohort_audit/`](cohort_audit/): Modular pipeline for biological dataset provenance, sample identifier linkage, OpenML metadata auditing, and duplicate profile detection.
+- [`overnight/`](overnight/): Comprehensive benchmark execution suite for EXP6 (cohort expansion), EXP7 (modern baselines), and EXP8 (unknown-$K$ discovery).
 
 ---
 
-### 5. Diagnostics & Visualizations
+## Determinism and Environment
 
-#### [`verify_environment.py`](file:///D:/icc-clustering/scripts/verify_environment.py)
-Audits host hardware, Python environment, optional deep learning accelerators (PyTorch, TensorFlow, CUDA), and package dependencies.
-
-- **Usage:**
-  ```powershell
-  python scripts/verify_environment.py
-  ```
-
-#### [`plot_conceptual_framework.py`](file:///D:/icc-clustering/scripts/plot_conceptual_framework.py)
-Generates high-resolution publication diagrams depicting the ICC-v2 geometry-calibrated consensus pipeline, bipartite graph formulation, and inductive out-of-sample projection.
-
-- **Usage:**
-  ```powershell
-  python scripts/plot_conceptual_framework.py
-  ```
-
-#### [`compute_inductive_bootstrap.py`](file:///D:/icc-clustering/scripts/compute_inductive_bootstrap.py)
-Computes bootstrap confidence intervals for inductive projection classification accuracy and Adjusted Rand Index across repeated data splits.
-
-- **Usage:**
-  ```powershell
-  python scripts/compute_inductive_bootstrap.py
-  ```
-
-#### [`compute_stats_summary.py`](file:///D:/icc-clustering/scripts/compute_stats_summary.py)
-Aggregates experimental outputs from `results/` into LaTeX and CSV summary tables.
-
-- **Usage:**
-  ```powershell
-  python scripts/compute_stats_summary.py
-  ```
+To guarantee bitwise identical outputs across CPU architectures, BLAS thread concurrency is pinned to 1 in all reproduction entrypoints:
+```bash
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+```
+All random seeds are explicitly documented and fixed in `pyproject.toml` and individual experiment runners.

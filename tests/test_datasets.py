@@ -1,12 +1,5 @@
 """
-Unit tests for the ICC benchmark dataset registry, loaders, and preprocessing pipeline.
-
-Validates dataset infrastructure:
-1. Enumeration and completeness of the 13 benchmark datasets.
-2. Dataset metadata retrieval: sample size N, dimension D, cluster count K, domain.
-3. Caching and loading mechanisms across domains (genomics, text, audio, hyperspectral, image, scRNA-seq).
-4. Preprocessing transforms: missing data imputation and feature standardization.
-5. Synchronization between datasets.yaml configuration and in-code metadata.
+Unit tests for the ICC dataset registry and loaders (src/icc/datasets).
 """
 
 import numpy as np
@@ -31,19 +24,11 @@ except (ImportError, Exception):
 
 
 def _is_zheng68k_cached():
-    """Check if the Zheng68k scRNA-seq benchmark is cached locally."""
     from icc.datasets.scrnaseq import _DEFAULT_CACHE
     return (_DEFAULT_CACHE / "zheng68k.npz").exists()
 
 
 def test_list_datasets():
-    """
-    Verify complete enumeration of all 13 canonical benchmark datasets.
-    
-    Validates that:
-    - Exactly 13 datasets are enabled and discoverable.
-    - Expected benchmarks span genomics, biomedical, text, audio, vision, and single-cell domains.
-    """
     enabled = list_datasets(enabled_only=True)
     all_ds = list_datasets(enabled_only=False)
 
@@ -59,12 +44,6 @@ def test_list_datasets():
 
 
 def test_get_dataset_info():
-    """
-    Verify metadata specifications (N, D, K, domain) for canonical datasets.
-    
-    Checks that get_dataset_info returns populated DatasetInfo records with matching
-    ground truth properties and raises KeyError for unknown identifiers.
-    """
     info = get_dataset_info("leukemia")
     assert isinstance(info, DatasetInfo)
     assert info.name == "leukemia"
@@ -119,13 +98,8 @@ def test_get_dataset_info():
 
 
 def test_load_cached_genomics():
-    """
-    Verify loading and tensor unpacking of cached genomic benchmarks (Colon).
-    """
-    try:
-        X, y, meta = load_dataset("colon")
-    except Exception as exc:
-        pytest.skip(f"Colon dataset not cached and download failed: {exc}")
+    # Load colon from existing cache
+    X, y, meta = load_dataset("colon")
     assert X.shape == (62, 2000)
     assert len(y) == 62
     assert meta["K"] == 2
@@ -133,13 +107,8 @@ def test_load_cached_genomics():
 
 
 def test_load_20newsgroups():
-    """
-    Verify loading and tf-idf feature representation of 20 Newsgroups.
-    """
-    try:
-        X, y, meta = load_dataset("newsgroups20")
-    except Exception as exc:
-        pytest.skip(f"20 Newsgroups dataset not cached and download failed: {exc}")
+    # Load newsgroups20 via unified registry loader
+    X, y, meta = load_dataset("newsgroups20")
     assert isinstance(X, np.ndarray)
     assert isinstance(y, np.ndarray)
     assert X.shape == (18846, 10000)
@@ -150,13 +119,8 @@ def test_load_20newsgroups():
 
 
 def test_load_isolet():
-    """
-    Verify loading and acoustic spectral representation of ISOLET.
-    """
-    try:
-        X, y, meta = load_dataset("isolet")
-    except Exception as exc:
-        pytest.skip(f"ISOLET dataset not cached and OpenML fetch failed: {exc}")
+    # Load isolet via unified registry loader
+    X, y, meta = load_dataset("isolet")
     assert isinstance(X, np.ndarray)
     assert isinstance(y, np.ndarray)
     assert X.shape == (7797, 617)
@@ -167,13 +131,8 @@ def test_load_isolet():
 
 
 def test_load_indian_pines():
-    """
-    Verify loading of airborne hyperspectral imaging benchmark (Indian Pines).
-    """
-    try:
-        X, y, meta = load_dataset("indian_pines")
-    except Exception as exc:
-        pytest.skip(f"Indian Pines dataset not cached and download failed: {exc}")
+    # Load indian_pines via unified registry loader
+    X, y, meta = load_dataset("indian_pines")
     assert isinstance(X, np.ndarray)
     assert isinstance(y, np.ndarray)
     assert X.shape == (10249, 200)
@@ -184,13 +143,8 @@ def test_load_indian_pines():
 
 
 def test_load_yale_b():
-    """
-    Verify loading and cropping dimensions of Extended Yale B face image dataset.
-    """
-    try:
-        X, y, meta = load_dataset("yale_b")
-    except Exception as exc:
-        pytest.skip(f"Yale B dataset not cached and download failed: {exc}")
+    # Load yale_b via unified registry loader
+    X, y, meta = load_dataset("yale_b")
     assert isinstance(X, np.ndarray)
     assert isinstance(y, np.ndarray)
     assert X.shape == (2414, 1024)
@@ -205,9 +159,7 @@ def test_load_yale_b():
     reason="scanpy not installed and zheng68k not cached",
 )
 def test_load_zheng68k():
-    """
-    Verify single-cell RNA-seq loading and sparse-to-dense preprocessing (Zheng68k).
-    """
+    # Load zheng68k via unified registry loader
     X, y, meta = load_dataset("zheng68k")
     assert isinstance(X, np.ndarray)
     assert isinstance(y, np.ndarray)
@@ -219,9 +171,6 @@ def test_load_zheng68k():
 
 
 def test_stubs_raise_not_implemented():
-    """
-    Verify that placeholder dataset loader stubs raise NotImplementedError.
-    """
     with pytest.raises(NotImplementedError):
         load_rcv1()
     with pytest.raises(NotImplementedError):
@@ -230,10 +179,8 @@ def test_stubs_raise_not_implemented():
         load_tabula_muris()
 
 
+
 def test_preprocess_dataset():
-    """
-    Verify preprocessing transforms: mean imputation of missing values and standardization.
-    """
     raw_X = np.array([
         [1.0, np.nan, 3.0],
         [2.0, 4.0, np.nan],
@@ -248,9 +195,6 @@ def test_preprocess_dataset():
 
 
 def test_scanpy_not_installed_error(monkeypatch):
-    """
-    Verify informative ImportError is raised when scanpy dependency is absent.
-    """
     import sys
     monkeypatch.setitem(sys.modules, "scanpy", None)
     from icc.datasets.scrnaseq import _check_scanpy
@@ -259,9 +203,6 @@ def test_scanpy_not_installed_error(monkeypatch):
 
 
 def test_registry_yaml_matches_dataset_metadata():
-    """
-    Verify consistency between configs/datasets.yaml and in-code dataset metadata.
-    """
     from pathlib import Path
 
     import yaml
@@ -275,3 +216,4 @@ def test_registry_yaml_matches_dataset_metadata():
         assert info.expected_N == entry["expected_N"]
         assert info.expected_D == entry["expected_D"]
         assert info.expected_K == entry["expected_K"]
+

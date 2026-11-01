@@ -1,12 +1,12 @@
 # ICC-v2 Python API Reference
 
-**Canonical Manuscript Title:** When Does Feature Gating and Anchor Consensus Improve High-Dimensional Clustering? An Empirical Examination  
+**Canonical Manuscript Title:** Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes  
 **Academic Lineage:** Initial University Allotment Title: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data" (`CSE_PROJECT_68`, Faculty Mentor: Prof. Kalyan Kumar Das); Early Proposal Blueprint: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"  
 **Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`)  
 **Canonical Active Release:** v2.1.0  
 **Repository Package:** `icc` (v2.1.0) and `cicc` (Conformal Inductive Consensus Clustering)
 
-The `icc` and `cicc` packages provide an unsupervised, scikit-learn compatible clustering estimator, split-conformal prediction sets, target-decoy feature selection, and episodic semantic memory for high-dimensional noise regimes ($D \gg N$).
+The `icc` and `cicc` packages provide an unsupervised, scikit-learn compatible clustering estimator, split-conformal prediction sets, target-decoy feature selection, and dynamic incremental memory routing for high-dimensional noise regimes ($D \gg N$).
 
 ---
 
@@ -149,7 +149,7 @@ False Discovery Rate (FDR) controlled feature selection via target-decoy / knock
 
 ### `InductiveConsensusMemory`
 
-Dynamic episodic memory and semantic clustering buffer with instantaneous $\mathcal{O}(L)$ inductive routing and conformal novelty detection.
+Dynamic incremental clustering memory for streaming query evaluation with instantaneous $\mathcal{O}(L)$ inductive routing and conformal novelty detection.
 
 - `store(text, embedding, metadata=None) -> MemoryItem`: Indexes new memory item, dynamically consolidating into existing cluster or triggering novel cluster creation upon conformal abstention ($C(x) = \emptyset$).
 - `query_similar(embedding, top_k=5) -> List[MemoryItem]`: Retrieves nearest indexed memory items.

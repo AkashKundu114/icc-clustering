@@ -1,6 +1,6 @@
 # Theoretical Foundations and Mathematical Proofs of ICC-v2
 
-**Canonical Manuscript Title:** When Do Feature Gating and Anchor Consensus Help High-Dimensional Clustering? An Empirical and Geometric Analysis  
+**Canonical Manuscript Title:** Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Extreme Noise Regimes  
 **Academic Lineage:** Initial University Allotment Title: "Cluster Stability-Based Ensemble Learning for Noisy High-Dimensional Data" (`CSE_PROJECT_68`, Faculty Mentor: Prof. Kalyan Kumar Das); Early Proposal Blueprint: "Inductive Consensus Clustering: Geometry-Calibrated Ensemble Distillation for High-Dimensional Noise Regimes"  
 **Target Publication Venue:** Springer Nature Journal (*Data Mining and Knowledge Discovery* / DAMI), document class `sn-jnl.cls` (`sn-mathphys-num.bst`)  
 **Canonical Active Release:** v2.1.0  
@@ -190,8 +190,8 @@ To bound False Discovery Rate (FDR) in feature selection, target-decoy screening
 $$W_d = |T_d| - |\tilde{T}_d|$$
 Features with $W_d > \tau_{\text{FDR}}$ are retained, ensuring rigorous control over false candidate discoveries.
 
-### 9.3 Episodic Semantic Agent Memory (`src/cicc/memory.py`)
-Incoming memory items are embedded and routed to clusters in $\mathcal{O}(L)$ time. When a query yields an empty conformal set ($\mathcal{C}(\mathbf{x}) = \emptyset$), the system abstains from forcing cluster assignment, triggering creation of an episodic novelty cluster.
+### 9.3 Dynamic Incremental Memory Routing (`src/cicc/memory.py`)
+Incoming streaming items are embedded and routed to cluster anchors in $\mathcal{O}(L)$ time. When a query yields an empty conformal set ($\mathcal{C}(\mathbf{x}) = \emptyset$), the system abstains from forcing cluster assignment, triggering creation of an incremental novelty cluster.
 
 ---
 
