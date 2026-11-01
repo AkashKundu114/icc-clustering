@@ -143,6 +143,7 @@ class InvariantCoreConsensusV2:
         self.selected_features_: Optional[np.ndarray] = None
         self.anchor_centroids_: Optional[np.ndarray] = None
         self.U_emb_: Optional[np.ndarray] = None
+        self.B_norm_: Optional[np.ndarray] = None
 
         self.fingerprints_: Optional[Any] = None
         self.psi_: Optional[np.ndarray] = None
@@ -320,6 +321,7 @@ class InvariantCoreConsensusV2:
         row_sums = B.sum(axis=1, keepdims=True)
         row_sums[row_sums < 1e-12] = 1.0
         B_norm = B / row_sums
+        self.B_norm_ = B_norm
 
         W_anchor = B_norm.T @ B_norm
         deg = W_anchor.sum(axis=1)

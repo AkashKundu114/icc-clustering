@@ -197,7 +197,7 @@ def test_download_manifest_checksum_mismatch(tmp_path: Path):
     fake_response.read.side_effect = [b"Actual payload content", b""]
     fake_response.__enter__.return_value = fake_response
 
-    with patch("urllib.request.urlopen", return_value=fake_response):
+    with patch("shutil.which", return_value=None), patch("urllib.request.urlopen", return_value=fake_response):
         with pytest.raises(SystemExit) as exc_info:
             download_manifest(args)
 

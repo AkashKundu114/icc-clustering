@@ -1,0 +1,2 @@
+cohort_id,url,relative_path,expected_sha256,license_reviewed,retrieval_timestamp_utc,bytes,sha256,download_status
+GSE42568_BREAST_CLARKE,https://ftp.ncbi.nlm.nih.gov/geo/series/GSE42nnn/GSE42568/matrix/GSE42568_series_matrix.txt.gz,GSE42568/GSE42568_series_matrix.txt.gz,,YES,2026-11-01T06:09:15.766312+00:00,22565943,43b93f72f1d81838dcd2a5b6ccc3bc1875e46230dad0d7346236773a99e32b76,VERIFIED

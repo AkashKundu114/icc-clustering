@@ -186,18 +186,24 @@ def download_manifest(args: argparse.Namespace) -> int:
         if root not in target.parents:
             raise SystemExit(f"Path escapes raw_dir: {rel}")
         target.parent.mkdir(parents=True, exist_ok=True)
-        req = urllib.request.Request(entry["url"], headers={"User-Agent": USER_AGENT})
-        digest = hashlib.sha256()
         tmp = target.with_suffix(target.suffix + ".part")
         try:
-            with urllib.request.urlopen(req, timeout=args.timeout) as response, tmp.open("wb") as out:
-                while True:
-                    chunk = response.read(1024 * 1024)
-                    if not chunk:
-                        break
-                    digest.update(chunk)
-                    out.write(chunk)
-            actual = digest.hexdigest()
+            import shutil, subprocess
+            curl_bin = shutil.which("curl") or shutil.which("curl.exe")
+            if curl_bin:
+                cmd = [curl_bin, "-sSL", "--fail", "-m", str(args.timeout), entry["url"], "-o", str(tmp)]
+                res = subprocess.run(cmd, capture_output=True, text=True)
+                if res.returncode != 0:
+                    raise RuntimeError(f"curl download failed ({res.returncode}): {res.stderr}")
+            else:
+                req = urllib.request.Request(entry["url"], headers={"User-Agent": USER_AGENT})
+                with urllib.request.urlopen(req, timeout=args.timeout) as response, tmp.open("wb") as out:
+                    while True:
+                        chunk = response.read(1024 * 1024)
+                        if not chunk:
+                            break
+                        out.write(chunk)
+            actual = sha256_file(tmp)
             expected = entry["expected_sha256"].strip().lower()
             if expected and actual != expected:
                 tmp.unlink(missing_ok=True)

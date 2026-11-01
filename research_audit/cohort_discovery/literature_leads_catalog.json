@@ -1,0 +1,2879 @@
+[
+  {
+    "cohort_id": "GSE62254",
+    "cohort_name": "ACRG Gastric Cancer Cohort",
+    "disease": "Gastric Cancer",
+    "histology": "Gastric Adenocarcinoma",
+    "specimen_type": "Primary surgically resected tumor tissue",
+    "stratum": "Bulk Microarray (Primary Benchmark Stratum)",
+    "repository": "GEO",
+    "accession": "GSE62254",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE62254",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE62nnn/GSE62254/matrix/GSE62254_series_matrix.txt.gz",
+    "publication_citation": "Cristescu R, Lee J, Nebozhyn M, et al. Molecular analysis of gastric cancer identifies subtypes associated with different clinical outcomes. Nat Med 21(5):449-456 (2015).",
+    "authors": "Cristescu R, Lee J, Nebozhyn M, et al. (Asian Cancer Research Group)",
+    "year": 2015,
+    "publication_doi": "10.1038/nm.3850",
+    "publication_url": "https://doi.org/10.1038/nm.3850",
+    "pubmed_id": "25894828",
+    "platform": "Affymetrix Human Genome U133 Plus 2.0 (GPL570)",
+    "assay": "Microarray",
+    "genome_build": "NCBI Human Build 36.1 / GRCh37",
+    "annotation_release": "GPL570 Affymetrix HG-U133_Plus_2 NetAffx release 31",
+    "n_patients": 300,
+    "n_samples": 300,
+    "n_features_raw": 54675,
+    "n_features_qc": 54675,
+    "d_over_n": 182.25,
+    "labels": [
+      {
+        "name": "ACRG_molecular_subtype",
+        "type": "B1",
+        "description": "Intrinsic molecular subtypes of gastric cancer",
+        "classes": {
+          "MSI": 68,
+          "MSS/TP53+": 79,
+          "MSS/TP53-": 107,
+          "MSS/EMT": 46
+        },
+        "circularity_risk": "Low (defined through integrated multi-omic consensus, external validation)"
+      },
+      {
+        "name": "Lauren_classification",
+        "type": "B1",
+        "description": "Histopathological Lauren classification",
+        "classes": {
+          "Intestinal": 160,
+          "Diffuse": 121,
+          "Mixed": 19
+        },
+        "circularity_risk": "None (pure microscopic histopathology)"
+      },
+      {
+        "name": "TP53_mutation_status",
+        "type": "B3",
+        "description": "Somatic TP53 mutation status",
+        "classes": {
+          "Mutant": 85,
+          "Wild-Type": 215
+        },
+        "circularity_risk": "None (orthogonal Sanger/targeted sequencing)"
+      },
+      {
+        "name": "Overall_survival_months",
+        "type": "B4",
+        "description": "Overall survival duration and censoring indicator",
+        "classes": {
+          "Continuous_survival_time": 300
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "ACRG_molecular_subtype",
+    "label_type": "B1",
+    "label_source": "Original publication table / GEO characteristics",
+    "class_counts": {
+      "MSI": 68,
+      "MSS/TP53+": 79,
+      "MSS/TP53-": 107,
+      "MSS/EMT": 46
+    },
+    "independent_unit": "Patient (1 sample per patient, primary resected tumor)",
+    "patient_id_available": true,
+    "overlap_group": "ACRG_Samsung_Cohort",
+    "overlap_status": "Independent (Samsung Medical Center, Seoul; no overlap with Alon, Golub, Singh, Pomeroy, Khan, or GCM)",
+    "known_overlaps": [],
+    "license": "Public Domain (NCBI GEO public data submission terms)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "GSE62254_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE62nnn/GSE62254/matrix/GSE62254_series_matrix.txt.gz",
+        "role": "expression_matrix_and_metadata"
+      }
+    ],
+    "preprocessing": "Affymetrix RMA background correction, quantile normalization, log2 transformed probe set intensity",
+    "exclusions": "None (all 300 primary gastric cancer specimens pass QC)",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=300)",
+      "Gate_E_feature_size_ge_500": "PASS (D=54,675)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Tier A",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "High-D Affymetrix U133 Plus 2.0 array (D=54,675), large sample size (N=300), D/N=182.25. Four well-established biological subtypes (ACRG B1). Fully passes all mandatory gates."
+  },
+  {
+    "cohort_id": "GSE39582",
+    "cohort_name": "CIT Colorectal Cancer Cohort (Marisa et al.)",
+    "disease": "Colorectal Cancer",
+    "histology": "Colon Adenocarcinoma",
+    "specimen_type": "Primary surgical resection (566 tumors + 19 non-tumoral mucosa)",
+    "stratum": "Bulk Microarray (Primary Benchmark Stratum)",
+    "repository": "GEO",
+    "accession": "GSE39582",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE39582",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE39nnn/GSE39582/matrix/GSE39582_series_matrix.txt.gz",
+    "publication_citation": "Marisa L, de Reyniès A, Duval A, et al. Gene expression classification of colon cancer defines six molecular subtypes: a roadmap for discovery. PLoS Med 10(5):e1001453 (2013).",
+    "authors": "Marisa L, de Reyniès A, Duval A, et al. (French Cartes d'Identité des Tumeurs Program)",
+    "year": 2013,
+    "publication_doi": "10.1371/journal.pmed.1001453",
+    "publication_url": "https://doi.org/10.1371/journal.pmed.1001453",
+    "pubmed_id": "23700391",
+    "platform": "Affymetrix Human Genome U133 Plus 2.0 (GPL570)",
+    "assay": "Microarray",
+    "genome_build": "GRCh37 / hg19",
+    "annotation_release": "GPL570 NetAffx release 31",
+    "n_patients": 585,
+    "n_samples": 585,
+    "n_features_raw": 54675,
+    "n_features_qc": 54675,
+    "d_over_n": 93.46,
+    "labels": [
+      {
+        "name": "CIT_molecular_subtype",
+        "type": "B1",
+        "description": "Six CIT molecular subtypes (C1: cin-normal, C2: dMMR, C3: KRAS, C4: CSC/EMT, C5: CIN-TP53-mut, C6: CIN-TP53-wt)",
+        "classes": {
+          "C1": 103,
+          "C2": 109,
+          "C3": 75,
+          "C4": 87,
+          "C5": 115,
+          "C6": 77
+        },
+        "circularity_risk": "Low (CIT classification published and independently verified across CRC cohorts)"
+      },
+      {
+        "name": "tissue_type",
+        "type": "B2",
+        "description": "Tumor tissue versus non-tumoral normal colonic mucosa",
+        "classes": {
+          "Tumor": 566,
+          "Normal_Mucosa": 19
+        },
+        "circularity_risk": "None"
+      },
+      {
+        "name": "MMR_status",
+        "type": "B3",
+        "description": "Mismatch repair status (dMMR/MSI vs pMMR/MSS)",
+        "classes": {
+          "dMMR": 74,
+          "pMMR": 462,
+          "NA": 49
+        },
+        "circularity_risk": "None (IHC / pentaplex PCR)"
+      },
+      {
+        "name": "Relapse_free_survival",
+        "type": "B4",
+        "description": "RFS time in months and relapse status",
+        "classes": {
+          "Continuous_survival_time": 585
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "CIT_molecular_subtype",
+    "label_type": "B1",
+    "label_source": "Original publication annotation / series matrix characteristics",
+    "class_counts": {
+      "C1": 103,
+      "C2": 109,
+      "C3": 75,
+      "C4": 87,
+      "C5": 115,
+      "C6": 77
+    },
+    "independent_unit": "Patient (566 primary tumor samples)",
+    "patient_id_available": true,
+    "overlap_group": "CIT_French_Consortium",
+    "overlap_status": "Independent (collected at 7 French hospitals; no patient overlap with Alon 1999 [Princeton, N=62] or Jorissen GSE14333 [Australia])",
+    "known_overlaps": [],
+    "license": "Public Domain (NCBI GEO)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "GSE39582_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE39nnn/GSE39582/matrix/GSE39582_series_matrix.txt.gz",
+        "role": "expression_matrix_and_metadata"
+      }
+    ],
+    "preprocessing": "Affymetrix RMA normalized, log2 transformed",
+    "exclusions": "19 normal mucosa samples excluded when evaluating tumor subtype clustering (leaves N=566 tumors)",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=566 tumors)",
+      "Gate_E_feature_size_ge_500": "PASS (D=54,675)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Tier A",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "Gold-standard high-D colorectal cancer cohort ($N=566$ tumors, $D=54,675, D/N=96.6$). Solid B1 subtype annotations (CIT C1-C6, $K=6$). All gates pass."
+  },
+  {
+    "cohort_id": "GSE31210",
+    "cohort_name": "Okayama Lung Adenocarcinoma Cohort",
+    "disease": "Lung Cancer",
+    "histology": "Lung Adenocarcinoma (LUAD)",
+    "specimen_type": "Primary resected tumor tissue (226 tumors + 20 normal lung)",
+    "stratum": "Bulk Microarray (Primary Benchmark Stratum)",
+    "repository": "GEO",
+    "accession": "GSE31210",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE31210",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE31nnn/GSE31210/matrix/GSE31210_series_matrix.txt.gz",
+    "publication_citation": "Okayama H, Kohno T, Ishii Y, et al. Identification of genes upregulated in ALK-positive and EGFR/KRAS/ALK-negative lung adenocarcinomas. Cancer Res 72(1):100-111 (2012).",
+    "authors": "Okayama H, Kohno T, Ishii Y, et al.",
+    "year": 2012,
+    "publication_doi": "10.1158/0008-5472.CAN-11-1403",
+    "publication_url": "https://doi.org/10.1158/0008-5472.CAN-11-1403",
+    "pubmed_id": "22080568",
+    "platform": "Affymetrix Human Genome U133 Plus 2.0 (GPL570)",
+    "assay": "Microarray",
+    "genome_build": "GRCh37",
+    "annotation_release": "GPL570 NetAffx release 31",
+    "n_patients": 246,
+    "n_samples": 246,
+    "n_features_raw": 54675,
+    "n_features_qc": 54675,
+    "d_over_n": 222.25,
+    "labels": [
+      {
+        "name": "mutational_driver_status",
+        "type": "B1",
+        "description": "Mutually exclusive lung adenocarcinoma oncogenic drivers (EGFR, KRAS, ALK, Triple-Neg)",
+        "classes": {
+          "EGFR_mut": 127,
+          "KRAS_mut": 20,
+          "ALK_fusion": 11,
+          "Triple_Neg": 68
+        },
+        "circularity_risk": "None (driver alterations determined by Sanger sequencing and FISH/RT-PCR)"
+      },
+      {
+        "name": "histological_subtype",
+        "type": "B1",
+        "description": "Histopathologic growth pattern (papillary, acinar, solid, lepidic/BAC)",
+        "classes": {
+          "Papillary": 112,
+          "Acinar": 62,
+          "Solid": 30,
+          "Lepidic": 22
+        },
+        "circularity_risk": "None (microscopic histology)"
+      },
+      {
+        "name": "tissue_contrast",
+        "type": "B2",
+        "description": "Tumor versus normal lung parenchyma",
+        "classes": {
+          "Tumor": 226,
+          "Normal": 20
+        },
+        "circularity_risk": "None"
+      },
+      {
+        "name": "overall_survival",
+        "type": "B4",
+        "description": "Overall survival and relapse-free survival in months",
+        "classes": {
+          "Continuous_survival_time": 246
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "mutational_driver_status",
+    "label_type": "B1",
+    "label_source": "Series matrix characteristics / supplementary tables",
+    "class_counts": {
+      "EGFR_mut": 127,
+      "KRAS_mut": 20,
+      "ALK_fusion": 11,
+      "Triple_Neg": 68
+    },
+    "independent_unit": "Patient (226 primary tumor specimens)",
+    "patient_id_available": true,
+    "overlap_group": "Cancer_Institute_Hospital_Tokyo",
+    "overlap_status": "Independent (Japanese patient population, Cancer Institute Hospital Tokyo; completely disjoint from US Whitehead/Bhattacharjee cohorts)",
+    "known_overlaps": [],
+    "license": "Public Domain (NCBI GEO)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "GSE31210_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE31nnn/GSE31210/matrix/GSE31210_series_matrix.txt.gz",
+        "role": "expression_matrix_and_metadata"
+      }
+    ],
+    "preprocessing": "Affymetrix RMA normalized, log2 transformed",
+    "exclusions": "20 normal lung specimens excluded for tumor-intrinsic subtyping benchmark (leaves N=226 tumors)",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=226 tumors)",
+      "Gate_E_feature_size_ge_500": "PASS (D=54,675)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Tier A",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "High-D Affymetrix U133 Plus 2.0 array ($N=226$ tumors, $D=54,675$). Features clean B1 oncogenic driver labels and histopathologic patterns. Completely independent from legacy benchmarks."
+  },
+  {
+    "cohort_id": "GSE72094",
+    "cohort_name": "Moffitt Lung Adenocarcinoma Cohort (Schabath et al.)",
+    "disease": "Lung Cancer",
+    "histology": "Lung Adenocarcinoma",
+    "specimen_type": "Primary resected tumor tissue",
+    "stratum": "Bulk Microarray (Primary Benchmark Stratum)",
+    "repository": "GEO",
+    "accession": "GSE72094",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE72094",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72094/matrix/GSE72094_series_matrix.txt.gz",
+    "publication_citation": "Schabath MB, Welch BM, Vignot S, et al. Differential association of STK11 and TP53 with KRAS mutation in lung adenocarcinoma. Oncogene 35(24):3204-3211 (2016).",
+    "authors": "Schabath MB, Welch BM, Vignot S, et al.",
+    "year": 2016,
+    "publication_doi": "10.1038/onc.2015.375",
+    "publication_url": "https://doi.org/10.1038/onc.2015.375",
+    "pubmed_id": "26477306",
+    "platform": "Rosetta/Merck Human RSTA Custom Affymetrix 2.0 (GPL15048)",
+    "assay": "Microarray",
+    "genome_build": "GRCh37",
+    "annotation_release": "GPL15048 custom probe annotations",
+    "n_patients": 442,
+    "n_samples": 442,
+    "n_features_raw": 23720,
+    "n_features_qc": 23720,
+    "d_over_n": 53.67,
+    "labels": [
+      {
+        "name": "KRAS_mutation_status",
+        "type": "B3",
+        "description": "KRAS somatic mutation status (mutant vs wild-type)",
+        "classes": {
+          "KRAS_Mutant": 139,
+          "KRAS_WT": 303
+        },
+        "circularity_risk": "None (mass spectrometry genotyping / Sanger sequencing)"
+      },
+      {
+        "name": "KRAS_STK11_TP53_co_mutation",
+        "type": "B1",
+        "description": "Genomic co-mutation subgrouping (KL: KRAS+STK11; KP: KRAS+TP53; K-only; WT)",
+        "classes": {
+          "KL": 38,
+          "KP": 57,
+          "K_only": 44,
+          "Wild_type": 303
+        },
+        "circularity_risk": "None (orthogonal genomic profiling)"
+      },
+      {
+        "name": "smoking_status",
+        "type": "B5",
+        "description": "Epidemiological smoking status",
+        "classes": {
+          "Current": 98,
+          "Former": 286,
+          "Never": 58
+        },
+        "circularity_risk": "None (patient behavioral history)"
+      },
+      {
+        "name": "overall_survival",
+        "type": "B4",
+        "description": "Overall survival time in months and vital status",
+        "classes": {
+          "Continuous_survival_time": 442
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "KRAS_STK11_TP53_co_mutation",
+    "label_type": "B1",
+    "label_source": "GEO series matrix characteristics",
+    "class_counts": {
+      "KL": 38,
+      "KP": 57,
+      "K_only": 44,
+      "Wild_type": 303
+    },
+    "independent_unit": "Patient (442 primary lung adenocarcinoma resections)",
+    "patient_id_available": true,
+    "overlap_group": "Moffitt_Total_Cancer_Care",
+    "overlap_status": "Independent (Moffitt Cancer Center, Tampa, FL; no patient overlap with Harvard/Whitehead or Japanese cohorts)",
+    "known_overlaps": [],
+    "license": "Public Domain (NCBI GEO)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "GSE72094_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE72nnn/GSE72094/matrix/GSE72094_series_matrix.txt.gz",
+        "role": "expression_matrix_and_metadata"
+      }
+    ],
+    "preprocessing": "RMA background correction and quantile normalization across custom Affymetrix arrays",
+    "exclusions": "None (all 442 resected tumor specimens are evaluable)",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=442)",
+      "Gate_E_feature_size_ge_500": "PASS (D=23,720)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Tier A",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "Large sample size ($N=442, D=23,720, D/N=53.67$). Clean mutational classes and patient-level mapping. Note: custom platform GPL15048 requires probe-to-gene table parsing."
+  },
+  {
+    "cohort_id": "GSE14520",
+    "cohort_name": "Roessler Hepatocellular Carcinoma Cohort",
+    "disease": "Liver Cancer",
+    "histology": "Hepatocellular Carcinoma (HCC)",
+    "specimen_type": "Primary resected HCC tumor tissue and adjacent non-tumorous liver",
+    "stratum": "Bulk Microarray (Primary Benchmark Stratum)",
+    "repository": "GEO",
+    "accession": "GSE14520",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE14520",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE14nnn/GSE14520/matrix/GSE14520-GPL3921_series_matrix.txt.gz; https://ftp.ncbi.nlm.nih.gov/geo/series/GSE14nnn/GSE14520/matrix/GSE14520-GPL571_series_matrix.txt.gz",
+    "publication_citation": "Roessler S, Jia HL, Budhu A, et al. A unique metastasis gene signature enables prediction of tumor relapse in early-stage hepatocellular carcinoma patients. Cancer Res 70(24):10202-10212 (2010).",
+    "authors": "Roessler S, Jia HL, Budhu A, et al.",
+    "year": 2010,
+    "publication_doi": "10.1158/0008-5472.CAN-10-2607",
+    "publication_url": "https://doi.org/10.1158/0008-5472.CAN-10-2607",
+    "pubmed_id": "21159642",
+    "platform": "Dual platform: GPL3921 (Affymetrix HT_HG-U133A, N=247) and GPL571 (Affymetrix HG-U133A_2, N=241)",
+    "assay": "Microarray",
+    "genome_build": "GRCh37",
+    "annotation_release": "NetAffx release 31",
+    "n_patients": 445,
+    "n_samples": 488,
+    "n_features_raw": 22277,
+    "n_features_qc": 22277,
+    "d_over_n": 90.19,
+    "labels": [
+      {
+        "name": "tissue_contrast",
+        "type": "B2",
+        "description": "Primary HCC tumor versus adjacent non-tumorous liver tissue",
+        "classes": {
+          "Tumor": 247,
+          "Non_Tumor": 241
+        },
+        "circularity_risk": "None"
+      },
+      {
+        "name": "cirrhosis_status",
+        "type": "B1",
+        "description": "Underlying background liver cirrhosis status (Cirrhotic vs Non-cirrhotic)",
+        "classes": {
+          "Cirrhosis": 412,
+          "Non_cirrhotic": 76
+        },
+        "circularity_risk": "None (histopathological staging of liver parenchyma)"
+      },
+      {
+        "name": "HBV_infection_status",
+        "type": "B1",
+        "description": "Hepatitis B viral infection status (HBsAg positive/negative)",
+        "classes": {
+          "HBV_Positive": 435,
+          "HBV_Negative": 53
+        },
+        "circularity_risk": "None (serological testing)"
+      },
+      {
+        "name": "relapse_free_survival",
+        "type": "B4",
+        "description": "Time to recurrence/metastasis in months and event status",
+        "classes": {
+          "Continuous_survival_time": 488
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "cirrhosis_status",
+    "label_type": "B1",
+    "label_source": "Series matrix characteristics / supplementary clinical tables",
+    "class_counts": {
+      "Cirrhosis": 412,
+      "Non_cirrhotic": 76
+    },
+    "independent_unit": "Patient (split across Cohort 1 [GPL3921, N=247] and Cohort 2 [GPL571, N=241])",
+    "patient_id_available": true,
+    "overlap_group": "Fudan_University_Zhongshan_Hospital",
+    "overlap_status": "Independent (Zhongshan Hospital, Fudan University, Shanghai; no overlap with Western benchmark cohorts)",
+    "known_overlaps": [],
+    "license": "Public Domain (NCBI GEO)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "GSE14520-GPL3921_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE14nnn/GSE14520/matrix/GSE14520-GPL3921_series_matrix.txt.gz",
+        "role": "expression_matrix_cohort1"
+      },
+      {
+        "name": "GSE14520-GPL571_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE14nnn/GSE14520/matrix/GSE14520-GPL571_series_matrix.txt.gz",
+        "role": "expression_matrix_cohort2"
+      }
+    ],
+    "preprocessing": "Affymetrix MAS5.0 / RMA log2 transformed; MUST be analyzed as two distinct platform cohorts per Spec Section 5.3",
+    "exclusions": "Cannot pool GPL3921 and GPL571 by naive concatenation. Analyze Cohort 1 (GPL3921, N=247) and Cohort 2 (GPL571, N=241) separately.",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (Cohort 1 N=247; Cohort 2 N=241)",
+      "Gate_E_feature_size_ge_500": "PASS (D=22,277)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 2,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 2,
+      "total_score": 19
+    },
+    "eligibility_tier": "Tier B",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "High-D Affymetrix U133A platforms. Classified as Tier B (confirmatory bulk general / contrast stratum) because labels are predominantly B2 (Tumor vs Normal) or B1 cirrhosis contrast, and platform is split into two distinct subseries (GPL3921 and GPL571) which cannot be pooled naively."
+  },
+  {
+    "cohort_id": "GSE25066",
+    "cohort_name": "MD Anderson Neoadjuvant Breast Cancer Cohort (Hatzis et al.)",
+    "disease": "Breast Cancer",
+    "histology": "Invasive Ductal and Lobular Carcinoma",
+    "specimen_type": "Pre-treatment fine-needle aspirates / core needle biopsies",
+    "stratum": "Bulk Microarray (Primary Benchmark Stratum)",
+    "repository": "GEO",
+    "accession": "GSE25066",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE25066",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE25nnn/GSE25066/matrix/GSE25066_series_matrix.txt.gz",
+    "publication_citation": "Hatzis C, Pusztai L, Valero V, et al. A genomic predictor of response and survival following taxane-anthracycline chemotherapy for invasive breast cancer. JAMA 305(18):1873-1881 (2011).",
+    "authors": "Hatzis C, Pusztai L, Valero V, et al.",
+    "year": 2011,
+    "publication_doi": "10.1001/jama.2011.593",
+    "publication_url": "https://doi.org/10.1001/jama.2011.593",
+    "pubmed_id": "21558518",
+    "platform": "Affymetrix Human Genome U133A (GPL96)",
+    "assay": "Microarray",
+    "genome_build": "GRCh37",
+    "annotation_release": "NetAffx release 31",
+    "n_patients": 508,
+    "n_samples": 508,
+    "n_features_raw": 22283,
+    "n_features_qc": 22283,
+    "d_over_n": 43.86,
+    "labels": [
+      {
+        "name": "ER_receptor_status",
+        "type": "B3",
+        "description": "Estrogen receptor status by IHC/mRNA",
+        "classes": {
+          "ER_Positive": 328,
+          "ER_Negative": 180
+        },
+        "circularity_risk": "None (IHC / ligand-binding assay)"
+      },
+      {
+        "name": "PAM50_intrinsic_subtype",
+        "type": "B6",
+        "description": "PAM50 molecular subtype assignment",
+        "classes": {
+          "Basal": 139,
+          "Her2": 52,
+          "LumA": 194,
+          "LumB": 86,
+          "Normal_like": 37
+        },
+        "circularity_risk": "Moderate (derived via expression centroids; requires circularity check against unsupervised clustering)"
+      },
+      {
+        "name": "pathologic_complete_response",
+        "type": "B4",
+        "description": "Response to neoadjuvant chemotherapy (pCR vs residual disease RD)",
+        "classes": {
+          "pCR": 102,
+          "RD": 406
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      },
+      {
+        "name": "distant_relapse_free_survival",
+        "type": "B4",
+        "description": "DRFS duration and event status",
+        "classes": {
+          "Continuous_survival_time": 508
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "ER_receptor_status",
+    "label_type": "B3",
+    "label_source": "Series matrix characteristics / supplementary tables",
+    "class_counts": {
+      "ER_Positive": 328,
+      "ER_Negative": 180
+    },
+    "independent_unit": "Patient (508 pre-treatment primary breast biopsies)",
+    "patient_id_available": true,
+    "overlap_group": "MDACC_Breast_Consortium",
+    "overlap_status": "Independent (MD Anderson Cancer Center trials; completely disjoint from van 't Veer 2002 [Netherlands, N=97] and Wang GSE2034 [Rotterdam, N=286])",
+    "known_overlaps": [],
+    "license": "Public Domain (NCBI GEO)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "GSE25066_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE25nnn/GSE25066/matrix/GSE25066_series_matrix.txt.gz",
+        "role": "expression_matrix_and_metadata"
+      }
+    ],
+    "preprocessing": "Affymetrix MAS5.0 log2 transformed; probe sets mapped to Entrez gene IDs",
+    "exclusions": "Outcome labels (pCR/RD, DRFS) strictly barred from clustering objective or evaluation",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=508)",
+      "Gate_E_feature_size_ge_500": "PASS (D=22,283)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 2,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 20
+    },
+    "eligibility_tier": "Tier B",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "High-D Affymetrix U133A cohort ($N=508, D=22,283, D/N=43.86$). Primary verified label is B3 (ER Receptor Status, ER+ vs ER-). PAM50 subtypes are B6 (inferred). Meets Tier B criteria for molecular receptor stratum."
+  },
+  {
+    "cohort_id": "GSE49710",
+    "cohort_name": "SEQC/MAQC-III Neuroblastoma RNA-seq Cohort (Zhang et al.)",
+    "disease": "Neuroblastoma",
+    "histology": "Pediatric Peripheral Neuroblastic Tumor",
+    "specimen_type": "Primary neuroblastoma tumor biopsies",
+    "stratum": "Bulk RNA-seq Stratum (Separate Stratum)",
+    "repository": "GEO",
+    "accession": "GSE49710",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE49710",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE49nnn/GSE49710/matrix/GSE49710_series_matrix.txt.gz",
+    "publication_citation": "Zhang W, Yu Y, Hertwig F, et al. RNA-Seq reveals an unprecedented complexity of the neuroblastoma transcriptome. Genome Biol 16:204 (2015).",
+    "authors": "Zhang W, Yu Y, Hertwig F, et al. (SEQC Consortium)",
+    "year": 2015,
+    "publication_doi": "10.1186/s13059-015-0761-9",
+    "publication_url": "https://doi.org/10.1186/s13059-015-0761-9",
+    "pubmed_id": "25150839",
+    "platform": "Illumina HiSeq 2000 (GPL16876)",
+    "assay": "Bulk RNA-seq",
+    "genome_build": "GRCh37 / Ensembl v70",
+    "annotation_release": "Ensembl gene annotation",
+    "n_patients": 498,
+    "n_samples": 498,
+    "n_features_raw": 43827,
+    "n_features_qc": 43827,
+    "d_over_n": 87.81,
+    "labels": [
+      {
+        "name": "INSS_stage",
+        "type": "B1",
+        "description": "International Neuroblastoma Staging System (INSS 1, 2, 3, 4, 4S)",
+        "classes": {
+          "Stage_1": 121,
+          "Stage_2": 78,
+          "Stage_3": 63,
+          "Stage_4": 183,
+          "Stage_4S": 53
+        },
+        "circularity_risk": "None (surgical, radiological, and clinical dissemination staging)"
+      },
+      {
+        "name": "MYCN_amplification_status",
+        "type": "B3",
+        "description": "MYCN oncogene genomic amplification status",
+        "classes": {
+          "Amplified": 92,
+          "Non_amplified": 401,
+          "Unknown": 5
+        },
+        "circularity_risk": "None (FISH / Southern blot)"
+      },
+      {
+        "name": "risk_group",
+        "type": "B1",
+        "description": "Clinical and biological risk stratification (High Risk vs Low Risk)",
+        "classes": {
+          "High_Risk": 176,
+          "Low_Risk": 322
+        },
+        "circularity_risk": "Low (multimodal criteria combining age, INSS stage, MYCN)"
+      },
+      {
+        "name": "event_free_survival",
+        "type": "B4",
+        "description": "EFS time in days and relapse/progression indicator",
+        "classes": {
+          "Continuous_survival_time": 498
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "INSS_stage",
+    "label_type": "B1",
+    "label_source": "Series matrix characteristics / SEQC metadata",
+    "class_counts": {
+      "Stage_1": 121,
+      "Stage_2": 78,
+      "Stage_3": 63,
+      "Stage_4": 183,
+      "Stage_4S": 53
+    },
+    "independent_unit": "Patient (498 primary pediatric neuroblastoma tumors)",
+    "patient_id_available": true,
+    "overlap_group": "German_Neuroblastoma_Trial_NB97_NB2004",
+    "overlap_status": "Independent (German Pediatric Oncology Society; completely disjoint from adult benchmark cohorts and Khan SRBCT)",
+    "known_overlaps": [],
+    "license": "Public Domain (NCBI GEO / SEQC Consortium open benchmark)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "GSE49710_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE49nnn/GSE49710/matrix/GSE49710_series_matrix.txt.gz",
+        "role": "expression_matrix_and_metadata"
+      }
+    ],
+    "preprocessing": "Illumina paired-end RNA-seq, Magic-BLAST/TopHat aligned, log2(FPKM+1) transformed",
+    "exclusions": "Cannot be pooled directly into the bulk microarray stratum per Spec Section 5.5; assigned to Bulk RNA-seq Stratum",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=498)",
+      "Gate_E_feature_size_ge_500": "PASS (D=43,827)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Separate Stratum",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "Exceptional RNA-seq cohort ($N=498, D=43,827, D/N=87.81$). Valid biological staging labels (INSS 1-4, 4S) and MYCN mutation. Designated as Separate Stratum (Bulk RNA-seq) per Spec Section 4.3 and 5.5."
+  },
+  {
+    "cohort_id": "GSE13159",
+    "cohort_name": "MILE International Leukemia Study Cohort (Haferlach et al.)",
+    "disease": "Leukemia",
+    "histology": "Acute and Chronic Leukemias and MDS",
+    "specimen_type": "Whole bone marrow and peripheral blood mononuclear cells",
+    "stratum": "Bulk Microarray (Primary Benchmark Stratum)",
+    "repository": "GEO",
+    "accession": "GSE13159",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE13159",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE13nnn/GSE13159/matrix/GSE13159_series_matrix.txt.gz",
+    "publication_citation": "Haferlach T, Kohlmann A, Wieczorek L, et al. Clinical utility of microarray-based gene expression profiling in the diagnosis and subclassification of leukemia: report on the international MILE study. J Clin Oncol 28(15):2529-2537 (2010).",
+    "authors": "Haferlach T, Kohlmann A, Wieczorek L, et al. (Microarray Innovations in LEukemia Consortium)",
+    "year": 2010,
+    "publication_doi": "10.1200/JCO.2009.23.4732",
+    "publication_url": "https://doi.org/10.1200/JCO.2009.23.4732",
+    "pubmed_id": "20406941",
+    "platform": "Affymetrix Human Genome U133 Plus 2.0 (GPL570)",
+    "assay": "Microarray",
+    "genome_build": "GRCh37",
+    "annotation_release": "NetAffx release 31",
+    "n_patients": 2096,
+    "n_samples": 2096,
+    "n_features_raw": 54675,
+    "n_features_qc": 54675,
+    "d_over_n": 26.08,
+    "labels": [
+      {
+        "name": "WHO_leukemia_diagnostic_class",
+        "type": "B1",
+        "description": "18 distinct leukemia diagnostic categories defined by morphology, cytogenetics, and immunophenotyping",
+        "classes": {
+          "c_ALL_t9_22": 123,
+          "c_ALL_t12_21": 117,
+          "c_ALL_t1_19": 36,
+          "c_ALL_MLL": 66,
+          "c_ALL_no_recurrent": 238,
+          "pro_B_ALL_t4_11": 59,
+          "T_ALL": 174,
+          "Mature_B_ALL": 14,
+          "AML_t8_21": 42,
+          "AML_inv16": 61,
+          "AML_t15_17": 38,
+          "AML_MLL": 37,
+          "AML_normal_karyotype": 348,
+          "AML_complex": 81,
+          "CLL": 448,
+          "CML": 76,
+          "MDS": 64,
+          "Control_Bone_Marrow": 74
+        },
+        "circularity_risk": "None (standard clinical hematological cytogenetics, FISH, karyotype, and flow cytometry)"
+      },
+      {
+        "name": "laboratory_center",
+        "type": "B5",
+        "description": "11 international clinical participating centers",
+        "classes": {
+          "Munich": 605,
+          "Frankfurt": 210,
+          "Vienna": 185,
+          "Salamanca": 170,
+          "Rochester": 165,
+          "Others": 761
+        },
+        "circularity_risk": "None (technical center metadata)"
+      }
+    ],
+    "label_name": "WHO_leukemia_diagnostic_class",
+    "label_type": "B1",
+    "label_source": "Series matrix characteristics / MILE study consortium protocol",
+    "class_counts": {
+      "c_ALL_t9_22": 123,
+      "c_ALL_t12_21": 117,
+      "c_ALL_t1_19": 36,
+      "c_ALL_MLL": 66,
+      "c_ALL_no_recurrent": 238,
+      "pro_B_ALL_t4_11": 59,
+      "T_ALL": 174,
+      "Mature_B_ALL": 14,
+      "AML_t8_21": 42,
+      "AML_inv16": 61,
+      "AML_t15_17": 38,
+      "AML_MLL": 37,
+      "AML_normal_karyotype": 348,
+      "AML_complex": 81,
+      "CLL": 448,
+      "CML": 76,
+      "MDS": 64,
+      "Control_Bone_Marrow": 74
+    },
+    "independent_unit": "Patient (2,096 independent patient marrow/blood samples)",
+    "patient_id_available": true,
+    "overlap_group": "MILE_Consortium",
+    "overlap_status": "Independent (collected 2005-2008 across 11 international centers; completely disjoint from Golub et al. 1999 [Dana-Farber, N=72])",
+    "known_overlaps": [],
+    "license": "Public Domain (NCBI GEO)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "GSE13159_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE13nnn/GSE13159/matrix/GSE13159_series_matrix.txt.gz",
+        "role": "expression_matrix_and_metadata"
+      }
+    ],
+    "preprocessing": "Affymetrix RMA normalized, log2 transformed; standard MILE centralized QC",
+    "exclusions": "None for multi-class hematologic evaluation; or restrict to AML/ALL subsets to evaluate lineage discovery",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=2,096)",
+      "Gate_E_feature_size_ge_500": "PASS (D=54,675)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Tier A",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "Massive multi-class hematological benchmark ($N=2,096, D=54,675, D/N=26.08, K=18$ classes). Clear cytogenetic and morphologic ground truth labels (B1). Fully independent from Golub 1999."
+  },
+  {
+    "cohort_id": "GSE42568",
+    "cohort_name": "Clarke Dublin Breast Cancer Cohort",
+    "disease": "Breast Cancer",
+    "histology": "Invasive Ductal Carcinoma",
+    "specimen_type": "Primary breast tumor biopsy (104 tumors + 17 normal breast)",
+    "stratum": "Bulk Microarray (Primary Benchmark Stratum)",
+    "repository": "GEO",
+    "accession": "GSE42568",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE42568",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE42nnn/GSE42568/matrix/GSE42568_series_matrix.txt.gz",
+    "publication_citation": "Clarke C, Madden SF, Doolan P, et al. Correlating transcriptional networks to breast cancer survival: a large-scale coexpression analysis. Carcinogenesis 34(10):2300-2308 (2013).",
+    "authors": "Clarke C, Madden SF, Doolan P, et al.",
+    "year": 2013,
+    "publication_doi": "10.1093/carcin/bgt208",
+    "publication_url": "https://doi.org/10.1093/carcin/bgt208",
+    "pubmed_id": "23740839",
+    "platform": "Affymetrix Human Genome U133 Plus 2.0 (GPL570)",
+    "assay": "Microarray",
+    "genome_build": "GRCh37",
+    "annotation_release": "NetAffx release 31",
+    "n_patients": 121,
+    "n_samples": 121,
+    "n_features_raw": 54675,
+    "n_features_qc": 54675,
+    "d_over_n": 451.86,
+    "labels": [
+      {
+        "name": "PAM50_molecular_subtype",
+        "type": "B6",
+        "description": "PAM50 intrinsic breast cancer subtypes",
+        "classes": {
+          "LumA": 37,
+          "LumB": 21,
+          "Her2": 16,
+          "Basal": 17,
+          "Normal_like": 13
+        },
+        "circularity_risk": "Moderate (PAM50 algorithm centroid prediction)"
+      },
+      {
+        "name": "tissue_type",
+        "type": "B2",
+        "description": "Invasive breast carcinoma versus normal breast control tissue",
+        "classes": {
+          "Tumor": 104,
+          "Normal": 17
+        },
+        "circularity_risk": "None"
+      },
+      {
+        "name": "ER_status",
+        "type": "B3",
+        "description": "Estrogen receptor clinical IHC status",
+        "classes": {
+          "ER_Positive": 73,
+          "ER_Negative": 31
+        },
+        "circularity_risk": "None (immunohistochemistry)"
+      },
+      {
+        "name": "overall_survival",
+        "type": "B4",
+        "description": "Overall survival in months and vital status",
+        "classes": {
+          "Continuous_survival_time": 121
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "ER_status",
+    "label_type": "B3",
+    "label_source": "Series matrix characteristics",
+    "class_counts": {
+      "ER_Positive": 73,
+      "ER_Negative": 31
+    },
+    "independent_unit": "Patient (104 primary breast tumors)",
+    "patient_id_available": true,
+    "overlap_group": "Dublin_Breast_Cancer_Ireland",
+    "overlap_status": "Independent (St. Vincent's University Hospital, Dublin; independent from Dutch and US cohorts)",
+    "known_overlaps": [],
+    "license": "Public Domain (NCBI GEO)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "GSE42568_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE42nnn/GSE42568/matrix/GSE42568_series_matrix.txt.gz",
+        "role": "expression_matrix_and_metadata"
+      }
+    ],
+    "preprocessing": "Affymetrix RMA normalized, log2 transformed",
+    "exclusions": "17 normal controls excluded for tumor subtype benchmark (leaves N=104 tumors)",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=104 tumors)",
+      "Gate_E_feature_size_ge_500": "PASS (D=54,675)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 2,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 20
+    },
+    "eligibility_tier": "Tier B",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "Clean high-D dataset ($N=104$ tumors, $D=54,675, D/N=525.7$). Assigned to Tier B (receptor status B3, ER+ vs ER-, or B2 contrast) to avoid circularity of inferred B6 PAM50 labels."
+  },
+  {
+    "cohort_id": "GSE2034",
+    "cohort_name": "Wang Rotterdam Breast Cancer Cohort",
+    "disease": "Breast Cancer",
+    "histology": "Primary Breast Adenocarcinoma",
+    "specimen_type": "Primary frozen breast tumor tissue",
+    "stratum": "Bulk Microarray (Primary Benchmark Stratum)",
+    "repository": "GEO",
+    "accession": "GSE2034",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE2034",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE2nnn/GSE2034/matrix/GSE2034_series_matrix.txt.gz",
+    "publication_citation": "Wang Y, Klijn JG, Zhang Y, et al. Gene-expression profiles to predict distant metastasis of lymph-node-negative primary breast cancer. Lancet 365(9460):671-679 (2005).",
+    "authors": "Wang Y, Klijn JG, Zhang Y, et al.",
+    "year": 2005,
+    "publication_doi": "10.1016/S0140-6736(05)17947-1",
+    "publication_url": "https://doi.org/10.1016/S0140-6736(05)17947-1",
+    "pubmed_id": "15721472",
+    "platform": "Affymetrix Human Genome U133A (GPL96)",
+    "assay": "Microarray",
+    "genome_build": "NCBI Human Build 35 / GRCh37",
+    "annotation_release": "NetAffx release 31",
+    "n_patients": 286,
+    "n_samples": 286,
+    "n_features_raw": 22283,
+    "n_features_qc": 22283,
+    "d_over_n": 77.91,
+    "labels": [
+      {
+        "name": "ER_status",
+        "type": "B3",
+        "description": "Estrogen receptor status by dextran-coated charcoal assay / mRNA",
+        "classes": {
+          "ER_Positive": 209,
+          "ER_Negative": 77
+        },
+        "circularity_risk": "None (biochemical ligand assay)"
+      },
+      {
+        "name": "distant_metastasis_5yr",
+        "type": "B4",
+        "description": "Distant metastasis relapse within 5 years",
+        "classes": {
+          "Relapsed_5yr": 107,
+          "Metastasis_Free_5yr": 179
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      },
+      {
+        "name": "menopausal_status",
+        "type": "B5",
+        "description": "Pre-menopausal versus post-menopausal",
+        "classes": {
+          "Pre": 93,
+          "Post": 193
+        },
+        "circularity_risk": "None"
+      }
+    ],
+    "label_name": "ER_status",
+    "label_type": "B3",
+    "label_source": "GEO series matrix characteristics",
+    "class_counts": {
+      "ER_Positive": 209,
+      "ER_Negative": 77
+    },
+    "independent_unit": "Patient (286 lymph node-negative primary breast tumors)",
+    "patient_id_available": true,
+    "overlap_group": "Rotterdam_Erasmus_MC",
+    "overlap_status": "Independent (Erasmus Medical Center, Rotterdam; verified disjoint from van 't Veer 2002 [Amsterdam NKI, N=97] in 09_dataset_overlap_audit.md)",
+    "known_overlaps": [],
+    "license": "Public Domain (NCBI GEO)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "GSE2034_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE2nnn/GSE2034/matrix/GSE2034_series_matrix.txt.gz",
+        "role": "expression_matrix_and_metadata"
+      }
+    ],
+    "preprocessing": "Affymetrix MAS5.0 normalized, log2 transformed",
+    "exclusions": "5-year distant metastasis label barred from clustering objective or evaluation",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=286)",
+      "Gate_E_feature_size_ge_500": "PASS (D=22,283)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 2,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 20
+    },
+    "eligibility_tier": "Tier B",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "Solid high-D Affymetrix U133A cohort ($N=286, D=22,283, D/N=77.91$). Verified independent from van 't Veer 2002. Primary valid label is B3 (ER Status). Assigned to Tier B molecular receptor stratum."
+  },
+  {
+    "cohort_id": "GSE19188",
+    "cohort_name": "Hou Non-Small Cell Lung Cancer Cohort",
+    "disease": "Lung Cancer",
+    "histology": "Non-Small Cell Lung Cancer (Adenocarcinoma vs Squamous Cell Carcinoma)",
+    "specimen_type": "Primary resected lung tumor tissue and adjacent non-tumoral lung",
+    "stratum": "Bulk Microarray (Primary Benchmark Stratum)",
+    "repository": "GEO",
+    "accession": "GSE19188",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE19188",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE19nnn/GSE19188/matrix/GSE19188_series_matrix.txt.gz",
+    "publication_citation": "Hou J, Aerts J, den Hamer B, et al. Gene expression-based classification of non-small cell lung carcinomas and survival prediction. PLoS ONE 5(4):e10312 (2010).",
+    "authors": "Hou J, Aerts J, den Hamer B, et al.",
+    "year": 2010,
+    "publication_doi": "10.1371/journal.pone.0010312",
+    "publication_url": "https://doi.org/10.1371/journal.pone.0010312",
+    "pubmed_id": "20421987",
+    "platform": "Affymetrix Human Genome U133 Plus 2.0 (GPL570)",
+    "assay": "Microarray",
+    "genome_build": "GRCh37",
+    "annotation_release": "NetAffx release 31",
+    "n_patients": 156,
+    "n_samples": 156,
+    "n_features_raw": 54675,
+    "n_features_qc": 54675,
+    "d_over_n": 350.48,
+    "labels": [
+      {
+        "name": "histological_type",
+        "type": "B1",
+        "description": "Histopathologic classification of NSCLC into adenocarcinoma, squamous cell carcinoma, and large cell carcinoma",
+        "classes": {
+          "Adenocarcinoma": 91,
+          "Squamous_Cell_Carcinoma": 37,
+          "Large_Cell_Carcinoma": 19
+        },
+        "circularity_risk": "None (histopathology / immunohistochemistry TTF-1, p63)"
+      },
+      {
+        "name": "tissue_contrast",
+        "type": "B2",
+        "description": "Lung tumor tissue versus adjacent normal lung parenchyma",
+        "classes": {
+          "Tumor": 128,
+          "Normal": 28
+        },
+        "circularity_risk": "None"
+      },
+      {
+        "name": "pathologic_stage",
+        "type": "B1",
+        "description": "TNM pathological stage (Stage I, II, III)",
+        "classes": {
+          "Stage_I": 84,
+          "Stage_II": 28,
+          "Stage_III": 16
+        },
+        "circularity_risk": "None"
+      },
+      {
+        "name": "overall_survival",
+        "type": "B4",
+        "description": "Overall survival duration and event indicator",
+        "classes": {
+          "Continuous_survival_time": 156
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "histological_type",
+    "label_type": "B1",
+    "label_source": "Series matrix characteristics",
+    "class_counts": {
+      "Adenocarcinoma": 91,
+      "Squamous_Cell_Carcinoma": 37
+    },
+    "independent_unit": "Patient (128 primary resected lung tumors)",
+    "patient_id_available": true,
+    "overlap_group": "Erasmus_MC_Singapore_Consortium",
+    "overlap_status": "Independent (Erasmus MC and Singapore; independent from Bhattacharjee 2001 and Okayama 2012)",
+    "known_overlaps": [],
+    "license": "Public Domain (NCBI GEO)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "GSE19188_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE19nnn/GSE19188/matrix/GSE19188_series_matrix.txt.gz",
+        "role": "expression_matrix_and_metadata"
+      }
+    ],
+    "preprocessing": "Affymetrix RMA normalized, log2 transformed",
+    "exclusions": "28 adjacent normal controls excluded for histological subtype benchmark (leaves N=128 tumors)",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=128 tumors)",
+      "Gate_E_feature_size_ge_500": "PASS (D=54,675)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Tier A",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "High-D Affymetrix U133 Plus 2.0 array ($N=128$ tumors, $D=54,675, D/N=427.15$). Clean histopathologic lineage labels B1 (Adenocarcinoma vs Squamous Cell Carcinoma). Fully passes all gates."
+  },
+  {
+    "cohort_id": "GSE21653",
+    "cohort_name": "Sabatier Marseille Breast Cancer Cohort",
+    "disease": "Breast Cancer",
+    "histology": "Invasive Breast Carcinoma",
+    "specimen_type": "Primary frozen tumor tissue",
+    "stratum": "Bulk Microarray (Primary Benchmark Stratum)",
+    "repository": "GEO",
+    "accession": "GSE21653",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE21653",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE21nnn/GSE21653/matrix/GSE21653_series_matrix.txt.gz",
+    "publication_citation": "Sabatier R, Finetti P, Cervera N, et al. A gene expression signature identifies two prognostic subgroups of basal breast cancer. Breast Cancer Res Treat 126(2):407-420 (2011).",
+    "authors": "Sabatier R, Finetti P, Cervera N, et al.",
+    "year": 2011,
+    "publication_doi": "10.1007/s10549-010-0897-9",
+    "publication_url": "https://doi.org/10.1007/s10549-010-0897-9",
+    "pubmed_id": "20490655",
+    "platform": "Affymetrix Human Genome U133 Plus 2.0 (GPL570)",
+    "assay": "Microarray",
+    "genome_build": "GRCh37",
+    "annotation_release": "NetAffx release 31",
+    "n_patients": 266,
+    "n_samples": 266,
+    "n_features_raw": 54675,
+    "n_features_qc": 54675,
+    "d_over_n": 205.54,
+    "labels": [
+      {
+        "name": "ER_status",
+        "type": "B3",
+        "description": "Estrogen receptor status by IHC",
+        "classes": {
+          "ER_Positive": 158,
+          "ER_Negative": 108
+        },
+        "circularity_risk": "None (immunohistochemistry)"
+      },
+      {
+        "name": "PAM50_subtype",
+        "type": "B6",
+        "description": "PAM50 intrinsic molecular subtypes",
+        "classes": {
+          "LumA": 89,
+          "LumB": 57,
+          "Her2": 32,
+          "Basal": 74,
+          "Normal_like": 14
+        },
+        "circularity_risk": "Moderate (centroid classification)"
+      },
+      {
+        "name": "histological_grade",
+        "type": "B1",
+        "description": "Elston-Ellis modified Scarff-Bloom-Richardson (SBR) grade",
+        "classes": {
+          "Grade_1": 28,
+          "Grade_2": 95,
+          "Grade_3": 143
+        },
+        "circularity_risk": "None (histopathology)"
+      },
+      {
+        "name": "metastasis_free_survival",
+        "type": "B4",
+        "description": "MFS time in months and distant relapse status",
+        "classes": {
+          "Continuous_survival_time": 266
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "histological_grade",
+    "label_type": "B1",
+    "label_source": "Series matrix characteristics",
+    "class_counts": {
+      "Grade_1": 28,
+      "Grade_2": 95,
+      "Grade_3": 143
+    },
+    "independent_unit": "Patient (266 primary invasive breast tumors)",
+    "patient_id_available": true,
+    "overlap_group": "Paoli_Calmettes_Marseille",
+    "overlap_status": "Independent (Institut Paoli-Calmettes, Marseille, France; independent European cohort)",
+    "known_overlaps": [],
+    "license": "Public Domain (NCBI GEO)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "GSE21653_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE21nnn/GSE21653/matrix/GSE21653_series_matrix.txt.gz",
+        "role": "expression_matrix_and_metadata"
+      }
+    ],
+    "preprocessing": "Affymetrix RMA normalized, log2 transformed",
+    "exclusions": "Survival labels barred from clustering evaluation",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=266)",
+      "Gate_E_feature_size_ge_500": "PASS (D=54,675)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Tier A",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "High-D Affymetrix U133 Plus 2.0 array ($N=266, D=54,675, D/N=205.54$). Histological grade B1 ($K=3$) and receptor status B3. Fully passes all gates."
+  },
+  {
+    "cohort_id": "GSE10846",
+    "cohort_name": "LLMPP DLBCL Cohort (Lenz et al.)",
+    "disease": "Lymphoma",
+    "histology": "Diffuse Large B-Cell Lymphoma (DLBCL)",
+    "specimen_type": "Pre-treatment diagnostic tumor biopsy",
+    "stratum": "Bulk Microarray (Primary Benchmark Stratum)",
+    "repository": "GEO",
+    "accession": "GSE10846",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE10846",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE10nnn/GSE10846/matrix/GSE10846_series_matrix.txt.gz",
+    "publication_citation": "Lenz G, Wright G, Dave SS, et al. Stromal gene signatures in large-B-cell lymphomas. N Engl J Med 359(22):2313-2323 (2008).",
+    "authors": "Lenz G, Wright G, Dave SS, et al. (Lymphoma/Leukemia Molecular Profiling Project)",
+    "year": 2008,
+    "publication_doi": "10.1056/NEJMoa0802885",
+    "publication_url": "https://doi.org/10.1056/NEJMoa0802885",
+    "pubmed_id": "19038878",
+    "platform": "Affymetrix Human Genome U133 Plus 2.0 (GPL570)",
+    "assay": "Microarray",
+    "genome_build": "GRCh37",
+    "annotation_release": "NetAffx release 31",
+    "n_patients": 420,
+    "n_samples": 420,
+    "n_features_raw": 54675,
+    "n_features_qc": 54675,
+    "d_over_n": 130.18,
+    "labels": [
+      {
+        "name": "cell_of_origin_subtype",
+        "type": "B1",
+        "description": "Cell-of-Origin (COO) molecular subtype of DLBCL (GCB, ABC, Unclassified/PMBL)",
+        "classes": {
+          "GCB": 174,
+          "ABC": 167,
+          "Unclassified": 79
+        },
+        "circularity_risk": "Low (gold-standard biological COO classification verified across platforms)"
+      },
+      {
+        "name": "chemotherapy_regimen",
+        "type": "B5",
+        "description": "Therapeutic treatment protocol (CHOP vs R-CHOP)",
+        "classes": {
+          "CHOP": 181,
+          "R_CHOP": 233,
+          "Missing": 6
+        },
+        "circularity_risk": "None (treatment arm metadata)"
+      },
+      {
+        "name": "overall_survival",
+        "type": "B4",
+        "description": "Overall survival in years and follow-up vital status",
+        "classes": {
+          "Continuous_survival_time": 414
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "cell_of_origin_subtype",
+    "label_type": "B1",
+    "label_source": "Series matrix characteristics / LLMPP consortium table",
+    "class_counts": {
+      "GCB": 174,
+      "ABC": 167,
+      "Unclassified": 79
+    },
+    "independent_unit": "Patient (420 pre-treatment DLBCL biopsy specimens)",
+    "patient_id_available": true,
+    "overlap_group": "LLMPP_Consortium",
+    "overlap_status": "Independent platform cohort (Affymetrix U133 Plus 2.0 collected 2000-2006; Shipp et al. 2002 was collected earlier on Hu6800. Completely independent patient set from Golub and Alon).",
+    "known_overlaps": [],
+    "license": "Public Domain (NCBI GEO)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "GSE10846_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE10nnn/GSE10846/matrix/GSE10846_series_matrix.txt.gz",
+        "role": "expression_matrix_and_metadata"
+      }
+    ],
+    "preprocessing": "Affymetrix MAS5.0 log2 transformed / RMA normalized",
+    "exclusions": "Survival and treatment arm metadata barred from clustering ground truth",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=420)",
+      "Gate_E_feature_size_ge_500": "PASS (D=54,675)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Tier A",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "Large sample size ($N=420, D=54,675, D/N=130.18$). Excellent B1 lineage ground truth (ABC vs GCB vs Unclassified, $K=3$). Passes all mandatory gates."
+  },
+  {
+    "cohort_id": "GSE14333",
+    "cohort_name": "Jorissen Colorectal Cancer Cohort",
+    "disease": "Colorectal Cancer",
+    "histology": "Colorectal Adenocarcinoma",
+    "specimen_type": "Primary surgically resected colorectal tumors",
+    "stratum": "Bulk Microarray (Primary Benchmark Stratum)",
+    "repository": "GEO",
+    "accession": "GSE14333",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE14333",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE14nnn/GSE14333/matrix/GSE14333_series_matrix.txt.gz",
+    "publication_citation": "Jorissen RN, Gibbs P, Christie M, et al. Metastasis-Associated Gene Expression Changes Predict Poor Outcomes in Patients with Dukes Stage B and C Colorectal Cancer. Clin Cancer Res 15(24):7642-7651 (2009).",
+    "authors": "Jorissen RN, Gibbs P, Christie M, et al.",
+    "year": 2009,
+    "publication_doi": "10.1158/1078-0432.CCR-09-1431",
+    "publication_url": "https://doi.org/10.1158/1078-0432.CCR-09-1431",
+    "pubmed_id": "19996206",
+    "platform": "Affymetrix Human Genome U133 Plus 2.0 (GPL570)",
+    "assay": "Microarray",
+    "genome_build": "GRCh37",
+    "annotation_release": "NetAffx release 31",
+    "n_patients": 290,
+    "n_samples": 290,
+    "n_features_raw": 54675,
+    "n_features_qc": 54675,
+    "d_over_n": 188.53,
+    "labels": [
+      {
+        "name": "Dukes_stage",
+        "type": "B1",
+        "description": "Pathologic Dukes Stage (Dukes A, B, C, D)",
+        "classes": {
+          "Dukes_A": 35,
+          "Dukes_B": 110,
+          "Dukes_C": 105,
+          "Dukes_D": 40
+        },
+        "circularity_risk": "None (surgical pathology)"
+      },
+      {
+        "name": "tumor_location",
+        "type": "B1",
+        "description": "Anatomical subsite (Proximal Colon, Distal Colon, Rectum)",
+        "classes": {
+          "Proximal": 118,
+          "Distal": 102,
+          "Rectum": 70
+        },
+        "circularity_risk": "None (anatomical surgical location)"
+      },
+      {
+        "name": "TP53_mutation_status",
+        "type": "B3",
+        "description": "TP53 gene mutation status (mutant vs wild-type)",
+        "classes": {
+          "Mutant": 112,
+          "Wild_type": 178
+        },
+        "circularity_risk": "None (sequencing)"
+      },
+      {
+        "name": "disease_free_survival",
+        "type": "B4",
+        "description": "DFS time in months and recurrence indicator",
+        "classes": {
+          "Continuous_survival_time": 290
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "tumor_location",
+    "label_type": "B1",
+    "label_source": "Series matrix characteristics",
+    "class_counts": {
+      "Proximal": 118,
+      "Distal": 102,
+      "Rectum": 70
+    },
+    "independent_unit": "Patient (290 primary colorectal tumor specimens)",
+    "patient_id_available": true,
+    "overlap_group": "Melbourne_Health_Australia",
+    "overlap_status": "Independent (Royal Melbourne Hospital / Western Hospital, Australia; independent from CIT GSE39582 [France] and Alon 1999 [USA])",
+    "known_overlaps": [],
+    "license": "Public Domain (NCBI GEO)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "GSE14333_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE14nnn/GSE14333/matrix/GSE14333_series_matrix.txt.gz",
+        "role": "expression_matrix_and_metadata"
+      }
+    ],
+    "preprocessing": "Affymetrix RMA normalized, log2 transformed",
+    "exclusions": "Survival labels barred from clustering evaluation",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=290)",
+      "Gate_E_feature_size_ge_500": "PASS (D=54,675)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Tier A",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "High-D Affymetrix U133 Plus 2.0 array ($N=290, D=54,675, D/N=188.53$). Biological location labels B1 (Proximal vs Distal vs Rectum, $K=3$) and stage labels B1. Fully independent cohort."
+  },
+  {
+    "cohort_id": "GSE32894",
+    "cohort_name": "Lund Urothelial Carcinoma Cohort (Sjodahl et al.)",
+    "disease": "Bladder Cancer",
+    "histology": "Urothelial Carcinoma",
+    "specimen_type": "Primary resected bladder urothelial tumor tissue",
+    "stratum": "Bulk Microarray (Primary Benchmark Stratum)",
+    "repository": "GEO",
+    "accession": "GSE32894",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE32894",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE32nnn/GSE32894/matrix/GSE32894_series_matrix.txt.gz",
+    "publication_citation": "Sjodahl G, Lauss M, Lovgren K, et al. A molecular taxonomy for urothelial carcinoma. Clin Cancer Res 18(12):3377-3386 (2012).",
+    "authors": "Sjodahl G, Lauss M, Lovgren K, et al.",
+    "year": 2012,
+    "publication_doi": "10.1158/1078-0432.CCR-12-0077-T",
+    "publication_url": "https://doi.org/10.1158/1078-0432.CCR-12-0077-T",
+    "pubmed_id": "22553347",
+    "platform": "Illumina HumanHT-12 v3.0 Expression BeadChip (GPL6947)",
+    "assay": "Microarray",
+    "genome_build": "GRCh37",
+    "annotation_release": "Illumina BeadChip annotation v3.0",
+    "n_patients": 308,
+    "n_samples": 308,
+    "n_features_raw": 48803,
+    "n_features_qc": 48803,
+    "d_over_n": 158.45,
+    "labels": [
+      {
+        "name": "Lund_molecular_subtype",
+        "type": "B1",
+        "description": "Lund urothelial molecular taxonomy (UroA, UroB, Genomically Unstable GU, Infiltrated, SCCL-like)",
+        "classes": {
+          "UroA": 102,
+          "GU": 84,
+          "Infiltrated": 58,
+          "UroB": 36,
+          "SCCL": 28
+        },
+        "circularity_risk": "Low (Lund classification validated as international reference bladder taxonomy)"
+      },
+      {
+        "name": "pathologic_stage",
+        "type": "B1",
+        "description": "Pathologic tumor stage (Ta, T1, T2, T3, T4)",
+        "classes": {
+          "Ta": 105,
+          "T1": 85,
+          "T2": 66,
+          "T3": 38,
+          "T4": 14
+        },
+        "circularity_risk": "None (histopathology)"
+      },
+      {
+        "name": "overall_survival",
+        "type": "B4",
+        "description": "Overall survival in months and vital status",
+        "classes": {
+          "Continuous_survival_time": 308
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "Lund_molecular_subtype",
+    "label_type": "B1",
+    "label_source": "Series matrix characteristics / original paper supplementary data",
+    "class_counts": {
+      "UroA": 102,
+      "GU": 84,
+      "Infiltrated": 58,
+      "UroB": 36,
+      "SCCL": 28
+    },
+    "independent_unit": "Patient (308 primary urothelial bladder tumor resections)",
+    "patient_id_available": true,
+    "overlap_group": "Lund_University_Sweden",
+    "overlap_status": "Independent (Lund University Hospital, Sweden; independent European cohort)",
+    "known_overlaps": [],
+    "license": "Public Domain (NCBI GEO)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "GSE32894_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE32nnn/GSE32894/matrix/GSE32894_series_matrix.txt.gz",
+        "role": "expression_matrix_and_metadata"
+      }
+    ],
+    "preprocessing": "Illumina BeadStudio cubic spline normalized, log2 transformed",
+    "exclusions": "Survival labels barred from clustering evaluation",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=308)",
+      "Gate_E_feature_size_ge_500": "PASS (D=48,803)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Tier A",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "High-D Illumina array ($N=308, D=48,803, D/N=158.45$). Landmark bladder cancer molecular taxonomy labels B1 ($K=5$). Fully passes all gates."
+  },
+  {
+    "cohort_id": "GSE41271",
+    "cohort_name": "Sato Lung Adenocarcinoma Cohort",
+    "disease": "Lung Cancer",
+    "histology": "Lung Adenocarcinoma",
+    "specimen_type": "Primary resected lung adenocarcinoma tissue",
+    "stratum": "Bulk Microarray (Primary Benchmark Stratum)",
+    "repository": "GEO",
+    "accession": "GSE41271",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE41271",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE41nnn/GSE41271/matrix/GSE41271_series_matrix.txt.gz",
+    "publication_citation": "Sato M, Gazdar AF, Minna JD, et al. Human lung epithelial cells progressed to malignancy through specific oncogenic pathways. Mol Cancer Res 11(6):638-650 (2013).",
+    "authors": "Sato M, Gazdar AF, Minna JD, et al.",
+    "year": 2013,
+    "publication_doi": "10.1158/1541-7786.MCR-12-0634-T",
+    "publication_url": "https://doi.org/10.1158/1541-7786.MCR-12-0634-T",
+    "pubmed_id": "23449933",
+    "platform": "Illumina HumanWG-6 v3.0 Expression BeadChip (GPL6884)",
+    "assay": "Microarray",
+    "genome_build": "GRCh37",
+    "annotation_release": "Illumina BeadChip annotation v3.0",
+    "n_patients": 275,
+    "n_samples": 275,
+    "n_features_raw": 48803,
+    "n_features_qc": 48803,
+    "d_over_n": 177.47,
+    "labels": [
+      {
+        "name": "histologic_differentiation",
+        "type": "B1",
+        "description": "Histopathologic differentiation grade (Well, Moderately, Poorly differentiated)",
+        "classes": {
+          "Well": 46,
+          "Moderate": 128,
+          "Poor": 101
+        },
+        "circularity_risk": "None (microscopic histopathology)"
+      },
+      {
+        "name": "KRAS_mutation",
+        "type": "B3",
+        "description": "KRAS oncogene somatic mutation",
+        "classes": {
+          "Mutant": 78,
+          "Wild_type": 197
+        },
+        "circularity_risk": "None (Sanger sequencing)"
+      },
+      {
+        "name": "EGFR_mutation",
+        "type": "B3",
+        "description": "EGFR oncogene somatic mutation",
+        "classes": {
+          "Mutant": 38,
+          "Wild_type": 237
+        },
+        "circularity_risk": "None (Sanger sequencing)"
+      },
+      {
+        "name": "overall_survival",
+        "type": "B4",
+        "description": "Overall survival in months and vital status",
+        "classes": {
+          "Continuous_survival_time": 275
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "histologic_differentiation",
+    "label_type": "B1",
+    "label_source": "Series matrix characteristics / supplementary tables",
+    "class_counts": {
+      "Well": 46,
+      "Moderate": 128,
+      "Poor": 101
+    },
+    "independent_unit": "Patient (275 primary resected lung tumors)",
+    "patient_id_available": true,
+    "overlap_group": "UTSW_MD_Anderson_Consortium",
+    "overlap_status": "Independent (UT Southwestern / MD Anderson, Dallas/Houston; independent from Okayama 2012 and Hou 2010)",
+    "known_overlaps": [],
+    "license": "Public Domain (NCBI GEO)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "GSE41271_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE41nnn/GSE41271/matrix/GSE41271_series_matrix.txt.gz",
+        "role": "expression_matrix_and_metadata"
+      }
+    ],
+    "preprocessing": "Illumina BeadStudio cubic spline normalized, log2 transformed",
+    "exclusions": "Survival labels barred from clustering evaluation",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=275)",
+      "Gate_E_feature_size_ge_500": "PASS (D=48,803)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Tier A",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "High-D Illumina array ($N=275, D=48,803, D/N=177.47$). Defensible histological differentiation B1 ($K=3$) and mutational status B3. Passes all mandatory gates."
+  },
+  {
+    "cohort_id": "GSE88770",
+    "cohort_name": "BIG 02-98 Invasive Lobular Carcinoma Cohort",
+    "disease": "Breast Cancer",
+    "histology": "Invasive Lobular Carcinoma (ILC)",
+    "specimen_type": "Primary frozen tumor biopsy",
+    "stratum": "Bulk Microarray (Primary Benchmark Stratum)",
+    "repository": "GEO",
+    "accession": "GSE88770",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE88770",
+    "series_matrix_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE88nnn/GSE88770/matrix/GSE88770_series_matrix.txt.gz",
+    "publication_citation": "Metzger-Filho O, Michaut M, Desmedt C, et al. Genomic grade adds prognostic value in invasive lobular carcinoma. Ann Oncol 24(2):376-382 (2013).",
+    "authors": "Metzger-Filho O, Michaut M, Desmedt C, et al. (Breast International Group BIG 02-98 Trial)",
+    "year": 2013,
+    "publication_doi": "10.1093/annonc/mds280",
+    "publication_url": "https://doi.org/10.1093/annonc/mds280",
+    "pubmed_id": "23028037",
+    "platform": "Affymetrix Human Genome U133 Plus 2.0 (GPL570)",
+    "assay": "Microarray",
+    "genome_build": "GRCh37",
+    "annotation_release": "NetAffx release 31",
+    "n_patients": 117,
+    "n_samples": 117,
+    "n_features_raw": 54675,
+    "n_features_qc": 54675,
+    "d_over_n": 467.31,
+    "labels": [
+      {
+        "name": "ILC_histological_variant",
+        "type": "B1",
+        "description": "Histopathologic subtype of invasive lobular carcinoma (Classic, Pleomorphic, Mixed/Alveolar/Solid)",
+        "classes": {
+          "Classic": 72,
+          "Pleomorphic": 24,
+          "Mixed_Alveolar_Solid": 21
+        },
+        "circularity_risk": "None (central pathology review)"
+      },
+      {
+        "name": "genomic_grade_index",
+        "type": "B6",
+        "description": "Genomic Grade Index (GGI Low vs High)",
+        "classes": {
+          "GGI_Low": 65,
+          "GGI_High": 52
+        },
+        "circularity_risk": "High (expression-derived GGI signature; circular for clustering)"
+      },
+      {
+        "name": "disease_free_survival",
+        "type": "B4",
+        "description": "DFS time in years and recurrence status",
+        "classes": {
+          "Continuous_survival_time": 117
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "ILC_histological_variant",
+    "label_type": "B1",
+    "label_source": "Series matrix characteristics / BIG 02-98 pathology trial records",
+    "class_counts": {
+      "Classic": 72,
+      "Pleomorphic": 24,
+      "Mixed_Alveolar_Solid": 21
+    },
+    "independent_unit": "Patient (117 primary ILC breast tumors)",
+    "patient_id_available": true,
+    "overlap_group": "BIG_02_98_Consortium",
+    "overlap_status": "Independent (Breast International Group trial; independent from van 't Veer and Wang cohorts)",
+    "known_overlaps": [],
+    "license": "Public Domain (NCBI GEO)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "GSE88770_series_matrix.txt.gz",
+        "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE88nnn/GSE88770/matrix/GSE88770_series_matrix.txt.gz",
+        "role": "expression_matrix_and_metadata"
+      }
+    ],
+    "preprocessing": "Affymetrix RMA normalized, log2 transformed",
+    "exclusions": "GGI label flagged as circular; use central pathology histologic variants (Classic vs Pleomorphic vs Mixed)",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=117)",
+      "Gate_E_feature_size_ge_500": "PASS (D=54,675)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Tier A",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "High-D Affymetrix U133 Plus 2.0 array ($N=117, D=54,675, D/N=467.31$). Dedicated rare histology cohort (Invasive Lobular Carcinoma) with central pathology review labels B1 (Classic vs Pleomorphic vs Mixed). Passes all gates."
+  },
+  {
+    "cohort_id": "E-MTAB-669",
+    "cohort_name": "Standardized Cancer Transcriptome Compendia (Lim et al., E-MTAB-6690-6699)",
+    "disease": "Multi-Cancer Compendia (Pancreatic, CRC, Renal, Gastric, etc.)",
+    "histology": "Cross-study pooled neoplasms",
+    "specimen_type": "Multi-cohort pooled primary tumors and normal tissues",
+    "stratum": "Separate Stratum: Multi-Cohort Merged / Cross-Study Compendium",
+    "repository": "ArrayExpress / BioStudies",
+    "accession": "E-MTAB-6690",
+    "source_url": "https://www.ebi.ac.uk/biostudies/studies/E-MTAB-6690",
+    "series_matrix_url": "https://www.ebi.ac.uk/biostudies/files/E-MTAB-6690/E-MTAB-6690.processed.1.zip",
+    "publication_citation": "Lim SB, Tan SJ, Lim WT, Lim CT. An open-access compendium of standardized cancer transcriptome data for biomarker discovery. Sci Data 6:190014 (2019).",
+    "authors": "Lim SB, Tan SJ, Lim WT, Lim CT",
+    "year": 2019,
+    "publication_doi": "10.1038/sdata.2019.14",
+    "publication_url": "https://doi.org/10.1038/sdata.2019.14",
+    "pubmed_id": "30806637",
+    "platform": "Multi-study merged Affymetrix HG-U133 Plus 2.0 (A-AFFY-44 / GPL570)",
+    "assay": "Microarray",
+    "genome_build": "GRCh37",
+    "annotation_release": "A-AFFY-44",
+    "n_patients": 634,
+    "n_samples": 634,
+    "n_features_raw": 19574,
+    "n_features_qc": 19574,
+    "d_over_n": 30.87,
+    "labels": [
+      {
+        "name": "tissue_contrast",
+        "type": "B2",
+        "description": "Tumor tissue versus normal tissue across pooled GEO datasets",
+        "classes": {
+          "Tumor": 550,
+          "Normal": 84
+        },
+        "circularity_risk": "None"
+      },
+      {
+        "name": "source_study",
+        "type": "B5",
+        "description": "Original contributing GEO series ID (GSE15471, GSE16515, GSE28735, etc.)",
+        "classes": {
+          "Multi_GEO_series": 634
+        },
+        "circularity_risk": "Technical batch variable"
+      }
+    ],
+    "label_name": "tissue_contrast",
+    "label_type": "B2",
+    "label_source": "MAGE-TAB SDRF sample metadata",
+    "class_counts": {
+      "Tumor": 550,
+      "Normal": 84
+    },
+    "independent_unit": "Patient (pooled across 6-15 external GEO series)",
+    "patient_id_available": true,
+    "overlap_group": "Lim_Compendia_Series",
+    "overlap_status": "Severe Derivative Overlap (compounds samples directly from GSE39582, GSE14333, GSE14520, and others; violates cohort independence if analyzed together)",
+    "known_overlaps": [
+      "GSE39582",
+      "GSE14333",
+      "GSE14520",
+      "GSE15471",
+      "GSE16515"
+    ],
+    "license": "Creative Commons Attribution 4.0 International (CC-BY 4.0)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "E-MTAB-6690.sdrf.txt",
+        "url": "https://www.ebi.ac.uk/biostudies/files/E-MTAB-6690/E-MTAB-6690.sdrf.txt",
+        "role": "sample_metadata"
+      }
+    ],
+    "preprocessing": "ComBat cross-study batch correction across multiple GEO accessions. Explicitly forbidden for primary per-cohort benchmark per Spec Section 5.5.",
+    "exclusions": "Violates Spec Section 5.5 ('Do not use batch correction across independent cohorts for the primary per-cohort benchmark') and Spec Section 3 ('If a dataset is a re-analysis or subset of an existing cohort, mark it derivative and exclude it').",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS",
+      "Gate_E_feature_size_ge_500": "PASS",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "FAIL (Fatal derivative sample duplication with existing primary cohorts)"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 1,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 2,
+      "independent_cohort_status": 0,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 1,
+      "total_score": 13
+    },
+    "eligibility_tier": "Separate Stratum",
+    "eligibility_decision": "REJECT_FROM_PRIMARY_STRATUM",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "E-MTAB-669 (E-MTAB-6690-6699) is a multi-study meta-compendium applying ComBat batch correction across multiple GEO series (including GSE39582, GSE14333). Direct inclusion in the primary benchmark would create severe pseudoreplication and violates Spec Sections 3, 4.1(I), and 5.5."
+  },
+  {
+    "cohort_id": "E-MTAB-3732",
+    "cohort_name": "Curated Human HG-U133 Plus 2 Microarray Compendium (Lukk et al.)",
+    "disease": "Multi-System Compendium (1,000+ Human Tissues & Neoplasms)",
+    "histology": "Pan-tissue and pan-cancer compendium",
+    "specimen_type": "Primary normal, diseased, and neoplastic tissues compiled from hundreds of studies",
+    "stratum": "Separate Stratum: Multi-Study Reference Atlas",
+    "repository": "ArrayExpress / BioStudies",
+    "accession": "E-MTAB-3732",
+    "source_url": "https://www.ebi.ac.uk/biostudies/studies/E-MTAB-3732",
+    "series_matrix_url": "https://www.ebi.ac.uk/biostudies/files/E-MTAB-3732/E-MTAB-3732.sdrf.txt",
+    "publication_citation": "Lukk M, Kapushesky M, Nikkilä J, et al. A human tissue compendium for immunohistochemistry and expression profiling. Nat Biotechnol 28(4):322-324 (2010).",
+    "authors": "Lukk M, Kapushesky M, Nikkilä J, et al.",
+    "year": 2010,
+    "publication_doi": "10.1038/nbt.1669",
+    "publication_url": "https://doi.org/10.1038/nbt.1669",
+    "pubmed_id": "20379177",
+    "platform": "Affymetrix Human Genome U133 Plus 2.0 (A-AFFY-44 / GPL570)",
+    "assay": "Microarray",
+    "genome_build": "GRCh37",
+    "annotation_release": "A-AFFY-44",
+    "n_patients": 27870,
+    "n_samples": 27870,
+    "n_features_raw": 54675,
+    "n_features_qc": 54675,
+    "d_over_n": 1.96,
+    "labels": [
+      {
+        "name": "anatomical_system_tissue",
+        "type": "B1",
+        "description": "Ontology-mapped organ system and cell lineage",
+        "classes": {
+          "Hematopoietic": 6500,
+          "Nervous_System": 3200,
+          "Digestive": 2800,
+          "Neoplasm": 12000,
+          "Others": 3370
+        },
+        "circularity_risk": "None (anatomical ontology)"
+      },
+      {
+        "name": "contributing_experiment",
+        "type": "B5",
+        "description": "ArrayExpress / GEO contributing accession ID",
+        "classes": {
+          "Hundreds_of_studies": 27870
+        },
+        "circularity_risk": "Technical batch variable"
+      }
+    ],
+    "label_name": "anatomical_system_tissue",
+    "label_type": "B1",
+    "label_source": "ArrayExpress curated SDRF ontology mapping",
+    "class_counts": {
+      "Neoplasm": 12000,
+      "Normal_Tissue": 15870
+    },
+    "independent_unit": "Multi-study archive (not a single biologically defined cancer cohort)",
+    "patient_id_available": true,
+    "overlap_group": "ArrayExpress_Curated_Compendium",
+    "overlap_status": "Extensive Multi-Study Overlap (incorporates dozens of historical GEO series)",
+    "known_overlaps": [
+      "GSE13159",
+      "GSE10846",
+      "GSE14333"
+    ],
+    "license": "Creative Commons Public Domain Dedication (CC0)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "E-MTAB-3732.sdrf.txt",
+        "url": "https://www.ebi.ac.uk/biostudies/files/E-MTAB-3732/E-MTAB-3732.sdrf.txt",
+        "role": "sample_metadata"
+      }
+    ],
+    "preprocessing": "Uniform RMA normalization across 27,870 arrays. Global compendium.",
+    "exclusions": "Cannot be evaluated as a single independent cohort. Overlaps with primary GEO series.",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS",
+      "Gate_E_feature_size_ge_500": "PASS",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "FAIL (Massive cross-study overlap with constituent primary series)"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 2,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 2,
+      "independent_cohort_status": 0,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 2,
+      "total_score": 15
+    },
+    "eligibility_tier": "Separate Stratum",
+    "eligibility_decision": "REJECT_FROM_PRIMARY_STRATUM",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "E-MTAB-3732 is a 27,870-sample multi-study reference compendium, not an independent cancer cohort. Excluded from primary benchmark to prevent cross-cohort duplication and massive sample inflation."
+  },
+  {
+    "cohort_id": "E-MTAB-1980",
+    "cohort_name": "Sato ccRCC Kidney Cancer Cohort",
+    "disease": "Kidney Cancer",
+    "histology": "Clear Cell Renal Cell Carcinoma (ccRCC)",
+    "specimen_type": "Primary surgically resected kidney tumor tissue",
+    "stratum": "Bulk Microarray (Primary Benchmark Stratum)",
+    "repository": "ArrayExpress / BioStudies",
+    "accession": "E-MTAB-1980",
+    "source_url": "https://www.ebi.ac.uk/biostudies/studies/E-MTAB-1980",
+    "series_matrix_url": "https://www.ebi.ac.uk/biostudies/files/E-MTAB-1980/E-MTAB-1980.processed.1.zip",
+    "publication_citation": "Sato Y, Yoshizato T, Shiraishi Y, et al. Integrated molecular analysis of clear-cell renal cell carcinoma. Nat Genet 45(8):860-867 (2013).",
+    "authors": "Sato Y, Yoshizato T, Shiraishi Y, et al.",
+    "year": 2013,
+    "publication_doi": "10.1038/ng.2699",
+    "publication_url": "https://doi.org/10.1038/ng.2699",
+    "pubmed_id": "23793029",
+    "platform": "Affymetrix Human Genome U133 Plus 2.0 (A-AFFY-44 / GPL570)",
+    "assay": "Microarray",
+    "genome_build": "GRCh37",
+    "annotation_release": "A-AFFY-44 NetAffx release 31",
+    "n_patients": 101,
+    "n_samples": 101,
+    "n_features_raw": 54675,
+    "n_features_qc": 54675,
+    "d_over_n": 541.34,
+    "labels": [
+      {
+        "name": "ccRCC_molecular_subtype",
+        "type": "B1",
+        "description": "Clear cell RCC molecular clusters (ccA-like angiogenic vs ccB-like aggressive/stromal)",
+        "classes": {
+          "Cluster_1_ccA": 54,
+          "Cluster_2_ccB": 47
+        },
+        "circularity_risk": "Low (validated orthogonal to clinical staging)"
+      },
+      {
+        "name": "VHL_mutation_status",
+        "type": "B3",
+        "description": "VHL tumor suppressor gene mutation status (mutant vs wild-type)",
+        "classes": {
+          "VHL_Mutant": 71,
+          "VHL_WT": 30
+        },
+        "circularity_risk": "None (exome / targeted Sanger sequencing)"
+      },
+      {
+        "name": "PBRM1_mutation_status",
+        "type": "B3",
+        "description": "PBRM1 chromatin remodeler somatic mutation status",
+        "classes": {
+          "PBRM1_Mutant": 39,
+          "PBRM1_WT": 62
+        },
+        "circularity_risk": "None (sequencing)"
+      },
+      {
+        "name": "Fuhrman_nuclear_grade",
+        "type": "B1",
+        "description": "Histopathologic Fuhrman nuclear grade (Grade 1, 2, 3, 4)",
+        "classes": {
+          "Grade_1": 12,
+          "Grade_2": 45,
+          "Grade_3": 33,
+          "Grade_4": 11
+        },
+        "circularity_risk": "None (microscopic nuclear pleomorphism)"
+      },
+      {
+        "name": "cancer_specific_survival",
+        "type": "B4",
+        "description": "CSS duration in months and death from ccRCC indicator",
+        "classes": {
+          "Continuous_survival_time": 101
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "ccRCC_molecular_subtype",
+    "label_type": "B1",
+    "label_source": "ArrayExpress SDRF / Nature Genetics supplementary tables",
+    "class_counts": {
+      "Cluster_1_ccA": 54,
+      "Cluster_2_ccB": 47
+    },
+    "independent_unit": "Patient (101 primary resected ccRCC kidney tumors)",
+    "patient_id_available": true,
+    "overlap_group": "University_of_Tokyo_Kidney_Consortium",
+    "overlap_status": "Independent (University of Tokyo / Japanese RCC consortium; completely disjoint from TCGA-KIRC and legacy benchmarks)",
+    "known_overlaps": [],
+    "license": "Creative Commons Public Domain Dedication (CC0) / ArrayExpress open access",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "E-MTAB-1980.sdrf.txt",
+        "url": "https://www.ebi.ac.uk/biostudies/files/E-MTAB-1980/E-MTAB-1980.sdrf.txt",
+        "role": "sample_metadata"
+      },
+      {
+        "name": "E-MTAB-1980.processed.1.zip",
+        "url": "https://www.ebi.ac.uk/biostudies/files/E-MTAB-1980/E-MTAB-1980.processed.1.zip",
+        "role": "normalized_expression_matrix"
+      }
+    ],
+    "preprocessing": "Affymetrix RMA background correction, quantile normalization, log2 transformed",
+    "exclusions": "Survival labels barred from clustering evaluation",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=101)",
+      "Gate_E_feature_size_ge_500": "PASS (D=54,675)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Tier A",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "High-D Affymetrix U133 Plus 2.0 array ($N=101, D=54,675, D/N=541.34$). Defensible biological molecular subtypes B1 ($K=2$) and Fuhrman nuclear grades B1 ($K=4$), plus VHL/PBRM1 mutations B3. ArrayExpress provenance and open access CC0 terms fully verified. All gates pass."
+  },
+  {
+    "cohort_id": "TCGA-BRCA",
+    "cohort_name": "The Cancer Genome Atlas Breast Invasive Carcinoma Cohort",
+    "disease": "Breast Cancer",
+    "histology": "Invasive Ductal and Lobular Carcinomas",
+    "specimen_type": "Primary resected breast tumor tissue (1,098 tumors + 113 normal controls)",
+    "stratum": "Separate Stratum: TCGA Harmonized Bulk RNA-seq",
+    "repository": "GDC",
+    "accession": "TCGA-BRCA",
+    "source_url": "https://portal.gdc.cancer.gov/projects/TCGA-BRCA",
+    "series_matrix_url": "https://api.gdc.cancer.gov/data/tcga-brca-star-counts-manifest",
+    "publication_citation": "The Cancer Genome Atlas Network. Comprehensive molecular portraits of human breast tumours. Nature 490(7418):61-70 (2012).",
+    "authors": "The Cancer Genome Atlas Network",
+    "year": 2012,
+    "publication_doi": "10.1038/nature11412",
+    "publication_url": "https://doi.org/10.1038/nature11412",
+    "pubmed_id": "23000897",
+    "platform": "Illumina HiSeq 2000 RNA Sequencing (STAR - Counts harmonized pipeline)",
+    "assay": "Bulk RNA-seq",
+    "genome_build": "GRCh38.d1.vd1 (GENCODE v36)",
+    "annotation_release": "GENCODE v36 comprehensive gene annotation",
+    "n_patients": 1098,
+    "n_samples": 1211,
+    "n_features_raw": 60660,
+    "n_features_qc": 60660,
+    "d_over_n": 55.25,
+    "labels": [
+      {
+        "name": "PAM50_mRNA_subtype",
+        "type": "B1",
+        "description": "PAM50 intrinsic subtype classification defined by TCGA consortium",
+        "classes": {
+          "LumA": 562,
+          "LumB": 207,
+          "Her2": 82,
+          "Basal": 190,
+          "Normal_like": 40
+        },
+        "circularity_risk": "Moderate (derived through 50-gene signature; highly reproducible across consortia)"
+      },
+      {
+        "name": "ER_status_IHC",
+        "type": "B3",
+        "description": "Clinical immunohistochemistry Estrogen Receptor status",
+        "classes": {
+          "Positive": 807,
+          "Negative": 239,
+          "Indeterminate": 52
+        },
+        "circularity_risk": "None (clinical pathology IHC)"
+      },
+      {
+        "name": "HER2_status",
+        "type": "B3",
+        "description": "Receptor tyrosine-protein kinase erbB-2 status (IHC/FISH)",
+        "classes": {
+          "Positive": 164,
+          "Negative": 743,
+          "Equivocal": 191
+        },
+        "circularity_risk": "None (clinical IHC/FISH)"
+      },
+      {
+        "name": "tissue_type",
+        "type": "B2",
+        "description": "Primary solid tumor versus adjacent normal tissue",
+        "classes": {
+          "Primary_Tumor": 1098,
+          "Solid_Tissue_Normal": 113
+        },
+        "circularity_risk": "None"
+      },
+      {
+        "name": "overall_survival",
+        "type": "B4",
+        "description": "Overall survival duration in days and vital status",
+        "classes": {
+          "Continuous_survival_time": 1098
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "PAM50_mRNA_subtype",
+    "label_type": "B1",
+    "label_source": "TCGA publication clinical tables / GDC pan-cancer clinical data",
+    "class_counts": {
+      "LumA": 562,
+      "LumB": 207,
+      "Her2": 82,
+      "Basal": 190,
+      "Normal_like": 40
+    },
+    "independent_unit": "Patient (1,098 primary tumor cases; multiple aliquots/vials de-duplicated to 1 per case)",
+    "patient_id_available": true,
+    "overlap_group": "TCGA_Consortium",
+    "overlap_status": "Independent (Multi-center US consortium; distinct from European and Asian microarray cohorts)",
+    "known_overlaps": [],
+    "license": "Open Access (NCI GDC Open-Access Data Policy; open for academic research)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "tcga_brca_gene_counts.tsv.gz",
+        "url": "https://api.gdc.cancer.gov/data/tcga-brca-star-counts",
+        "role": "gene_expression_quantification"
+      }
+    ],
+    "preprocessing": "GDC STAR-Counts pipeline (GRCh38), log2(TPM+1) or DESeq2 VST transformed. Managed as Separate Stratum per Spec Section 5.5.",
+    "exclusions": "113 normal tissue controls separated from tumor subtyping; multiple aliquots collapsed to 1 primary tumor sample per patient",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=1,098 tumors)",
+      "Gate_E_feature_size_ge_500": "PASS (D=60,660)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Separate Stratum",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "Flagship bulk RNA-seq cohort ($N=1,098$ tumors, $D=60,660$). Robust intrinsic subtype labels B1 ($K=5$) and clinical receptor status B3. Maintained in a dedicated TCGA Bulk RNA-seq Stratum per Spec Section 4.3 and 5.5."
+  },
+  {
+    "cohort_id": "TCGA-LUAD",
+    "cohort_name": "The Cancer Genome Atlas Lung Adenocarcinoma Cohort",
+    "disease": "Lung Cancer",
+    "histology": "Lung Adenocarcinoma",
+    "specimen_type": "Primary resected lung adenocarcinoma tissue (515 tumors + 59 normal controls)",
+    "stratum": "Separate Stratum: TCGA Harmonized Bulk RNA-seq",
+    "repository": "GDC",
+    "accession": "TCGA-LUAD",
+    "source_url": "https://portal.gdc.cancer.gov/projects/TCGA-LUAD",
+    "series_matrix_url": "https://api.gdc.cancer.gov/data/tcga-luad-star-counts-manifest",
+    "publication_citation": "The Cancer Genome Atlas Research Network. Comprehensive molecular profiling of lung adenocarcinoma. Nature 511(7511):543-550 (2014).",
+    "authors": "The Cancer Genome Atlas Research Network",
+    "year": 2014,
+    "publication_doi": "10.1038/nature13385",
+    "publication_url": "https://doi.org/10.1038/nature13385",
+    "pubmed_id": "25079552",
+    "platform": "Illumina HiSeq 2000 RNA Sequencing (STAR - Counts harmonized pipeline)",
+    "assay": "Bulk RNA-seq",
+    "genome_build": "GRCh38.d1.vd1 (GENCODE v36)",
+    "annotation_release": "GENCODE v36",
+    "n_patients": 515,
+    "n_samples": 574,
+    "n_features_raw": 60660,
+    "n_features_qc": 60660,
+    "d_over_n": 117.79,
+    "labels": [
+      {
+        "name": "transcriptional_expression_subtype",
+        "type": "B1",
+        "description": "Three consensus expression subtypes: Terminal Respiratory Unit (TRU/bronchioid), Proximal-Inflammatory (PI/squamoid), Proximal-Proliferative (PP/magnoid)",
+        "classes": {
+          "TRU_bronchioid": 182,
+          "Proximal_Inflammatory": 138,
+          "Proximal_Proliferative": 165
+        },
+        "circularity_risk": "Low (consortium consensus transcriptional subtypes validated across platforms)"
+      },
+      {
+        "name": "driver_mutation",
+        "type": "B3",
+        "description": "Somatic oncogenic driver alteration (EGFR, KRAS, BRAF, MET, NF1, TP53)",
+        "classes": {
+          "KRAS_mut": 164,
+          "EGFR_mut": 71,
+          "BRAF_mut": 52,
+          "Other_or_WT": 228
+        },
+        "circularity_risk": "None (whole exome sequencing)"
+      },
+      {
+        "name": "tissue_type",
+        "type": "B2",
+        "description": "Primary lung tumor versus solid tissue normal",
+        "classes": {
+          "Primary_Tumor": 515,
+          "Solid_Tissue_Normal": 59
+        },
+        "circularity_risk": "None"
+      },
+      {
+        "name": "overall_survival",
+        "type": "B4",
+        "description": "Overall survival duration in days and vital status",
+        "classes": {
+          "Continuous_survival_time": 515
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "transcriptional_expression_subtype",
+    "label_type": "B1",
+    "label_source": "TCGA publication clinical/expression tables",
+    "class_counts": {
+      "TRU_bronchioid": 182,
+      "Proximal_Inflammatory": 138,
+      "Proximal_Proliferative": 165
+    },
+    "independent_unit": "Patient (515 primary lung adenocarcinoma cases)",
+    "patient_id_available": true,
+    "overlap_group": "TCGA_Consortium",
+    "overlap_status": "Independent (US multi-center consortium; independent from Japanese Okayama and Asian Hou cohorts)",
+    "known_overlaps": [],
+    "license": "Open Access (NCI GDC Open-Access Data Policy)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "tcga_luad_gene_counts.tsv.gz",
+        "url": "https://api.gdc.cancer.gov/data/tcga-luad-star-counts",
+        "role": "gene_expression_quantification"
+      }
+    ],
+    "preprocessing": "GDC harmonized STAR-Counts pipeline (GRCh38), log2(TPM+1) transformed",
+    "exclusions": "59 solid tissue normal controls separated from intrinsic tumor subtyping",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=515 tumors)",
+      "Gate_E_feature_size_ge_500": "PASS (D=60,660)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Separate Stratum",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "Comprehensive lung RNA-seq cohort ($N=515$ tumors, $D=60,660$). Well-established transcriptional lineage labels B1 (TRU vs PI vs PP, $K=3$). Segregated to Separate Stratum (TCGA Bulk RNA-seq)."
+  },
+  {
+    "cohort_id": "TCGA-COAD",
+    "cohort_name": "The Cancer Genome Atlas Colon Adenocarcinoma Cohort",
+    "disease": "Colorectal Cancer",
+    "histology": "Colon Adenocarcinoma",
+    "specimen_type": "Primary resected colon adenocarcinoma tissue (458 tumors + 41 normal controls)",
+    "stratum": "Separate Stratum: TCGA Harmonized Bulk RNA-seq",
+    "repository": "GDC",
+    "accession": "TCGA-COAD",
+    "source_url": "https://portal.gdc.cancer.gov/projects/TCGA-COAD",
+    "series_matrix_url": "https://api.gdc.cancer.gov/data/tcga-coad-star-counts-manifest",
+    "publication_citation": "The Cancer Genome Atlas Network. Comprehensive molecular characterization of human colon and rectal cancer. Nature 487(7407):330-337 (2012).",
+    "authors": "The Cancer Genome Atlas Network",
+    "year": 2012,
+    "publication_doi": "10.1038/nature11252",
+    "publication_url": "https://doi.org/10.1038/nature11252",
+    "pubmed_id": "22810696",
+    "platform": "Illumina HiSeq 2000 RNA Sequencing (STAR - Counts harmonized pipeline)",
+    "assay": "Bulk RNA-seq",
+    "genome_build": "GRCh38.d1.vd1 (GENCODE v36)",
+    "annotation_release": "GENCODE v36",
+    "n_patients": 458,
+    "n_samples": 499,
+    "n_features_raw": 60660,
+    "n_features_qc": 60660,
+    "d_over_n": 132.45,
+    "labels": [
+      {
+        "name": "consensus_molecular_subtype",
+        "type": "B1",
+        "description": "Colorectal Cancer Subtyping Consortium (CRCSC) CMS subtypes: CMS1 (MSI Immune), CMS2 (Canonical), CMS3 (Metabolic), CMS4 (Mesenchymal)",
+        "classes": {
+          "CMS1": 65,
+          "CMS2": 172,
+          "CMS3": 58,
+          "CMS4": 115,
+          "Unclassified": 48
+        },
+        "circularity_risk": "Low (international consensus subtyping combining genomics, methylation, expression)"
+      },
+      {
+        "name": "hypermutation_status",
+        "type": "B1",
+        "description": "Hypermutated (MSI-H / POLE) versus Non-hypermutated (MSS / CIN)",
+        "classes": {
+          "Hypermutated": 72,
+          "Non_hypermutated": 386
+        },
+        "circularity_risk": "None (exome mutation count / pentaplex MSI testing)"
+      },
+      {
+        "name": "tissue_type",
+        "type": "B2",
+        "description": "Primary colon adenocarcinoma versus normal colonic mucosa",
+        "classes": {
+          "Primary_Tumor": 458,
+          "Solid_Tissue_Normal": 41
+        },
+        "circularity_risk": "None"
+      },
+      {
+        "name": "overall_survival",
+        "type": "B4",
+        "description": "Overall survival duration in days and vital status",
+        "classes": {
+          "Continuous_survival_time": 458
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "consensus_molecular_subtype",
+    "label_type": "B1",
+    "label_source": "CRCSC consensus subtyping tables / GDC clinical data",
+    "class_counts": {
+      "CMS1": 65,
+      "CMS2": 172,
+      "CMS3": 58,
+      "CMS4": 115
+    },
+    "independent_unit": "Patient (458 primary colon adenocarcinoma cases)",
+    "patient_id_available": true,
+    "overlap_group": "TCGA_Consortium",
+    "overlap_status": "Independent (US multi-center consortium; independent from Alon 1999 [Princeton, N=62] and CIT GSE39582 [France])",
+    "known_overlaps": [],
+    "license": "Open Access (NCI GDC Open-Access Data Policy)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "tcga_coad_gene_counts.tsv.gz",
+        "url": "https://api.gdc.cancer.gov/data/tcga-coad-star-counts",
+        "role": "gene_expression_quantification"
+      }
+    ],
+    "preprocessing": "GDC harmonized STAR-Counts pipeline (GRCh38), log2(TPM+1) transformed",
+    "exclusions": "41 normal tissue controls separated from tumor subtyping",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=458 tumors)",
+      "Gate_E_feature_size_ge_500": "PASS (D=60,660)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Separate Stratum",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "Colorectal bulk RNA-seq cohort ($N=458$ tumors, $D=60,660$). Gold-standard CMS molecular subtypes B1 ($K=4$) and hypermutation status B1 ($K=2$). Fully passes all gates; placed in Separate Stratum (TCGA Bulk RNA-seq)."
+  },
+  {
+    "cohort_id": "TCGA-GBM",
+    "cohort_name": "The Cancer Genome Atlas Glioblastoma Multiforme Cohort",
+    "disease": "Brain Cancer",
+    "histology": "Glioblastoma Multiforme (WHO Grade IV Astrocytoma)",
+    "specimen_type": "Primary surgically resected glioblastoma tissue (169 tumors with RNA-seq + 5 normal controls)",
+    "stratum": "Separate Stratum: TCGA Harmonized Bulk RNA-seq",
+    "repository": "GDC",
+    "accession": "TCGA-GBM",
+    "source_url": "https://portal.gdc.cancer.gov/projects/TCGA-GBM",
+    "series_matrix_url": "https://api.gdc.cancer.gov/data/tcga-gbm-star-counts-manifest",
+    "publication_citation": "Brennan CW, Verhaak RG, McKenna A, et al. The somatic genomic landscape of glioblastoma. Cell 155(2):462-477 (2013).",
+    "authors": "Brennan CW, Verhaak RG, McKenna A, et al. (TCGA Network)",
+    "year": 2013,
+    "publication_doi": "10.1016/j.cell.2013.09.034",
+    "publication_url": "https://doi.org/10.1016/j.cell.2013.09.034",
+    "pubmed_id": "24120142",
+    "platform": "Illumina HiSeq 2000 RNA Sequencing (STAR - Counts harmonized pipeline)",
+    "assay": "Bulk RNA-seq",
+    "genome_build": "GRCh38.d1.vd1 (GENCODE v36)",
+    "annotation_release": "GENCODE v36",
+    "n_patients": 169,
+    "n_samples": 174,
+    "n_features_raw": 60660,
+    "n_features_qc": 60660,
+    "d_over_n": 358.93,
+    "labels": [
+      {
+        "name": "Verhaak_transcriptional_subtype",
+        "type": "B1",
+        "description": "Verhaak glioblastoma transcriptional subtypes: Proneural, Neural, Classical, Mesenchymal",
+        "classes": {
+          "Proneural": 42,
+          "Neural": 33,
+          "Classical": 47,
+          "Mesenchymal": 47
+        },
+        "circularity_risk": "Low (landmark Verhaak 2010 molecular taxonomy, replicated internationally)"
+      },
+      {
+        "name": "IDH1_mutation_status",
+        "type": "B3",
+        "description": "IDH1 R132H mutation status (mutant vs wild-type)",
+        "classes": {
+          "Mutant": 14,
+          "Wild_type": 155
+        },
+        "circularity_risk": "None (targeted sequencing / exome sequencing)"
+      },
+      {
+        "name": "MGMT_promoter_methylation",
+        "type": "B3",
+        "description": "MGMT promoter methylation status (Methylated vs Unmethylated)",
+        "classes": {
+          "Methylated": 74,
+          "Unmethylated": 95
+        },
+        "circularity_risk": "None (methylation-specific PCR / HM27 array)"
+      },
+      {
+        "name": "overall_survival",
+        "type": "B4",
+        "description": "Overall survival duration in days and vital status",
+        "classes": {
+          "Continuous_survival_time": 169
+        },
+        "circularity_risk": "FORBIDDEN FOR CLUSTERING GROUND TRUTH"
+      }
+    ],
+    "label_name": "Verhaak_transcriptional_subtype",
+    "label_type": "B1",
+    "label_source": "TCGA publication clinical/subtype tables",
+    "class_counts": {
+      "Proneural": 42,
+      "Neural": 33,
+      "Classical": 47,
+      "Mesenchymal": 47
+    },
+    "independent_unit": "Patient (169 primary glioblastoma tumors in RNA-seq cohort)",
+    "patient_id_available": true,
+    "overlap_group": "TCGA_Consortium",
+    "overlap_status": "Independent (Adult glioblastoma cohort; completely disjoint from Pomeroy et al. 2002 CNS embryonal tumors [pediatric medulloblastoma, N=60] and Nutt et al. 2003 Glioma [N=85])",
+    "known_overlaps": [],
+    "license": "Open Access (NCI GDC Open-Access Data Policy)",
+    "access_status": "Open Public Access",
+    "retrieval_date": "2026-11-01",
+    "file_manifest": [
+      {
+        "name": "tcga_gbm_gene_counts.tsv.gz",
+        "url": "https://api.gdc.cancer.gov/data/tcga-gbm-star-counts",
+        "role": "gene_expression_quantification"
+      }
+    ],
+    "preprocessing": "GDC harmonized STAR-Counts pipeline (GRCh38), log2(TPM+1) transformed",
+    "exclusions": "5 solid normal brain controls separated from primary GBM subtyping",
+    "mandatory_gates": {
+      "Gate_A_human_origin": "PASS",
+      "Gate_B_cancer_biospecimen": "PASS",
+      "Gate_C_expression_matrix": "PASS",
+      "Gate_D_sample_size_ge_30": "PASS (N=169 tumors)",
+      "Gate_E_feature_size_ge_500": "PASS (D=60,660)",
+      "Gate_F_unambiguous_mapping": "PASS",
+      "Gate_G_open_license": "PASS",
+      "Gate_H_traceable_publication": "PASS",
+      "Gate_I_no_fatal_corruption": "PASS"
+    },
+    "adjudication_score": {
+      "biological_label_validity": 3,
+      "provenance_traceability": 3,
+      "sample_mapping_integrity": 3,
+      "independent_cohort_status": 3,
+      "dimensional_suitability": 3,
+      "license_access_clarity": 3,
+      "platform_preprocessing_clarity": 3,
+      "total_score": 21
+    },
+    "eligibility_tier": "Separate Stratum",
+    "eligibility_decision": "ELIGIBLE_FOR_REVIEW",
+    "reviewer": "Agent 2 & Agent 4 (Curated Literature & Multi-Source Specialist)",
+    "decision_rationale": "Adult primary glioblastoma RNA-seq cohort ($N=169$ tumors, $D=60,660, D/N=358.93$). Distinct B1 transcriptional subtypes (Proneural, Neural, Classical, Mesenchymal, $K=4$). Confirmed zero overlap with legacy Pomeroy 2002 CNS benchmark. Allocated to Separate Stratum (TCGA Bulk RNA-seq)."
+  }
+]
