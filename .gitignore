@@ -120,6 +120,10 @@ paper.tex
 !paper/figures/*.jpg
 !paper/figures/*.jpeg
 
+# Confirmatory raw prediction binaries and large unlabeled matrices
+results/confirmatory/predictions/
+data/confirmatory/unlabeled/*.npz
+
 # Intermediate and processed datasets
 data/interim/*
 !data/interim/.gitkeep
