@@ -186,12 +186,23 @@ def download_manifest(args: argparse.Namespace) -> int:
         if root not in target.parents:
             raise SystemExit(f"Path escapes raw_dir: {rel}")
         target.parent.mkdir(parents=True, exist_ok=True)
+
+        if target.exists() and target.stat().st_size > 0:
+            actual = sha256_file(target)
+            expected = entry["expected_sha256"].strip().lower()
+            if not expected or actual == expected:
+                output.append({**entry, "retrieval_timestamp_utc": utc_now(),
+                               "bytes": target.stat().st_size, "sha256": actual,
+                               "download_status": "VERIFIED_EXISTING"})
+                print(f"Verified existing {entry['cohort_id']} -> {target} ({target.stat().st_size:,} bytes)")
+                continue
+
         tmp = target.with_suffix(target.suffix + ".part")
         try:
             import shutil, subprocess
             curl_bin = shutil.which("curl") or shutil.which("curl.exe")
             if curl_bin:
-                cmd = [curl_bin, "-sSL", "--fail", "-m", str(args.timeout), entry["url"], "-o", str(tmp)]
+                cmd = [curl_bin, "-sSL", "--fail", "-C", "-", "--connect-timeout", "60", "-m", str(args.timeout), entry["url"], "-o", str(tmp)]
                 res = subprocess.run(cmd, capture_output=True, text=True)
                 if res.returncode != 0:
                     raise RuntimeError(f"curl download failed ({res.returncode}): {res.stderr}")
@@ -241,7 +252,7 @@ def main() -> int:
     p_download.add_argument("--manifest", required=True)
     p_download.add_argument("--raw-dir", default="data/raw/cohort_discovery")
     p_download.add_argument("--report", default="research_audit/cohort_discovery/download_manifest.csv")
-    p_download.add_argument("--timeout", type=int, default=180)
+    p_download.add_argument("--timeout", type=int, default=3600)
     p_download.set_defaults(func=download_manifest)
 
     args = parser.parse_args()

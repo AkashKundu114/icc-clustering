@@ -152,15 +152,10 @@ def load_genomics_dataset(
         raw_y = np.asarray(raw.target)
 
     if "subsample_n" in cfg and cfg["subsample_n"] < raw_X.shape[0]:
+        # Strictly label-blind uniform subsampling (no class stratifier)
         rng = np.random.default_rng(42)
-        indices = []
-        unique_classes = np.unique(raw_y)
-        per_class = cfg["subsample_n"] // len(unique_classes)
-        for c in unique_classes:
-            c_idx = np.where(raw_y == c)[0]
-            sampled = rng.choice(c_idx, size=min(per_class, len(c_idx)), replace=False)
-            indices.extend(sampled)
-        sub_indices = np.array(indices)
+        sub_indices = rng.choice(raw_X.shape[0], size=cfg["subsample_n"], replace=False)
+        sub_indices.sort()
         raw_X = raw_X[sub_indices]
         raw_y = raw_y[sub_indices]
 
