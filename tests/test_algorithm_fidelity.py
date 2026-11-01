@@ -12,13 +12,11 @@ Verifies:
 """
 
 import numpy as np
-import pytest
+
 from icc.baselines.anchor import run_fastmvc
-from icc.baselines.classical import run_fcm
-from icc.baselines.consensus import run_icc_v2, run_standard_consensus
 from icc.baselines.density import evaluate_hdbscan_metrics, run_hdbscan
 from icc.baselines.leiden_snn import run_leiden_snn, run_spectral_snn
-from icc.baselines.probabilistic import run_gmm, run_gmm_bic, run_gmm_icl
+from icc.baselines.probabilistic import run_gmm, run_gmm_bic
 from icc.baselines.sparse_kmeans import run_sparse_kmeans
 from icc.consensus_v2 import InvariantCoreConsensusV2
 

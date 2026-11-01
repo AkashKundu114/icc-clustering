@@ -18,7 +18,7 @@ References:
 
 import time
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
 import numpy as np
 from sklearn.metrics import calinski_harabasz_score, davies_bouldin_score, silhouette_score
@@ -205,7 +205,7 @@ def run_icc_autok(
             db_scores[k] = 999.0
 
     # Model selection decision rule: minimum PAC with Occam's parsimony tolerance (+0.02)
-    min_pac = min(pac_scores.values())
+    _min_pac = min(pac_scores.values())  # noqa: F841
     best_k_pac = min(pac_scores, key=pac_scores.get)
 
     # Secondary decision rule: maximum Silhouette

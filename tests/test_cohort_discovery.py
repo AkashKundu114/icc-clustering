@@ -23,11 +23,10 @@ import pytest
 
 from tools.discover_biological_cohorts import (
     clean,
+    download_manifest,
     esummary,
     sha256_file,
-    download_manifest,
 )
-
 
 # =============================================================================
 # 1. Metadata and String Cleaning Tests
@@ -307,7 +306,7 @@ def test_matrix_orientation_and_unsupervised_preprocessing():
     N, D = 40, 600
     np.random.seed(42)
     X = np.random.randn(N, D)
-    y_labels = np.array(["SubtypeA"] * 20 + ["SubtypeB"] * 20)
+    _y_labels = np.array(["SubtypeA"] * 20 + ["SubtypeB"] * 20)
 
     # ICC matrix contract: samples along axis 0, features along axis 1
     assert X.shape[0] == N
