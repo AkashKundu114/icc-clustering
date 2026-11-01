@@ -125,7 +125,7 @@ def make_signal(
     while True:
         d = np.linalg.norm(centers[:, None, :] - centers[None, :, :], axis=-1)
         np.fill_diagonal(d, np.inf)
-        if d.min() > 8.0:
+        if np.min(d) > 8.0:
             break
         centers = rng.normal(scale=6.0, size=(k, signal_dim))
 
