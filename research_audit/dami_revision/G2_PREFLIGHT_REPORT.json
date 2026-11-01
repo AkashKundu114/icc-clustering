@@ -1,0 +1,96 @@
+{
+  "timestamp_utc": "2026-11-01T09:27:04.504848+00:00",
+  "status": "PASS",
+  "checks": {
+    "1_protocol_hashes": {
+      "status": "PASS",
+      "hashes": {
+        "PREREGISTRATION.md": "8200ca67e4e827f7baa51e27f66c0946b68bc233bb8204d194682d678dd757be",
+        "HYPOTHESES_AND_ANALYSIS_PLAN.md": "0f92af9a76a508cd2259da62ffef26a08852bf07d4c1622892013ccbed7f161a",
+        "HYPOTHESIS_TEST_MAPPING.csv": "b2b1829f612474b771ade0d04423d785c98590912f01429dd16623d479cf44f7",
+        "MULTIPLICITY_FAMILY_SPECIFICATION.md": "77d4ea1234b2d943f4f57391b8601f9f2be0b0f395fc03132c089776e2466ed2",
+        "POWER_AND_PRECISION_ASSESSMENT.md": "97846d343503a7a82a6bd90d3aca7ac40ba8dd5b3414e8ff29d8b42528cd0988",
+        "STATISTICAL_EVALUATION_PROTOCOL.md": "a738f425cd3e74459dc0462c00075e623fb9945465b50b01ff3749533af27db2",
+        "MULTIPLICITY_MAP.csv": "53eb92d962b5d56060bb828927f8cd35788b70bc9f9828c649d826122b39540b",
+        "COHORT_CANDIDATE_REGISTRY.csv": "4bf469b52c5e8e9fc77949c11f6e6149c4e93275019a975d46ad8e1c0762d74e",
+        "COHORT_PROVENANCE_REPORT.md": "4e8bbb01d5c2e37ef2ad28390f35eaebb1fcc371d439d603f57dd00161957602",
+        "COHORT_OVERLAP_MATRIX.csv": "16105cc08ed6b7e66e59e0f3cf186718e7bbee449f4193f03cbadef2602ab1de"
+      },
+      "missing": []
+    },
+    "2_prereg_commit_and_tag": {
+      "status": "PASS",
+      "tag": "prereg-dami-v1",
+      "tag_exists": true,
+      "commit": "aaa95896d33537caa107cd81f274e01c75faf869",
+      "expected_commit": "aaa9589"
+    },
+    "3_cohort_registry": {
+      "status": "PASS",
+      "total_candidates": 29,
+      "lifecycle_counts": {
+        "CONFIRMATORY_ELIGIBLE": 9,
+        "EXCLUDED": 8,
+        "EXPLORATORY_LOCKED": 6,
+        "ELIGIBILITY_REVIEWED": 5,
+        "DOWNLOADED": 1
+      }
+    },
+    "4_confirmatory_cohort_list": {
+      "status": "PASS",
+      "expected_tier_a_count": 10,
+      "matched_tier_a_count": 10,
+      "tier_a_accessions": [
+        "GSE62254",
+        "GSE39582",
+        "GSE31210",
+        "GSE13159",
+        "GSE10846",
+        "GSE42568",
+        "GSE19188",
+        "GSE21653",
+        "GSE32894",
+        "GSE49710"
+      ]
+    },
+    "5_label_quarantine_preflight": {
+      "status": "PASS",
+      "quarantine_enforced": true,
+      "raw_dir_exists": true,
+      "policy": "Unsupervised fitting only; label vectors sealed with SHA-256 fingerprints before inference"
+    },
+    "6_experiment_config": {
+      "status": "PASS",
+      "total_hypotheses_tests": 13,
+      "families": [
+        "Family 3 (Methodological)",
+        "Family 2 (Architectural)",
+        "Family 1 (Comparative Baselines)"
+      ],
+      "tost_margin": "+/-0.02 ARI"
+    },
+    "7_protected_result_stores": {
+      "status": "PASS",
+      "working_tree_clean": false,
+      "frozen_stores_intact": true,
+      "stores": [
+        "results\\stats.json",
+        "experiments\\exp3_real_world_benchmarks\\data\\exp3_1_benchmark_matrix.csv"
+      ]
+    },
+    "8_computational_environment": {
+      "status": "PASS",
+      "environment": {
+        "python_version": "3.14.6",
+        "platform": "Windows-11-10.0.26300-SP0",
+        "processor": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+        "numpy_version": "2.4.6",
+        "pandas_version": "3.0.5",
+        "omp_num_threads": "NOT_SET",
+        "mkl_num_threads": "NOT_SET",
+        "seed_schedule_length": 30,
+        "master_seed": 20261101
+      }
+    }
+  }
+}

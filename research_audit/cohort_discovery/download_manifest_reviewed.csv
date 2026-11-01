@@ -1,0 +1,11 @@
+cohort_id,url,relative_path,expected_sha256,license_reviewed
+GSE62254_ACRG_GASTRIC,https://ftp.ncbi.nlm.nih.gov/geo/series/GSE62nnn/GSE62254/matrix/GSE62254_series_matrix.txt.gz,GSE62254/GSE62254_series_matrix.txt.gz,,YES
+GSE39582_CIT_COLORECTAL,https://ftp.ncbi.nlm.nih.gov/geo/series/GSE39nnn/GSE39582/matrix/GSE39582_series_matrix.txt.gz,GSE39582/GSE39582_series_matrix.txt.gz,,YES
+GSE31210_LUNG_ADENOCARCINOMA,https://ftp.ncbi.nlm.nih.gov/geo/series/GSE31nnn/GSE31210/matrix/GSE31210_series_matrix.txt.gz,GSE31210/GSE31210_series_matrix.txt.gz,,YES
+GSE13159_MILE_LEUKEMIA,https://ftp.ncbi.nlm.nih.gov/geo/series/GSE13nnn/GSE13159/matrix/GSE13159_series_matrix.txt.gz,GSE13159/GSE13159_series_matrix.txt.gz,,YES
+GSE10846_DLBCL_LYMPHOMA,https://ftp.ncbi.nlm.nih.gov/geo/series/GSE10nnn/GSE10846/matrix/GSE10846_series_matrix.txt.gz,GSE10846/GSE10846_series_matrix.txt.gz,,YES
+GSE42568_BREAST_CLARKE,https://ftp.ncbi.nlm.nih.gov/geo/series/GSE42nnn/GSE42568/matrix/GSE42568_series_matrix.txt.gz,GSE42568/GSE42568_series_matrix.txt.gz,,YES
+GSE19188_NSCLC_HISTOLOGY,https://ftp.ncbi.nlm.nih.gov/geo/series/GSE19nnn/GSE19188/matrix/GSE19188_series_matrix.txt.gz,GSE19188/GSE19188_series_matrix.txt.gz,,YES
+GSE21653_BREAST_SABATIER,https://ftp.ncbi.nlm.nih.gov/geo/series/GSE21nnn/GSE21653/matrix/GSE21653_series_matrix.txt.gz,GSE21653/GSE21653_series_matrix.txt.gz,,YES
+GSE32894_UROTHELIAL_BLADDER,https://ftp.ncbi.nlm.nih.gov/geo/series/GSE32nnn/GSE32894/matrix/GSE32894_series_matrix.txt.gz,GSE32894/GSE32894_series_matrix.txt.gz,,YES
+GSE49710_NEUROBLASTOMA_SEQC,https://ftp.ncbi.nlm.nih.gov/geo/series/GSE49nnn/GSE49710/matrix/GSE49710_series_matrix.txt.gz,GSE49710/GSE49710_series_matrix.txt.gz,,YES

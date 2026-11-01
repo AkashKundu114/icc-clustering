@@ -97,6 +97,7 @@ def run_sparse_kmeans(
     X: np.ndarray,
     k: int,
     s: Optional[float] = None,
+    s_rule: str = "witten_scaled",
     max_iter: int = 15,
     seed: int = 42,
     n_init: int = 5,
@@ -112,7 +113,11 @@ def run_sparse_kmeans(
     k : int
         Number of clusters.
     s : float, optional
-        L1 sparsity parameter in [1.1, sqrt(D)]. Defaults to 0.15 * sqrt(D) + 1.0.
+        L1 sparsity parameter in [1.1, sqrt(D)].
+    s_rule : str, default='witten_scaled'
+        Sparsity scaling rule when s is not directly specified:
+        - 'witten_scaled': s = max(1.1, 0.15 * sqrt(D) + 1.0) [code implementation]
+        - 'table2': s = max(1.1, 1.1 + 0.5 * (sqrt(D) - 1.1)) [manuscript Table 2]
     max_iter : int, default=15
         Alternating optimization iterations.
     seed : int, default=42
@@ -134,7 +139,10 @@ def run_sparse_kmeans(
     N, D = X_arr.shape
 
     if s is None:
-        s = max(1.1, 0.15 * np.sqrt(D) + 1.0)
+        if s_rule == "table2":
+            s = max(1.1, 1.1 + 0.5 * (np.sqrt(D) - 1.1))
+        else:
+            s = max(1.1, 0.15 * np.sqrt(D) + 1.0)
     s = min(max(float(s), 1.0), np.sqrt(D))
 
     # Initial uniform weights
@@ -160,6 +168,7 @@ def run_sparse_kmeans(
             break
 
     runtime_sec = time.perf_counter() - t0
+    active_feat_count = int(np.sum(w > 1e-5))
     metadata = ModelMetadata(
         k,
         method="SparseKMeans",
@@ -167,8 +176,12 @@ def run_sparse_kmeans(
         n_features=D,
         n_clusters=k,
         sparsity_param=s,
-        active_features=int(np.sum(w > 1e-5)),
+        s_rule=s_rule,
+        active_features=active_feat_count,
     )
     metadata._data["feature_weights"] = w
+    metadata._data["sparsity_param"] = s
+    metadata._data["s_rule"] = s_rule
+    metadata._data["active_features"] = active_feat_count
 
     return labels, runtime_sec, metadata

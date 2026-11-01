@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d0" for="node" attr.name="name" attr.type="string"/>
+  <key id="d1" for="node" attr.name="tier" attr.type="string"/>
+  <key id="d2" for="edge" attr.name="relation" attr.type="string"/>
+  <key id="d3" for="edge" attr.name="weight" attr.type="int"/>
+  <graph id="G" edgedefault="undirected">
+    <!-- Nodes -->
+    <node id="GSE62254"><data key="d0">ACRG Gastric</data><data key="d1">Tier A</data></node>
+    <node id="GSE39582"><data key="d0">CIT Colorectal</data><data key="d1">Tier A</data></node>
+    <node id="GSE31210"><data key="d0">Okayama Lung</data><data key="d1">Tier A</data></node>
+    <node id="GSE13159"><data key="d0">MILE Leukemia</data><data key="d1">Tier A</data></node>
+    <node id="GSE10846"><data key="d0">Lenz DLBCL</data><data key="d1">Tier A</data></node>
+    <node id="GSE42568"><data key="d0">Clarke Breast</data><data key="d1">Tier A</data></node>
+    <node id="GSE19188"><data key="d0">Hou NSCLC</data><data key="d1">Tier A</data></node>
+    <node id="GSE21653"><data key="d0">Sabatier Breast</data><data key="d1">Tier A</data></node>
+    <node id="GSE32894"><data key="d0">Sjodahl Bladder</data><data key="d1">Tier A</data></node>
+    <node id="GSE49710"><data key="d0">SEQC Neuroblastoma</data><data key="d1">Tier A</data></node>
+    <node id="GSE14333"><data key="d0">Jorissen CRC</data><data key="d1">Tier B</data></node>
+    <node id="E_MTAB_6698"><data key="d0">Lim CRC Compendium</data><data key="d1">Rejected</data></node>
+    <node id="OPENML_1107"><data key="d0">tumors_C</data><data key="d1">Rejected</data></node>
+    <node id="CNS_CANONICAL"><data key="d0">Pomeroy CNS</data><data key="d1">Canonical Benchmark</data></node>
+    <!-- Edges -->
+    <edge id="e1" source="OPENML_1107" target="CNS_CANONICAL"><data key="d2">BIT_IDENTICAL_DUPLICATE</data><data key="d3">60</data></edge>
+    <edge id="e2" source="E_MTAB_6698" target="GSE39582"><data key="d2">DERIVATIVE_ABSORBED_SET</data><data key="d3">566</data></edge>
+    <edge id="e3" source="E_MTAB_6698" target="GSE14333"><data key="d2">DERIVATIVE_ABSORBED_SET</data><data key="d3">290</data></edge>
+  </graph>
+</graphml>

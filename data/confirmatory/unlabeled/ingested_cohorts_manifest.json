@@ -1,0 +1,64 @@
+[
+  {
+    "cohort_id": "GSE42568",
+    "N": 104,
+    "D": 10000,
+    "K": 3,
+    "classes": [
+      "ER_Negative",
+      "ER_Positive",
+      "ER_Unknown"
+    ],
+    "vault_fingerprint": "19a14db7f6f60aa0178c44a0b5e05a3784703b06d602cb75cd596b14aee92dff",
+    "unlabeled_path": "D:\\Final Year Project\\data\\confirmatory\\unlabeled\\GSE42568_unlabeled.npz",
+    "matrix_sha256": "4cd7ee6f50322eefca27d0bc60f0312b0dd0b26582ae10bc6a780fb11bf4d69e"
+  },
+  {
+    "cohort_id": "GSE19188",
+    "N": 91,
+    "D": 10000,
+    "K": 3,
+    "classes": [
+      "ADC_Adeno",
+      "LCC_LargeCell",
+      "SCC_Squamous"
+    ],
+    "vault_fingerprint": "2f7c96b609c6049ae17e3a968ef313bb1929a0f7a280cb2964a6bd65ae374619",
+    "unlabeled_path": "D:\\Final Year Project\\data\\confirmatory\\unlabeled\\GSE19188_unlabeled.npz",
+    "matrix_sha256": "9318ee2d54dfcdcb156e9453ef128400bd59aef958c3162a914768f3e961f199"
+  },
+  {
+    "cohort_id": "GSE21653",
+    "N": 266,
+    "D": 10000,
+    "K": 5,
+    "classes": [
+      "Basal",
+      "ERBB2",
+      "LuminalA",
+      "LuminalB",
+      "Normal"
+    ],
+    "vault_fingerprint": "1545ad34622c3e71c115bdef9be83d7a1cd2b8d667ed0f6bab799205f6c88558",
+    "unlabeled_path": "D:\\Final Year Project\\data\\confirmatory\\unlabeled\\GSE21653_unlabeled.npz",
+    "matrix_sha256": "263370b8464cc285d1f17943d0bebc06a62a90b82d1f1b777a9222d4efe5003b"
+  },
+  {
+    "cohort_id": "GSE32894",
+    "N": 308,
+    "D": 10000,
+    "K": 7,
+    "classes": [
+      "MS1a",
+      "MS1b",
+      "MS2a.1",
+      "MS2a.2",
+      "MS2b.1",
+      "MS2b2.1",
+      "MS2b2.2"
+    ],
+    "vault_fingerprint": "b4de3896fc49c631e7fffb66741bd53ced3f2dc5a2880660c01c7dacab8ce1e7",
+    "unlabeled_path": "D:\\Final Year Project\\data\\confirmatory\\unlabeled\\GSE32894_unlabeled.npz",
+    "matrix_sha256": "af2e1f5545b0da27f3f45d53d2bdd6e36c0e3f40d776d744a10248a39c3dd40f"
+  }
+]

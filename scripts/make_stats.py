@@ -190,8 +190,18 @@ def run():
         "Inductive_Bootstrap": inductive_boot,
     }
 
-    # Save to results/stats.json
+    # Preserve historical sections like Subsample_Stability if present
     out_json = RESULTS_DIR / "stats.json"
+    if out_json.exists():
+        try:
+            with open(out_json, "r", encoding="utf-8") as f:
+                existing_stats = json.load(f)
+            if "Subsample_Stability" in existing_stats:
+                stats["Subsample_Stability"] = existing_stats["Subsample_Stability"]
+        except Exception as e:
+            print(f"Warning: could not read existing stats.json: {e}")
+
+    # Save to results/stats.json
     with open(out_json, "w", encoding="utf-8") as f:
         json.dump(stats, f, indent=2)
     print(f"Saved stats to {out_json}")
@@ -293,6 +303,80 @@ def run():
         r"\newcommand{\AblationLeukemiaMarkerFiftyCount}{27}",
         r"\newcommand{\AblationLeukemiaMarkerFiftyFraction}{54.0\%}",
     ]
+
+    # 4. Confirmatory G2 Evaluation Statistics (if available)
+    confirmatory_dir = RESULTS_DIR / "confirmatory"
+    if (confirmatory_dir / "statistical_summary_family1.csv").exists():
+        f1_df = pd.read_csv(confirmatory_dir / "statistical_summary_family1.csv")
+        f2_df = pd.read_csv(confirmatory_dir / "statistical_summary_family2.csv")
+        h2a_row = f2_df[f2_df["hypothesis_id"] == "H2a"].iloc[0]
+        h3_row = f2_df[f2_df["hypothesis_id"] == "H3"].iloc[0]
+
+        # Load cohort summaries
+        c_ids = ["GSE42568", "GSE19188", "GSE21653", "GSE32894"]
+        c_sums = {}
+        for c in c_ids:
+            cp = confirmatory_dir / f"{c}_summary.csv"
+            if cp.exists():
+                c_sums[c] = pd.read_csv(cp, index_col=0, header=[0, 1])
+
+        gac_aris = [c_sums[c].loc["Full_GAC", ("ari", "median")] for c in c_ids if c in c_sums]
+        rand_aris = [c_sums[c].loc["Matched_Random", ("ari", "median")] for c in c_ids if c in c_sums]
+        gac_nmis = [c_sums[c].loc["Full_GAC", ("nmi", "median")] for c in c_ids if c in c_sums]
+        gac_amis = [c_sums[c].loc["Full_GAC", ("ami", "median")] for c in c_ids if c in c_sums]
+        gac_runtimes = [c_sums[c].loc["Full_GAC", ("runtime_sec", "median")] for c in c_ids if c in c_sums]
+
+        conf_stats = {
+            "cohort_count": len(c_ids),
+            "sample_count": 769,
+            "total_runs": 1440,
+            "full_gac_median_ari": float(np.median(gac_aris)),
+            "full_gac_mean_ari": float(np.mean(gac_aris)),
+            "matched_random_median_ari": float(np.median(rand_aris)),
+            "matched_random_mean_ari": float(np.mean(rand_aris)),
+            "bgss_median_gain": float(h2a_row["median_diff"]),
+            "bgss_hl_estimate": float(h2a_row["hl_estimate"]),
+            "bgss_ci_lower": float(h2a_row["ci_lower"]),
+            "bgss_ci_upper": float(h2a_row["ci_upper"]),
+            "bgss_raw_p": float(h2a_row["p_raw"]),
+            "bgss_holm_p": float(h2a_row["p_adj"]),
+            "h3_decision": str(h3_row["decision"]),
+            "h3_delta_median": float(h3_row["median_diff"]),
+            "h3_ci_lower": float(h3_row["ci_lower"]),
+            "h3_ci_upper": float(h3_row["ci_upper"]),
+        }
+        stats["Confirmatory_N4"] = conf_stats
+
+        # Re-save stats.json with Confirmatory block
+        with open(out_json, "w", encoding="utf-8") as f:
+            json.dump(stats, f, indent=2)
+
+        # Append confirmatory macros
+        lines.extend([
+            "% Confirmatory G2 Evaluation Macros (Independent Biobank Cohorts)",
+            r"\newcommand{\ConfirmatoryCohortCount}{4}",
+            r"\newcommand{\ConfirmatorySampleCount}{769}",
+            r"\newcommand{\ConfirmatoryTotalRuns}{1{,}440}",
+            f"\\newcommand{{\\ConfirmatoryFullGacMedianARI}}{{{float(np.median(gac_aris)):.3f}}}",
+            f"\\newcommand{{\\ConfirmatoryFullGacMeanARI}}{{{float(np.mean(gac_aris)):.3f}}}",
+            f"\\newcommand{{\\ConfirmatoryMatchedRandomMedianARI}}{{{float(np.median(rand_aris)):.3f}}}",
+            f"\\newcommand{{\\ConfirmatoryMatchedRandomMeanARI}}{{{float(np.mean(rand_aris)):.3f}}}",
+            f"\\newcommand{{\\ConfirmatoryBgssMedianGain}}{{+{float(h2a_row['median_diff']):.3f}}}",
+            f"\\newcommand{{\\ConfirmatoryBgssHLEstimate}}{{+{float(h2a_row['hl_estimate']):.3f}}}",
+            f"\\newcommand{{\\ConfirmatoryBgssHLCILower}}{{+{float(h2a_row['ci_lower']):.3f}}}",
+            f"\\newcommand{{\\ConfirmatoryBgssHLCIUpper}}{{+{float(h2a_row['ci_upper']):.3f}}}",
+            f"\\newcommand{{\\ConfirmatoryBgssRawP}}{{{float(h2a_row['p_raw']):.4f}}}",
+            f"\\newcommand{{\\ConfirmatoryBgssHolmP}}{{{float(h2a_row['p_adj']):.4f}}}",
+            f"\\newcommand{{\\ConfirmatoryFullGacMedianNMI}}{{{float(np.median(gac_nmis)):.3f}}}",
+            f"\\newcommand{{\\ConfirmatoryFullGacMedianAMI}}{{{float(np.median(gac_amis)):.3f}}}",
+            f"\\newcommand{{\\ConfirmatoryFullGacMedianRuntime}}{{{float(np.median(gac_runtimes)):.3f}\\,\\text{{s}}}}",
+            f"\\newcommand{{\\ConfirmatoryHThreeTOSTDecision}}{{{str(h3_row['decision']).title()}}}",
+            f"\\newcommand{{\\ConfirmatoryHThreeDeltaMedian}}{{{float(h3_row['median_diff']):.3f}}}",
+            f"\\newcommand{{\\ConfirmatoryHThreeCILower}}{{{float(h3_row['ci_lower']):.3f}}}",
+            f"\\newcommand{{\\ConfirmatoryHThreeCIUpper}}{{+{float(h3_row['ci_upper']):.3f}}}",
+            r"\newcommand{\ConfirmatorySparseKmARIHou}{0.776}",
+            r"\newcommand{\ConfirmatorySparseKmNMIHou}{0.724}",
+        ])
 
     out_content = "\n".join(lines) + "\n"
     for dest in [ROOT / "paper" / "numbers.tex", ROOT / "springer_manuscript" / "numbers.tex", ROOT / "manuscript" / "numbers.tex"]:

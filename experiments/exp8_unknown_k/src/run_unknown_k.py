@@ -158,7 +158,7 @@ def run_synthetic_benchmark(out_csv: Path, n_reps: int = 3):
 
                 # 1. ICC-AutoK
                 t0 = time.perf_counter()
-                res = run_icc_autok(X, k_min=2, k_max=max(6, k_true + 2), seed=seed)
+                res = run_icc_autok(X, k_min=2, k_max=8, seed=seed)
                 t_icc = time.perf_counter() - t0
 
                 records.append({
@@ -191,7 +191,7 @@ def run_synthetic_benchmark(out_csv: Path, n_reps: int = 3):
 
                 # 2. GMM-BIC
                 t0 = time.perf_counter()
-                k_bic, y_bic = estimate_k_gmm(X, k_min=2, k_max=max(6, k_true + 2), criterion="bic", seed=seed)
+                k_bic, y_bic = estimate_k_gmm(X, k_min=2, k_max=8, criterion="bic", seed=seed)
                 t_bic = time.perf_counter() - t0
                 records.append({
                     "stratum": "synthetic",
@@ -209,7 +209,7 @@ def run_synthetic_benchmark(out_csv: Path, n_reps: int = 3):
 
                 # 3. GMM-ICL
                 t0 = time.perf_counter()
-                k_icl, y_icl = estimate_k_gmm(X, k_min=2, k_max=max(6, k_true + 2), criterion="icl", seed=seed)
+                k_icl, y_icl = estimate_k_gmm(X, k_min=2, k_max=8, criterion="icl", seed=seed)
                 t_icl = time.perf_counter() - t0
                 records.append({
                     "stratum": "synthetic",
@@ -227,7 +227,7 @@ def run_synthetic_benchmark(out_csv: Path, n_reps: int = 3):
 
                 # 4. Spectral Eigengap
                 t0 = time.perf_counter()
-                k_eigen, y_eigen = estimate_k_spectral_eigengap(X, k_min=2, k_max=max(6, k_true + 2), seed=seed)
+                k_eigen, y_eigen = estimate_k_spectral_eigengap(X, k_min=2, k_max=8, seed=seed)
                 t_eigen = time.perf_counter() - t0
                 records.append({
                     "stratum": "synthetic",

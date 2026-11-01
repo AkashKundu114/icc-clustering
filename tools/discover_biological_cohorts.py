@@ -93,7 +93,7 @@ def clean(value: Any) -> str:
     if value is None:
         return ""
     if isinstance(value, list):
-        return "; ".join(clean(v) for v in value)
+        return "; ".join(c for v in value if (c := clean(v)))
     return re.sub(r"\s+", " ", str(value)).strip()
 
 
@@ -186,18 +186,35 @@ def download_manifest(args: argparse.Namespace) -> int:
         if root not in target.parents:
             raise SystemExit(f"Path escapes raw_dir: {rel}")
         target.parent.mkdir(parents=True, exist_ok=True)
-        req = urllib.request.Request(entry["url"], headers={"User-Agent": USER_AGENT})
-        digest = hashlib.sha256()
+
+        if target.exists() and target.stat().st_size > 0:
+            actual = sha256_file(target)
+            expected = entry["expected_sha256"].strip().lower()
+            if not expected or actual == expected:
+                output.append({**entry, "retrieval_timestamp_utc": utc_now(),
+                               "bytes": target.stat().st_size, "sha256": actual,
+                               "download_status": "VERIFIED_EXISTING"})
+                print(f"Verified existing {entry['cohort_id']} -> {target} ({target.stat().st_size:,} bytes)")
+                continue
+
         tmp = target.with_suffix(target.suffix + ".part")
         try:
-            with urllib.request.urlopen(req, timeout=args.timeout) as response, tmp.open("wb") as out:
-                while True:
-                    chunk = response.read(1024 * 1024)
-                    if not chunk:
-                        break
-                    digest.update(chunk)
-                    out.write(chunk)
-            actual = digest.hexdigest()
+            import shutil, subprocess
+            curl_bin = shutil.which("curl") or shutil.which("curl.exe")
+            if curl_bin:
+                cmd = [curl_bin, "-sSL", "--fail", "-C", "-", "--connect-timeout", "60", "-m", str(args.timeout), entry["url"], "-o", str(tmp)]
+                res = subprocess.run(cmd, capture_output=True, text=True)
+                if res.returncode != 0:
+                    raise RuntimeError(f"curl download failed ({res.returncode}): {res.stderr}")
+            else:
+                req = urllib.request.Request(entry["url"], headers={"User-Agent": USER_AGENT})
+                with urllib.request.urlopen(req, timeout=args.timeout) as response, tmp.open("wb") as out:
+                    while True:
+                        chunk = response.read(1024 * 1024)
+                        if not chunk:
+                            break
+                        out.write(chunk)
+            actual = sha256_file(tmp)
             expected = entry["expected_sha256"].strip().lower()
             if expected and actual != expected:
                 tmp.unlink(missing_ok=True)
@@ -235,7 +252,7 @@ def main() -> int:
     p_download.add_argument("--manifest", required=True)
     p_download.add_argument("--raw-dir", default="data/raw/cohort_discovery")
     p_download.add_argument("--report", default="research_audit/cohort_discovery/download_manifest.csv")
-    p_download.add_argument("--timeout", type=int, default=180)
+    p_download.add_argument("--timeout", type=int, default=3600)
     p_download.set_defaults(func=download_manifest)
 
     args = parser.parse_args()

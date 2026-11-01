@@ -1,0 +1,4 @@
+hypothesis_id,comparison,description,n_cohorts,median_diff,hl_estimate,ci_lower,ci_upper,p_raw,test_type,p_adj,reject_h0,decision
+H2a,Full_GAC vs Matched_Random,Primary Bimodality Gating Advantage (Bipartite),4,0.0645,0.069,0.0556,0.1317,0.0625,Wilcoxon signed-rank (one-sided),0.1875,False,NOT_CONFIRMED
+H2b,Delta_Bip - Delta_Dense,Dense Consensus Attenuation Interaction,4,-0.0131,-0.0253,-0.0495,0.0121,0.8125,Wilcoxon signed-rank (one-sided),1.0,False,NOT_CONFIRMED
+H3,Full_GAC (Core) vs Knockout_4 (RandomLandmarks),Core Determinacy Anchor Equivalence (TOST +/-0.02),4,-0.0149,-0.0238,-0.0536,0.0064,0.5625,TOST Equivalence (90% HL CI),1.0,False,INCONCLUSIVE
