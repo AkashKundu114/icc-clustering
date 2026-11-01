@@ -30,6 +30,7 @@ checks = [
     ("Table 13 retitled without pre-specified", "Table 13: Statistical Testing Parameters and Configurations" in full_text),
     ("No Supplementary Table references", "Supplementary Table" not in full_text),
     ("Fig 2b gap stays below 0.2", "stays below 0.2 across noise scales" in full_text),
+    ("Section 3.1 gap stays below 0.2", "stays below 0.2 across all noise scales" in full_text),
 ]
 
 all_passed = True
