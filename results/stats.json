@@ -405,5 +405,24 @@
       "rule_iii_claim_supported": true,
       "note": "Pre-specified in PLAN_STAB.md (commit 3307380) and amended with non-degeneracy condition (commit 548d68d)."
     }
+  },
+  "Confirmatory_N4": {
+    "cohort_count": 4,
+    "sample_count": 769,
+    "total_runs": 1440,
+    "full_gac_median_ari": 0.450638256311955,
+    "full_gac_mean_ari": 0.3980630174911176,
+    "matched_random_median_ari": 0.3599345535784577,
+    "matched_random_mean_ari": 0.30585236488567474,
+    "bgss_median_gain": 0.0645,
+    "bgss_hl_estimate": 0.069,
+    "bgss_ci_lower": 0.0556,
+    "bgss_ci_upper": 0.1317,
+    "bgss_raw_p": 0.0625,
+    "bgss_holm_p": 0.1875,
+    "h3_decision": "INCONCLUSIVE",
+    "h3_delta_median": -0.0149,
+    "h3_ci_lower": -0.0536,
+    "h3_ci_upper": 0.0064
   }
 }
