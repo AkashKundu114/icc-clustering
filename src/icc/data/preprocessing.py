@@ -2,11 +2,9 @@
 Preprocessing and synthetic benchmark generation primitives.
 """
 
-from typing import List, Optional, Tuple, Union
+from typing import List, Optional, Tuple
+
 import numpy as np
-import scipy.cluster.hierarchy as sch
-import scipy.linalg as sla
-from scipy.spatial.distance import cdist
 from scipy.stats import kurtosis, skew
 
 RNG_DATA_SEED = 42

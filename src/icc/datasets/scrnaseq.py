@@ -158,7 +158,15 @@ def load_zheng68k(
                         f_out.write(chunk)
             print("[*] Extracting 10x Genomics matrix archive...")
             with tarfile.open(tar_path, "r:gz") as tar:
-                tar.extractall(path=r_dir)
+                if hasattr(tarfile, "data_filter"):
+                    tar.extractall(path=r_dir, filter="data")
+                else:
+                    abs_r_dir = os.path.abspath(r_dir)
+                    for member in tar.getmembers():
+                        member_path = os.path.abspath(os.path.join(r_dir, member.name))
+                        if not member_path.startswith(abs_r_dir):
+                            raise RuntimeError(f"Path traversal detected in archive member: {member.name}")
+                    tar.extractall(path=r_dir)
 
         print("[*] Reading 10x matrix...")
         adata = sc.read_10x_mtx(mtx_dir, var_names="gene_symbols", cache=True)

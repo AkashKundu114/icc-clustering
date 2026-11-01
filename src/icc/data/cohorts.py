@@ -17,7 +17,6 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -199,7 +198,8 @@ def download_manifest(args: argparse.Namespace) -> int:
 
         tmp = target.with_suffix(target.suffix + ".part")
         try:
-            import shutil, subprocess
+            import shutil
+            import subprocess
             curl_bin = shutil.which("curl") or shutil.which("curl.exe")
             if curl_bin:
                 cmd = [curl_bin, "-sSL", "--fail", "-C", "-", "--connect-timeout", "60", "-m", str(args.timeout), entry["url"], "-o", str(tmp)]

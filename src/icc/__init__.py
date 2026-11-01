@@ -6,7 +6,6 @@ from .algorithms import (
     get_algorithm,
     list_algorithms,
 )
-from .aspp import ASPP_FAMILIES, AnchorSpacePerturbationProfiler, ASPPConfig
 from .baselines import (
     get_model,
     list_models,
@@ -22,6 +21,7 @@ from .consensus import (
     InvariantCoreConsensus,
     InvariantCoreConsensusV2,
 )
+from .consensus.aspp import ASPP_FAMILIES, AnchorSpacePerturbationProfiler, ASPPConfig
 from .consensus.autok import AutoKResult, compute_anchor_pac, run_icc_autok
 from .core import run_clusterer
 from .data import (

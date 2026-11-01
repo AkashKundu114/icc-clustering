@@ -92,7 +92,7 @@ where = ["src"]
 line-length = 120
 target-version = "py310"
 exclude = [
-    "data",
+    "./data",
     ".pytest_cache",
     ".ruff_cache",
     ".mypy_cache",

@@ -123,9 +123,9 @@ def load_genomics_dataset(
     cache_path = get_cached_path(dataset_name, cache_dir=c_dir)
 
     if os.path.exists(cache_path) and not force_download:
-        data = np.load(cache_path)
-        X = data["X"]
-        y = data["y"]
+        with np.load(cache_path) as data:
+            X = data["X"]
+            y = data["y"]
         metadata = {
             "name": dataset_name,
             "N": int(X.shape[0]),

@@ -212,7 +212,7 @@ class InvariantCoreConsensusV2:
         elif self.pool_mode == "gauss":
             from scipy.stats import norm
 
-            rn = np.random.default_rng(0)
+            rn = np.random.default_rng(self.random_state)
             Z = rn.normal(size=(N, 2000))
             kz = kurtosis(Z, axis=0, bias=False) if N >= 4 else kurtosis(Z, axis=0)
             sz = skew(Z, axis=0, bias=False) if N >= 3 else skew(Z, axis=0)

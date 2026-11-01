@@ -1,5 +1,6 @@
-# Generated benchmark results and temporary run outputs
-results/
+# Private local coding-agent workspace
+/audit/
+/results/
 
 # Data cache and raw downloads (large binary files)
 data/cache/
@@ -12,7 +13,6 @@ data/paul15/
 
 # Experiment caches
 results/experiments/*.json
-!results/experiments/.gitkeep
 experiments/**/data/*.npz
 experiments/**/data/cache/*.npz
 experiments/**/data/*.h5ad

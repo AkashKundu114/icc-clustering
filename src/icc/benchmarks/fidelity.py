@@ -109,19 +109,24 @@ def run_fidelity_sweep(n_samples_list=None, n_trials=5, output_csv=None):
                 signal_dim=2,
             )
 
-            # 1. Benchmark ICC-v2 Reduced (O(N))
-            tracemalloc.start()
+            # 1. Benchmark ICC-v2 Reduced (O(N)): separate timing and memory
             t0 = time.perf_counter()
             model_red = InvariantCoreConsensusV2(n_clusters=3, n_base_models=25, n_anchors=40, random_state=seed)
             labels_red = model_red.fit_predict(X)
             t_red = time.perf_counter() - t0
+
+            tracemalloc.start()
+            m_red_mem = InvariantCoreConsensusV2(n_clusters=3, n_base_models=25, n_anchors=40, random_state=seed)
+            _ = m_red_mem.fit_predict(X)
             _, peak_mem_red = tracemalloc.get_traced_memory()
             tracemalloc.stop()
 
-            # 2. Benchmark ICC-v2 Exact (O(N^2))
-            tracemalloc.start()
+            # 2. Benchmark ICC-v2 Exact (O(N^2)): separate timing and memory
             t0 = time.perf_counter()
             labels_exact, t_exact = run_icc_v2_exact(X, k=3, n_base_models=25, seed=seed)
+
+            tracemalloc.start()
+            _, _ = run_icc_v2_exact(X, k=3, n_base_models=25, seed=seed)
             _, peak_mem_exact = tracemalloc.get_traced_memory()
             tracemalloc.stop()
 

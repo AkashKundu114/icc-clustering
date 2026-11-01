@@ -2,7 +2,7 @@
 Statistical hypothesis testing, effect sizes, and multi-algorithm comparison tests.
 """
 
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 from scipy import stats
@@ -132,3 +132,29 @@ def nemenyi_critical_distance(k: int, n: int, alpha: float = 0.05) -> float:
     }
     q = q_table.get(k, 3.4)
     return float(q * np.sqrt(k * (k + 1) / (6.0 * n)))
+
+
+def wilcoxon_signed_rank_test(x: np.ndarray, y: Optional[np.ndarray] = None) -> Dict[str, float]:
+    """
+    Computes Wilcoxon signed-rank test for paired samples or one sample vs zero.
+    """
+    x = np.asarray(x, dtype=np.float64)
+    if y is not None:
+        y = np.asarray(y, dtype=np.float64)
+        d = x - y
+    else:
+        d = x
+    d_nonzero = d[d != 0]
+    if len(d_nonzero) == 0:
+        return {"statistic": 0.0, "pvalue": 1.0}
+    res = stats.wilcoxon(d_nonzero)
+    return {"statistic": float(res.statistic), "pvalue": float(res.pvalue)}
+
+
+def bonferroni_correction(p_values: np.ndarray) -> np.ndarray:
+    """
+    Applies Bonferroni multiple testing correction, capping adjusted p-values at 1.0.
+    """
+    p_arr = np.asarray(p_values, dtype=np.float64)
+    m = len(p_arr)
+    return np.minimum(p_arr * m, 1.0)

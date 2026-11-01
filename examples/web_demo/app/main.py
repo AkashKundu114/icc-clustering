@@ -14,14 +14,18 @@ from fastapi.responses import HTMLResponse
 from sklearn.decomposition import PCA, TruncatedSVD
 from sklearn.model_selection import train_test_split
 
-from src.cicc.inductive import InductiveConsensusClusterer
-from src.cicc.memory import InductiveConsensusMemory
+try:
+    from cicc.inductive import InductiveConsensusClusterer
+    from cicc.memory import InductiveConsensusMemory
+except ImportError:
+    from src.cicc.inductive import InductiveConsensusClusterer
+    from src.cicc.memory import InductiveConsensusMemory
 
 app = FastAPI(title="CICC: Conformal Inductive Consensus Clustering", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://127.0.0.1:8000", "http://localhost:8000", "http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -34,8 +38,8 @@ def load_preset_dataset(name: str):
         path = "data/cache/newsgroups20.npz"
         if not os.path.exists(path):
             raise FileNotFoundError("newsgroups20.npz not found")
-        data = np.load(path)
-        X_raw, y_raw = data["X"], data["y"]
+        with np.load(path) as data:
+            X_raw, y_raw = data["X"], data["y"]
         # 4 distinct topics: comp.graphics (1), rec.sport.baseball (9), sci.space (13), talk.politics.mideast (17)
         selected_classes = [1, 9, 13, 17]
         mask = np.isin(y_raw, selected_classes)
@@ -77,8 +81,8 @@ def load_preset_dataset(name: str):
         path = "data/cache/isolet.npz"
         if not os.path.exists(path):
             raise FileNotFoundError("isolet.npz not found")
-        data = np.load(path)
-        X_raw, y_raw = data["X"], data["y"]
+        with np.load(path) as data:
+            X_raw, y_raw = data["X"], data["y"]
         # 4 letter classes
         mask = np.isin(y_raw, [0, 1, 2, 3])
         X = X_raw[mask][:800]
@@ -125,6 +129,14 @@ def run_clustering_endpoint(
     n_anchors: int = Form(30),
     enable_decoy: bool = Form(True),
 ):
+    if not (2 <= n_clusters <= 50):
+        raise HTTPException(status_code=422, detail="n_clusters must be between 2 and 50")
+    if not (5 <= n_anchors <= 500):
+        raise HTTPException(status_code=422, detail="n_anchors must be between 5 and 500")
+    if not (0.01 <= alpha <= 0.50):
+        raise HTTPException(status_code=422, detail="alpha must be between 0.01 and 0.50")
+    if not (0.01 <= fdr_target <= 0.50):
+        raise HTTPException(status_code=422, detail="fdr_target must be between 0.01 and 0.50")
     try:
         X, y_true, class_names = load_preset_dataset(dataset)
     except Exception as e:

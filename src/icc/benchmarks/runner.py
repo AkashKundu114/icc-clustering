@@ -38,9 +38,6 @@ class BenchmarkResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 
-# Backward-compatibility alias
-ExperimentResult = BenchmarkResult
-
 
 class BenchmarkRunner:
     """
@@ -77,7 +74,7 @@ class BenchmarkRunner:
         dataset_name: str,
         algorithm_name: str,
         seed: int,
-    ) -> ExperimentResult:
+    ) -> BenchmarkResult:
         """Execute a single combination of dataset, algorithm, and seed."""
         set_seed(seed)
 
@@ -119,9 +116,11 @@ class BenchmarkRunner:
         try:
             with Timer() as timer:
                 if algorithm_name in ("icc_v2", "icc", "gac"):
+                    icc_kwargs = dict(self.config.get("icc_v2", {})) if isinstance(self.config, dict) else {}
                     model = InvariantCoreConsensusV2(
                         n_clusters=k,
                         random_state=seed,
+                        **icc_kwargs,
                     )
                     labels = model.fit_predict(X)
                     model_meta = {"n_anchors": model.n_anchors, "n_base": model.n_base_models}

@@ -38,24 +38,30 @@ def generate_benchmark_synthetic(n_samples, n_features, k=3, seed=42):
 
 def benchmark_model_execution(model_name, model_fn, X, k, seed=42):
     """
-    Executes model with tracemalloc to capture peak memory (MB) and wall-clock time (sec).
+    Executes model with clean wall-clock timing pass and separate tracemalloc pass.
     """
-    tracemalloc.start()
-    t0 = time.perf_counter()
+    oom = False
+    lc = 0
+    t_total = np.nan
     try:
+        t0 = time.perf_counter()
         pred, elapsed, lc = model_fn(X, k, seed=seed)
         t_total = time.perf_counter() - t0
-        current, peak = tracemalloc.get_traced_memory()
-        peak_mb = peak / (1024.0 * 1024.0)
-        oom = False
     except MemoryError:
-        t_total = np.nan
-        peak_mb = np.nan
-        lc = 0
+        return np.nan, np.nan, 0, True
+
+    peak_mb = np.nan
+    try:
+        tracemalloc.start()
+        _, _, _ = model_fn(X, k, seed=seed)
+        _, peak = tracemalloc.get_traced_memory()
+        peak_mb = peak / (1024.0 * 1024.0)
+    except MemoryError:
         oom = True
     finally:
-        tracemalloc.stop()
-        
+        if tracemalloc.is_tracing():
+            tracemalloc.stop()
+
     return t_total, peak_mb, lc, oom
 
 
