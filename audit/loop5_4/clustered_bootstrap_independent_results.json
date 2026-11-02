@@ -1,0 +1,289 @@
+{
+  "metadata": {
+    "audit_phase": "Loop 5.4 Independent Verification",
+    "script": "audit/loop5_4/clustered_bootstrap_independent_verification.py",
+    "input_artifact": "results/evidence_recovery/recovered/subsample_stability_summary.csv",
+    "input_artifact_sha256": "577cbab79913020ce362b8280ccb8c7ef62952d28ea47a45950f75cca2ff4b4f",
+    "num_cohorts": 6,
+    "num_methods": 12,
+    "num_cells": 72,
+    "bootstrap_replications": 10000,
+    "random_seed": 42
+  },
+  "point_estimates_72_cells": {
+    "mean_stability": 0.5165860620823638,
+    "mean_accuracy": 0.052312182172289196,
+    "mean_gap": 0.46427387991007457,
+    "mean_null_stability": 0.00661968076299296,
+    "mean_net_stability": 0.5099663813193707,
+    "median_stability": 0.48948118107532945,
+    "median_accuracy": 0.012926522150455665,
+    "median_gap": 0.44840681694162077,
+    "std_gap": 0.24399293209301764
+  },
+  "unclustered_cell_bootstrap": {
+    "resampling_unit": "Cell (n=72)",
+    "gap_95_ci": [
+      0.40777445668843576,
+      0.5204759295360887
+    ],
+    "gap_se": 0.02884031199449466,
+    "gap_ci_width": 0.11270147284765292,
+    "stability_95_ci": [
+      0.4647311758471769,
+      0.5687677445162744
+    ],
+    "stability_se": 0.02637364891775697,
+    "accuracy_95_ci": [
+      0.03357315647656394,
+      0.07399152723122675
+    ],
+    "accuracy_se": 0.010342550989036692
+  },
+  "clustered_cohort_bootstrap": {
+    "resampling_unit": "Cohort Block (n=6 clusters, 12 methods each)",
+    "gap_95_ci": [
+      0.36430496419568154,
+      0.6083518108844851
+    ],
+    "gap_se": 0.06530566747271688,
+    "gap_ci_width": 0.24404684668880355,
+    "stability_95_ci": [
+      0.4221579953930112,
+      0.645471398709167
+    ],
+    "stability_se": 0.05924978954358853,
+    "accuracy_95_ci": [
+      0.0058597198228569035,
+      0.10009305908644185
+    ],
+    "accuracy_se": 0.02600312200989705,
+    "se_inflation_ratio": 2.264388384050183,
+    "width_expansion_ratio": 2.1654273056280293
+  },
+  "leave_one_cohort_out_sensitivity": {
+    "cns": {
+      "Omitted_Cohort": "cns",
+      "Remaining_Cohorts": 5,
+      "Remaining_Cells": 60,
+      "Mean_Stability": 0.5256,
+      "Mean_Accuracy": 0.0644,
+      "Mean_Gap": 0.4612,
+      "Clustered_Gap_95_CI": "[0.3442, 0.6390]",
+      "Clustered_Gap_SE": 0.0771,
+      "Gap_Excludes_Zero": true,
+      "Relative_Gap_Shift_Pct": -0.67
+    },
+    "colon": {
+      "Omitted_Cohort": "colon",
+      "Remaining_Cohorts": 5,
+      "Remaining_Cells": 60,
+      "Mean_Stability": 0.5368,
+      "Mean_Accuracy": 0.0596,
+      "Mean_Gap": 0.4772,
+      "Clustered_Gap_95_CI": "[0.3532, 0.6461]",
+      "Clustered_Gap_SE": 0.0757,
+      "Gap_Excludes_Zero": true,
+      "Relative_Gap_Shift_Pct": 2.79
+    },
+    "leukemia": {
+      "Omitted_Cohort": "leukemia",
+      "Remaining_Cohorts": 5,
+      "Remaining_Cells": 60,
+      "Mean_Stability": 0.5325,
+      "Mean_Accuracy": 0.0352,
+      "Mean_Gap": 0.4973,
+      "Clustered_Gap_95_CI": "[0.4003, 0.6501]",
+      "Clustered_Gap_SE": 0.0681,
+      "Gap_Excludes_Zero": true,
+      "Relative_Gap_Shift_Pct": 7.11
+    },
+    "ovarian": {
+      "Omitted_Cohort": "ovarian",
+      "Remaining_Cohorts": 5,
+      "Remaining_Cells": 60,
+      "Mean_Stability": 0.5407,
+      "Mean_Accuracy": 0.0614,
+      "Mean_Gap": 0.4793,
+      "Clustered_Gap_95_CI": "[0.3594, 0.6461]",
+      "Clustered_Gap_SE": 0.075,
+      "Gap_Excludes_Zero": true,
+      "Relative_Gap_Shift_Pct": 3.24
+    },
+    "prostate": {
+      "Omitted_Cohort": "prostate",
+      "Remaining_Cohorts": 5,
+      "Remaining_Cells": 60,
+      "Mean_Stability": 0.4573,
+      "Mean_Accuracy": 0.059,
+      "Mean_Gap": 0.3983,
+      "Clustered_Gap_95_CI": "[0.3421, 0.4465]",
+      "Clustered_Gap_SE": 0.0262,
+      "Gap_Excludes_Zero": true,
+      "Relative_Gap_Shift_Pct": -14.2
+    },
+    "srbct": {
+      "Omitted_Cohort": "srbct",
+      "Remaining_Cohorts": 5,
+      "Remaining_Cells": 60,
+      "Mean_Stability": 0.5065,
+      "Mean_Accuracy": 0.0342,
+      "Mean_Gap": 0.4723,
+      "Clustered_Gap_95_CI": "[0.3532, 0.6341]",
+      "Clustered_Gap_SE": 0.0756,
+      "Gap_Excludes_Zero": true,
+      "Relative_Gap_Shift_Pct": 1.72
+    }
+  },
+  "leave_one_method_out_sensitivity": {
+    "CoHiRF": {
+      "Omitted_Method": "CoHiRF",
+      "Remaining_Methods": 11,
+      "Remaining_Cells": 66,
+      "Mean_Stability": 0.5375,
+      "Mean_Accuracy": 0.0552,
+      "Mean_Gap": 0.4822,
+      "Relative_Gap_Shift_Pct": 3.87
+    },
+    "CoreHalo": {
+      "Omitted_Method": "CoreHalo",
+      "Remaining_Methods": 11,
+      "Remaining_Cells": 66,
+      "Mean_Stability": 0.5143,
+      "Mean_Accuracy": 0.0535,
+      "Mean_Gap": 0.4609,
+      "Relative_Gap_Shift_Pct": -0.74
+    },
+    "DEC": {
+      "Omitted_Method": "DEC",
+      "Remaining_Methods": 11,
+      "Remaining_Cells": 66,
+      "Mean_Stability": 0.5187,
+      "Mean_Accuracy": 0.053,
+      "Mean_Gap": 0.4657,
+      "Relative_Gap_Shift_Pct": 0.31
+    },
+    "FCAG": {
+      "Omitted_Method": "FCAG",
+      "Remaining_Methods": 11,
+      "Remaining_Cells": 66,
+      "Mean_Stability": 0.5134,
+      "Mean_Accuracy": 0.0526,
+      "Mean_Gap": 0.4608,
+      "Relative_Gap_Shift_Pct": -0.75
+    },
+    "FCM": {
+      "Omitted_Method": "FCM",
+      "Remaining_Methods": 11,
+      "Remaining_Cells": 66,
+      "Mean_Stability": 0.4933,
+      "Mean_Accuracy": 0.0527,
+      "Mean_Gap": 0.4406,
+      "Relative_Gap_Shift_Pct": -5.11
+    },
+    "FastMVC": {
+      "Omitted_Method": "FastMVC",
+      "Remaining_Methods": 11,
+      "Remaining_Cells": 66,
+      "Mean_Stability": 0.5098,
+      "Mean_Accuracy": 0.0534,
+      "Mean_Gap": 0.4565,
+      "Relative_Gap_Shift_Pct": -1.68
+    },
+    "GAC": {
+      "Omitted_Method": "GAC",
+      "Remaining_Methods": 11,
+      "Remaining_Cells": 66,
+      "Mean_Stability": 0.521,
+      "Mean_Accuracy": 0.0418,
+      "Mean_Gap": 0.4792,
+      "Relative_Gap_Shift_Pct": 3.21
+    },
+    "K-Means": {
+      "Omitted_Method": "K-Means",
+      "Remaining_Methods": 11,
+      "Remaining_Cells": 66,
+      "Mean_Stability": 0.5293,
+      "Mean_Accuracy": 0.0525,
+      "Mean_Gap": 0.4768,
+      "Relative_Gap_Shift_Pct": 2.71
+    },
+    "Spectral": {
+      "Omitted_Method": "Spectral",
+      "Remaining_Methods": 11,
+      "Remaining_Cells": 66,
+      "Mean_Stability": 0.5069,
+      "Mean_Accuracy": 0.054,
+      "Mean_Gap": 0.4529,
+      "Relative_Gap_Shift_Pct": -2.45
+    },
+    "StdCons": {
+      "Omitted_Method": "StdCons",
+      "Remaining_Methods": 11,
+      "Remaining_Cells": 66,
+      "Mean_Stability": 0.5112,
+      "Mean_Accuracy": 0.0532,
+      "Mean_Gap": 0.458,
+      "Relative_Gap_Shift_Pct": -1.36
+    },
+    "UngatedAC": {
+      "Omitted_Method": "UngatedAC",
+      "Remaining_Methods": 11,
+      "Remaining_Cells": 66,
+      "Mean_Stability": 0.5302,
+      "Mean_Accuracy": 0.0531,
+      "Mean_Gap": 0.4771,
+      "Relative_Gap_Shift_Pct": 2.77
+    },
+    "Ward": {
+      "Omitted_Method": "Ward",
+      "Remaining_Methods": 11,
+      "Remaining_Cells": 66,
+      "Mean_Stability": 0.5134,
+      "Mean_Accuracy": 0.0528,
+      "Mean_Gap": 0.4606,
+      "Relative_Gap_Shift_Pct": -0.79
+    }
+  },
+  "stability_accuracy_correlation": {
+    "pearson_r": -0.03186820109445919,
+    "pearson_p": 0.7904351740516891,
+    "spearman_rho": 0.02450318348446846,
+    "spearman_p": 0.838112655719164,
+    "kendall_tau": 0.004694835680751173,
+    "kendall_p": 0.9534818168627069,
+    "interpretation": "Empirical correlation between subsample stability and reference alignment is statistically indistinguishable from zero across all 72 cells."
+  },
+  "conditional_nine_cell_analysis": {
+    "n_cells": 9,
+    "cohorts": [
+      "cns",
+      "colon",
+      "ovarian",
+      "prostate"
+    ],
+    "cohort_counts": {
+      "cns": 3,
+      "colon": 3,
+      "ovarian": 1,
+      "prostate": 2
+    },
+    "methods": [
+      "FCAG",
+      "FCM",
+      "FastMVC"
+    ],
+    "mean_stability": 0.6837644109002099,
+    "mean_accuracy": -0.002853002898569365,
+    "mean_gap": 0.6866174137987793,
+    "mean_null_stability": 0.012858302445349756,
+    "min_gap": 0.5176158028115929,
+    "max_gap": 0.9082239664188195,
+    "selection_conditioning_classification": "CONDITIONAL_DESCRIPTIVE_TAIL_ANALYSIS",
+    "validity_warning": "Outcome-conditioned subset (selected on Stab >= 0.50 and Acc <= 0.05). Must not be reported as unconditional population estimate."
+  },
+  "methodological_conclusions": {
+    "discordance_robustness": "CONFIRMED. The stability-accuracy gap remains strictly positive (> +0.398) across all leave-one-cohort-out and leave-one-method-out permutations.",
+    "clustered_bootstrap_role": "SECONDARY_SENSITIVITY_ANALYSIS. With C=6 clusters, discrete support limitations (462 unique compositions) preclude designating cluster bootstrap as primary population inference. It serves as a rigorous robustness check demonstrating that discordance survives intra-cohort variance inflation."
+  }
+}

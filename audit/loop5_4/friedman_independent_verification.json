@@ -1,0 +1,137 @@
+{
+  "metadata": {
+    "audit_phase": "Loop 5.4 Friedman Matrix Verification",
+    "source_file": "results/evidence_recovery/recovered/results.json",
+    "source_sha256": "0e5d2c10343ba077ff109e5f6554ecc191d89a590dfaf28bec2ef3e950e3ba27",
+    "datasets_count": 13,
+    "methods_count": 11,
+    "total_verified_fits": 1430
+  },
+  "verified_11_method_omnibus_benchmark": {
+    "datasets": [
+      "cns",
+      "colon",
+      "indian_pines",
+      "isolet",
+      "leukemia",
+      "madelon",
+      "newsgroups20",
+      "ovarian",
+      "prostate",
+      "sonar",
+      "srbct",
+      "yale_b",
+      "zheng68k"
+    ],
+    "methods": [
+      "DEC",
+      "FCAG",
+      "FCM",
+      "FastMVC",
+      "ICC_v1",
+      "ICC_v2",
+      "K-Means",
+      "Li_et_al_2019",
+      "Spectral",
+      "Standard_Consensus",
+      "Ward"
+    ],
+    "matrix_shape": [
+      13,
+      11
+    ],
+    "cells_total": 143,
+    "all_cells_have_10_seeds": true,
+    "friedman_statistic_chi2": 11.342657342657333,
+    "degrees_of_freedom": 10,
+    "p_value": 0.33145228811008864,
+    "statistically_significant_alpha_05": false,
+    "method_ranks_ascending_best_first": [
+      {
+        "rank_position": 1,
+        "method": "DEC",
+        "average_rank": 4.308
+      },
+      {
+        "rank_position": 2,
+        "method": "Standard_Consensus",
+        "average_rank": 5.077
+      },
+      {
+        "rank_position": 3,
+        "method": "K-Means",
+        "average_rank": 5.308
+      },
+      {
+        "rank_position": 4,
+        "method": "Ward",
+        "average_rank": 5.308
+      },
+      {
+        "rank_position": 5,
+        "method": "ICC_v2",
+        "average_rank": 5.462
+      },
+      {
+        "rank_position": 6,
+        "method": "ICC_v1",
+        "average_rank": 5.923
+      },
+      {
+        "rank_position": 7,
+        "method": "Spectral",
+        "average_rank": 6.538
+      },
+      {
+        "rank_position": 8,
+        "method": "Li_et_al_2019",
+        "average_rank": 6.846
+      },
+      {
+        "rank_position": 9,
+        "method": "FCM",
+        "average_rank": 6.923
+      },
+      {
+        "rank_position": 10,
+        "method": "FastMVC",
+        "average_rank": 6.923
+      },
+      {
+        "rank_position": 11,
+        "method": "FCAG",
+        "average_rank": 7.385
+      }
+    ],
+    "gac_performance_summary": {
+      "method_name": "ICC_v2",
+      "average_rank": 5.462,
+      "rank_position": 5,
+      "total_methods": 11,
+      "tied_with": "Ward and K-Means near ~5.3-5.5 rank band",
+      "interpretation": "Across all 13 diverse benchmarks, GAC does not demonstrate statistical superiority. It ranks 5th out of 11 (tied 4th effective rank tier), consistent with the Friedman p-value of 0.3315 confirming no significant performance divergence across algorithms globally."
+    }
+  },
+  "comparison_with_manuscript_12_method_table_6": {
+    "table_6_methods": [
+      "K-Means",
+      "Ward",
+      "Spectral",
+      "FCM",
+      "Standard_Consensus",
+      "Core_Halo_Consensus",
+      "DEC",
+      "FCAG",
+      "FastMVC",
+      "CoHiRF",
+      "ICC_v1",
+      "ICC_v2"
+    ],
+    "table_6_friedman_stat": 11.556213017751475,
+    "table_6_degrees_of_freedom": 11,
+    "table_6_p_value": 0.3979076148432822,
+    "table_6_gac_rank": 5.615384615384615,
+    "discrepancy_explanation": "The manuscript Table 6 comparison incorporates 12 methods including Core_Halo_Consensus and CoHiRF. However, raw trial-level run microdata for Core_Halo_Consensus and CoHiRF is present only for the 6 high-D biomedical cohorts (in subsample_stability_summary.csv) and is completely missing from results.json for the 7 non-biomedical benchmarks (Sonar, Madelon, Isolet, 20News, Indian Pines, Yale B, PBMC68k). Consequently, the 12-method Table 6 Friedman test exists only as precomputed metadata in stats.json and cannot be independently recalculated from raw arrays. The 11-method analysis above is the sole fully verifiable omnibus benchmark comparison reproducible from archived microdata.",
+    "classification": "DISTINCT_ESTIMAND_AND_CONFIGURATION"
+  }
+}
