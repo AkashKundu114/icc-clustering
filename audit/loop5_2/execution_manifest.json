@@ -1,0 +1,118 @@
+{
+  "manifest_metadata": {
+    "version": "1.0.0",
+    "generated_at_iso": "2026-11-02T13:48:00+05:30",
+    "audit_phase": "Loop 5.2 \u2014 Artifact, Estimand & Reproduction Consistency Audit",
+    "git_commit": "d81340f19376fc80ba29417b741a8edf5774bb9b",
+    "branch": "main",
+    "working_tree_clean": true,
+    "target_journal": "Springer Nature \u2014 Data Mining and Knowledge Discovery (DMKD)"
+  },
+  "categorical_gate_verdicts": {
+    "1_artifact_integrity": "GO",
+    "2_fit_count_integrity": "UNVERIFIED",
+    "3_discordance_thesis": "GO",
+    "4_confidence_interval_validity": "CONDITIONAL GO",
+    "5_factorial_ablation": "CONDITIONAL GO",
+    "6_omnibus_benchmark": "CONDITIONAL GO",
+    "7_scalability": "GO",
+    "8_independent_reproducibility": "GO",
+    "9_public_reproducibility": "HOLD",
+    "10_manuscript_revision_readiness": "GO",
+    "11_dmkd_submission_readiness": "HOLD"
+  },
+  "deliverables_created": {
+    "artifact_conflict_report.md": {
+      "relative_path": "audit/loop5_2/artifact_conflict_report.md",
+      "size_bytes": 12102,
+      "sha256": "526093b6ed9b5f2aef37549de307d89d31daeb3b5be29ab12fce505e4f4e3520",
+      "status": "VERIFIED"
+    },
+    "canonical_artifact_manifest.csv": {
+      "relative_path": "audit/loop5_2/canonical_artifact_manifest.csv",
+      "size_bytes": 13536,
+      "sha256": "8c2b36407140519db4c22e3f3bade2f5270f5f81230eccee86d135414dc65593",
+      "status": "VERIFIED"
+    },
+    "discordance_estimand_recomputation.md": {
+      "relative_path": "audit/loop5_2/discordance_estimand_recomputation.md",
+      "size_bytes": 9328,
+      "sha256": "47156fc33d7c24bb94e8987345d9e735997955bd717cf35617a3053e3acb9f6a",
+      "status": "VERIFIED"
+    },
+    "discordance_recomputed_statistics.csv": {
+      "relative_path": "audit/loop5_2/discordance_recomputed_statistics.csv",
+      "size_bytes": 2553,
+      "sha256": "20276bee599492a575d08caebc6c5e7132892b7a0ca3e5cbc349ed22e06298b0",
+      "status": "VERIFIED"
+    },
+    "execute_recomputations.py": {
+      "relative_path": "audit/loop5_2/execute_recomputations.py",
+      "size_bytes": 14729,
+      "sha256": "9af260dbd66fc421b3ff76f7faf8b8be0f41291ea41041e063498fc3fd12d27e",
+      "status": "VERIFIED"
+    },
+    "final_loop5_2_adjudication.md": {
+      "relative_path": "audit/loop5_2/final_loop5_2_adjudication.md",
+      "size_bytes": 9818,
+      "sha256": "718562c9e233fdcb36c82b8c74981f2db25d7d848d50987e4f942848a0a398e6",
+      "status": "VERIFIED"
+    },
+    "fit_count_adjudication.md": {
+      "relative_path": "audit/loop5_2/fit_count_adjudication.md",
+      "size_bytes": 7767,
+      "sha256": "fe0aa544235d1fc0dd159ae261a9f611679aadcf7545b211e4a9db9088442b16",
+      "status": "VERIFIED"
+    },
+    "fit_record_inventory.csv": {
+      "relative_path": "audit/loop5_2/fit_record_inventory.csv",
+      "size_bytes": 439872,
+      "sha256": "150abe10be97f18f0020571b26f1362c75e994379d6f318f9c4d88044e3bf42b",
+      "status": "VERIFIED"
+    },
+    "generate_manifest.py": {
+      "relative_path": "audit/loop5_2/generate_manifest.py",
+      "size_bytes": 2874,
+      "sha256": "28d2f1af72a023d01220d79eb8404ddf959085a09f1c682a7ac5b763d0f6ef1b",
+      "status": "VERIFIED"
+    },
+    "reproduction_evidence_report.md": {
+      "relative_path": "audit/loop5_2/reproduction_evidence_report.md",
+      "size_bytes": 9693,
+      "sha256": "c6fff75ce2cb617300f86926221e6969ca2d6f7ee48b3445a828779d97605577",
+      "status": "VERIFIED"
+    },
+    "reproduction_execution_ledger.csv": {
+      "relative_path": "audit/loop5_2/reproduction_execution_ledger.csv",
+      "size_bytes": 5396,
+      "sha256": "d53488d41977aeb0360e15d4bc468d899a55550c5f1a5d985123e030009ba405",
+      "status": "VERIFIED"
+    },
+    "zenodo_package_readiness.md": {
+      "relative_path": "audit/loop5_2/zenodo_package_readiness.md",
+      "size_bytes": 7603,
+      "sha256": "436f189df7fe1234d44924a3cab477d1d7f9fa381a20fe28e8444ec8b50496dc",
+      "status": "VERIFIED"
+    },
+    "zenodo_package_validation.csv": {
+      "relative_path": "audit/loop5_2/zenodo_package_validation.csv",
+      "size_bytes": 11041,
+      "sha256": "02a88d2beb9ad35c43bf18bcdbbfa96ba635ad99ea27fb06a9d6c36677b9da6d",
+      "status": "VERIFIED"
+    }
+  },
+  "execution_summary": {
+    "total_deliverables": 14,
+    "canonical_artifacts_verified": 14,
+    "cached_datasets_verified": 14,
+    "headline_results_reproduced_live": 8,
+    "unverified_claims_identified": [
+      "3,000 model fits in Table 6 (only 1,430 unique primary fits archived in results.json)"
+    ],
+    "methodological_safeguards_established": [
+      "Clustered block bootstrap by cohort cluster (n=6) replacing anti-conservative cell-level bootstrap",
+      "Non-parametric bootstrap intervals replacing out-of-bounds Student-t intervals",
+      "Dual-licensing requirement (CC-BY-NC 4.0 for yale_b.npz) replacing blanket CC-BY 4.0"
+    ]
+  }
+}
