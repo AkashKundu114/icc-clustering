@@ -37,6 +37,12 @@ Each tool writes recalculated CSV/JSON outputs and dynamically computed SHA-256 
 
 The six-cohort tool expects a 6 × 12 × 2 × 30 partition grid, matching Parquet records, matching sample counts and repeat seed/split structures, and 435 pairwise intersection comparisons per cell and mode. It recomputes external ARI and stability from supplied files. Outputs are `recomputed_cells.csv`, `recomputation_summary.json`, and `output_manifest.json`.
 
+The summary distinguishes (a) cells passing the post-hoc 5% minimum-cluster
+fraction in at least 27 of 30 repeats, (b) cells passing the original numeric
+stability/ARI screen, and (c) their intersection. The repeat-level screen also
+requires predicted K to be at least the number of reference classes, so it is
+label-informed. These selections are exploratory and are not confirmation.
+
 The benchmark tool reports score cell summaries, ranks, tie-corrected Friedman arithmetic, missing/duplicate keys, zero scores, and hashes. Outputs are `benchmark_cell_summary.csv` and `benchmark_recalculation.json`.
 
 Compare outputs to the authors' cited archived values, then inspect all reported mismatches. The tools do not infer a corrected experiment definition from output values.

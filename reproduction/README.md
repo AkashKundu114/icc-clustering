@@ -80,6 +80,15 @@ cell and dynamic SHA-256 checksums. It writes `recomputed_cells.csv`,
 `recomputation_summary.json`, and `output_manifest.json` to a new empty output
 directory.
 
+The cell output also reports how many real repeats pass 2%, 5%, and 10%
+minimum-cluster-fraction screens, and whether a cell passes the post-hoc
+5% / 27-of-30 screen. The summary counts cells passing that screen, the original
+mean-stability/ARI screen, and their intersection. This diagnostic uses the
+reference-label class count as a lower bound on predicted K; it is therefore
+label-informed and post hoc. The resulting subsets are exploratory and must
+not be described as independent confirmation. The verifier does not select a
+primary result from these subsets.
+
 ```powershell
 python reproduction/scripts/recompute_saved_stability.py `
   --data-root <evidence-root> `

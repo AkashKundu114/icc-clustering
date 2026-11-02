@@ -223,6 +223,7 @@ def main() -> int:
                     errors.append(f"real/null split mismatch: {cohort}/{method}/{real[0]}")
 
             real_aris: list[float] = []
+            qualifying_repeat_counts = {0.02: 0, 0.05: 0, 0.10: 0}
             for mode in MODES:
                 for repeat, idx, labels in mode_rows[mode]:
                     record = records_by_key[f"{cohort}_{method}_{mode}_{repeat}"]
@@ -236,6 +237,17 @@ def main() -> int:
                     if mode == "real":
                         aria = float(adjusted_rand_score(y[idx], labels))
                         real_aris.append(aria)
+                        cluster_sizes = np.unique(labels, return_counts=True)[1]
+                        min_cluster_fraction = (float(cluster_sizes.min() / len(labels))
+                                                if len(cluster_sizes) and len(labels) else 0.0)
+                        # Historical post-hoc screen: a repeat is eligible only
+                        # if its smallest cluster meets the fraction threshold
+                        # and predicted K is not below reference-label K.
+                        if len(cluster_sizes) < np.unique(y).size:
+                            min_cluster_fraction = 0.0
+                        for threshold in qualifying_repeat_counts:
+                            if min_cluster_fraction >= threshold:
+                                qualifying_repeat_counts[threshold] += 1
                         stored = row.get("accuracy")
                         if pd.isna(stored) or abs(float(stored) - aria) > 1e-12:
                             errors.append(f"Parquet ARI mismatch: {cohort}/{method}/real/{repeat}")
@@ -269,6 +281,10 @@ def main() -> int:
                 "n_real_pairwise": n_real_pairs, "n_null_pairwise": n_null_pairs,
                 "mean_stability": stability, "mean_external_ari": float(np.mean(real_aris)),
                 "mean_gap": stability - float(np.mean(real_aris)), "mean_null_stability": null_stability,
+                "nondegenerate_repeats_2pct": qualifying_repeat_counts[0.02],
+                "nondegenerate_repeats_5pct": qualifying_repeat_counts[0.05],
+                "nondegenerate_repeats_10pct": qualifying_repeat_counts[0.10],
+                "passes_5pct_27of30": qualifying_repeat_counts[0.05] >= 27,
                 "saved_mean_stability": float(saved_row.subsample_stability) if saved_row is not None else np.nan,
                 "saved_mean_external_ari": float(saved_row.subsample_accuracy) if saved_row is not None else np.nan,
                 "saved_mean_null_stability": float(saved_row.null_stability) if saved_row is not None else np.nan,
@@ -285,6 +301,8 @@ def main() -> int:
     if seed_mismatches:
         errors.append(f"cross-method seed mismatches: {len(seed_mismatches)}")
     cells = pd.DataFrame(cell_rows).sort_values(["dataset", "method"])
+    cells["passes_original_numeric_rule"] = (cells.mean_stability >= 0.50) & (cells.mean_external_ari <= 0.05)
+    cells["passes_rule_i_prime_intersection"] = cells.passes_original_numeric_rule & cells.passes_5pct_27of30
     cells.to_csv(out / "recomputed_cells.csv", index=False, quoting=csv.QUOTE_MINIMAL)
     comparison = {
         "max_abs_stability_difference": float((cells.mean_stability - cells.saved_mean_stability).abs().max()),
@@ -308,6 +326,13 @@ def main() -> int:
                                        "mean_gap": float(cells.mean_gap.mean()),
                                        "median_gap": float(cells.mean_gap.median()),
                                        "mean_null_stability": float(cells.mean_null_stability.mean())},
+        "posthoc_selection_counts": {
+            "cells_passing_5pct_minimum_cluster_fraction_in_at_least_27_of_30_repeats": int(cells.passes_5pct_27of30.sum()),
+            "cells_passing_original_mean_stability_ari_rule": int(cells.passes_original_numeric_rule.sum()),
+            "cells_passing_both_screens_rule_i_prime_intersection": int(cells.passes_rule_i_prime_intersection.sum()),
+            "reference_label_informed_k_floor": True,
+            "posthoc_and_exploratory": True,
+        },
         "aggregate_comparison": comparison, "cache_metadata": caches,
         "inputs": input_manifest, "errors": errors,
         "software": {"python": sys.version, "numpy": np.__version__, "pandas": pd.__version__,
