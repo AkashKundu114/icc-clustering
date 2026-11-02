@@ -23,8 +23,16 @@ Optional dependency groups are declared in `pyproject.toml`: `.[deep]` for selec
 
 ```bash
 python -c "import icc; print(icc.__version__)"
-python -m pytest tests/ -q
 ```
+
+To install development tools and run the unit/regression tests:
+
+```bash
+python -m pip install -r requirements-dev.txt
+python -m pytest tests/unit tests/regression -q
+```
+
+The full integration suite also contains a Yale B loader test that attempts to download the dataset. Yale B is not bundled here, redistribution rights are not cleared, and the upstream mirror timed out in the fresh-clone check. Consequently, a fresh clone did not pass `python -m pytest tests/ -q`; see [reproducibility status](reproducibility.md). The test should not be treated as an offline check.
 
 The synthetic smoke workflow is:
 
