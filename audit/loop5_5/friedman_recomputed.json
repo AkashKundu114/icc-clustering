@@ -1,0 +1,118 @@
+{
+  "source": "results\\evidence_recovery\\recovered\\results.json",
+  "ari_observation_count": 1430,
+  "datasets": [
+    "cns",
+    "colon",
+    "indian_pines",
+    "isolet",
+    "leukemia",
+    "madelon",
+    "newsgroups20",
+    "ovarian",
+    "prostate",
+    "sonar",
+    "srbct",
+    "yale_b",
+    "zheng68k"
+  ],
+  "methods": [
+    "DEC",
+    "FCAG",
+    "FCM",
+    "FastMVC",
+    "ICC_v1",
+    "ICC_v2",
+    "K-Means",
+    "Li_et_al_2019",
+    "Spectral",
+    "Standard_Consensus",
+    "Ward"
+  ],
+  "matrix_shape": [
+    13,
+    11
+  ],
+  "observations_per_cell_distribution": {
+    "10": 143
+  },
+  "unique_dataset_method_seed_rows": 1430,
+  "duplicate_dataset_method_seed_keys": 0,
+  "seed_values": [
+    42,
+    101,
+    202,
+    303,
+    404,
+    505,
+    606,
+    707,
+    808,
+    909
+  ],
+  "distinct_config_hashes": 10,
+  "source_commit_values": [
+    "879fd96a282e88f5491826dd7355d24d9490661b"
+  ],
+  "friedman_chi2": 11.342657342657333,
+  "df": 10,
+  "p_value": 0.33145228811008864,
+  "average_ranks_best_first": [
+    {
+      "rank": 1,
+      "method": "DEC",
+      "average_rank": 4.3076923076923075
+    },
+    {
+      "rank": 2,
+      "method": "Standard_Consensus",
+      "average_rank": 5.076923076923077
+    },
+    {
+      "rank": 3,
+      "method": "Ward",
+      "average_rank": 5.3076923076923075
+    },
+    {
+      "rank": 4,
+      "method": "K-Means",
+      "average_rank": 5.3076923076923075
+    },
+    {
+      "rank": 5,
+      "method": "ICC_v2",
+      "average_rank": 5.461538461538462
+    },
+    {
+      "rank": 6,
+      "method": "ICC_v1",
+      "average_rank": 5.923076923076923
+    },
+    {
+      "rank": 7,
+      "method": "Spectral",
+      "average_rank": 6.538461538461538
+    },
+    {
+      "rank": 8,
+      "method": "Li_et_al_2019",
+      "average_rank": 6.846153846153846
+    },
+    {
+      "rank": 9,
+      "method": "FCM",
+      "average_rank": 6.923076923076923
+    },
+    {
+      "rank": 10,
+      "method": "FastMVC",
+      "average_rank": 6.923076923076923
+    },
+    {
+      "rank": 11,
+      "method": "FCAG",
+      "average_rank": 7.384615384615385
+    }
+  ],
+  "qualification": "Computed over dataset-level means; repeated seeds are reduced within dataset-method cells. Datasets are heterogeneous and are not independent draws from a defined population."
+}

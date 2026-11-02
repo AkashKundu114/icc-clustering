@@ -1,0 +1,36 @@
+{
+  "input": "results\\evidence_recovery\\recovered\\subsample_stability_summary.csv",
+  "rows": 72,
+  "datasets": [
+    "cns",
+    "colon",
+    "leukemia",
+    "ovarian",
+    "prostate",
+    "srbct"
+  ],
+  "methods": [
+    "CoHiRF",
+    "CoreHalo",
+    "DEC",
+    "FCAG",
+    "FCM",
+    "FastMVC",
+    "GAC",
+    "K-Means",
+    "Spectral",
+    "StdCons",
+    "UngatedAC",
+    "Ward"
+  ],
+  "observations_per_cell": 1,
+  "mean_stability": 0.5165860620823638,
+  "mean_external_ari": 0.052312182172289196,
+  "mean_gap_direct": 0.46427387991007457,
+  "mean_gap_stored": 0.46427387991007457,
+  "median_gap": 0.44840681694162077,
+  "dataset_weighted_mean_gap": 0.46427387991007457,
+  "method_weighted_mean_gap": 0.46427387991007457,
+  "nine_cell_rule_i_count": 20,
+  "paired_repeated_observations_available": false
+}
