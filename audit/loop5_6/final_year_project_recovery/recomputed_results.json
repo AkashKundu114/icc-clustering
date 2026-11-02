@@ -1,0 +1,172 @@
+{
+  "summary": {
+    "n_cells": 72,
+    "mean_stability": 0.5165860620823639,
+    "mean_external_ari": 0.052312182172289196,
+    "mean_gap": 0.46427387991007457,
+    "median_gap": 0.44840681694162077,
+    "rule_i_count": 20,
+    "rule_i_prime_count": 18,
+    "rule_i_prime_cells": [
+      "cns|Spectral",
+      "cns|FCM",
+      "cns|FCAG",
+      "cns|FastMVC",
+      "cns|GAC",
+      "colon|FCM",
+      "colon|CoreHalo",
+      "colon|FCAG",
+      "colon|FastMVC",
+      "colon|UngatedAC",
+      "ovarian|FCM",
+      "prostate|K-Means",
+      "prostate|Ward",
+      "prostate|Spectral",
+      "prostate|FCAG",
+      "prostate|FastMVC",
+      "prostate|GAC",
+      "prostate|DEC"
+    ],
+    "mean_stability_difference_from_summary": 1.61907524424502e-17,
+    "max_stability_difference_from_summary": 1.1102230246251565e-16,
+    "mean_ari_difference_from_summary": 4.575182584253761e-17,
+    "max_ari_difference_from_summary": 9.71445146547012e-17,
+    "mean_null_difference_from_summary": 4.6786335415450864e-17,
+    "max_repeat_ari_difference": 0.0,
+    "repeat_statuses": {
+      "success": 4320
+    },
+    "n_pairwise_recomputations": 62640,
+    "n_failed_or_malformed_records": 0,
+    "n_split_mismatches": 0
+  },
+  "summary_source_comparison": {
+    "fyp_current_sha256": "577cbab79913020ce362b8280ccb8c7ef62952d28ea47a45950f75cca2ff4b4f",
+    "fyp_commit_49f_blob_sha1": "5704dff9f6eaec99e98f049355b039452d1f361e",
+    "fyp_commit_raw_blob_sha256": "dfb1897378356fc201cb14bde34a62d2f84e964e2187893bb4349ee6c2fd8a21",
+    "fyp_current_raw_sha256_matches_blob": false,
+    "fyp_current_and_commit_content_equal_after_crlf_normalization": true,
+    "icc_current_local_sha256": "577cbab79913020ce362b8280ccb8c7ef62952d28ea47a45950f75cca2ff4b4f",
+    "icc_and_fyp_summaries_byte_identical": true
+  },
+  "cohort_cache_metadata": {
+    "cns": {
+      "path": "D:/Final Year Project/data/cache/cns.npz",
+      "bytes": 3151719,
+      "sha256": "0e449bf55f8e5682de8de4264c986c1b85b27f25ca0092b5a8a98ca2bb2a87ff",
+      "N": 60,
+      "D": 7129,
+      "K": 2,
+      "class_counts": {
+        "0": 39,
+        "1": 21
+      },
+      "keys": [
+        "X",
+        "y"
+      ],
+      "nonfinite_X": 0,
+      "duplicate_feature_rows": 0,
+      "declared_shape_matches": true
+    },
+    "colon": {
+      "path": "D:/Final Year Project/data/cache/colon.npz",
+      "bytes": 947714,
+      "sha256": "b4d56e96a488ae3aff707553f0f9864642921f6994689b00f9adab60fe9fc107",
+      "N": 62,
+      "D": 2000,
+      "K": 2,
+      "class_counts": {
+        "0": 40,
+        "1": 22
+      },
+      "keys": [
+        "X",
+        "y"
+      ],
+      "nonfinite_X": 0,
+      "duplicate_feature_rows": 0,
+      "declared_shape_matches": true
+    },
+    "leukemia": {
+      "path": "D:/Final Year Project/data/cache/leukemia.npz",
+      "bytes": 3701508,
+      "sha256": "04fe5da4984a80f16bb389c29fb6c68bde727a92667e3439cab85590633b1d23",
+      "N": 72,
+      "D": 7129,
+      "K": 2,
+      "class_counts": {
+        "0": 47,
+        "1": 25
+      },
+      "keys": [
+        "X",
+        "y"
+      ],
+      "nonfinite_X": 0,
+      "duplicate_feature_rows": 0,
+      "declared_shape_matches": true
+    },
+    "ovarian": {
+      "path": "D:/Final Year Project/data/cache/ovarian.npz",
+      "bytes": 27707530,
+      "sha256": "23656cd40a34a393e8244eca3f7f2f5ca711ff0c11b43c8ce828f653ac4f0a7a",
+      "N": 253,
+      "D": 15154,
+      "K": 2,
+      "class_counts": {
+        "0": 162,
+        "1": 91
+      },
+      "keys": [
+        "X",
+        "y"
+      ],
+      "nonfinite_X": 0,
+      "duplicate_feature_rows": 0,
+      "declared_shape_matches": true
+    },
+    "prostate": {
+      "path": "D:/Final Year Project/data/cache/prostate.npz",
+      "bytes": 5480825,
+      "sha256": "a2717c9d01233867cba436e1da37b30390e1c6dc27f6a753473bc18bb43cbe6c",
+      "N": 102,
+      "D": 12600,
+      "K": 2,
+      "class_counts": {
+        "0": 52,
+        "1": 50
+      },
+      "keys": [
+        "X",
+        "y"
+      ],
+      "nonfinite_X": 0,
+      "duplicate_feature_rows": 0,
+      "declared_shape_matches": true
+    },
+    "srbct": {
+      "path": "D:/Final Year Project/data/cache/srbct.npz",
+      "bytes": 1466641,
+      "sha256": "be99430f054e3a83987c5d87e34106ce3466f729ab3c65450fee66aa6e9ac425",
+      "N": 83,
+      "D": 2308,
+      "K": 4,
+      "class_counts": {
+        "0": 29,
+        "1": 11,
+        "2": 18,
+        "3": 25
+      },
+      "keys": [
+        "X",
+        "y"
+      ],
+      "nonfinite_X": 0,
+      "duplicate_feature_rows": 0,
+      "declared_shape_matches": true
+    }
+  },
+  "failures": [],
+  "split_mismatches": []
+}
