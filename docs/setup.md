@@ -32,7 +32,7 @@ python -m pip install -r requirements-dev.txt
 python -m pytest tests/unit tests/regression -q
 ```
 
-The full integration suite also contains a Yale B loader test that attempts to download the dataset. Yale B is not bundled here, redistribution rights are not cleared, and the upstream mirror timed out in the fresh-clone check. Consequently, a fresh clone did not pass `python -m pytest tests/ -q`; see [reproducibility status](reproducibility.md). The test should not be treated as an offline check.
+The full integration suite can acquire third-party datasets and write raw files and caches. Review provider terms before running it. In clean-clone checks, one full-suite attempt failed when the Yale B mirror timed out; another completed after the tests downloaded multiple dataset files. Thus `python -m pytest tests/ -q` is network- and provider-dependent, can create local data files, and is not an offline check. See [reproducibility status](reproducibility.md).
 
 The synthetic smoke workflow is:
 
