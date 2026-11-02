@@ -1,0 +1,44 @@
+{
+  "audit": "Loop 5.8",
+  "baseline_target_commit": "29bcc279589d4a6c1e6747885cc857085ac8d6d0",
+  "fetched_origin_main": "29bcc279589d4a6c1e6747885cc857085ac8d6d0",
+  "target_branch": "main",
+  "fyp_worktree_commit": "60b163f22b5931da35a1ace07d1934bf3bdd65e3",
+  "original_experiment_execution_commit": "UNVERIFIABLE",
+  "protocol_or_artifact_commits_are_not_execution_attestations": true,
+  "final_manuscript_commit": "UNAVAILABLE; target paper/manuscript/main.tex is absent/untracked",
+  "loop5_8_deliverables_commit": "NOT COMMITTED",
+  "public_release_commit": "NONE",
+  "executed_scripts": [
+    "audit/loop5_8/scripts/partition_forensics.py (subagent; direct read-only scan)",
+    "audit/loop5_8/scripts/bootstrap_estimand.py (lead; rerun after report correction)",
+    "audit/loop5_8/scripts/benchmark_provenance_inventory.py (subagent; local source/row inventory)",
+    "audit/loop5_8/scripts/build_manuscript_claims.py (subagent; FYP candidate claim matrix; no manuscript edit)",
+    "audit/loop5_8/reproduction/scripts/reproduce_aggregate.py (lead; repeated local execution)",
+    "audit/loop5_6/minimum_aggregate_package/reproduce_aggregate.py (fresh clone; exit 0)"
+  ],
+  "fresh_clone_commit": "29bcc279589d4a6c1e6747885cc857085ac8d6d0",
+  "fresh_clone_tiers": {
+    "tier1_aggregate": "PASS",
+    "tier2_partition": "FAIL_INPUTS_ABSENT",
+    "tier3_full_fit": "NOT_RUN"
+  },
+  "local_saved_counts": {
+    "partitions": 4320,
+    "per_fit_records": 4320,
+    "pairwise_stability_values": 62640,
+    "reconstructed_cells": 72
+  },
+  "loop5_8_manifest_rows": 8703,
+  "environment": {
+    "python": "3.14.6 for lead's Tier 1 clone check; specialist environment details are recorded where available",
+    "os": "Windows local environment"
+  },
+  "executed_at_local": "2026-11-02T17:34:43+05:30",
+  "limitations": [
+    "Saved fit execution/input linkage not authenticated",
+    "No complete public package or raw evidence release",
+    "No model fits rerun",
+    "FYP evidence is local-only"
+  ]
+}

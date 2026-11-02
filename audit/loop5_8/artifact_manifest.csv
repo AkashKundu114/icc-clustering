@@ -1,0 +1,9 @@
+path,bytes,sha256,classification,tracked_in_target_repo,tracked_in_fyp_head,modified_time_utc
+D:\Final Year Project\results\passF\benchmark_matrix_passF.csv,235836,4f5659c93393054d5fdaa6eb82895e167aa784b214b3f849a35a591696da2b8c,raw saved scores,False,True,2026-10-23T07:50:48.830458403+00:00
+D:\Final Year Project\results\exp3_cohirf_benchmark.csv,19326,559040232a29e03c148da0cddebe6249bebed6c52e3b21f5dd425859100716da,raw saved scores,False,True,2026-10-28T08:52:37.282079458+00:00
+D:\Final Year Project\results\passF\benchmark_matrix_summary_passF.csv,11060,048d31c2f3f846f6be6d3db8d2e84ce4db43630dd357e1360930479d694e40b5,prior audit supporting document,False,True,2026-10-23T07:50:48.831458092+00:00
+D:\Final Year Project\scripts\run_phase3_experiments.py,20696,dd5560600d596b47e1b618410338435a0e81d790ca50b89ab59db6ad73d2617b,source/configuration,False,True,2026-11-01T06:16:43.469778776+00:00
+D:\Final Year Project\experiments\exp3_real_world_benchmarks\src\run_exp3_1_benchmark_matrix.py,18282,fd4a59e9ddc77244953fa9e95818ee7050ceeaa9ff9a5373ea13ba3e05627a25,source/configuration,False,True,2026-11-01T06:16:43.351654053+00:00
+D:\Final Year Project\configs\datasets.yaml,7524,5fc3c6443e51693cd365ab62ff1f685f4723c17f1c4156c00950102b1ae1df9c,source/configuration,False,True,2026-10-23T18:16:26.540380001+00:00
+D:\icc-clustering\audit\loop5_7\benchmark_scope_verification.md,2277,62be589adefd0af77819d4063bf5b448918b7bd9cefae71aacf5c0d60df2c947,prior audit supporting document,True,False,2026-11-02T11:31:48.447706699+00:00
+D:\icc-clustering\audit\loop5_7\provenance_chain.md,3150,4ae4392eb5388b06a7617eddee8994f64b833e7666995a100245551849bbe41e,prior audit supporting document,True,False,2026-11-02T11:31:48.447706699+00:00
