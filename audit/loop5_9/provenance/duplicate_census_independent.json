@@ -1,0 +1,220 @@
+{
+  "partitions": 4320,
+  "partition_names_unique": 4320,
+  "sha_groups": 4169,
+  "unique_sha": 4169,
+  "duplicate_groups": 140,
+  "duplicate_files": 291,
+  "excess_duplicate_files": 151,
+  "group_size_distribution": {
+    "2": 131,
+    "4": 2,
+    "3": 7
+  },
+  "malformed_partitions": [],
+  "missing_parquet": 0,
+  "parquet_rows_not_one": 0,
+  "non_success_status": 0,
+  "duplicate_relation_groups": {
+    "cross_method": 137,
+    "cross_mode": 3
+  },
+  "named_cases": [
+    {
+      "file_a": "cns_CoHiRF_null_17.npy",
+      "file_b": "cns_CoHiRF_real_17.npy",
+      "sha_a": "35d95d43dfb104368f0d287006ada076462707abe73d8fdd53c13b6dd8003755",
+      "sha_b": "35d95d43dfb104368f0d287006ada076462707abe73d8fdd53c13b6dd8003755",
+      "indices_order_equal": true,
+      "labels_array_equal": true,
+      "sample_order_length_a": 48,
+      "sample_order_length_b": 48,
+      "cluster_sizes_a": [
+        47,
+        1
+      ],
+      "cluster_sizes_b": [
+        47,
+        1
+      ],
+      "record_a": {
+        "dataset": "cns",
+        "model": "CoHiRF",
+        "mode": "null",
+        "subsample_id": "17",
+        "sub_seed": "5017",
+        "null_seed": "6017",
+        "status": "success",
+        "runtime": "0.3121962547302246",
+        "accuracy": "nan",
+        "n_samples": "48"
+      },
+      "record_b": {
+        "dataset": "cns",
+        "model": "CoHiRF",
+        "mode": "real",
+        "subsample_id": "17",
+        "sub_seed": "5017",
+        "null_seed": "-1",
+        "status": "success",
+        "runtime": "0.31333327293395996",
+        "accuracy": "-0.01870775035371797",
+        "n_samples": "48"
+      }
+    },
+    {
+      "file_a": "prostate_CoHiRF_null_5.npy",
+      "file_b": "prostate_CoreHalo_real_5.npy",
+      "sha_a": "e8594a236c1f0b6588163202e9491533bfc467f359652d8499681d029236e39b",
+      "sha_b": "e8594a236c1f0b6588163202e9491533bfc467f359652d8499681d029236e39b",
+      "indices_order_equal": true,
+      "labels_array_equal": true,
+      "sample_order_length_a": 81,
+      "sample_order_length_b": 81,
+      "cluster_sizes_a": [
+        81
+      ],
+      "cluster_sizes_b": [
+        81
+      ],
+      "record_a": {
+        "dataset": "prostate",
+        "model": "CoHiRF",
+        "mode": "null",
+        "subsample_id": "5",
+        "sub_seed": "5005",
+        "null_seed": "6005",
+        "status": "success",
+        "runtime": "0.11692476272583008",
+        "accuracy": "nan",
+        "n_samples": "81"
+      },
+      "record_b": {
+        "dataset": "prostate",
+        "model": "CoreHalo",
+        "mode": "real",
+        "subsample_id": "5",
+        "sub_seed": "5005",
+        "null_seed": "-1",
+        "status": "success",
+        "runtime": "0.40602779388427734",
+        "accuracy": "0.0",
+        "n_samples": "81"
+      }
+    },
+    {
+      "file_a": "prostate_StdCons_null_16.npy",
+      "file_b": "prostate_UngatedAC_real_16.npy",
+      "sha_a": "dc39ed34063ae91184e77022fcaebf2d851310c2929d060457d1ed7808c116b3",
+      "sha_b": "dc39ed34063ae91184e77022fcaebf2d851310c2929d060457d1ed7808c116b3",
+      "indices_order_equal": true,
+      "labels_array_equal": true,
+      "sample_order_length_a": 81,
+      "sample_order_length_b": 81,
+      "cluster_sizes_a": [
+        80,
+        1
+      ],
+      "cluster_sizes_b": [
+        80,
+        1
+      ],
+      "record_a": {
+        "dataset": "prostate",
+        "model": "StdCons",
+        "mode": "null",
+        "subsample_id": "16",
+        "sub_seed": "5016",
+        "null_seed": "6016",
+        "status": "success",
+        "runtime": "0.3347771167755127",
+        "accuracy": "nan",
+        "n_samples": "81"
+      },
+      "record_b": {
+        "dataset": "prostate",
+        "model": "UngatedAC",
+        "mode": "real",
+        "subsample_id": "16",
+        "sub_seed": "5016",
+        "null_seed": "-1",
+        "status": "success",
+        "runtime": "0.39899253845214844",
+        "accuracy": "0.0006176559204579692",
+        "n_samples": "81"
+      }
+    }
+  ],
+  "producer_search_hits": [
+    {
+      "path": "D:\\Final Year Project\\docs\\REPRODUCIBILITY.md",
+      "hits": "results/stability/runs",
+      "writes_partition_path": false
+    },
+    {
+      "path": "D:\\Final Year Project\\research_audit\\00_current_state.md",
+      "hits": "subsample_stability_summary",
+      "writes_partition_path": false
+    },
+    {
+      "path": "D:\\Final Year Project\\research_audit\\01_manuscript_claim_inventory.csv",
+      "hits": "subsample_stability_summary",
+      "writes_partition_path": false
+    },
+    {
+      "path": "D:\\Final Year Project\\scripts\\audit_degeneracy.py",
+      "hits": "sub_idx",
+      "writes_partition_path": false
+    },
+    {
+      "path": "D:\\Final Year Project\\scripts\\make_stability_outputs.py",
+      "hits": "subsample_stability_summary",
+      "writes_partition_path": false
+    },
+    {
+      "path": "D:\\Final Year Project\\src\\icc\\autok.py",
+      "hits": "sub_idx",
+      "writes_partition_path": false
+    },
+    {
+      "path": "D:\\Final Year Project\\src\\icc\\consensus_v2.py",
+      "hits": "sub_idx",
+      "writes_partition_path": false
+    },
+    {
+      "path": "D:\\Final Year Project\\research_audit\\dami_revision\\CLAIMS_AUDIT.md",
+      "hits": "subsample_stability_summary",
+      "writes_partition_path": false
+    },
+    {
+      "path": "D:\\Final Year Project\\research_audit\\dami_revision\\CLAIMS_LEDGER.csv",
+      "hits": "subsample_stability_summary",
+      "writes_partition_path": false
+    },
+    {
+      "path": "D:\\Final Year Project\\research_audit\\dami_revision\\FINAL_CLAIMS_LEDGER.csv",
+      "hits": "subsample_stability_summary",
+      "writes_partition_path": false
+    },
+    {
+      "path": "D:\\Final Year Project\\experiments\\exp4_scalability_and_sensitivity\\src\\anchor_fidelity_benchmark.py",
+      "hits": "sub_idx",
+      "writes_partition_path": false
+    },
+    {
+      "path": "D:\\Final Year Project\\experiments\\exp4_scalability_and_sensitivity\\src\\sensitivity_sweep.py",
+      "hits": "sub_idx",
+      "writes_partition_path": false
+    },
+    {
+      "path": "D:\\Final Year Project\\experiments\\exp2_ablation\\src\\vssg_interpretability.py",
+      "hits": "sub_idx",
+      "writes_partition_path": false
+    },
+    {
+      "path": "D:\\Final Year Project\\experiments\\audit_controls\\src\\e3_label_free_selector.py",
+      "hits": "sub_idx",
+      "writes_partition_path": false
+    }
+  ]
+}

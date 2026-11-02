@@ -1,0 +1,13 @@
+claim_id,claim,status,evidence,reason,required_action
+S01,72-cell mean stability 0.516586 and mean external ARI 0.052312,VERIFIED WITH LIMITATIONS,statistics/cell_reconstruction.csv,Recomputed from local saved partitions; historical execution not authenticated,Call aggregate descriptive summaries from recovered saved partitions
+S02,Mean gap 0.464274 and median gap 0.448407,DESCRIPTIVE ONLY,statistics/cell_reconstruction.csv,Each cell gap subtracts external ARI mean from pairwise stability mean; 72 cells clustered by cohort and method,No iid p-value or universal scale claim
+S03,Mean null stability 0.006620,DESCRIPTIVE ONLY,statistics/cell_reconstruction.csv,Computed under saved column-permuted files; producer and null transform execution are not authenticated,Describe only for recovered files/protocol
+S04,Stability uses 435 overlapping-subset pairwise ARIs,VERIFIED WITH LIMITATIONS,provenance/duplicate_reaudit.csv; statistics/cell_reconstruction.csv,Pair values reuse partitions and common samples,Call subsampling sensitivity; explain dependence
+S05,External ARI is averaged over 30 partitions,VERIFIED WITH LIMITATIONS,statistics/cell_reconstruction.csv,Reference labels guide class-stratified sampling and K is externally specified,Disclose label-informed evaluation design
+S06,Rule(i)=20 cells,EXPLORATORY,statistics/selection_reconstruction.csv,Threshold-driven cell selection,Keep selection rule visible
+S07,Rule(i-prime)=18 cells,EXPLORATORY,statistics/selection_reconstruction.csv,5% and 27/30 condition post hoc,Supplement only with post-hoc label
+S08,Nine-cell recurrence result,EXPLORATORY,statistics/selection_reconstruction.csv,Selection after examining results; no independent confirmation,Do not headline as confirmatory
+S09,Nondegenerate gap .485376 with CI [.379,.662],CONTRADICTED AS PAIRED ESTIMAND,statistics/bootstrap_reanalysis.csv; statistics/estimand_reconciliation.md,Point equal-cell; historical interval equal-cohort,Remove primary CI or relabel/recompute matched estimand
+S10,Friedman p=.397908 on saved matrix,VERIFIED WITH LIMITATIONS,statistics/benchmark_reanalysis.json,Recalculated from score records; copied/imported rows and no fit attestation,Report non-significance only; not equality or superiority
+S11,13-dataset benchmark extends stability finding,UNSUPPORTED,statistics/benchmark_reanalysis.json,Benchmark contains external ARI only,Keep analyses separate
+S12,Non-significant association proves stability has no predictive utility,UNSUPPORTED,No appropriate independent inference; six cohorts,Do not state

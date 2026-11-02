@@ -1,0 +1,11 @@
+artifact,tier,baseline_or_release_path,status_in_fresh_clone,sha256,redistribution_status,notes
+aggregate input,1,audit/loop5_6/minimum_aggregate_package/inputs/subsample_stability_summary.csv,PRESENT,577cbab79913020ce362b8280ccb8c7ef62952d28ea47a45950f75cca2ff4b4f,Tracked summary file; underlying dataset rights not assessed here,72 aggregate rows only
+aggregate reproduction script,1,audit/loop5_6/minimum_aggregate_package/reproduce_aggregate.py,PRESENT,3cac0aff64d4d949622cfc163e3f15cbf654759a890c908bba193c55fbeb0a04,Repository MIT code license subject to dependencies,Standard-library arithmetic only
+stability partitions,2,results/stability/partitions/*.npy,ABSENT,,NOT CLEARED,4320 local files; original source rights and transformed-data status unresolved
+per-fit records,2,results/stability/runs/*.parquet,ABSENT,,NOT CLEARED,4320 local records; input lineage omitted
+cohort caches,2,data/cache/{cns,colon,leukemia,ovarian,prostate,srbct}.npz,ABSENT,,NOT CLEARED,Derived matrices preserve third-party restrictions unless clarified
+Pass F raw scores,1,results/passF/benchmark_matrix_passF.csv,ABSENT,,Local FYP only,2750 saved score rows; execution provenance unresolved
+CoHiRF raw scores,1,results/exp3_cohirf_benchmark.csv,ABSENT,,Local FYP only,250 saved score rows; seed schedule differs
+canonical manuscript source,not a reproduction tier,paper/manuscript/main.tex,ABSENT from Git clone,,Local-only/ignored,Canonical per local README; SHA in manuscript inventory
+Yale B images/cache,not applicable,data/cache/yale_b*,ABSENT,,Permission required for public redistribution,Official Yale terms prohibit incorporating images into a publicly distributed larger database absent permission
+Zenodo archive,not applicable,https://doi.org/10.5281/zenodo.23852735,Record exists but no files,,Restricted,no public archive package verified

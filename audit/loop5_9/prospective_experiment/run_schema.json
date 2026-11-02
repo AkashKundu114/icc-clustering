@@ -1,0 +1,74 @@
+{
+  "schema_name": "icc_stability_fit_provenance",
+  "schema_version": "1.0.0",
+  "run_identity": {
+    "run_uuid": "required unique UUID; never reused",
+    "experiment_id": "required immutable experiment tag",
+    "dataset_id": "canonical dataset key",
+    "method_id": "canonical method key",
+    "mode": "real or null",
+    "repeat_index": "nonnegative integer"
+  },
+  "source": {
+    "repository_url": "string",
+    "source_commit": "full git SHA",
+    "dirty_tree": "boolean; must be false for release run",
+    "config_sha256": "SHA-256 of frozen config bytes",
+    "environment_lock_sha256": "SHA-256",
+    "runtime_versions": "object"
+  },
+  "data": {
+    "upstream_accession": "string",
+    "upstream_version": "string or null with reason",
+    "license_or_terms": "URL and local rights decision ID",
+    "raw_input_sha256": "SHA-256",
+    "preprocessing_config_sha256": "SHA-256",
+    "feature_matrix_sha256": "SHA-256",
+    "sample_id_manifest_sha256": "SHA-256",
+    "ordered_sample_ids_sha256": "SHA-256",
+    "labels_sha256": "restricted path/hash if disclosure is not permitted"
+  },
+  "sampling": {
+    "sampling_fraction": "number",
+    "sampling_with_replacement": "boolean",
+    "label_stratified": "boolean",
+    "label_use_disclosure": "required text",
+    "subsample_seed": "integer",
+    "ordered_subsample_indices_sha256": "SHA-256",
+    "ordered_sample_ids_in_fit_sha256": "SHA-256",
+    "null_transform": "none or named transform",
+    "null_seed": "integer or null"
+  },
+  "model": {
+    "parameters": "complete JSON object",
+    "requested_k": "integer",
+    "k_source": "fixed, external labels, estimated, or other",
+    "model_seed": "integer or null",
+    "thread_settings": "object"
+  },
+  "execution": {
+    "start_utc": "RFC3339 timestamp",
+    "end_utc": "RFC3339 timestamp",
+    "host_fingerprint": "non-sensitive identifier",
+    "hardware": "object",
+    "exit_code": "integer",
+    "status": "success or failed",
+    "failure_type": "string or null",
+    "failure_trace_sha256": "SHA-256 or null"
+  },
+  "output": {
+    "partition_path": "immutable relative artifact path",
+    "partition_sha256": "SHA-256",
+    "labels_sha256": "SHA-256 of ordered predicted labels",
+    "n_samples": "integer",
+    "observed_k": "integer",
+    "cluster_sizes": "sorted list of integers",
+    "external_ari": "number or null",
+    "artifact_record_path": "immutable relative JSON/Parquet path"
+  },
+  "integrity": {
+    "metadata_matches_partition": "boolean",
+    "input_hashes_verified": "boolean",
+    "duplicate_output_hash_review": "required classification and run IDs"
+  }
+}

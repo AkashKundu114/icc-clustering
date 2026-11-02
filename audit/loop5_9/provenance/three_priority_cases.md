@@ -1,0 +1,9 @@
+# Three priority duplicate cases — independent re-audit
+
+All arrays and matched Parquet rows were loaded directly by `provenance/recompute_forensics.py`. SHA-256 values were recalculated from actual bytes. In each same-cohort/repeat pair, ordered subsample indices match; the paired labels also match exactly. Same sample subsets are expected by the shared split design, but the model inputs, null transformation and invocations are not recorded.
+
+1. **CNS CoHiRF real/null repeat 17:** identical 48 ordered indices and assignments; K=2, sizes 47/1. Parquet rows have same cohort/method/repeat and sub_seed 5017; null_seed 6017 versus −1. Distinct runtime metadata exist but do not prove independent invocations. Degenerate convergence is plausible; null transformation and file lineage are unverified. **Cannot classify.**
+2. **Prostate CoHiRF null/CoreHalo real repeat 5:** identical 81 indices/labels; K=1, size 81. Same subsample seed 5005, null seed differs (6005 versus −1), status success. The all-one assignment is algorithmically unsurprising across methods, but exact byte identity cannot distinguish independent outputs from reuse. **Plausible degenerate match, still cannot classify.**
+3. **Prostate StdCons null/UngatedAC real repeat 16:** identical 81 indices/labels; K=2, sizes 80/1. Same sub_seed 5016, mode-specific null seed differs. A shared one-cluster explanation does not apply; identical sparse nontrivial result across method and mode has no recovered deterministic explanation. **Unexplained, highest concern; cannot classify.**
+
+Across all 140 hash groups (291 files, 151 excess copies; 131 pairs, 7 triples, 2 groups of four), no producer trace establishes separate algorithm calls. Keep all historical artifacts unchanged. Do not call duplicate outputs either legitimate model convergence or corruption absent new execution evidence.

@@ -1,0 +1,1 @@
+{"interpretation": "Aggregate-only descriptive recomputation; not repeated-run or raw-partition reproduction.", "mean_external_ari": 0.0523121821722892, "mean_gap": 0.46427387991007457, "mean_stability": 0.5165860620823638, "median_gap": 0.44840681694162077, "n_aggregate_rows": 72, "n_datasets": 6, "n_methods": 12}

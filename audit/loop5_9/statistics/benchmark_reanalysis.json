@@ -1,0 +1,32 @@
+{
+  "passF_rows": 2750,
+  "cohirf_rows": 250,
+  "combined_rows": 3000,
+  "datasets": 13,
+  "methods": 12,
+  "cells": 156,
+  "unique_keys": 3000,
+  "duplicate_keys": 0,
+  "missing_cells": 0,
+  "friedman_chi2": 11.556213017751475,
+  "df": 11,
+  "pvalue": 0.3979076148432822,
+  "average_ranks": {
+    "K-Means": 5.153846153846154,
+    "DEC": 5.230769230769231,
+    "Standard_Consensus": 5.230769230769231,
+    "ICC_v2": 5.615384615384615,
+    "Ward": 5.6923076923076925,
+    "ICC_v1": 6.923076923076923,
+    "Spectral": 7.076923076923077,
+    "FCM": 7.076923076923077,
+    "Core_Halo_Consensus": 7.153846153846154,
+    "FastMVC": 7.384615384615385,
+    "CoHiRF": 7.6923076923076925,
+    "FCAG": 7.769230769230769
+  },
+  "icc_v2_method_name": "ICC_v2",
+  "icc_v2_rank": 4,
+  "passF_sha256": "4f5659c93393054d5fdaa6eb82895e167aa784b214b3f849a35a591696da2b8c",
+  "cohirf_sha256": "559040232a29e03c148da0cddebe6249bebed6c52e3b21f5dd425859100716da"
+}

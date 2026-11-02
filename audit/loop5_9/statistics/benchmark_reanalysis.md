@@ -1,0 +1,9 @@
+# 13-dataset benchmark statistical reanalysis
+
+Lead executed `statistics/reconstruct_stats.py` against the two local saved score files. Result: 2,750 Pass F rows plus 250 CoHiRF rows = 3,000 saved observations, 13 dataset IDs, 12 method IDs, 156 complete dataset-method cells, zero duplicate dataset-method-seed keys, no missing cells. It recomputed dataset-method mean ARIs, Friedman χ²=11.556213017751475, df=11, p=0.3979076148432822. ICC-v2 average rank is 5.615384615384615, rank position 4/12. This is independent arithmetic from local saved scores; no clustering fits were run.
+
+The row total must not be called 3,000 independently authenticated fit events. Source audit found 20 high-D Ward rows per dataset copied from seed-0 score and 20 ICC-v2 rows per high-D dataset imported from a separate Pass E ARI-only file; these are embedded in Pass F assembly. Pass F seed values are 0–29/0–9, while CoHiRF uses 42–71/42–51. A general benchmark runner has a third seed schedule and does not generate the exact Pass F output; exact Pass F generating config remains partly unresolved. CoHiRF historical source matches its saved schedule, but the CSV still lacks execution attestation.
+
+Methods receive K derived from reference labels, and scores are transductive on complete datasets rather than held-out generalization. Runtime/fit budgets differ; ICC-v2 chooses Spectral as a base engine for small N but standard consensus uses K-means. FastMVC is an internal surrogate and must not be presented as the published method. Core-Halo zero metrics lack clear failure status. Friedman non-significance does not prove equality or superiority.
+
+Therefore the benchmark supports a bounded descriptive ranking of these saved local implementation scores. It does not extend stability–accuracy evidence to 13 datasets, show ICC-v2 superiority, or verify 3,000 unique fits.

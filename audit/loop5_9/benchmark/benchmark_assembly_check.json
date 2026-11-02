@@ -1,0 +1,126 @@
+{
+  "target_repo_baseline": "d0c4665af327ec284d931c94f9658309ec13763c",
+  "FYP_head": "60b163f22b5931da35a1ace07d1934bf3bdd65e3",
+  "passF_source_commit": "7f74f6842ae02bc8fd9203fab18a56b7c68035c",
+  "cohirf_source_commit": "567c5260972f1ce29124ce8449a907bebe8b3983",
+  "passF_rows": 2750,
+  "cohirf_rows": 250,
+  "combined_rows": 3000,
+  "dataset_method_cells": 156,
+  "duplicate_dataset_method_seed_keys": 0,
+  "passF_matrix_rebuilt_from_committed_merge_inputs_shape_matches": true,
+  "passF_matrix_rebuilt_from_committed_merge_inputs_all_values_match": true,
+  "assembly_numeric_tolerance": "rtol=1e-12, atol=1e-12 for ARI/NMI/runtime; exact for identifiers, dimensions, K, seed",
+  "highD_rows": 1980,
+  "passE_rows": 1430,
+  "passF_ward_copy_mismatches_against_seed0": 0,
+  "passF_zero_metric_counts_by_method": {
+    "Core_Halo_Consensus": {
+      "ari_zero": 42,
+      "nmi_zero": 42,
+      "both_zero": 42,
+      "both_zero_runtime_zero": 0
+    },
+    "DEC": {
+      "ari_zero": 0,
+      "nmi_zero": 0,
+      "both_zero": 0,
+      "both_zero_runtime_zero": 0
+    },
+    "FCAG": {
+      "ari_zero": 9,
+      "nmi_zero": 0,
+      "both_zero": 0,
+      "both_zero_runtime_zero": 0
+    },
+    "FCM": {
+      "ari_zero": 0,
+      "nmi_zero": 0,
+      "both_zero": 0,
+      "both_zero_runtime_zero": 0
+    },
+    "FastMVC": {
+      "ari_zero": 10,
+      "nmi_zero": 0,
+      "both_zero": 0,
+      "both_zero_runtime_zero": 0
+    },
+    "ICC_v1": {
+      "ari_zero": 0,
+      "nmi_zero": 0,
+      "both_zero": 0,
+      "both_zero_runtime_zero": 0
+    },
+    "ICC_v2": {
+      "ari_zero": 2,
+      "nmi_zero": 121,
+      "both_zero": 2,
+      "both_zero_runtime_zero": 0
+    },
+    "K-Means": {
+      "ari_zero": 0,
+      "nmi_zero": 0,
+      "both_zero": 0,
+      "both_zero_runtime_zero": 0
+    },
+    "Spectral": {
+      "ari_zero": 0,
+      "nmi_zero": 0,
+      "both_zero": 0,
+      "both_zero_runtime_zero": 0
+    },
+    "Standard_Consensus": {
+      "ari_zero": 0,
+      "nmi_zero": 0,
+      "both_zero": 0,
+      "both_zero_runtime_zero": 0
+    },
+    "Ward": {
+      "ari_zero": 0,
+      "nmi_zero": 0,
+      "both_zero": 0,
+      "both_zero_runtime_zero": 0
+    }
+  },
+  "input_artifacts": [
+    {
+      "path": "D:\\Final Year Project\\results\\passF\\benchmark_matrix_passF.csv",
+      "bytes": 235836,
+      "sha256": "4f5659c93393054d5fdaa6eb82895e167aa784b214b3f849a35a591696da2b8c"
+    },
+    {
+      "path": "D:\\Final Year Project\\results\\exp3_cohirf_benchmark.csv",
+      "bytes": 19326,
+      "sha256": "559040232a29e03c148da0cddebe6249bebed6c52e3b21f5dd425859100716da"
+    },
+    {
+      "path": "D:\\Final Year Project\\results\\passE\\benchmark_matrix_seeds0_9.csv",
+      "bytes": 127572,
+      "sha256": "2525923970577e840c422af4c484d55b9b5a40be58fbc7b9b207de54c37c20f7"
+    },
+    {
+      "path": "D:\\Final Year Project\\results\\passF\\high_d_30seeds_all_models.csv",
+      "bytes": 167434,
+      "sha256": "3be1945ff6defdaa238b164e71fdc5fcd9370e9993f6177ddbe474e3fd408ff2"
+    },
+    {
+      "path": "D:\\Final Year Project\\results\\passF\\high_d_30seeds_fast_models.csv",
+      "bytes": 88352,
+      "sha256": "81c6a3d68aa88a2773a92c9c98861abd9d23b6975f9529221e175f9919def60c"
+    },
+    {
+      "path": "D:\\Final Year Project\\results\\passF\\high_d_30seeds_dec.csv",
+      "bytes": 10255,
+      "sha256": "7d4240f912ee9ba448e68e6359d8b240f6437f5b2625402fc82df744028046ed"
+    },
+    {
+      "path": "D:\\Final Year Project\\results\\passE\\high_d_30seeds_bimodal.csv",
+      "bytes": 5535,
+      "sha256": "89824c739b936dce4186f8001d2ebcee8e2ba436e826a367c319be174ca73a86"
+    }
+  ],
+  "historical_merge_script_present_at_passF_commit": true,
+  "passF_fit_execution_attestation": "UNVERIFIED; score construction lineage recovered but no independent logs/environment/input digest per fit",
+  "CoHiRF_fit_execution_attestation": "UNVERIFIED",
+  "model_fits_rerun": false
+}
