@@ -1,0 +1,6 @@
+python_version,declared_in_committed_ci,actual_ci_run_id,ci_run_status,local_test_status,verified_status
+3.10,YES (ci.yml at 7ddbe83),41328272363,SUCCESS (Ubuntu & Windows),NOT RUN (3.14 installed locally),CI VERIFIED (Workflow Matrix)
+3.11,YES (ci.yml at 7ddbe83),41328272363,SUCCESS (Ubuntu & Windows),NOT RUN (3.14 installed locally),CI VERIFIED (Workflow Matrix)
+3.12,YES (ci.yml at 7ddbe83),41328272363,SUCCESS (Ubuntu & Windows),NOT RUN (3.14 installed locally),CI VERIFIED (Workflow Matrix)
+3.13,YES (ci.yml at 7ddbe83),41328272363,SUCCESS (Ubuntu & Windows),NOT RUN (3.14 installed locally),CI VERIFIED (Workflow Matrix)
+3.14,YES (ci.yml at 7ddbe83),41328272363,SUCCESS (Ubuntu & Windows),SUCCESS (133/133 tests pass locally),LOCALLY & CI VERIFIED
