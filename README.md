@@ -30,7 +30,7 @@ See [the documentation index](docs/index.md) for the software and methodology gu
 
 The research has two separate experiments: a six-cohort biomedical stability analysis and a 13-dataset external-ARI benchmark. The first concerns resampling stability versus reference alignment; the second concerns saved external-ARI scores only. They must not be combined as one 13-dataset stability result.
 
-No numerical result table or run-level evidence package is included in this repository snapshot. Portable scripts under [`reproduction/`](reproduction/README.md) can recalculate summaries if a researcher supplies the saved evidence, but those inputs are not distributed here. A local saved-output reconstruction found descriptive stability/alignment differences; its historical producer and exact input ordering were not authenticated, and derived artifacts are not cleared for redistribution. See [results and evidence status](docs/results.md) and [reproducibility](docs/reproducibility.md).
+The repository includes a claim ledger with historical figures and local recalculations for transparency, but it does not distribute a numerical result dataset or run-level evidence package. Portable scripts under [`reproduction/`](reproduction/README.md) can recalculate summaries if a researcher supplies the saved evidence, but those inputs are not distributed here. A local saved-output reconstruction found descriptive stability/alignment differences; its historical producer and exact input ordering were not authenticated, and derived artifacts are not cleared for redistribution. See [results and evidence status](docs/results.md) and [reproducibility](docs/reproducibility.md).
 
 ## Repository layout
 
