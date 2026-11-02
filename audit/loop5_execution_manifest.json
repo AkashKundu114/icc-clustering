@@ -1,0 +1,303 @@
+{
+  "manifest_metadata": {
+    "version": "1.0.0",
+    "generated_at": "2026-11-02T11:20:00+05:30",
+    "phase": "Loop 5 Forensic Reconciliation & Go/No-Go Gate",
+    "git_commit": "b0d304bff8a42df690d96248b5c6a731f8faaf78",
+    "branch": "main",
+    "working_tree_clean": true
+  },
+  "computational_environment": {
+    "os": "Microsoft Windows 11 Enterprise (64-bit)",
+    "cpu": "AMD Ryzen 9 8940HX (16 physical cores, 32 threads)",
+    "ram": "16 GB DDR5",
+    "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU (8 GB VRAM)",
+    "python_version": "3.14.6",
+    "packages": {
+      "numpy": "2.4.6",
+      "scipy": "1.18.0",
+      "scikit-learn": "1.9.1",
+      "torch": "2.16.0"
+    }
+  },
+  "subagent_responsibilities": {
+    "Agent A": "Repository and Evidence Provenance (Git history, file inventory, manifests vs disk, 3,000 fits trace)",
+    "Agent B": "Mathematical and Theorem Audit (10 topics, Sarle bound, Transfer-Cut, coupon collector)",
+    "Agent C": "Statistical and Experimental Audit (Wilcoxon exact p-values, CI bounds, Leukemia interval audit)",
+    "Agent D": "Manuscript Claim and Citation Auditor (9 mandatory questions, claim ledger, safe wording)",
+    "Agent E": "Adversarial Reproduction and Falsification (10 critical hypotheses tested with negative controls)",
+    "Agent F": "Independent Peer Reviewer (DMKD standard reviewer report)",
+    "Lead Agent": "Reconciliation, Master Claim Ledger, Discrepancy Register, and Go/No-Go Gate"
+  },
+  "seed_schedules": {
+    "S_high (6 High-D Cohorts Omnibus)": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+    ],
+    "S_other (7 Other Benchmarks Omnibus)": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+    ],
+    "S_sub (Ablation and Gating Sub-Experiments)": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29
+    ],
+    "S_scale (Synthetic Scaling Experiments)": [
+      0,
+      1,
+      2
+    ],
+    "S_split (Inductive Train/Test Splits)": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "S_loop2_exp5 (Adversarial Baseline Suite)": [
+      42,
+      100,
+      777,
+      999,
+      2024
+    ]
+  },
+  "dataset_checksums": {
+    "cns.npz": {
+      "size_bytes": 3151719,
+      "sha256": "0e449bf55f8e5682de8de4264c986c1b85b27f25ca0092b5a8a98ca2bb2a87ff"
+    },
+    "colon.npz": {
+      "size_bytes": 947714,
+      "sha256": "b4d56e96a488ae3aff707553f0f9864642921f6994689b00f9adab60fe9fc107"
+    },
+    "indian_pines.npz": {
+      "size_bytes": 6843055,
+      "sha256": "c52bb50bf43840c07dae85954815672743ca06a8fc0136dbabd5b8cd375756d6"
+    },
+    "isolet.npz": {
+      "size_bytes": 12354744,
+      "sha256": "f7b081d1e77fa1735a60bb7d96f8bb5aeaaefb71d942f067062a449880b1dbce"
+    },
+    "leukemia.npz": {
+      "size_bytes": 3701508,
+      "sha256": "04fe5da4984a80f16bb389c29fb6c68bde727a92667e3439cab85590633b1d23"
+    },
+    "lymphoma.npz": {
+      "size_bytes": 26682256,
+      "sha256": "4367cc5052522b75d0cdd4ba268ffcff718eb94a13262aa0e354afa49b4635d6"
+    },
+    "madelon.npz": {
+      "size_bytes": 1718782,
+      "sha256": "1401e717bbbcbb8c11076130db9a52a4d0cbcef2d988323871193b3b25674511"
+    },
+    "newsgroups20.npz": {
+      "size_bytes": 10157789,
+      "sha256": "84cbec29f7002567a5f349e4d6ea7d27cca53e545a444c50a1718f84a32b4a4b"
+    },
+    "ovarian.npz": {
+      "size_bytes": 27707530,
+      "sha256": "23656cd40a34a393e8244eca3f7f2f5ca711ff0c11b43c8ce828f653ac4f0a7a"
+    },
+    "prostate.npz": {
+      "size_bytes": 5480825,
+      "sha256": "a2717c9d01233867cba436e1da37b30390e1c6dc27f6a753473bc18bb43cbe6c"
+    },
+    "sonar.npz": {
+      "size_bytes": 89280,
+      "sha256": "31f9fa19dea7e063e61fb09fcb17d351abb0557be354fc164f16482ccd6630c3"
+    },
+    "srbct.npz": {
+      "size_bytes": 1466641,
+      "sha256": "be99430f054e3a83987c5d87e34106ce3466f729ab3c65450fee66aa6e9ac425"
+    },
+    "yale_b.npz": {
+      "size_bytes": 4026121,
+      "sha256": "31375da9ffa052716e0f7aad0744c1b44096614b7c8e5d06245f20a2aa430325"
+    },
+    "zheng68k.npz": {
+      "size_bytes": 809668,
+      "sha256": "4e3f0fea4d64087840bd6a896a2c4161dde9cee1fe8b1beef8620a5053389c4c"
+    }
+  },
+  "raw_artifact_checksums": {
+    "adversarial_autok_raw_results.csv": {
+      "path": "results\\evidence_recovery\\recovered\\adversarial_autok_raw_results.csv",
+      "size_bytes": 104264,
+      "sha256": "b61898c371e6e5c7dd1a72de560a257e6c184f59860804d716d4b0c58bbe402a",
+      "matches_manifest": true
+    },
+    "adversarial_autok_summary.json": {
+      "path": "results\\evidence_recovery\\recovered\\adversarial_autok_summary.json",
+      "size_bytes": 9763,
+      "sha256": "45da7079a602fe1f7e9767ba78994aad317a1336d2d47033e773721eaba29f5b",
+      "matches_manifest": true
+    },
+    "aggregate_seed_statistics.csv": {
+      "path": "results\\evidence_recovery\\recovered\\aggregate_seed_statistics.csv",
+      "size_bytes": 1646,
+      "sha256": "4542d1a454a98ab1027acc8d715ed6e87166b8b971670c7a06407e1f04ef261b",
+      "matches_manifest": true
+    },
+    "clean_env_results.json": {
+      "path": "results\\evidence_recovery\\recovered\\clean_env_results.json",
+      "size_bytes": 4185,
+      "sha256": "26b538453b775cea56a84a34eadab066b1c40011c96bdd9f1057ff798cd5917f",
+      "matches_manifest": true
+    },
+    "conformal_audit_results.json": {
+      "path": "results\\evidence_recovery\\recovered\\conformal_audit_results.json",
+      "size_bytes": 3796,
+      "sha256": "32c95a285d00be3c8a5e8986c314ebbbcc137e5c7a23a7fc31f6f2e484d6d936",
+      "matches_manifest": true
+    },
+    "exp2_real_high_d_factorial.csv": {
+      "path": "results\\evidence_recovery\\recovered\\exp2_real_high_d_factorial.csv",
+      "size_bytes": 43385,
+      "sha256": "50bc54c6855fd50d3cd61329d776aa2d998238a232b339075fe588800745c458",
+      "matches_manifest": true
+    },
+    "knockoff_audit_results.json": {
+      "path": "results\\evidence_recovery\\recovered\\knockoff_audit_results.json",
+      "size_bytes": 8125,
+      "sha256": "fd0aaba191a4b09dc711f6e666ef4b035e11802077caeea6dbb2a5c948f8c010",
+      "matches_manifest": true
+    },
+    "leakage_audit_results.json": {
+      "path": "results\\evidence_recovery\\recovered\\leakage_audit_results.json",
+      "size_bytes": 2684,
+      "sha256": "2c33dd40c1bd611a3876b9b4be6e4c3eb16e33eac5e8c1f809ca759af1f0c46d",
+      "matches_manifest": true
+    },
+    "numbers.tex": {
+      "path": "results\\evidence_recovery\\recovered\\numbers.tex",
+      "size_bytes": 4087,
+      "sha256": "10265f3d68da1985938382a9601c258193cc35a24579aa505133d480bb9493f7",
+      "matches_manifest": true
+    },
+    "real_data_stability_summary.csv": {
+      "path": "results\\evidence_recovery\\recovered\\real_data_stability_summary.csv",
+      "size_bytes": 16630,
+      "sha256": "7720e038ad46a6cb399b02f989ec7ba16fc93025ff7d38ece6064d90e7ed49d0",
+      "matches_manifest": true
+    },
+    "reproduction_benchmarks.csv": {
+      "path": "results\\evidence_recovery\\recovered\\reproduction_benchmarks.csv",
+      "size_bytes": 14849,
+      "sha256": "23f2c804f8d7298bd49f681e2b6105899543b848ada058372605f859ad6f9312",
+      "matches_manifest": true
+    },
+    "results.json": {
+      "path": "results\\evidence_recovery\\recovered\\results.json",
+      "size_bytes": 1627258,
+      "sha256": "0e5d2c10343ba077ff109e5f6554ecc191d89a590dfaf28bec2ef3e950e3ba27",
+      "matches_manifest": true
+    },
+    "stats.json": {
+      "path": "results\\evidence_recovery\\recovered\\stats.json",
+      "size_bytes": 11858,
+      "sha256": "83858600000b0d02fbad9742c333d634621f2fc1c64fdcd848c689ea952c4761",
+      "matches_manifest": true
+    },
+    "subsample_stability_summary.csv": {
+      "path": "results\\evidence_recovery\\recovered\\subsample_stability_summary.csv",
+      "size_bytes": 10622,
+      "sha256": "577cbab79913020ce362b8280ccb8c7ef62952d28ea47a45950f75cca2ff4b4f",
+      "matches_manifest": true
+    }
+  },
+  "loop5_deliverables_created": [
+    "audit/loop5_provenance_report.md",
+    "audit/loop5_mathematical_adjudication.md",
+    "audit/loop5_statistical_audit.md",
+    "audit/loop5_recomputed_statistics.csv",
+    "audit/loop5_manuscript_claim_audit.csv",
+    "audit/loop5_manuscript_audit.md",
+    "audit/loop5_adversarial_reproduction.md",
+    "audit/loop5_independent_reviewer_report.md",
+    "audit/loop5_master_claim_ledger.csv",
+    "audit/loop5_discrepancy_register.md",
+    "audit/loop5_dmkd_go_no_go_decision.md",
+    "audit/loop5_execution_manifest.json"
+  ],
+  "failed_or_skipped_experiments": [],
+  "commands_executed": [
+    "git branch -v; git rev-parse HEAD; git status --short",
+    "python -c verify_manuscript_asset_manifest",
+    "python -c verify_recovered_artifact_manifest",
+    "python results/scratch_check_wilcoxon.py",
+    "python results/generate_loop5_recomputed_stats.py",
+    "python results/generate_loop5_manuscript_claims.py",
+    "python results/generate_loop5_master_ledger.py",
+    "python results/generate_loop5_execution_manifest.py"
+  ]
+}
