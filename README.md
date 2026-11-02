@@ -85,7 +85,7 @@ The saved-output stability analysis uses six convenience cohorts, reference-labe
 
 ## Citation and publication status
 
-For the software citation metadata, see [CITATION.cff](CITATION.cff). The repository license covers software files only, not third-party data. This software repository does not contain or link to a manuscript. The existing Zenodo software archive for version 2.2.1 is [10.5281/zenodo.23888368](https://doi.org/10.5281/zenodo.23888368); it contains software only, not research-result evidence. Check the [GitHub releases](https://github.com/AkashKundu114/icc-clustering/releases) for the current source tag and the [citation and release notes](docs/citation.md) for archive scope. A GitHub tag or release is not a reproduction-data archive.
+For the software citation metadata, see [CITATION.cff](CITATION.cff). The repository license covers software files only, not third-party data. This software repository does not contain or link to a manuscript. Version 2.2.2 is the current software release and its software-only Zenodo archive is [10.5281/zenodo.23891237](https://doi.org/10.5281/zenodo.23891237). The archive contains source code only, not research-result evidence. See [citation and release notes](docs/citation.md) for the archive scope. A separate reproduction archive has not been published.
 
 ## License
 
