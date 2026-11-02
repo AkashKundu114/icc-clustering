@@ -1,0 +1,12 @@
+# Likely reviewer objections
+
+1. **Selection and confirmation:** The nine cells are selected after post-hoc Rule(i′) and recurrence; they are not independent confirmation. Report full 72 and 60 cell populations, selection chronology, and an unambiguous meaning for “18 cells.”
+2. **Bootstrap estimand:** The manuscript combines cell-weighted nondegenerate mean gap .485376 with a percentile interval generated from equal-weight cohort means whose center is .499925. The historical script’s sequential RNG produces a different interval. Explain or remove the CI; do not claim it confirms the .485 estimand. Six cohorts do not justify broad cohort-population inference without a defensible sampling model.
+3. **Dependence:** 72 cells share data and methods; each stability metric averages 435 pairs that reuse 30 partitions and overlapping samples. Neither 72 nor 435 is an independent sample size.
+4. **Perturbation scope:** Subsamples are label-stratified and overlap; model seed is fixed at zero. This assesses sample perturbation conditional on label proportions, not initialization variability or unsupervised resampling.
+5. **Authenticity:** Partitions and fit rows are locally complete, but no run-to-input hash, stable sample identifiers, source commit or execution log links them to exact cache bytes. Three cross-mode exact partition matches and 140 duplicate-hash groups need a root-cause explanation.
+6. **Artifact consistency:** Loop 5.6’s aggregate-only JSON and missing-evidence inventory contradict final partition-level reports; rerun order can overwrite outputs. Replace the package with one canonical workflow and regenerate manifests.
+7. **Benchmark config:** 3,000/12/p=.40 reproduces from saved raw ARI scores, but seed schedules conflict between raw files, current code/manuscript. FYP records are not on current public branch.
+8. **Generalization and mechanism:** Six selected biomedical cohorts support a bounded descriptive result. They do not establish universal or causal high-dimensional effects, clinical validity, or mechanism of Prostate partitions.
+9. **Public reproducibility and rights:** The cited Zenodo DOI is a restricted record with zero files; a clean clone cannot reproduce saved fits. Third-party data redistribution rights are not cleared by a public source URL.
+10. **Method claim scope:** ICC/GAC ablation, scalability, and clinical/biological explanations are not adjudicated by the six-cohort recovery; require separate artifact-level validation and narrow superiority wording.

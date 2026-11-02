@@ -1,0 +1,60 @@
+{
+  "purpose": "exploratory sensitivity reproduction; cohort exchangeability assumed",
+  "same_rng_sequential_as_audit_degeneracy.py": {
+    "all_cells": {
+      "point_cell_weighted": 0.46427387991007457,
+      "point_equal_cohort": 0.4642738799100745,
+      "cohort_mean_gaps": {
+        "colon": 0.39950486714739736,
+        "srbct": 0.42426710225107694,
+        "cns": 0.4797607234488228,
+        "leukemia": 0.29914388233503325,
+        "prostate": 0.7939392852162869,
+        "ovarian": 0.3890274190618303
+      },
+      "percentile_95_ci": [
+        0.36270035079145285,
+        0.6066055695368907
+      ],
+      "n_cells": 72,
+      "bootstrap_resamples": 10000
+    },
+    "nondegenerate_cells": {
+      "point_cell_weighted": 0.4853760361818695,
+      "point_equal_cohort": 0.49992520072828633,
+      "cohort_mean_gaps": {
+        "colon": 0.4308743826467584,
+        "srbct": 0.41396642592777766,
+        "cns": 0.5757600528948348,
+        "leukemia": 0.3144961599785571,
+        "prostate": 0.8656272462712271,
+        "ovarian": 0.39882693665056307
+      },
+      "percentile_95_ci": [
+        0.3811044151849985,
+        0.6530020557223053
+      ],
+      "n_cells": 60,
+      "bootstrap_resamples": 10000
+    }
+  },
+  "fresh_seed_on_nondegenerate_only": {
+    "point_cell_weighted": 0.4853760361818695,
+    "point_equal_cohort": 0.49992520072828633,
+    "cohort_mean_gaps": {
+      "colon": 0.4308743826467584,
+      "srbct": 0.41396642592777766,
+      "cns": 0.5757600528948348,
+      "leukemia": 0.3144961599785571,
+      "prostate": 0.8656272462712271,
+      "ovarian": 0.39882693665056307
+    },
+    "percentile_95_ci": [
+      0.37858116697212935,
+      0.6617159441682737
+    ],
+    "n_cells": 60,
+    "bootstrap_resamples": 10000
+  },
+  "warning": "The manuscript reports the cell-weighted nondegenerate point estimate with a cohort-resampled CI whose bootstrap center is the equal-cohort mean; these are different estimands."
+}

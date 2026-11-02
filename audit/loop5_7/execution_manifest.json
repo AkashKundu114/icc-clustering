@@ -1,0 +1,32 @@
+{
+  "code_under_audit_commit": "313e1542d524ddd2b38fa8c7e2ae885f9c52b7ca",
+  "loop5_6_deliverables_commit": "4fd21edaf7e4f45a8bea6acc8a052ad5f55275ba",
+  "loop5_6_deliverables_commit_is_origin_main": true,
+  "original_experiment_execution_commit": "UNVERIFIABLE; 49f3882 is source/protocol/summary lineage only",
+  "fyp_worktree_head": "60b163f22b5931da35a1ace07d1934bf3bdd65e3",
+  "audit_execution_commit": "4fd21edaf7e4f45a8bea6acc8a052ad5f55275ba",
+  "loop5_7_final_deliverables_commit": "NOT COMMITTED",
+  "scripts_executed": [
+    "python audit/loop5_7/scripts/independent_reconcile.py",
+    "python audit/loop5_7/scripts/build_final_deliverables.py"
+  ],
+  "inputs": [
+    "D:/Final Year Project/results/stability/partitions/*.npy",
+    "D:/Final Year Project/results/stability/runs/*.parquet",
+    "D:/Final Year Project/data/cache/*.npz",
+    "D:/Final Year Project/results/stability/subsample_stability_summary.csv",
+    "D:/Final Year Project/results/passF/benchmark_matrix_passF.csv",
+    "D:/Final Year Project/results/exp3_cohirf_benchmark.csv",
+    "paper/manuscript/main.tex"
+  ],
+  "n_stability_partitions": 4320,
+  "n_fit_records": 4320,
+  "n_pairwise_stability_values": 62640,
+  "n_recomputed_cells": 72,
+  "n_benchmark_rows": 3000,
+  "full_model_rerun": false,
+  "clean_clone_commit": "4fd21edaf7e4f45a8bea6acc8a052ad5f55275ba",
+  "clean_clone_aggregate_script_exit_code": 0,
+  "clean_clone_full_experiment": "BLOCKED: raw runs/caches not present",
+  "executed_local_time": "2026-11-02T17:01:48+05:30"
+}
