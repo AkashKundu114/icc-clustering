@@ -1,7 +1,0 @@
-public_document,claim_or_topic,supporting_source,status,qualification
-README.md,Two distinct experiments: six-cohort stability and 13-dataset external ARI,audit/loop6_0/FINAL_LOOP6_0_REPORT.md,CONDITIONALLY VERIFIED,Historical local audit evidence; no raw result package in candidate.
-README.md,No public numerical result package / reproduction tiers,audit/loop6_0/FINAL_LOOP6_0_REPORT.md; audit/loop6_1/reproducibility/,VERIFIED,Tier 1 dependency excluded with audit; Tier 2 unavailable; Tier 3 not run.
-docs/datasets.md,Registry shapes and upstream identity/rights caveats,configs/datasets.yaml; audit/loop6_1/data_rights/,CONDITIONALLY VERIFIED,Configured dimensions; source variant and exact rights often unresolved.
-docs/statistical-analysis.md,Cells and pairwise values are dependent; six cohorts limit inference,audit/loop6_0/FINAL_LOOP6_0_REPORT.md,VERIFIED AS LIMITATION,Descriptive scope only; no population inference.
-docs/results.md,No numerical results released,candidate tracked file inventory; rights review,VERIFIED,No results directory tracked in baseline; no evidence package included.
-docs/reproducibility.md,Tier status,audit/loop6_0/FINAL_LOOP6_0_REPORT.md; clean clone validation,VERIFIED,Tier 1 not present in candidate; Tier 2 unavailable; Tier 3 not run.

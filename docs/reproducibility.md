@@ -1,39 +1,11 @@
-# Reproducibility Guide
+# Reproducibility status
 
-This guide details instructions for reproducing benchmark evaluations, running the test battery, and verifying numerical determinacy across platforms.
+Reproducibility is reported in three separate tiers. Testing one tier does not establish a higher tier.
 
----
+| Tier | Status for this repository snapshot | Inputs and environment | Command / expected output |
+|---|---|---|---|
+| Tier 1 — aggregate reproduction | **Not available in this snapshot.** An aggregate arithmetic check passed on an earlier repository snapshot, but its script and input were located with internal audit material and the derived result is not cleared for distribution. | Would require a rights-cleared aggregate CSV and a standard-library calculation script. | No Tier 1 command is supplied here. A public equivalent must be independently reviewed, relocated, and tested in a fresh clone before this tier can be called available. |
+| Tier 2 — partition-level reproduction | **Unavailable.** | Exact cached features/labels, stable row mapping, 4,320 partitions, fit records, metric configuration, and a compatible environment. These are not in the public snapshot; data/derived-output rights are not cleared. | No command can run from this clone. |
+| Tier 3 — full experimental reproduction | **Not run.** | Rights-cleared versioned datasets, recovered or newly specified experiment producer, frozen configuration, dependencies, seeds, sample IDs, and per-fit provenance. | No authenticated historical producer or full reproduction command is included. |
 
-## 1. Quickstart
-
-Run the automated test battery:
-```bash
-python -m pytest tests/
-```
-
-Execute a sample experiment benchmark:
-```bash
-python scripts/run.py --config configs/examples/synthetic.yaml
-```
-
-Evaluate experimental outputs:
-```bash
-python scripts/evaluate.py --results results/experiments/<latest_run>.json
-```
-
----
-
-## 2. Environment and Determinism
-
-### Hardware and System Requirements
-- **Operating System:** Linux (Ubuntu 22.04+), macOS (13+), or Windows 10/11 (64-bit).
-- **Python Version:** Python 3.10 through 3.14 (fully verified across Python 3.10, 3.11, 3.12, 3.13, and 3.14).
-- **RAM:** Minimum 8 GB (16 GB recommended for large benchmark sweeps).
-
-### BLAS Thread Concurrency
-To ensure bitwise identical numerical determinacy across CPU architectures, BLAS thread concurrency can be pinned to single-threaded execution:
-```bash
-export OMP_NUM_THREADS=1
-export MKL_NUM_THREADS=1
-export OPENBLAS_NUM_THREADS=1
-```
+The package can be installed and its software tests may be run independently, but that does not reproduce the research findings. Dataset acquisition instructions are not redistribution permission. Do not download or distribute a dataset until you have checked its current provider terms and the exact variant used.

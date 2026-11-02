@@ -2,18 +2,18 @@
 
 ## Quick Start
 
-### 1. Basic Invariant Core Consensus (ICC-v2)
+### 1. Invariant Core Consensus (ICC)
 
 ```python
 import numpy as np
-from icc import InvariantCoreConsensusV2, evaluate_all
+from icc import ICC, evaluate_all
 
 # Generate or load high-dimensional data (N=150, D=500, K=3)
 X = np.random.randn(150, 500)
 y_true = np.repeat([0, 1, 2], 50)
 
-# Instantiate and fit ICC-v2
-model = InvariantCoreConsensusV2(
+# Instantiate and fit ICC
+model = ICC(
     n_clusters=3,
     n_base_models=25,
     n_anchors=50,
@@ -28,7 +28,7 @@ print("Adjusted Rand Index (ARI):", metrics["ari"])
 
 ### 2. Out-of-Sample Inductive Prediction
 
-ICC-v2 supports closed-form inductive projection of unseen test instances without graph recomputation:
+ICC also exposes an inductive prediction method for assigning new samples using the fitted model:
 
 ```python
 # Unseen query samples (N_test=20, D=500)

@@ -1,9 +1,0 @@
-classification,path,description,provenance
-Original evidence,D:/Final Year Project/results/stability/partitions/,4320 per-repeat cluster partition arrays; six cohorts x 12 methods x 30 repeats x real/null,ignored local artifacts; original linkage only conditional
-Original evidence,D:/Final Year Project/results/stability/runs/,4320 per-fit Parquet records; 30 real and null fit records per cell,ignored local artifacts; source commit recovered
-Derived evidence,D:/Final Year Project/results/stability/subsample_stability_summary.csv,72-cell aggregate summary,tracked historical summary; recomputed from partitions
-Derived evidence,D:/Final Year Project/data/cache/,six preprocessed X/y arrays,untracked caches; no IDs or preprocessing hash
-Supporting documentation,D:/Final Year Project/PLAN_STAB.md,protocol and selection rules,Git historical commits
-Supporting documentation,D:/Final Year Project/scripts/stability_subsample.py,original subsampling script,Git historical commits
-Supporting documentation,D:/Final Year Project/scripts/audit_degeneracy.py,post-hoc degeneracy audit,Git historical commits
-Unverified,D:/Final Year Project/results/stability/partitions/,link from saved partitions to exact original cache bytes,indices have no stable sample IDs or recorded X/y hash

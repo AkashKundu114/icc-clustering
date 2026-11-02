@@ -1,0 +1,2 @@
+# Install project and test/development extras from the current checkout.
+-e .[dev]

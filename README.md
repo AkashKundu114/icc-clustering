@@ -1,205 +1,92 @@
-# Invariant Core Consensus (ICC)
+# ICC Clustering Research Software
 
-A high-performance Python framework for scalable, noise-robust consensus clustering and inductive out-of-sample inference in high-dimensional regimes.
-
-[![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue.svg)](https://www.python.org/)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Tests: Passing](https://img.shields.io/badge/pytest-133%2F133%20passing-brightgreen.svg)](tests/)
-[![CI/CD](https://img.shields.io/badge/CI%2FCD-Ubuntu%20%7C%20Windows-blue.svg)](.github/workflows/ci.yml)
-[![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
-[![Type Checked: Mypy](https://img.shields.io/badge/mypy-checked-blue.svg)](https://mypy-lang.org/)
+[![CI](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/AkashKundu114/icc-clustering/actions/workflows/ci.yml)
+[![Code style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
+[![Types: Mypy](https://img.shields.io/badge/types-mypy-blue.svg)](https://mypy-lang.org/)
 [![XERJ Corpus Hub contributor](https://hub.xerj.org/contributors/AkashKundu114/badge.svg)](https://hub.xerj.org/contributors/AkashKundu114)
 
----
+Python research software for consensus clustering, clustering baselines, dataset loading, evaluation, and experiment configuration. The repository is intended for researchers who want to inspect or extend the software; it does not contain the private research paper or the complete evidence needed to reproduce its six-cohort analysis.
 
-## Overview
+**ICC** stands for **Invariant Core Consensus**. In this codebase, the public aliases `ICC` and `ICCv2` resolve to the same `InvariantCoreConsensusV2` estimator; they do not select different algorithms. This estimator is exploratory, and its versioned class name does not imply a verified performance advantage.
 
-Consensus clustering synthesizes diverse base clusterings into an aggregated partition to discover robust latent structures without supervision. However, in extreme high-dimensional noise regimes ($D \gg N$), distance concentration severely degrades base partition fidelity, while classical $\mathcal{O}(N^2)$ co-association matrices prevent scaling to large sample sizes and preclude out-of-sample inductive inference.
+## Research question
 
-**Invariant Core Consensus (ICC-v2)** resolves these challenges through five core mechanisms:
+The associated research investigates whether two properties can differ: **resampling stability**, meaning agreement among partitions after a specified sampling perturbation, and **external reference-label alignment**, meaning agreement with supplied reference categories. A stable partition need not align with those categories. Sampling robustness is distinct from sensitivity to model initialization.
 
-1. **Bimodality-Gated Subspace Selection (BGSS):** Unsupervised linear $\mathcal{O}(N \cdot D)$ feature screening using Sarle's Bimodality Coefficient ($BC$) with finite-sample null calibration to filter continuous unimodal distractor noise ($BC \le 5/9$) while retaining discriminative multimodal cluster signals.
-2. **Exact Linear-Memory Contingency Determinacy:** An algebraic formulation that evaluates ensemble co-association directly from base contingency tables in $\mathcal{O}(M^2 N + M^2 K^2)$ time and $\mathcal{O}(N + M K)$ memory, achieving a 99.6% reduction in memory footprint over quadratic consensus.
-3. **Reduced Bipartite Spectral Transfer-Cut:** Compresses consensus optimization into an $\mathcal{O}(N \cdot L)$ rectangular bipartite graph ($L \ll N$) with generalized degree and eigenvalue normalization, yielding linear scaling in $\mathcal{O}(N L^2 + L^3)$ time.
-4. **Closed-Form Inductive Inference:** Stability-weighted active centroid projection executing in $\mathcal{O}(K \cdot |\mathcal{F}_{\text{active}}|)$ operations per query instance without graph recomputation, enabling real-time out-of-sample cluster assignment.
-5. **Conformal Uncertainty Quantification (`cicc`):** Finite-sample distribution-free $(1 - \alpha)$ coverage guarantees with target-decoy False Discovery Rate (FDR) feature selection and automated sample triage.
+ICC is an exploratory method in this research codebase. The repository does not establish universal algorithmic superiority, clinical utility, causal mechanisms, or generalization guarantees.
 
----
+## Software capabilities
 
-## When to Use and Limitations
+- Consensus-clustering implementations and baseline wrappers under `src/icc/`.
+- Additional inductive and conformal components under `src/cicc/`.
+- Dataset registry/configuration and local acquisition/preprocessing helpers.
+- Evaluation metrics, benchmark runners, command-line scripts, examples, and tests.
 
-- **Optimal Regimes:** Continuous high-dimensional data with substantial nuisance features ($D \gg N, D/N > 20$) and localized cluster structure under additive isotropic distractor noise (e.g. genomic microarrays, mass spectrometry assays, oncological expression profiles, hyperspectral data).
-- **When NOT to Use:**
-  - Large-sample low-dimensional data ($N \gg D$) or ultra-sparse count matrices (e.g., single-cell count matrices with high zero inflation or sparse TF-IDF text), where classical Ward or DEC is preferred.
-  - Non-linear multi-feature XOR interactions, where 1D marginal unimodality cannot detect joint multi-variable dependencies without marginal separation.
-  - Very large cluster counts ($K \ge 20$) with small anchor budgets ($L < K$).
+See [the documentation index](docs/index.md) for the software and methodology guides.
 
----
+## Research scope and available evidence
 
-## Repository Architecture
+The research has two separate experiments: a six-cohort biomedical stability analysis and a 13-dataset external-ARI benchmark. The first concerns resampling stability versus reference alignment; the second concerns saved external-ARI scores only. They must not be combined as one 13-dataset stability result.
+
+No numerical result table or run-level evidence package is included in this repository snapshot. A local saved-output reconstruction found descriptive stability/alignment differences, but its historical producer was not authenticated, the derived artifacts are not cleared for redistribution, and the underlying partitions and caches are not available here. See [results and evidence status](docs/results.md) and [reproducibility](docs/reproducibility.md).
+
+## Repository layout
 
 ```text
-icc-clustering/
-├── src/
-│   ├── icc/                    # Core ICC framework
-│   │   ├── algorithms/         # Comparative baseline shims (re-exporting from baselines/)
-│   │   ├── baselines/          # Canonical comparative baseline implementations (14 algorithms)
-│   │   ├── benchmarks/         # Canonical benchmark runner and scaling harnesses
-│   │   ├── consensus/          # Canonical consensus engines (ICC-v2, GAC, ASPP, Auto-K, CICC)
-│   │   ├── data/               # Dataset shims, preprocessing (BGSS), and synthetic generators
-│   │   ├── datasets/           # Canonical 13-benchmark dataset loader and registry suite
-│   │   ├── evaluation/         # Dual-backend clustering evaluation metrics (ARI, NMI, AMI, ACC, FM)
-│   │   ├── experiments/        # Backward-compatibility shims for benchmarks/
-│   │   ├── stats/              # Statistical tests (Hodges-Lehmann, TOST, Friedman, Wilcoxon, Bonferroni)
-│   │   └── utils/              # Logging, timer, and seeding utilities
-│   └── cicc/                   # Conformal Inductive Consensus Clustering
-│       ├── conformal.py        # Split-conformal prediction sets
-│       ├── decoy.py            # Target-decoy knockoff FDR screening
-│       ├── inductive.py        # Inductive out-of-sample projection
-│       └── memory.py           # Dynamic incremental memory routing
-├── tests/                      # Modular test suite (133 tests, 100% pass rate)
-│   ├── unit/                   # Fast algorithmic unit tests
-│   ├── integration/            # Dataset loading and pipeline integration tests
-│   └── regression/             # Scalability, anchor fidelity, Python 3.10-3.14 compatibility tests
-├── scripts/                    # Command-line utility and benchmarking scripts
-│   ├── run.py                  # CLI experiment runner
-│   ├── prepare_data.py         # Data preparation and preprocessing CLI
-│   ├── evaluate.py             # Results evaluation and metrics computation CLI
-│   └── fetch_data.py           # Benchmark dataset fetcher
-├── configs/                    # YAML configuration files
-│   ├── default.yaml            # Default execution configuration
-│   └── examples/               # Example configuration presets
-└── docs/                       # Framework documentation
-    ├── setup.md                # Installation and environment guide
-    ├── usage.md                # Usage tutorials and examples
-    ├── api.md                  # Python API reference
-    ├── theory.md               # Mathematical formulations and proofs
-    ├── data.md                 # Benchmark dataset specifications
-    ├── reproducibility.md      # Determinism and reproduction guide
-    └── development.md          # Development and contribution guide
+src/          Python packages (`icc`, `cicc`)
+configs/      dataset and experiment configuration
+scripts/      command-line utilities
+tests/        automated tests
+examples/     usage examples
+docs/         public software and methodology documentation
+data/         registry and acquisition guidance; no research matrices
 ```
 
----
+The package paths are retained to avoid breaking imports. There is no public manuscript, submission, or internal-audit directory in the current repository snapshot.
 
 ## Installation
 
-### Standard Installation
-Supported across Python 3.10, 3.11, 3.12, 3.13, and 3.14 on Linux, macOS, and Windows:
+Python 3.10 or newer is declared in package metadata. In a virtual environment, install the repository and its core dependencies:
 
 ```bash
 git clone https://github.com/AkashKundu114/icc-clustering.git
 cd icc-clustering
-pip install -e .
+python -m pip install -e .
 ```
 
-### Optional Dependencies
-```bash
-# Deep learning baselines (DEC, IDEC)
-pip install -e ".[deep]"
+Some optional methods require additional dependencies. Consult `pyproject.toml` and [setup documentation](docs/setup.md). Installation does not acquire the datasets or reproduce the research analyses.
 
-# Single-cell & genomics tools (Scanpy, AnnData)
-pip install -e ".[bio]"
-
-# Development, testing, and linting toolchains
-pip install -e ".[dev]"
-
-# Complete installation with all components
-pip install -e ".[all]"
-```
-
-Verify installation:
-```bash
-python -m pytest tests/
-```
-
----
-
-## Continuous Integration & Matrix Testing
-
-Automated CI/CD pipelines run on GitHub Actions across **Python 3.10, 3.11, 3.12, 3.13, and 3.14** on both `ubuntu-latest` and `windows-latest`:
-- Strict PEP 8 linting and formatting verification with Ruff.
-- Static type checking with Mypy.
-- Complete regression and unit test suite execution (133 tests).
-- End-to-end interactive demo execution.
-
----
-
-## Quick Start
-
-### 1. Python API
+## Quick start
 
 ```python
 import numpy as np
-from icc import ICC, evaluate_all
+from icc import ICC
 
-# Synthesize sample high-dimensional data (N=150, D=1000, K=3)
 rng = np.random.default_rng(42)
-X_signal = np.repeat([[0.0, 0.0], [3.0, 3.0], [-3.0, 3.0]], 50, axis=0)
-X_noise = rng.normal(scale=1.0, size=(150, 998))
-X = np.hstack([X_signal + rng.normal(scale=0.5, size=(150, 2)), X_noise])
-y_true = np.repeat([0, 1, 2], 50)
-
-# Fit ICC-v2 model
+X = rng.normal(size=(120, 40))
 model = ICC(n_clusters=3, n_base_models=20, n_anchors=30, random_state=42)
 labels = model.fit_predict(X)
-
-# Evaluate performance
-metrics = evaluate_all(y_true, labels)
-print(f"ARI: {metrics['ari']:.4f}")
-
-# Out-of-sample inductive prediction on new samples
-X_new = rng.normal(scale=1.0, size=(10, 1000))
-new_labels = model.predict(X_new)
+print(labels.shape)  # (120,)
 ```
 
-### 2. Command-Line Interface
+This synthetic example demonstrates the API. It is not a reproduction of either research experiment. Check the selected model's documentation and parameters before applying it to data.
 
-Run an experiment via configuration file:
-```bash
-python scripts/run.py --config configs/examples/synthetic.yaml
-```
+## Datasets and results
 
-Evaluate experimental results:
-```bash
-python scripts/evaluate.py --results results/experiments/<run_name>.json
-```
+The registry describes 13 dataset variants, but upstream availability does not imply permission to redistribute raw data, transformed matrices, sample identifiers, or partitions. Dataset-specific terms and exact variant identities remain unresolved for most sources. **Do not redistribute datasets or derived sample-level artifacts from this repository without confirming the applicable provider terms.** Yale B images require permission before redistribution. See [dataset access and rights](docs/datasets.md).
 
-Prepare and inspect datasets:
-```bash
-python scripts/prepare_data.py --dataset colon --visualize
-```
+The current public snapshot includes no authorized numerical research-result package. The previously tested aggregate checker and its input are not included because they were located with internal audit material and the derived result is not cleared for redistribution. Tier 2 partition reproduction is unavailable; Tier 3 full experimental reproduction has not been run.
 
----
+## Limitations
 
-## Documentation
+The saved-output stability analysis uses six convenience cohorts, reference-label-informed subsampling and a reference-derived cluster count. The model seed was fixed, so it assesses sampling sensitivity rather than initialization robustness. Cohort-method cells and pairwise comparisons are dependent. The historical partition producer is unknown, duplicate assignments remain unexplained, and public partition-level reproduction is unavailable. The broader benchmark has different methods and saved-score limitations. These restrictions preclude broad performance or clinical claims.
 
-Detailed documentation is available in the [`docs/`](docs/) directory:
-- [Setup and Installation Guide](docs/setup.md)
-- [Usage Guide & Code Examples](docs/usage.md)
-- [Python API Reference](docs/api.md)
-- [Theoretical Formulations & Proofs](docs/theory.md)
-- [Benchmark Dataset Specifications](docs/data.md)
-- [Reproducibility & Determinism Guide](docs/reproducibility.md)
-- [Development and Contributing Guide](docs/development.md)
+## Citation and publication status
 
----
-
-## Citation
-
-If you use this software in your research, please cite:
-
-```bibtex
-@software{icc_clustering,
-  author    = {Kundu, Akash and Das, Kalyan Kumar and Mukhopadhyay, Anirban},
-  title     = {Invariant Core Consensus (ICC): High-Dimensional Consensus Clustering},
-  year      = {2026},
-  url       = {https://github.com/AkashKundu114/icc-clustering},
-  version   = {2.2.0}
-}
-```
-
----
+For the software citation metadata, see [CITATION.cff](CITATION.cff). The repository license covers software files only, not third-party data. This software repository does not contain or link to a manuscript. Version 2.2.1 is an untagged release candidate and has not been released. An older published Zenodo record exists, but it contains no files and its metadata does not match this source snapshot; it is not an archive of this software tree. See [citation and release notes](docs/citation.md).
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+The software is distributed under the MIT License; see [LICENSE](LICENSE). External datasets, resources, and derived data have separate terms.

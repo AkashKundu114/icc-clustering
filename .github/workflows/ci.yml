@@ -30,6 +30,9 @@ jobs:
       - name: Run Mypy Type Checking
         run: python -m mypy src
 
+      - name: Validate Dataset and Release Metadata
+        run: python scripts/validate_registry_and_release_metadata.py
+
   test:
     name: Test Python ${{ matrix.python-version }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}

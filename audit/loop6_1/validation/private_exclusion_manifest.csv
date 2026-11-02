@@ -1,2 +1,0 @@
-path,status,note
-335 tracked audit paths at baseline,REMOVED_FROM_CANDIDATE_TIP,Files retained in local internal workspace; historical Git commits still contain them.

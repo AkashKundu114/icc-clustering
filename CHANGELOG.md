@@ -1,22 +1,24 @@
 # Changelog
 
-All notable changes to the Invariant Core Consensus (`icc`) package are documented in this file.
+All notable changes to ICC Clustering (`icc` import package; `icc-clustering` distribution) are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
-## [2.2.1] - 2026-11-01
+## [Unreleased] (candidate version 2.2.1)
 
 ### Added
-- **XERJ Corpus Hub Contributor Badge:** Integrated official XERJ Corpus Hub indexing and contributor badge into `README.md` and `CONTRIBUTING.md` for AI agent reference search.
+- **XERJ Corpus Hub contributor badge:** Retained the project contributor badge and profile link in the public README.
+- **Public project documentation:** Updated researcher-facing project and installation guidance.
 - **Python 3.10–3.14 CI/CD Matrix:** Configured full GitHub Actions matrix workflow testing across Python 3.10, 3.11, 3.12, 3.13, and 3.14 on both Ubuntu and Windows (`.github/workflows/ci.yml`).
 - **Python 3.13 & 3.14 Compatibility Test Suite:** Added dedicated regression tests (`tests/regression/test_python_compatibility.py`) validating PEP 706 safe tarfile extraction, PEP 649/749 deferred annotation evaluation, dataclass typing resolution, and end-to-end estimator execution under modern runtimes.
 - **Statistical Testing Extensions:** Implemented `wilcoxon_signed_rank_test` and `bonferroni_correction` in `src/icc/stats/testing.py` with PEP 484 type annotations.
 
 ### Changed
-- **Test Suite Expansion:** Expanded automated test battery from 118 to 133 passing tests with 100% pass rate and 67% statement coverage.
+- **Distribution metadata:** The installable distribution is named `icc-clustering`; Python imports remain `icc`. This avoids directing users to an unrelated project registered under the shorter package name.
+- **Test Suite Expansion:** Expanded the automated test suite; run the current test suite to verify this source snapshot.
 - **Architecture Deduplication:** Converted duplicate `src/icc/aspp.py` into an 18-line backward-compatibility shim re-exporting from canonical `src/icc/consensus/aspp.py`.
 - **Public Documentation Overhaul:** Synchronized and modernized all repository guides (`README.md`, `setup.md`, `usage.md`, `development.md`, `reproducibility.md`, `CONTRIBUTING.md`), fixing code fence formatting and standardizing references.
 
@@ -31,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **Automated Verification Suite:** Comprehensive test battery covering mathematical bounds, algorithm parity, and numerical determinacy.
-- **Real-Data Stability Analysis:** Empirical measurement of the stability-accuracy trade-off across 13 benchmarks x 12 methods.
+- **Benchmark utilities:** Added utilities for external-ARI benchmark evaluation. This changelog entry does not represent a 13-dataset stability experiment; the repository documentation distinguishes the 13-dataset external benchmark from the six-cohort stability study.
 
 ### Changed
 - **Modern Literature Overhaul:** Upgraded comparative baselines and references across leading machine learning and data mining literature.

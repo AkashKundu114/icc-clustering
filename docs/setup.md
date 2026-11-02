@@ -1,56 +1,35 @@
-# Setup and Installation Guide
+# Installation and tested environments
 
 ## Requirements
-- Python >= 3.10 (tested through 3.14 on Linux, macOS, and Windows)
-- Pip >= 22.0
 
-## Installation
+The package metadata declares Python 3.10 or later. The GitHub Actions workflow on the latest inspected `main` commit (`8a97edcbe1b62269fdb36cd2070c94fad1e8eeef`) completed successfully for Ubuntu and Windows across Python 3.10–3.14 on 2026-11-02. A separate local editable-install check was run on Windows 11 with Python 3.14.6. These checks do not establish macOS support or a guarantee of bitwise-identical results across systems.
 
-### Standard Installation
-Clone the repository and install core dependencies:
+## Install from source
 
 ```bash
 git clone https://github.com/AkashKundu114/icc-clustering.git
 cd icc-clustering
-pip install -e .
+python -m venv .venv
+# Activate the environment using the instructions for your shell.
+python -m pip install --upgrade pip
+python -m pip install -e .
 ```
 
-### Optional Dependencies
+The project distribution name is `icc-clustering`; the Python import package remains `icc`. Install from this repository rather than assuming that a similarly named package on a package index is this project.
 
-1. **Deep Learning Baselines (DEC, IDEC):**
-   ```bash
-   pip install -e ".[deep]"
-   ```
+Optional dependency groups are declared in `pyproject.toml`: `.[deep]` for selected deep-learning baselines, `.[bio]` for Scanpy/AnnData integrations, and `.[dev]` for tests and development tools. The `.[all]` group is broad and may require substantial platform-specific dependencies. For contributor/test setup, `python -m pip install -r requirements-dev.txt` installs the current checkout with the `dev` extra.
 
-2. **Single-cell & Genomics (Scanpy, AnnData):**
-   ```bash
-   pip install -e ".[bio]"
-   ```
+## Verify the software installation
 
-3. **Development and Testing:**
-   ```bash
-   pip install -e ".[dev]"
-   ```
-
-4. **All Components:**
-   ```bash
-   pip install -e ".[all]"
-   ```
-
-## System Requirements & Resource Guidelines
-
-### Recommended Hardware
-- **CPU:** Multi-core x86_64 or ARM64 processor (8+ cores recommended for multi-seed benchmark evaluations).
-- **RAM:** Minimum 8 GB (16+ GB recommended for large high-dimensional datasets and scRNA-seq matrices).
-- **GPU (Optional):** NVIDIA GPU with CUDA support for optional deep clustering baselines (DEC, IDEC). All consensus and anchor clustering algorithms run natively and deterministically on CPU.
-
-### Resource Limits and Safeguards
-- **Memory Safeguard:** When executing extensive benchmark sweeps, ensure adequate host swap or container limits (e.g. 13 GB RAM limit threshold).
-- **Disk Space:** At least 5 GB free disk space recommended for caching benchmark datasets and output logs.
-
-## Verifying Installation
-
-Run the test suite:
 ```bash
+python -c "import icc; print(icc.__version__)"
 python -m pytest tests/ -q
 ```
+
+The synthetic smoke workflow is:
+
+```bash
+python scripts/reproduce.py --scope smoke
+```
+
+This runs the synthetic example configuration only. It does not reproduce the historical six-cohort analysis or the 13-dataset result tables. Only `smoke` and `verify` are accepted scopes; requests for `tables`, `figures`, or `full` now fail instead of returning success without producing results. See [reproducibility](reproducibility.md).

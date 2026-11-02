@@ -6,6 +6,8 @@ The icc and cicc packages provide an unsupervised, scikit-learn compatible clust
 
 ## 1. Primary Estimator: `ICC` / `InvariantCoreConsensusV2`
 
+`ICC` and the compatibility name `ICCv2` both resolve to `InvariantCoreConsensusV2`; there is no behavioral distinction between those aliases. `InvariantCoreConsensus` is a separate legacy estimator.
+
 ```python
 from icc import ICC
 # or
@@ -129,14 +131,14 @@ InductiveConsensusClusterer(
 
 ### `ConformalClusterer`
 
-General split-conformal wrapper providing finite-sample coverage guarantees ($1 - \alpha$).
+Split-conformal wrapper whose coverage claim depends on exchangeability and the calibration procedure; this API description does not establish validity for every dataset or application.
 
 - `fit_calibrate(X_disc, labels_disc, X_cal, labels_cal)`: Fits cluster prototypes on discovery set and calibrates non-conformity quantile $\hat{q}$ on calibration set.
 - `predict_set(X_query, ground_truth=None) -> ConformalResult`: Evaluates query points to yield candidate prediction sets $C(x)$.
 
 ### `DecoyFeatureGating`
 
-False Discovery Rate (FDR) controlled feature selection via target-decoy / knockoff competition:
+Target-decoy feature screening with an FDR-control objective. The implementation and its assumptions require application-specific validation; this API summary is not a universal FDR guarantee:
 
 - `fit(X, labels) -> DecoyFeatureGating`: Computes mirror statistics $W_d = |T_d| - |\tilde{T}_d|$ across true features and permuted/knockoff decoys.
 - `transform(X) -> np.ndarray`: Filters feature matrix to retained candidate features at nominal FDR threshold.

@@ -1,7 +1,0 @@
-dataset,artifact_path,exists,sha256,bytes,keys,N,D,K,class_counts,nonfinite_X,exact_duplicate_rows,sample_ids,artifact_status
-cns,data\cache\cns.npz,True,0e449bf55f8e5682de8de4264c986c1b85b27f25ca0092b5a8a98ca2bb2a87ff,3151719,X;y,60,7129,2,0:39;1:21,0,0,MISSING,local preprocessed cache; source commit and exact benchmark identity unverified
-colon,data\cache\colon.npz,True,b4d56e96a488ae3aff707553f0f9864642921f6994689b00f9adab60fe9fc107,947714,X;y,62,2000,2,0:40;1:22,0,0,MISSING,local preprocessed cache; source commit and exact benchmark identity unverified
-leukemia,data\cache\leukemia.npz,True,04fe5da4984a80f16bb389c29fb6c68bde727a92667e3439cab85590633b1d23,3701508,X;y,72,7129,2,0:47;1:25,0,0,MISSING,local preprocessed cache; source commit and exact benchmark identity unverified
-ovarian,data\cache\ovarian.npz,True,23656cd40a34a393e8244eca3f7f2f5ca711ff0c11b43c8ce828f653ac4f0a7a,27707530,X;y,253,15154,2,0:162;1:91,0,0,MISSING,local preprocessed cache; source commit and exact benchmark identity unverified
-prostate,data\cache\prostate.npz,True,a2717c9d01233867cba436e1da37b30390e1c6dc27f6a753473bc18bb43cbe6c,5480825,X;y,102,12600,2,0:52;1:50,0,0,MISSING,local preprocessed cache; source commit and exact benchmark identity unverified
-srbct,data\cache\srbct.npz,True,be99430f054e3a83987c5d87e34106ce3466f729ab3c65450fee66aa6e9ac425,1466641,X;y,83,2308,4,0:29;1:11;2:18;3:25,0,0,MISSING,local preprocessed cache; source commit and exact benchmark identity unverified

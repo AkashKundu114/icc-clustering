@@ -1,12 +1,12 @@
-# ==============================================================================
-# Unified Dataset Provenance & Preprocessing Registry (data/registry.yaml)
-# Single Source of Truth for all 13 Benchmark Datasets in the ICC Benchmark Suite
+# Dataset metadata, preprocessing notes, and source-specific reuse status.
+# This registry does not acquire or redistribute datasets. A public download does
+# not establish permission to redistribute the exact configured variant.
 # ==============================================================================
 
-version: "2.1.0"
-updated_at: "2026-10-29"
-curator: "Akash Kundu (Techno India University)"
-license_policy: "Public academic benchmark datasets under CC-BY / OpenML / Public Domain"
+schema_version: "1.0"
+updated_at: "2026-11-02"
+curator: "Akash Kundu"
+rights_policy: "Verify terms for the exact upstream variant before redistribution."
 
 preprocessing_pipeline_default:
   imputation: "SimpleImputer(strategy='mean')"
@@ -25,7 +25,14 @@ datasets:
     upstream_id: 45086
     upstream_url: "https://www.openml.org/d/45086"
     retrieval_date: "2026-10-20"
-    license: "Public Domain / Open Access"
+    license: "UNKNOWN"
+    license_evidence: "OpenML record; the prior audit found a Public metadata value but no named license confirmed for this exact version."
+    license_evidence_status: "UNKNOWN"
+    license_evidence_url: "https://www.openml.org/d/45086"
+    derivative_redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    attribution: "Pomeroy et al. (2002), plus the exact OpenML dataset record."
+    rights_notes: "No raw, cached, sample-level, or derived artifact redistribution until exact terms are established."
     n_samples: 60
     n_features: 7129
     n_clusters: 2
@@ -46,7 +53,14 @@ datasets:
     upstream_id: 45087
     upstream_url: "https://www.openml.org/d/45087"
     retrieval_date: "2026-10-20"
-    license: "Public Domain / Open Access"
+    license: "UNKNOWN"
+    license_evidence: "OpenML record; the prior audit found a Public metadata value but no named license confirmed for this exact version."
+    license_evidence_status: "UNKNOWN"
+    license_evidence_url: "https://www.openml.org/d/45087"
+    derivative_redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    attribution: "Alon et al. (1999), plus the exact OpenML dataset record."
+    rights_notes: "No raw, cached, sample-level, or derived artifact redistribution until exact terms are established."
     n_samples: 62
     n_features: 2000
     n_clusters: 2
@@ -67,7 +81,14 @@ datasets:
     upstream_id: 1104
     upstream_url: "https://www.openml.org/d/1104"
     retrieval_date: "2026-10-20"
-    license: "Public Domain / Open Access"
+    license: "UNKNOWN"
+    license_evidence: "OpenML record; exact version license and redistribution terms were not established in the prior audit."
+    license_evidence_status: "UNKNOWN"
+    license_evidence_url: "https://www.openml.org/d/1104"
+    derivative_redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    attribution: "Golub et al. (1999) and exact OpenML dataset record; confirm accession-specific citation."
+    rights_notes: "No raw, cached, sample-level, or derived artifact redistribution until exact terms are established."
     n_samples: 72
     n_features: 7129
     n_clusters: 2
@@ -88,7 +109,14 @@ datasets:
     upstream_id: 45098
     upstream_url: "https://www.openml.org/d/45098"
     retrieval_date: "2026-10-20"
-    license: "Public Domain / Open Access"
+    license: "UNKNOWN"
+    license_evidence: "OpenML record; the prior audit found no named license established for this exact version."
+    license_evidence_status: "UNKNOWN"
+    license_evidence_url: "https://www.openml.org/d/45098"
+    derivative_redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    attribution: "Petricoin et al. (2002) and exact OpenML dataset record; confirm source citation."
+    rights_notes: "No raw, cached, sample-level, or derived artifact redistribution until exact terms are established."
     n_samples: 253
     n_features: 15154
     n_clusters: 2
@@ -109,7 +137,14 @@ datasets:
     upstream_id: 45099
     upstream_url: "https://www.openml.org/d/45099"
     retrieval_date: "2026-10-20"
-    license: "Public Domain / Open Access"
+    license: "UNKNOWN"
+    license_evidence: "OpenML record; the prior audit found no named license established for this exact version."
+    license_evidence_status: "UNKNOWN"
+    license_evidence_url: "https://www.openml.org/d/45099"
+    derivative_redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    attribution: "Singh et al. (2002) and exact OpenML dataset record; confirm source citation."
+    rights_notes: "No raw, cached, sample-level, or derived artifact redistribution until exact terms are established."
     n_samples: 102
     n_features: 12600
     n_clusters: 2
@@ -130,7 +165,14 @@ datasets:
     upstream_id: 45101
     upstream_url: "https://www.openml.org/d/45101"
     retrieval_date: "2026-10-20"
-    license: "Public Domain / Open Access"
+    license: "UNKNOWN"
+    license_evidence: "OpenML record; the prior audit found no named license established for this exact version."
+    license_evidence_status: "UNKNOWN"
+    license_evidence_url: "https://www.openml.org/d/45101"
+    derivative_redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    attribution: "Khan et al. (2001) and exact OpenML dataset record; confirm source citation."
+    rights_notes: "No raw, cached, sample-level, or derived artifact redistribution until exact terms are established."
     n_samples: 83
     n_features: 2308
     n_clusters: 4
@@ -154,7 +196,16 @@ datasets:
     upstream_id: 40
     upstream_url: "https://www.openml.org/d/40"
     retrieval_date: "2026-10-20"
-    license: "Public Domain / UCI"
+    license: "UNKNOWN"
+    license_evidence: "UCI canonical Sonar record states CC BY 4.0, but identity of OpenML 40 v1 with that licensed source was not verified."
+    license_evidence_status: "PARTIAL"
+    license_evidence_url: "https://archive.ics.uci.edu/dataset/151/connectionist+bench+(sonar,+mines+vs.+rocks)"
+    canonical_license_url: "https://archive.ics.uci.edu/dataset/151/connectionist+bench+(sonar,+mines+vs.+rocks)"
+    derivative_redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    canonical_upstream_license: "CC BY 4.0 on the cited canonical UCI record; not established for this configured variant"
+    redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    attribution: "Sejnowski & Gorman (1988), UCI DOI 10.24432/C5T01Q, and exact OpenML record."
+    rights_notes: "Canonical UCI license does not automatically clear the OpenML variant."
     n_samples: 208
     n_features: 60
     n_clusters: 2
@@ -175,7 +226,16 @@ datasets:
     upstream_id: 1485
     upstream_url: "https://www.openml.org/d/1485"
     retrieval_date: "2026-10-20"
-    license: "Public Domain / NIPS 2003 Feature Selection Challenge"
+    license: "UNKNOWN"
+    license_evidence: "UCI canonical Madelon record states CC BY 4.0; identity and first-500-row selection of OpenML 1485 are not verified against that source."
+    license_evidence_status: "PARTIAL"
+    license_evidence_url: "https://archive.ics.uci.edu/dataset/171/madelon"
+    canonical_license_url: "https://archive.ics.uci.edu/dataset/171/madelon"
+    derivative_redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    canonical_upstream_license: "CC BY 4.0 on the cited canonical UCI record; not established for this configured variant"
+    redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    attribution: "Guyon et al. challenge source and UCI DOI 10.24432/C5602H, plus exact OpenML record."
+    rights_notes: "Do not redistribute the subset unless exact lineage and applicable terms are established."
     n_samples: 500
     n_features: 500
     n_clusters: 2
@@ -196,7 +256,16 @@ datasets:
     upstream_id: 300
     upstream_url: "https://www.openml.org/d/300"
     retrieval_date: "2026-10-20"
-    license: "Public Domain / UCI"
+    license: "UNKNOWN"
+    license_evidence: "UCI ISOLET canonical record states CC BY 4.0, but identity of configured OpenML v1 with that licensed source was not verified."
+    license_evidence_status: "PARTIAL"
+    license_evidence_url: "https://archive.ics.uci.edu/dataset/54/isolet"
+    canonical_license_url: "https://archive.ics.uci.edu/dataset/54/isolet"
+    derivative_redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    canonical_upstream_license: "CC BY 4.0 on the cited canonical UCI record; not established for this configured variant"
+    redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    attribution: "Cole & Fanty (1991), UCI DOI 10.24432/C51G69, and exact OpenML record."
+    rights_notes: "Canonical UCI license does not automatically clear the OpenML variant."
     n_samples: 7797
     n_features: 617
     n_clusters: 26
@@ -215,9 +284,16 @@ datasets:
     domain: "Single-Cell Transcriptomics"
     upstream_source: "10x Genomics via Scanpy"
     upstream_id: "scanpy.datasets.pbmc68k_reduced()"
-    upstream_url: "https://scanpy.readthedocs.io"
+    upstream_url: "https://scanpy.readthedocs.io/en/stable/generated/scanpy.datasets.pbmc68k_reduced.html"
     retrieval_date: "2026-10-20"
-    license: "CC-BY 4.0 (10x Genomics, Zheng et al., Nature Communications 2017)"
+    license: "UNKNOWN"
+    license_evidence: "Scanpy documents pbmc68k_reduced as a processed 700 × 765 example derived from the 68k PBMC source; applicable license for exact distributed object/variant was not established."
+    license_evidence_status: "PARTIAL"
+    license_evidence_url: "https://scanpy.readthedocs.io/en/stable/generated/scanpy.datasets.pbmc68k_reduced.html"
+    derivative_redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    attribution: "Zheng et al. (2017), Scanpy dataset documentation and 10x source attribution; verify exact data terms."
+    rights_notes: "This is not the full 68,579-cell matrix. Do not redistribute source or derived sample-level artifacts until rights are verified."
     n_samples: 700
     n_features: 765
     n_clusters: 10
@@ -238,11 +314,20 @@ datasets:
   newsgroups20:
     name: "20 Newsgroups (CMU)"
     domain: "Text Document TF-IDF"
-    upstream_source: "Scikit-Learn (CMU / Lang 1995)"
+    upstream_source: "scikit-learn fetcher; canonical UCI Twenty Newsgroups source"
     upstream_id: "sklearn.datasets.fetch_20newsgroups"
-    upstream_url: "http://qwone.com/~jason/20Newsgroups/"
+    upstream_url: "https://archive.ics.uci.edu/dataset/113/twenty+newsgroups"
     retrieval_date: "2026-10-20"
-    license: "Public Domain"
+    license: "UNKNOWN"
+    license_evidence: "UCI canonical record states CC BY 4.0; exact scikit-learn filtered document variant and underlying user-post terms were not reviewed."
+    license_evidence_status: "PARTIAL"
+    license_evidence_url: "https://archive.ics.uci.edu/dataset/113/twenty+newsgroups"
+    canonical_license_url: "https://archive.ics.uci.edu/dataset/113/twenty+newsgroups"
+    derivative_redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    canonical_upstream_license: "CC BY 4.0 on the cited canonical UCI record; not established for this configured variant"
+    redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    attribution: "UCI DOI 10.24432/C5C323 and exact scikit-learn/source attribution."
+    rights_notes: "Do not redistribute processed text or sample-level records pending exact-variant and content-term review."
     n_samples: 18846
     n_features: 10000
     n_clusters: 20
@@ -263,7 +348,14 @@ datasets:
     upstream_id: "Indian_pines_corrected.mat"
     upstream_url: "https://www.ehu.eus/ccwintco/uploads/6/67/Indian_pines_corrected.mat"
     retrieval_date: "2026-10-20"
-    license: "Public Domain / NASA AVIRIS Sensor"
+    license: "UNKNOWN"
+    license_evidence: "EHU corrected 200-band product; no applicable license verified. Purdue record for a different 220-band item is not evidence for this variant."
+    license_evidence_status: "UNVERIFIED"
+    license_evidence_url: "https://www.ehu.eus/ccwintco/uploads/6/67/Indian_pines_corrected.mat"
+    derivative_redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    redistribution_status: "REDISTRIBUTION_NOT_CLEARED"
+    attribution: "EHU source and the exact upstream product documentation; do not substitute Purdue attribution/terms without variant match."
+    rights_notes: "Do not transfer a license from a different Indian Pines product."
     n_samples: 10249
     n_features: 200
     n_clusters: 16
@@ -282,9 +374,16 @@ datasets:
     domain: "Computer Vision / Face Manifolds"
     upstream_source: "UC San Diego Computer Vision Archive"
     upstream_id: "CroppedYaleB.zip"
-    upstream_url: "http://vision.ucsd.edu/extyaleb/CroppedYaleB.zip"
+    upstream_url: "https://cvc.cs.yale.edu/cvc/projects/yalefacesB/yalefacesB.html"
     retrieval_date: "2026-10-20"
-    license: "Academic Research Use / UCSD (Georghiades et al., IEEE TPAMI 2001)"
+    license: "UNKNOWN"
+    license_evidence: "Official Yale Face Database B page permits research use with acknowledgement and states permission is required before images are incorporated into a publicly distributed larger database; this is a source-use restriction, not a general license grant."
+    license_evidence_status: "VERIFIED_SOURCE_TERMS"
+    license_evidence_url: "https://cvc.cs.yale.edu/cvc/projects/yalefacesB/yalefacesB.html"
+    derivative_redistribution_status: "RESTRICTED"
+    redistribution_status: "RESTRICTED"
+    attribution: "Yale Face Database B source paper and acknowledgement instructions on the official Yale page."
+    rights_notes: "Do not redistribute images or derived sample-level artifacts without written Yale permission."
     n_samples: 2414
     n_features: 1024
     n_clusters: 38

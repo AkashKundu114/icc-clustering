@@ -1,21 +1,17 @@
 cff-version: 1.2.0
-message: "If you use this software in your research, please cite as follows."
+message: "Please cite the exact tagged software version used in your work."
 title: "Invariant Core Consensus (ICC): High-Dimensional Consensus Clustering"
-version: 2.2.0
-date-released: "2026-10-30"
+version: 2.2.1
 authors:
   - family-names: "Kundu"
     given-names: "Akash"
     orcid: "https://orcid.org/0009-0003-8246-7316"
-    email: "akashkundu1152@gmail.com"
   - family-names: "Das"
     given-names: "Kalyan Kumar"
     orcid: "https://orcid.org/0009-0004-8333-8900"
-    email: "kalyan.biltu@gmail.com"
   - family-names: "Mukhopadhyay"
     given-names: "Anirban"
     orcid: "https://orcid.org/0000-0001-8128-3521"
-    email: "anirban@klyuniv.ac.in"
 repository-code: "https://github.com/AkashKundu114/icc-clustering"
 license: "MIT"
 keywords:

@@ -1,9 +1,0 @@
-location,claim,status,action,basis
-"main.tex:58, abstract",Stability–accuracy discordance and six-cohort result,CONDITIONALLY VERIFIED,RETAIN WITH QUALIFICATION,partition-level recomputation; six selected cohorts; lineage caveat
-"main.tex:86, contribution",stability and external-label alignment are distinct outcomes,VERIFIED DESCRIPTIVELY,RETAIN,protocol and paired metrics
-main.tex:90-92,"13 datasets, 3000 fits, 12 methods, public data/seeds/code",UNVERIFIED/PARTLY CONTRADICTED,REWRITE,11-method 1430-fit source records in previous audit; full raw unavailable; no public run archive
-main.tex:151ff,30 stratified 80% draws and 435 pairwise ARIs,CONDITIONALLY VERIFIED,RETAIN WITH QUALIFICATION,script and partition records; label-informed splits; fixed model seed
-main.tex:203ff,nine-cell subset metrics,DESCRIPTIVE ONLY,RETAIN WITH QUALIFICATION,posthoc Rule i prime + recurrence; 20 flag vs 18 screened vs nine selected
-"main.tex:370, result tables",60 nondegenerate cells and confidence interval,DESCRIPTIVE ONLY,REWRITE,degeneracy rule post hoc; no inferential independent-unit CI established
-main.tex:719-755,high dimensionality causes discordance/generalizes/clinical relevance,UNVERIFIED,REMOVE OR QUALIFY,observational cohorts do not establish causality or clinical validity
-throughout,ICC superiority or broad ranking,UNVERIFIED,REMOVE,no verified confirmatory superiority evidence

@@ -1,7 +1,0 @@
-artifact,identity,path_or_location,status
-code_under_audit,313e1542d524ddd2b38fa8c7e2ae885f9c52b7ca,GitHub main,VERIFIED
-original_experiment_commit,49f3882fe5385913a9af1a5b89138c6ae6d95579,D:/Final Year Project Git,VERIFIED LOCAL HISTORY
-original_protocol_commit,330738037fcb7f4ec8537581051b856a63c2b0d5,D:/Final Year Project Git,VERIFIED LOCAL HISTORY
-protocol_amendment_commit,548d68d54bb42bac76f20908cda1ae9a671e5b60,D:/Final Year Project Git,VERIFIED LOCAL HISTORY
-audit_execution_commit,313e1542d524ddd2b38fa8c7e2ae885f9c52b7ca,local current checkout,VERIFIED
-final_deliverables_commit,NOT COMMITTED,local audit directory,NOT APPLICABLE

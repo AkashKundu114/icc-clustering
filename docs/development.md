@@ -7,7 +7,7 @@ src/icc/
 ├── algorithms/     # Comparative baseline shims (re-exporting from baselines/)
 ├── baselines/      # Canonical comparative baseline algorithms (KMeans, Spectral, GMM, HDBSCAN, FCAG, etc.)
 ├── benchmarks/     # Canonical benchmark runner and scaling suites
-├── consensus/      # Core consensus engines (ICCv2, GAC, ICCv1, ASPP, Auto-K, CICC)
+├── consensus/      # ICC estimator and legacy consensus implementation, ASPP, Auto-K, CICC
 ├── data/           # Dataset shims, preprocessing (BGSS), and synthetic generators
 ├── datasets/       # Canonical 13-benchmark dataset loader and registry suite
 ├── evaluation/     # Dual-backend evaluation metrics (ARI, NMI, AMI, PAC, coverage)

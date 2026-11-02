@@ -1,0 +1,27 @@
+{
+  "title": "ICC Clustering: Consensus Clustering Research Software",
+  "upload_type": "software",
+  "description": "Research software for consensus clustering, clustering baselines, dataset access helpers, and evaluation utilities. The repository does not distribute third-party benchmark datasets or the historical experimental result package. The software is provided for research use; empirical results and algorithmic performance claims require independent evaluation under the documented limitations.",
+  "creators": [
+    {
+      "name": "Akash Kundu",
+      "orcid": "0009-0003-8246-7316"
+    },
+    {
+      "name": "Kalyan Kumar Das",
+      "orcid": "0009-0004-8333-8900"
+    },
+    {
+      "name": "Anirban Mukhopadhyay",
+      "orcid": "0000-0001-8128-3521"
+    }
+  ],
+  "version": "2.2.1",
+  "license": "MIT",
+  "keywords": [
+    "consensus clustering",
+    "clustering stability",
+    "high-dimensional data",
+    "research software"
+  ]
+}

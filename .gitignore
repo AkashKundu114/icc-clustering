@@ -1,29 +1,47 @@
-# Private local coding-agent workspace
-/results/
+# Private research and audit material
+/audit/
+/paper/
+/manuscript/
+/submission/
+/reviewer-responses/
+/supplementary-private/
+/private-research/
+/publication-records/
+/internal-notes/
 
-# Data cache and raw downloads (large binary files)
-data/cache/
-data/raw/
-data/paul15/
+# Research data and machine-local caches
+/data/raw/
+/data/cache/
+/data/paul15/
+/data/interim/*
+!/data/interim/.gitkeep
+!/data/interim/README.md
+/data/processed/*
+!/data/processed/.gitkeep
+!/data/processed/README.md
 *.h5
 *.h5ad
-!data/cache/.gitkeep
-!data/raw/.gitkeep
 
-# Experiment caches
-results/experiments/*.json
-experiments/**/data/*.npz
-experiments/**/data/cache/*.npz
-experiments/**/data/*.h5ad
-experiments/**/data/*.mat
-!experiments/**/data/.gitkeep
-!experiments/**/figures/.gitkeep
-results/study_null_gating/confirmatory_raw/
-results/stability/labels/
-results/stability/runs/
-results/stability/partitions/
+# Explicitly private or large experimental outputs; reviewed public summaries may be tracked
+/results/study_null_gating/confirmatory_raw/
+/results/stability/labels/
+/results/stability/runs/
+/results/stability/partitions/
+/results/confirmatory/predictions/
+/results/experiments/*.json
+/experiments/**/data/cache/
+/experiments/**/data/*.npz
+/experiments/**/data/*.h5ad
+/experiments/**/data/*.mat
 
-# Python bytecode and caches
+# Local model checkpoints and generated logs
+/checkpoints/
+**/checkpoints/
+*.ckpt
+*.log
+/logs/
+
+# Python, build, test, and coverage outputs
 __pycache__/
 *.py[cod]
 *$py.class
@@ -46,16 +64,18 @@ share/python-wheels/
 *.egg
 MANIFEST
 
-# Virtual environments
+# Virtual environments and local environment files
 .env
-.venv
-env/
+.env.*
+!.env.example
+.venv/
 venv/
+env/
 ENV/
 env.bak/
 venv.bak/
 
-# Testing and coverage
+# Testing and coverage caches
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
@@ -65,7 +85,7 @@ htmlcov/
 .tox/
 .nox/
 
-# IDE and OS files
+# IDE and operating-system files
 .vscode/
 .idea/
 *.swp
@@ -75,57 +95,17 @@ htmlcov/
 Thumbs.db
 .mcp.json
 
-# Internal logs and scratchpads
-*.log
-scratch/
-governance/
-reports/
-paper2/
-results_legacy/
-
-# Local tools and binaries
-tools/bin/
+# Local scratch and governance workspaces
+/scratch/
+/governance/
+/reports/
+/paper2/
+/results_legacy/
+/tools/bin/
 *.exe
-!tools/check_consistency.py
+!/tools/check_consistency.py
 
-# Publication, manuscript, and LaTeX build artifacts
-submission/
-manuscript/
-paper/
-*.tex
-*.pdf
-*.zip
-*.tar.gz
-*.bib
-*.bst
-*.cls
-*.sty
-*.eps
-
-# Figures and visual binaries
-**/figures/*
-!**/figures/README.md
-!**/figures/.gitkeep
-*.png
-*.jpg
-*.jpeg
-*.svg
-
-# Confirmatory raw prediction binaries and large unlabeled matrices
-results/confirmatory/predictions/
-data/confirmatory/unlabeled/*.npz
-
-# Intermediate and processed datasets
-data/interim/*
-!data/interim/.gitkeep
-!data/interim/README.md
-data/processed/*
-!data/processed/.gitkeep
-!data/processed/README.md
-data/cache/*
-!data/cache/.gitkeep
-!data/cache/README.md
-
+# LaTeX auxiliary build files (source manuscripts are ignored by private directories above)
 *.aux
 *.bbl
 *.blg

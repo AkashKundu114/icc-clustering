@@ -1,9 +1,0 @@
-{
-  "fyp_current_sha256": "577cbab79913020ce362b8280ccb8c7ef62952d28ea47a45950f75cca2ff4b4f",
-  "fyp_commit_49f_blob_sha1": "5704dff9f6eaec99e98f049355b039452d1f361e",
-  "fyp_commit_raw_blob_sha256": "dfb1897378356fc201cb14bde34a62d2f84e964e2187893bb4349ee6c2fd8a21",
-  "fyp_current_raw_sha256_matches_blob": false,
-  "fyp_current_and_commit_content_equal_after_crlf_normalization": true,
-  "icc_current_local_sha256": "577cbab79913020ce362b8280ccb8c7ef62952d28ea47a45950f75cca2ff4b4f",
-  "icc_and_fyp_summaries_byte_identical": true
-}

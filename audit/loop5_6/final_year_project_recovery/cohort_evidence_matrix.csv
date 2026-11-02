@@ -1,7 +1,0 @@
-cohort,cache_N,cache_D,cache_K,expected_NDK_match,cache_keys,cache_sha256,cache_exact_duplicates,cache_nonfinite_values,expected_partition_files,partition_files_found,expected_run_files,run_files_found,unique_splits_across_30_repeats,subsample_sizes,expected_train_size_floor,mean_pair_overlap,min_pair_overlap,max_pair_overlap,sample_ids_in_cache
-cns,60,7129,2,True,X;y,0e449bf55f8e5682de8de4264c986c1b85b27f25ca0092b5a8a98ca2bb2a87ff,0,0,720,720,720,720,30,48,48,38.31264367816092,36,42,NO; index positions only
-colon,62,2000,2,True,X;y,b4d56e96a488ae3aff707553f0f9864642921f6994689b00f9adab60fe9fc107,0,0,720,720,720,720,30,49,49,38.63448275862069,36,43,NO; index positions only
-leukemia,72,7129,2,True,X;y,04fe5da4984a80f16bb389c29fb6c68bde727a92667e3439cab85590633b1d23,0,0,720,720,720,720,30,57,57,44.96551724137931,42,51,NO; index positions only
-ovarian,253,15154,2,True,X;y,23656cd40a34a393e8244eca3f7f2f5ca711ff0c11b43c8ce828f653ac4f0a7a,0,0,720,720,720,720,30,202,202,161.183908045977,154,170,NO; index positions only
-prostate,102,12600,2,True,X;y,a2717c9d01233867cba436e1da37b30390e1c6dc27f6a753473bc18bb43cbe6c,0,0,720,720,720,720,30,81,81,64.23908045977012,60,71,NO; index positions only
-srbct,83,2308,4,True,X;y,be99430f054e3a83987c5d87e34106ce3466f729ab3c65450fee66aa6e9ac425,0,0,720,720,720,720,30,66,66,52.54712643678161,49,57,NO; index positions only
