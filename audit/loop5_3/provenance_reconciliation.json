@@ -1,0 +1,113 @@
+{
+  "metadata": {
+    "audit_phase": "Loop 5.3 — Adversarial Verification of Loop 5.2 Reproduction Claims",
+    "target_repository": "AkashKundu114/icc-clustering",
+    "adjudication_timestamp": "2026-11-02T14:25:00+05:30",
+    "git_head_commit": "d7b3348888b56d81e0ba30cb28383e54737f1b62",
+    "target_benchmark_commit": "4107feb9cdeda889426b39b293a9dc1c4857fd95",
+    "git_branch": "main"
+  },
+  "commit_state_reconciliation": {
+    "production_code_frozen_at": "4107feb9cdeda889426b39b293a9dc1c4857fd95",
+    "commits_since_4107feb": [
+      {
+        "commit": "d81340f",
+        "description": "Add Loop 5.1 audit reconciliation reports",
+        "files_modified": [
+          "audit/loop5_1/checksum_reconciliation.csv",
+          "audit/loop5_1/claim_ledger_adjudication.csv",
+          "audit/loop5_1/environment_verification.json",
+          "audit/loop5_1/execution_manifest.json",
+          "audit/loop5_1/experiment_record_reconciliation.csv",
+          "audit/loop5_1/final_integrity_decision.md",
+          "audit/loop5_1/independent_reproduction_report.md",
+          "audit/loop5_1/public_reproducibility_report.md"
+        ]
+      },
+      {
+        "commit": "d7b3348",
+        "description": "Add Loop 5.2 reproducibility audit",
+        "files_modified": [
+          "audit/loop5_2/artifact_conflict_report.md",
+          "audit/loop5_2/canonical_artifact_manifest.csv",
+          "audit/loop5_2/discordance_estimand_recomputation.md",
+          "audit/loop5_2/discordance_recomputed_statistics.csv",
+          "audit/loop5_2/execute_recomputations.py",
+          "audit/loop5_2/execution_manifest.json",
+          "audit/loop5_2/final_loop5_2_adjudication.md",
+          "audit/loop5_2/fit_count_adjudication.md",
+          "audit/loop5_2/fit_record_inventory.csv",
+          "audit/loop5_2/reproduction_evidence_report.md",
+          "audit/loop5_2/reproduction_execution_ledger.csv",
+          "audit/loop5_2/zenodo_package_readiness.md",
+          "audit/loop5_2/zenodo_package_validation.csv"
+        ]
+      }
+    ],
+    "production_files_modified_since_4107feb": [],
+    "test_files_modified_since_4107feb": [],
+    "manuscript_files_modified_since_4107feb": [],
+    "data_or_result_files_modified_since_4107feb": [],
+    "audit_conclusion": "Production code, test suite, manuscript LaTeX, cached datasets, and raw experimental results have remained strictly frozen and unmodified since commit 4107feb. All changes between 4107feb and HEAD reside exclusively in audit/."
+  },
+  "working_tree_status": {
+    "branch": "main",
+    "upstream_status": "Your branch is up to date with 'origin/main'.",
+    "tracked_modifications": 0,
+    "untracked_files_detected": [
+      "audit/loop5_3/"
+    ],
+    "cleanliness_verdict": "VERIFIED_CLEAN. No uncommitted modifications to existing repository assets."
+  },
+  "hash_reconciliation_git_blob_vs_sha256": {
+    "explanation": "Prior audit reports frequently identified spurious 'checksum mismatches' because auditors conflated Git blob object hashes (computed as SHA-1 over 'blob <size>\\0<content>') with cryptographic file SHA-256 hashes (computed over raw file content bytes). Both hashes are forensically valid within their respective domains.",
+    "artifacts": {
+      "results/evidence_recovery/recovered/results.json": {
+        "byte_size": 1627258,
+        "physical_file_sha256": "0e5d2c10343ba077ff109e5f6554ecc191d89a590dfaf28bec2ef3e950e3ba27",
+        "git_blob_object_sha1": "5915d7ed6abff380b482fd53bf83aa18808d89b1",
+        "conflation_status": "RECONCILED"
+      },
+      "results/evidence_recovery/recovered/stats.json": {
+        "byte_size": 11858,
+        "physical_file_sha256": "83858600000b0d02fbad9742c333d634621f2fc1c64fdcd848c689ea952c4761",
+        "git_blob_object_sha1": "a7f9a3b9324537dc7a15daa2685c3853f8262a45",
+        "conflation_status": "RECONCILED"
+      },
+      "results/evidence_recovery/recovered/subsample_stability_summary.csv": {
+        "byte_size": 10622,
+        "physical_file_sha256": "577cbab79913020ce362b8280ccb8c7ef62952d28ea47a45950f75cca2ff4b4f",
+        "git_blob_object_sha1": "5704dff9f6eaec99e98f049355b039452d1f361e",
+        "conflation_status": "RECONCILED"
+      },
+      "results/evidence_recovery/recovered/exp2_real_high_d_factorial.csv": {
+        "byte_size": 43385,
+        "physical_file_sha256": "50bc54c6855fd50d3cd61329d776aa2d998238a232b339075fe588800745c458",
+        "git_blob_object_sha1": "5a7b90b40580e27520795c2543276eaf4b588b09",
+        "conflation_status": "RECONCILED"
+      },
+      "results/loop2/raw/exp5_baseline_comparison.csv": {
+        "byte_size": 95627,
+        "physical_file_sha256": "b33839fc835df4ae903511baff27296e5f763c0e179602a60c386424c681d3bb",
+        "git_blob_object_sha1": "a8cdc3507164faff6e67b3b8329cc6a47329cdbb",
+        "conflation_status": "RECONCILED"
+      },
+      "results/loop2/raw/exp6_scalability.csv": {
+        "byte_size": 84339,
+        "physical_file_sha256": "e58a3d041eceb744fdc53e845114a9ab9be242be402691a8d255a7072ee2d28b",
+        "git_blob_object_sha1": "f980c54d5c737550cd8b07e938ed0f2dbd99cd31",
+        "conflation_status": "RECONCILED"
+      }
+    }
+  },
+  "contemporaneous_execution_logs_audit": {
+    "presence_in_results_json": {
+      "timestamps_present": true,
+      "wall_clock_times_present": true,
+      "random_seeds_present": true,
+      "metric_values_present": true
+    },
+    "presence_of_terminal_stdout_transcripts": false,
+    "audit_finding": "Primary numeric metrics, run parameters, and timing benchmarks are contemporaneously preserved in results.json and raw CSVs. However, continuous terminal stdout logging of original 2026 execution runs was not archived. Loop 5.2's 'Captured_Stdout' column captured stdout from its own audit recomputation script, not original benchmark execution logs. This distinction is now formally clarified."
+  }
+}
