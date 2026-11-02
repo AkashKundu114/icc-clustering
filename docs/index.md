@@ -11,6 +11,7 @@ This guide describes the research software, its configured data loaders and benc
 - [Statistical analysis](statistical-analysis.md): estimands, dependence, and sensitivity.
 - [Limitations](limitations.md): evidence and implementation caveats.
 - [Reproducibility](reproducibility.md): current tested status across three evidence tiers.
+- [Saved-output verification tools](../reproduction/README.md): portable recalculation commands and the evidence inputs they require.
 - [Software architecture](software-architecture.md): code layout and entry points.
 - [Setup](setup.md): installation and actually tested environments.
 - [Citation](citation.md): software citation and DOI status.

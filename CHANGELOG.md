@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.2.2] - 2026-11-02
+
+### Added
+- **Portable saved-output verification tools:** Added input-driven scripts to recompute six-cohort stability/alignment summaries and the separate 13-dataset benchmark arithmetic from user-supplied evidence files. The scripts do not rerun clusterers or authenticate historical fit events.
+- **Research-result verification guidance:** Added a reproduction guide and a Windows/Python 3.14.6 dependency freeze for the verification tools. Historical data and sample-level outputs are not bundled because exact-variant redistribution rights remain unresolved.
+
+### Changed
+- **Archive and dataset-rights documentation:** Verified the v2.2.1 software archive DOI, distinguished it from the empty stale record and from an absent reproduction archive, and refined exact-variant rights notes for OpenML and PBMC68k/Zheng68K.
+
+---
+
 ## [2.2.1] - 2026-11-02
 
 ### Added

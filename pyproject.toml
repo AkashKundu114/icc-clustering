@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "icc-clustering"
-version = "2.2.1"
+version = "2.2.2"
 description = "Invariant Core Consensus: Feature-Gated Bipartite Graph Ensembles for Stable Clustering in High-Dimensional Regimes"
 readme = "README.md"
 authors = [

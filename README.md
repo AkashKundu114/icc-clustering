@@ -30,7 +30,7 @@ See [the documentation index](docs/index.md) for the software and methodology gu
 
 The research has two separate experiments: a six-cohort biomedical stability analysis and a 13-dataset external-ARI benchmark. The first concerns resampling stability versus reference alignment; the second concerns saved external-ARI scores only. They must not be combined as one 13-dataset stability result.
 
-No numerical result table or run-level evidence package is included in this repository snapshot. A local saved-output reconstruction found descriptive stability/alignment differences, but its historical producer was not authenticated, the derived artifacts are not cleared for redistribution, and the underlying partitions and caches are not available here. See [results and evidence status](docs/results.md) and [reproducibility](docs/reproducibility.md).
+No numerical result table or run-level evidence package is included in this repository snapshot. Portable scripts under [`reproduction/`](reproduction/README.md) can recalculate summaries if a researcher supplies the saved evidence, but those inputs are not distributed here. A local saved-output reconstruction found descriptive stability/alignment differences; its historical producer and exact input ordering were not authenticated, and derived artifacts are not cleared for redistribution. See [results and evidence status](docs/results.md) and [reproducibility](docs/reproducibility.md).
 
 ## Repository layout
 
@@ -85,7 +85,7 @@ The saved-output stability analysis uses six convenience cohorts, reference-labe
 
 ## Citation and publication status
 
-For the software citation metadata, see [CITATION.cff](CITATION.cff). The repository license covers software files only, not third-party data. This software repository does not contain or link to a manuscript. Version 2.2.1 is the current tagged software release. An older published Zenodo record exists, but it contains no files and its metadata does not match this source snapshot; it is not an archive of this software tree. See [citation and release notes](docs/citation.md).
+For the software citation metadata, see [CITATION.cff](CITATION.cff). The repository license covers software files only, not third-party data. This software repository does not contain or link to a manuscript. Version 2.2.1 is the current tagged software release and has a verified software archive DOI, [10.5281/zenodo.23888368](https://doi.org/10.5281/zenodo.23888368). That archive contains software only, not the research-result evidence. A separate older Zenodo record is empty and has stale metadata; see [citation and release notes](docs/citation.md).
 
 ## License
 

@@ -1,0 +1,117 @@
+# Research-result verification tools
+
+This directory contains portable scripts for recalculating summaries from
+user-supplied saved outputs. It does **not** contain research data, historical
+partition assignments, per-fit records, or benchmark score tables. As a result,
+the scripts cannot reproduce a paper result from this public repository alone.
+
+The [claim-to-evidence matrix](claim-to-evidence-matrix.csv) lists the
+historically reported quantities and their current evidence status. The
+[numerical comparison report](numerical_comparison_report.md) explains the
+local saved-output recalculation and its limits. Reviewers can follow the
+[quick verification guide](reviewer_guide/quick_verification.md) after
+obtaining the required evidence through an authorized route.
+
+The six-cohort script recalculates external adjusted Rand indices and
+intersection-based pairwise stability from saved partition arrays. The
+benchmark script reaggregates two saved score tables and recomputes Friedman
+ranks. Neither script reruns clustering algorithms or authenticates historical
+fit events.
+
+## Evidence not included
+
+The 4,320 six-cohort partitions, 4,320 per-fit records, cohort caches, and
+13-dataset benchmark score files remain outside this repository. Exact-source
+redistribution rights for these variants and their sample-level derivatives
+have not been cleared. Yale B has a source-level restriction requiring
+permission before public redistribution of a larger image collection. Do not
+copy local research files into this repository or an archive until the rights
+for that exact input and its derived outputs have been reviewed.
+
+The historical partition producer was not located. The available local files
+can be used to check arithmetic, but their producer, input row identity and
+historical execution cannot currently be authenticated. See
+[reproducibility status](../docs/reproducibility.md),
+[dataset access notes](../docs/datasets.md), and
+[limitations](../docs/limitations.md).
+
+## Verification environment
+
+Use Python 3.10 or newer and install the project dependencies. The saved
+stability verifier additionally requires PyArrow for Parquet input. The
+benchmark verifier uses SciPy.
+
+```powershell
+python -m pip install -e .
+python -m pip install pyarrow
+```
+
+An observed Windows/Python 3.14.6 dependency freeze from the clean-clone script
+test is available at [`environment/win-py314-requirements-lock.txt`](environment/win-py314-requirements-lock.txt).
+It is a verification-tool environment, not the unknown historical experiment
+environment. To recreate that tested dependency set, install the project and
+then install the lock file:
+
+```powershell
+python -m pip install -e .
+python -m pip install -r reproduction/environment/win-py314-requirements-lock.txt
+```
+
+Do not use these scripts on untrusted NPY files. Historical partition files
+use NumPy object serialization; the stability script restricts unpickling to
+NumPy array types, but input archives should still come from a verified source.
+
+## Six-cohort saved-output recalculation
+
+Provide a local evidence root with this layout:
+
+```text
+<evidence-root>/
+├── data/cache/{cns,colon,leukemia,ovarian,prostate,srbct}.npz
+└── results/stability/
+    ├── partitions/<cohort>_<method>_<real-or-null>_<repeat>.npy
+    ├── runs/<matching-partition-name>.parquet
+    └── subsample_stability_summary.csv
+```
+
+The script validates the expected 6 × 12 × 2 × 30 file grid, Parquet keys,
+sample counts, saved ARIs, repeat split matching, 435 pairwise comparisons per
+cell and dynamic SHA-256 checksums. It writes `recomputed_cells.csv`,
+`recomputation_summary.json`, and `output_manifest.json` to a new empty output
+directory.
+
+```powershell
+python reproduction/scripts/recompute_saved_stability.py `
+  --data-root <evidence-root> `
+  --output-dir <new-empty-output-directory>
+```
+
+This recalculation assumes each NPY row index refers to the corresponding row
+in its cohort cache. The saved cache files do not contain stable upstream
+sample identifiers, so the script cannot verify that assumption.
+
+## Thirteen-dataset saved-score arithmetic
+
+The benchmark verifier requires the two historical CSVs, each with `dataset`,
+`model`, `seed`, and `ari` columns. It reports cell means, ranks, missingness,
+duplicate dataset-method-seed keys, zeros, and Friedman arithmetic. This is not
+evidence that every row came from an independent, fair, or successful fit.
+
+```powershell
+python reproduction/scripts/recompute_benchmark_scores.py `
+  --scores <pass-f-score.csv> <cohirf-score.csv> `
+  --output-dir <new-empty-output-directory>
+```
+
+## Current reproduction status
+
+- **Aggregate result verification:** unavailable from a fresh clone because
+  authorized result tables and their inputs are not included.
+- **Partition-level verification:** unavailable from a fresh clone because the
+  partitions, per-fit records and exact input caches are not included.
+- **Full experimental reproduction:** not run; the historical producer and a
+  complete verified input/configuration chain are unavailable.
+
+The software package itself has passed a fresh-clone installation and a
+synthetic API smoke test. That check is not reproduction of the scientific
+results. No reproduction archive DOI is currently claimed.
