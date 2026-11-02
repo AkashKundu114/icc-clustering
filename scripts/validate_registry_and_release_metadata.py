@@ -93,8 +93,11 @@ def main() -> int:
         errors.append("CHANGELOG.md could not be read")
     changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
     first_heading = next((line for line in changelog.splitlines() if line.startswith("## ")), "")
-    if not first_heading.startswith("## [Unreleased]"):
-        errors.append("Top changelog section must mark the untagged candidate as Unreleased")
+    if first_heading.startswith("## [Unreleased]"):
+        if project_version not in first_heading:
+            errors.append("Unreleased changelog section should identify the candidate project version")
+    elif not first_heading.startswith(f"## [{project_version}]"):
+        errors.append(f"Top changelog section must match project version {project_version}")
     return fail(errors)
 
 

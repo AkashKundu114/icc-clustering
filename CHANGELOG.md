@@ -7,17 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [Unreleased] (candidate version 2.2.1)
+## [2.2.1] - 2026-11-02
 
 ### Added
 - **XERJ Corpus Hub contributor badge:** Retained the project contributor badge and profile link in the public README.
 - **Public project documentation:** Updated researcher-facing project and installation guidance.
+- **Research scope and naming documentation:** Clarified the stability versus external alignment distinction, the separate benchmark scopes, and that `ICC`/`ICCv2` are aliases for one estimator.
 - **Python 3.10–3.14 CI/CD Matrix:** Configured full GitHub Actions matrix workflow testing across Python 3.10, 3.11, 3.12, 3.13, and 3.14 on both Ubuntu and Windows (`.github/workflows/ci.yml`).
 - **Python 3.13 & 3.14 Compatibility Test Suite:** Added dedicated regression tests (`tests/regression/test_python_compatibility.py`) validating PEP 706 safe tarfile extraction, PEP 649/749 deferred annotation evaluation, dataclass typing resolution, and end-to-end estimator execution under modern runtimes.
 - **Statistical Testing Extensions:** Implemented `wilcoxon_signed_rank_test` and `bonferroni_correction` in `src/icc/stats/testing.py` with PEP 484 type annotations.
 
 ### Changed
 - **Distribution metadata:** The installable distribution is named `icc-clustering`; Python imports remain `icc`. This avoids directing users to an unrelated project registered under the shorter package name.
+- **Reproduction CLI:** Removed unsupported `tables`, `figures`, and `full` scopes that returned success without generating research results.
+- **Public data-rights metadata:** Replaced blanket license claims with source-variant evidence and explicit un-cleared redistribution status.
+- **Version identity:** Aligned package, runtime, citation, and archival draft metadata at version 2.2.1.
 - **Test Suite Expansion:** Expanded the automated test suite; run the current test suite to verify this source snapshot.
 - **Architecture Deduplication:** Converted duplicate `src/icc/aspp.py` into an 18-line backward-compatibility shim re-exporting from canonical `src/icc/consensus/aspp.py`.
 - **Public Documentation Overhaul:** Synchronized and modernized all repository guides (`README.md`, `setup.md`, `usage.md`, `development.md`, `reproducibility.md`, `CONTRIBUTING.md`), fixing code fence formatting and standardizing references.

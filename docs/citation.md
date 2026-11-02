@@ -1,6 +1,6 @@
 # Citation and version identity
 
-The repository distributes software under the MIT License. Cite the software release described by [`CITATION.cff`](../CITATION.cff) and name the exact tag/commit used. The repository candidate declares package/CFF version 2.2.1, based on the existing 2.2.1 changelog entry. It remains untagged and unreleased; the last matching remote software tag inspected was v2.2.0.
+The repository distributes software under the MIT License. Cite the exact software release described by [`CITATION.cff`](../CITATION.cff) and name the tag/commit used. Version 2.2.1 is the current tagged software release.
 
 The GitHub source repository is [AkashKundu114/icc-clustering](https://github.com/AkashKundu114/icc-clustering). Citation metadata does not license third-party datasets. Dataset publications and upstream sources should be cited separately as described in [datasets](datasets.md).
 
