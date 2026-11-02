@@ -1,0 +1,33 @@
+{
+  "experiment_id": "loop6_0_prospective_not_executed",
+  "status": "NOT_RUN",
+  "purpose": "Prospective protocol placeholder; not a historical reconstruction or pilot result.",
+  "source_commit": "5dac3762f34b756a1047e099b4465c8a1954daad",
+  "source_tree_clean_at_baseline": true,
+  "prospective_source_changes_are_uncommitted": true,
+  "experiment_config": null,
+  "records": [],
+  "execution_reason": "Not launched: original producer/null transform and stable source-sample mapping unavailable; dataset rights not resolved. A limited KMeans fit on a locally cached matrix would not resolve comparability and would risk being misrepresented.",
+  "resource_assessment": {
+    "historical_recorded_runtime_seconds_sum": 17056.06561732292,
+    "historical_recorded_runtime_seconds_median": 0.1294713020324707,
+    "historical_recorded_runtime_seconds_p95": 8.710186481475835,
+    "historical_recorded_runtime_seconds_max": 151.72737836837769,
+    "interpretation": "Planning reference only; recorded historical runtimes are not authenticated and do not predict a prospective rerun.",
+    "full_run_storage_estimate": "Not quantified; must be measured after an authorized pilot and before full execution."
+  },
+  "pilot_execution": {
+    "status": "NOT_RUN",
+    "model_fits": 0,
+    "reason": "No scientific pilot was run. Only synthetic integrity-validator unit tests were executed."
+  },
+  "validation_artifacts": {
+    "validator_path": "scripts/validate_run_manifest.py",
+    "validator_sha256": "21c41a6aa14fe5af75cc69ee335998a0ca324d11b7f607850bc0c6c67bf09cc1",
+    "schema_path": "execution_trace_schema.json",
+    "schema_sha256": "38852460b98111e9ade464bb6202d13b5c0015a7e89dfce0c50cb0db76da61bb",
+    "test_path": "tests/test_validator.py",
+    "test_sha256": "c95178a36d4e4a530d792bf273bd74061d0e67426d5c77f72ef6f5565fe75c02",
+    "test_result": "4 tests passed; synthetic integrity fixtures only; no model fits"
+  }
+}

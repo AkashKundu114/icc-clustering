@@ -1,0 +1,2 @@
+## main...origin/main
+Captured before Loop 6.0 files were created; tracked tree clean and no pre-existing untracked work.

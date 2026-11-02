@@ -1,0 +1,4 @@
+path,bytes,sha256_actual,tracked,role,tested_tier,redistribution
+audit/loop5_6/minimum_aggregate_package/reproduce_aggregate.py,1402,3cac0aff64d4d949622cfc163e3f15cbf654759a890c908bba193c55fbeb0a04,True,Tier 1 script,Tier 1,Tracked aggregate only; not raw partition evidence; source rights/provenance caveat applies
+audit/loop5_6/minimum_aggregate_package/manifest.csv,310,752d9085a0021e8e0e39f09f716724b3ff0958c4edfd220d1c8fc55f04b18d37,True,Tier 1 input/manifest,Tier 1,Tracked aggregate only; not raw partition evidence; source rights/provenance caveat applies
+audit/loop5_6/minimum_aggregate_package/inputs/subsample_stability_summary.csv,10622,577cbab79913020ce362b8280ccb8c7ef62952d28ea47a45950f75cca2ff4b4f,True,Tier 1 input/manifest,Tier 1,Tracked aggregate only; not raw partition evidence; source rights/provenance caveat applies

@@ -1,0 +1,98 @@
+{
+  "loop": "6.0",
+  "repository": "AkashKundu114/icc-clustering",
+  "baseline_code_commit": "5dac3762f34b756a1047e099b4465c8a1954daad",
+  "branch": "main",
+  "baseline_commit_timestamp": "2026-11-02T18:16:35+05:30",
+  "canonical_manuscript_path": "paper/manuscript/main.tex",
+  "canonical_manuscript_sha256": "a0c4274ec5dfbb40311d3d33d7ad8179b17dee145851fd2e5b255e498054e75f",
+  "fyp_repo_head": "60b163f22b5931da35a1ace07d1934bf3bdd65e3",
+  "execution_environment": {
+    "os": "Windows-11-10.0.26300-SP0",
+    "python": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+    "numpy": "2.4.6",
+    "lead_locale_timezone": "Asia/Calcutta"
+  },
+  "original_model_fit_count_loop6_0": 0,
+  "execution_records": [
+    {
+      "command": "python audit/loop6_0/statistics/reconstruct_loop6.py",
+      "executor": "lead; Agent B separately executed same reconstruction",
+      "status": "PASS exit 0",
+      "inputs": "D:\\Final Year Project caches, 4320 partitions, 4320 Parquet, stability summary",
+      "outputs": "statistics/reconstructed_72_cells.csv; reproduction_checks.json",
+      "fits_run": false
+    },
+    {
+      "command": "Independent direct reconstruction of 72 cells",
+      "executor": "Agent F",
+      "status": "PASS per independent adjudicator report",
+      "inputs": "FYP caches, all NPY and Parquet, saved summary",
+      "outputs": "reviewer/independent_adjudicator_review.md",
+      "fits_run": false
+    },
+    {
+      "command": "python audit/loop6_0/benchmark/reconcile_loop6.py",
+      "executor": "benchmark agent and lead; Agent F separately recomputed test",
+      "status": "PASS exit 0",
+      "inputs": "Pass F and CoHiRF saved score CSVs",
+      "outputs": "benchmark row audits and recalculation.json",
+      "fits_run": false
+    },
+    {
+      "command": "python -m unittest discover -s audit/loop6_0/provenance/tests -v",
+      "executor": "Agent C and lead",
+      "status": "PASS; 4 tests",
+      "inputs": "synthetic trace fixtures",
+      "outputs": "validator test log; provenance/prospective_run_validation.md",
+      "fits_run": false
+    },
+    {
+      "command": "python audit/loop6_0/manuscript/candidate/validate_candidate.py",
+      "executor": "Agent A and lead",
+      "status": "PASS static validation",
+      "inputs": "candidate main.tex, generated tables/macros, local 72-cell CSV",
+      "outputs": "static validation stdout",
+      "fits_run": false
+    },
+    {
+      "command": "python audit/loop6_0/manuscript/candidate/build_candidate_tables.py",
+      "executor": "Agent A and lead",
+      "status": "PASS; 72 cells, 6 cohorts, 12 methods",
+      "inputs": "audit/loop5_9/statistics/cell_reconstruction.csv",
+      "outputs": "candidate aggregate macros/tables/JSON/cohort CSV",
+      "fits_run": false
+    },
+    {
+      "command": "Fresh shallow clone of public repository at baseline commit; Tier1 aggregate script",
+      "executor": "Agent E",
+      "status": "PASS tier1 exit 0; Tier2 unavailable; Tier3 not run",
+      "inputs": "tracked summary CSV only in clean clone",
+      "outputs": "release/clean_clone_test.md; stdout SHA reported there",
+      "fits_run": false
+    },
+    {
+      "command": "pdflatex -interaction=nonstopmode -halt-on-error -output-directory=build main.tex",
+      "executor": "Agent A",
+      "status": "NOT EXECUTED: executable unavailable on PATH",
+      "inputs": "candidate LaTeX source",
+      "outputs": "manuscript/candidate/build/pdflatex_attempt.log",
+      "fits_run": false
+    }
+  ],
+  "limitations": "Agent-specific runs are attributed explicitly. No original clustering model was refit. All numerical reconstructions use local saved files; historical execution remains unauthenticated.",
+  "commit_roles": {
+    "code_under_audit": "5dac3762f34b756a1047e099b4465c8a1954daad",
+    "historical_protocol_repository_commit": "60b163f22b5931da35a1ace07d1934bf3bdd65e3",
+    "original_experiment_execution_commit": "UNVERIFIED; no authenticated execution identity recovered",
+    "audit_execution_source_snapshot": "5dac3762f34b756a1047e099b4465c8a1954daad",
+    "final_audit_deliverables_commit": "NOT CREATED; Loop 6.0 deliverables remain uncommitted",
+    "final_manuscript_commit": "NOT CREATED; canonical manuscript unchanged and candidate uncommitted"
+  },
+  "candidate_manuscript": {
+    "path": "audit/loop6_0/DMKD_submission_candidate_loop6_0/main.tex",
+    "sha256": "79905fbaa3f6efa5ea73d2eb042925646e15dd293a033615bcc11d0e5377e74f",
+    "format": "standalone article class, not Springer sn-jnl",
+    "compiled_pdf": "NOT AVAILABLE; pdflatex missing"
+  }
+}

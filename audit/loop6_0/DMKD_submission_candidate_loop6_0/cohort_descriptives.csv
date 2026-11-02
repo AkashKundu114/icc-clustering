@@ -1,0 +1,7 @@
+dataset,n_methods,mean_pairwise_subsample_stability,mean_external_ari,descriptive_difference_of_means,source
+cns,12,0.471758288907,-0.008002434542,0.479760723449,D:/icc-clustering/audit/loop5_9/statistics/cell_reconstruction.csv
+colon,12,0.415299869188,0.015795002040,0.399504867147,D:/icc-clustering/audit/loop5_9/statistics/cell_reconstruction.csv
+leukemia,12,0.436925244016,0.137781361681,0.299143882335,D:/icc-clustering/audit/loop5_9/statistics/cell_reconstruction.csv
+ovarian,12,0.395779731806,0.006752312744,0.389027419062,D:/icc-clustering/audit/loop5_9/statistics/cell_reconstruction.csv
+prostate,12,0.812768566482,0.018829281266,0.793939285216,D:/icc-clustering/audit/loop5_9/statistics/cell_reconstruction.csv
+srbct,12,0.566984672095,0.142717569844,0.424267102251,D:/icc-clustering/audit/loop5_9/statistics/cell_reconstruction.csv

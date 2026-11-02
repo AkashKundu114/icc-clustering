@@ -1,0 +1,4 @@
+rule,n_cells,members,mean_stability,mean_external_ari,mean_gap,median_gap
+rule_i,20,cns:FCAG;cns:FCM;cns:FastMVC;cns:GAC;cns:Spectral;colon:CoreHalo;colon:FCAG;colon:FCM;colon:FastMVC;colon:UngatedAC;ovarian:FCM;prostate:CoHiRF;prostate:CoreHalo;prostate:DEC;prostate:FCAG;prostate:FastMVC;prostate:GAC;prostate:K-Means;prostate:Spectral;prostate:Ward,0.7232008898498903,0.004051740252218218,0.7191491495976721,0.7004956627646113
+rule_i_prime,18,cns:FCAG;cns:FCM;cns:FastMVC;cns:GAC;cns:Spectral;colon:CoreHalo;colon:FCAG;colon:FCM;colon:FastMVC;colon:UngatedAC;ovarian:FCM;prostate:DEC;prostate:FCAG;prostate:FastMVC;prostate:GAC;prostate:K-Means;prostate:Spectral;prostate:Ward,0.7200105227059802,0.00387291730802727,0.716137605397953,0.7004956627646113
+rule_iii,9,cns:FCAG;cns:FCM;cns:FastMVC;colon:FCAG;colon:FCM;colon:FastMVC;ovarian:FCM;prostate:FCAG;prostate:FastMVC,0.6837644109002099,-0.0028530028985693655,0.6866174137987792,0.6661357272652879

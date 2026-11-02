@@ -1,0 +1,11 @@
+claim_family,candidate_status,evidence,remaining_limitation,action
+Six-cohort stability and reference-label ARI,Verified for saved-output reconstruction,statistics/reconstructed_72_cells.csv; reproduction_checks.json,Historical producer/execution unauthenticated; label-informed protocol,Retain as bounded descriptive result only
+Mean/median gap,Verified for saved outputs,statistics/reconstructed_72_cells.csv; candidate aggregate_results.json,Descriptive arithmetic contrast; balanced cell weighting; cohort heterogeneity,Define subtraction and populations explicitly
+Nine-cell subset,Exploratory only,statistics/posthoc_selection_audit.csv; selection_threshold_sensitivity.csv,Post-hoc thresholds; selected from same cells,Supplementary or omit
+Bootstrap inference,Not suitable as primary inference,statistics/bootstrap_reanalysis.csv; statistical_methods_note.md,Six convenience cohorts; order/seed sensitivity; mismatch resolved by omission,No primary CI
+13-dataset Friedman benchmark,Saved-score descriptive recalculation,benchmark/recalculated_benchmark.csv; recalculation.json,"Copied/imported rows, unequal methods/budgets, no fit event auth",Keep distinct; no superiority/equivalence claim
+ICC superiority,Unsupported,benchmark/benchmark_verdict.md; reviewer/*,"Rank 4/12, nonsignificant omnibus, fairness issues",Remove
+Causal/high-dimensional mechanism,Not audited/unsupported here,Canonical manuscript; prior high_risk_claims.md,No controlled verification in Loop6.0,Omit or separately audit
+Clinical/biological meaning,Not established,statistics/statistical_methods_note.md; candidate limitations,ARI to reference categories is not clinical validation,No clinical claim
+Public reproduction,Tier 1 only,release/clean_clone_test.md; reproducibility_tier_matrix.csv,Tier 2 unavailable; Tier 3 not run; rights unresolved,Correct availability and pursue lawful Tier 2
+"Broad ablation, scaling, theory, PCA/Prostate",Not audited in this loop,manuscript/high_risk_claims.md; original figures/tables,No result-level validation here,Audit from raw/version-matched data or remove

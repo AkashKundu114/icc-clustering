@@ -1,0 +1,34 @@
+{
+  "input_paths": [
+    "D:\\Final Year Project\\results\\passF\\benchmark_matrix_passF.csv",
+    "D:\\Final Year Project\\results\\exp3_cohirf_benchmark.csv"
+  ],
+  "input_sha256": {
+    "D:\\Final Year Project\\results\\passF\\benchmark_matrix_passF.csv": "4f5659c93393054d5fdaa6eb82895e167aa784b214b3f849a35a591696da2b8c",
+    "D:\\Final Year Project\\results\\exp3_cohirf_benchmark.csv": "559040232a29e03c148da0cddebe6249bebed6c52e3b21f5dd425859100716da"
+  },
+  "rows": 3000,
+  "datasets": 13,
+  "methods": 12,
+  "dataset_method_cells": 156,
+  "duplicate_dataset_method_seed_keys": 0,
+  "incomplete_cells": [],
+  "friedman_chi2": 11.556213017751475,
+  "df": 11,
+  "p_value": 0.3979076148432822,
+  "average_ranks": {
+    "CoHiRF": 7.6923076923076925,
+    "Core_Halo_Consensus": 7.153846153846154,
+    "DEC": 5.230769230769231,
+    "FCAG": 7.769230769230769,
+    "FCM": 7.076923076923077,
+    "FastMVC": 7.384615384615385,
+    "ICC_v1": 6.923076923076923,
+    "ICC_v2": 5.615384615384615,
+    "K-Means": 5.153846153846154,
+    "Spectral": 7.076923076923077,
+    "Standard_Consensus": 5.230769230769231,
+    "Ward": 5.6923076923076925
+  },
+  "interpretation": "Saved-score-row recalculation only; not 3000 authenticated fit events; descriptive exploratory Friedman across a convenience set of heterogeneous datasets."
+}

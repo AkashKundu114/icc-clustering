@@ -1,0 +1,14 @@
+{
+  "source": "D:/icc-clustering/audit/loop5_9/statistics/cell_reconstruction.csv",
+  "aggregation": "equal-weight arithmetic across 72 cohort-method summaries; median across 72 cell gaps",
+  "results": {
+    "mean_stability": 0.5165860620823638,
+    "mean_external_ari": 0.0523121821722892,
+    "mean_gap": 0.46427387991007457,
+    "mean_null_stability": 0.00661968076299296,
+    "median_gap": 0.44840681694162077,
+    "n_cells": 72,
+    "n_datasets": 6,
+    "n_methods": 12
+  }
+}

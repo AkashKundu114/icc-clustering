@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "created_for": "Loop 6.0; audit documentation not a public data release",
+  "source_repository": "https://github.com/AkashKundu114/icc-clustering",
+  "tested_commit": "5dac3762f34b756a1047e099b4465c8a1954daad",
+  "release_created": false,
+  "tiers": {
+    "tier1_aggregate": {
+      "status": "PASS",
+      "script": "audit/loop5_6/minimum_aggregate_package/reproduce_aggregate.py",
+      "exit_code": 0,
+      "stdout_sha256": "538f5e9ce1026689eebef5fb8a79126e82c946be269c6a82afd03a4a45cfa9a5",
+      "input": "tracked aggregate summary CSV",
+      "n_rows": 72
+    },
+    "tier2_partition": {
+      "status": "UNAVAILABLE",
+      "missing": [
+        "results/stability/partitions/",
+        "results/stability/runs/",
+        "data/cache/"
+      ],
+      "exit_code": null
+    },
+    "tier3_full_experiment": {
+      "status": "NOT_RUN",
+      "reason": "historical producer, exact input linkage and full configuration unavailable",
+      "fit_count": 0
+    }
+  },
+  "artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "d0944edd66ac27f7ea5ceec9f5077b61f17afb16d47c8dd8f99fdbcc248408f4",
+      "bytes": 2450
+    },
+    {
+      "path": "clean_clone_test.md",
+      "sha256": "22110b98ada829fe10708dcea529a41309d0781d48c145c7c577f5cf240575fd",
+      "bytes": 1653
+    },
+    {
+      "path": "data_rights_matrix.csv",
+      "sha256": "c3d4c65ed841f69497ce1a0813a1f264be851e83c1b48d57858d9af2a8a29c58",
+      "bytes": 4299
+    }
+  ],
+  "redistribution": "No dataset or run-level evidence files bundled; rights for most processed and raw datasets not cleared.",
+  "tier1_inputs": [
+    {
+      "path": "audit/loop5_6/minimum_aggregate_package/reproduce_aggregate.py",
+      "sha256": "3cac0aff64d4d949622cfc163e3f15cbf654759a890c908bba193c55fbeb0a04",
+      "bytes": 1402
+    },
+    {
+      "path": "audit/loop5_6/minimum_aggregate_package/manifest.csv",
+      "sha256": "752d9085a0021e8e0e39f09f716724b3ff0958c4edfd220d1c8fc55f04b18d37",
+      "bytes": 310
+    },
+    {
+      "path": "audit/loop5_6/minimum_aggregate_package/inputs/subsample_stability_summary.csv",
+      "sha256": "577cbab79913020ce362b8280ccb8c7ef62952d28ea47a45950f75cca2ff4b4f",
+      "bytes": 10622
+    }
+  ]
+}

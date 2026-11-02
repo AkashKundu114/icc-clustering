@@ -1,0 +1,3 @@
+# Data availability statement
+
+The public repository supports an aggregate arithmetic check only. The partition arrays, per-fit records, cohort caches, and raw 13-dataset score CSVs used for the Loop 6.0 reconstruction are local and are not included in the clean public clone. Third-party redistribution rights have not been cleared for most datasets; Yale B requires permission for redistribution. The manuscript therefore does not claim public availability of the underlying experiment evidence. Readers should obtain data from upstream providers under their current terms; source-specific acquisition and version instructions, sample mapping, and a rights-cleared Tier 2 archive remain to be completed.
