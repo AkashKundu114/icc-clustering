@@ -12,4 +12,4 @@ Before a release, maintainers should:
 6. If Zenodo integration is enabled, inspect the resulting record, metadata, and actual downloadable files; verify that the archive corresponds to that exact tag/commit.
 7. Add DOI references only after the record is public, complete, and resolving.
 
-No automatic release or Zenodo-publishing workflow is configured in the current repository. The existing Zenodo record is not a verified archive of the current software tree; see [citation status](citation.md). The current software release does not archive the research result package, so it must not be described as reproducing the historical paper analyses.
+A previous GitHub–Zenodo integration archived release `v2.2.1` as [Zenodo DOI 10.5281/zenodo.23888368](https://doi.org/10.5281/zenodo.23888368); the archive was checked against the tag. This software archive does not include the historical research result package. The separate older DOI has no files and stale metadata, and no reproduction archive has been verified. Do not describe the software release as reproducing the historical paper analyses.

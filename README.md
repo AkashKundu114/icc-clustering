@@ -30,7 +30,7 @@ See [the documentation index](docs/index.md) for the software and methodology gu
 
 The research has two separate experiments: a six-cohort biomedical stability analysis and a 13-dataset external-ARI benchmark. The first concerns resampling stability versus reference alignment; the second concerns saved external-ARI scores only. They must not be combined as one 13-dataset stability result.
 
-No numerical result table or run-level evidence package is included in this repository snapshot. A local saved-output reconstruction found descriptive stability/alignment differences, but its historical producer was not authenticated, the derived artifacts are not cleared for redistribution, and the underlying partitions and caches are not available here. See [results and evidence status](docs/results.md) and [reproducibility](docs/reproducibility.md).
+The repository provides a claim-status ledger and verification tools, but it does not distribute numerical result tables, run-level evidence, or dataset inputs. The local evidence review and a later fresh run remain unavailable to reviewers because the exact inputs and derived outputs have not been cleared for redistribution. The recovered protocol source does not authenticate historical execution. See [results and evidence status](docs/results.md) and [reproducibility](docs/reproducibility.md).
 
 ## Repository layout
 
@@ -77,15 +77,15 @@ This synthetic example demonstrates the API. It is not a reproduction of either 
 
 The registry describes 13 dataset variants, but upstream availability does not imply permission to redistribute raw data, transformed matrices, sample identifiers, or partitions. Dataset-specific terms and exact variant identities remain unresolved for most sources. **Do not redistribute datasets or derived sample-level artifacts from this repository without confirming the applicable provider terms.** Yale B images require permission before redistribution. See [dataset access and rights](docs/datasets.md).
 
-The current public snapshot includes no authorized numerical research-result package. The previously tested aggregate checker and its input are not included because they were located with internal audit material and the derived result is not cleared for redistribution. Tier 2 partition reproduction is unavailable; Tier 3 full experimental reproduction has not been run.
+The current public snapshot includes no authorized numerical research-result package. A full six-cohort run was executed locally on 2026-11-02 using the recovered protocol code and local cohort caches. Its detailed results, input data, and output files are not included because rights for those exact inputs and derived artifacts have not been cleared. A clean public clone therefore cannot reproduce or verify this local run. Tier 2 partition reproduction is unavailable, and Tier 3 has not been validated from a clean clone.
 
 ## Limitations
 
-The saved-output stability analysis uses six convenience cohorts, reference-label-informed subsampling and a reference-derived cluster count. The model seed was fixed, so it assesses sampling sensitivity rather than initialization robustness. Cohort-method cells and pairwise comparisons are dependent. The historical partition producer is unknown, duplicate assignments remain unexplained, and public partition-level reproduction is unavailable. The broader benchmark has different methods and saved-score limitations. These restrictions preclude broad performance or clinical claims.
+The saved-output stability analysis uses six convenience cohorts, reference-label-informed subsampling and a reference-derived cluster count. The model seed was fixed, so it assesses sampling sensitivity rather than initialization robustness. Cohort-method cells and pairwise comparisons are dependent. Historical protocol source code was recovered from a public Git commit, but the contemporaneous execution and its inputs remain unauthenticated. A later local run is not included in the public package pending rights review; duplicate assignments remain unexplained. Public partition-level reproduction is unavailable. The broader benchmark has different methods and saved-score limitations. These restrictions preclude broad performance or clinical claims.
 
 ## Citation and publication status
 
-For the software citation metadata, see [CITATION.cff](CITATION.cff). The repository license covers software files only, not third-party data. This software repository does not contain or link to a manuscript. Version 2.2.1 is the current tagged software release. An older published Zenodo record exists, but it contains no files and its metadata does not match this source snapshot; it is not an archive of this software tree. See [citation and release notes](docs/citation.md).
+For the software citation metadata, see [CITATION.cff](CITATION.cff). The repository license covers software files only, not third-party data. This software repository does not contain or link to a manuscript. The existing Zenodo software archive for version 2.2.1 is [10.5281/zenodo.23888368](https://doi.org/10.5281/zenodo.23888368); it contains software only, not research-result evidence. Check the [GitHub releases](https://github.com/AkashKundu114/icc-clustering/releases) for the current source tag and the [citation and release notes](docs/citation.md) for archive scope. A GitHub tag or release is not a reproduction-data archive.
 
 ## License
 

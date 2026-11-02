@@ -12,7 +12,7 @@ A cell-weighted mean averages the cohort-method summaries. In a balanced design,
 
 ## Post-hoc analyses
 
-Threshold-based non-degeneracy and recurrence subsets were selected after the original analysis and are exploratory. Subset statistics must not be interpreted as independent confirmation or used to choose the primary result.
+Threshold-based non-degeneracy and recurrence subsets were selected after the original analysis and are exploratory. The saved-output verifier reports the non-degeneracy screen separately from its intersection with the original stability/ARI rule. The repeat screen uses a 5% minimum cluster fraction in at least 27 of 30 repeats and requires predicted K to be no smaller than the reference-class count; this makes the screen label-informed. Subset statistics must not be interpreted as independent confirmation or used to choose the primary result.
 
 ## Separate external benchmark
 

@@ -8,9 +8,11 @@ This guide describes the research software, its configured data loaders and benc
 - [Methodology](methodology.md): the distinct stability and external-ARI designs.
 - [Datasets](datasets.md): sources, configured shapes, and access restrictions.
 - [Results](results.md): result-package availability and evidence limits.
+- [Provenance](provenance.md): what is known about historical protocol source and later local execution.
 - [Statistical analysis](statistical-analysis.md): estimands, dependence, and sensitivity.
 - [Limitations](limitations.md): evidence and implementation caveats.
 - [Reproducibility](reproducibility.md): current tested status across three evidence tiers.
+- [Saved-output verification tools](../reproduction/README.md): portable recalculation commands and the evidence inputs they require.
 - [Software architecture](software-architecture.md): code layout and entry points.
 - [Setup](setup.md): installation and actually tested environments.
 - [Citation](citation.md): software citation and DOI status.

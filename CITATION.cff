@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "Please cite the exact tagged software version used in your work."
 title: "Invariant Core Consensus (ICC): High-Dimensional Consensus Clustering"
-version: 2.2.1
+version: 2.2.2
 authors:
   - family-names: "Kundu"
     given-names: "Akash"
