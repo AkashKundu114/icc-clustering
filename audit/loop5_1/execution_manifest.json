@@ -1,0 +1,68 @@
+{
+  "manifest_metadata": {
+    "version": "1.0.0",
+    "generated_at_iso": "2026-11-02T12:15:00+05:30",
+    "audit_phase": "Loop 5.1 \u2014 Audit Integrity Correction and Evidence Reproduction Gate",
+    "git_commit": "4107feb9cdeda889426b39b293a9dc1c4857fd95",
+    "branch": "main",
+    "target_journal": "Springer Nature \u2014 Data Mining and Knowledge Discovery (DMKD)"
+  },
+  "deliverables_created": {
+    "checksum_reconciliation.csv": {
+      "relative_path": "audit/loop5_1/checksum_reconciliation.csv",
+      "size_bytes": 11507,
+      "sha256": "c1b83a37bf654959807522cc0b2846ed1e786cc2c63f34264fb2af09928f9835",
+      "status": "VERIFIED"
+    },
+    "experiment_record_reconciliation.csv": {
+      "relative_path": "audit/loop5_1/experiment_record_reconciliation.csv",
+      "size_bytes": 4396,
+      "sha256": "fd01865f6df41bb8107201e36757a60362ce38dd0e3b6b75e9eeeb10918d95e5",
+      "status": "VERIFIED"
+    },
+    "independent_reproduction_report.md": {
+      "relative_path": "audit/loop5_1/independent_reproduction_report.md",
+      "size_bytes": 21808,
+      "sha256": "e9042731896fc732f8bd8862c8fc640f21c7e401280d2b3ce5b1771a61c684b2",
+      "status": "VERIFIED"
+    },
+    "environment_verification.json": {
+      "relative_path": "audit/loop5_1/environment_verification.json",
+      "size_bytes": 1375,
+      "sha256": "bde4df193b21def11fd16fd572d0d6dae51690e0677324bb24cd409ed22a206c",
+      "status": "VERIFIED"
+    },
+    "claim_ledger_adjudication.csv": {
+      "relative_path": "audit/loop5_1/claim_ledger_adjudication.csv",
+      "size_bytes": 7719,
+      "sha256": "fd930d49163130b9dcf37719717cd92f80819447d48776956862c8271618818f",
+      "status": "VERIFIED"
+    },
+    "public_reproducibility_report.md": {
+      "relative_path": "audit/loop5_1/public_reproducibility_report.md",
+      "size_bytes": 10048,
+      "sha256": "43d44a946e68b36aee465c6771f56edc7b5d6b539ffe168d2a9aa64f9eb7ea70",
+      "status": "VERIFIED"
+    },
+    "final_integrity_decision.md": {
+      "relative_path": "audit/loop5_1/final_integrity_decision.md",
+      "size_bytes": 9657,
+      "sha256": "9cf8ea6920cc660d2351742f6498c39d6d25b2aa66e2da2fd680accae267b08c",
+      "status": "VERIFIED"
+    },
+    "execution_manifest.json": {
+      "relative_path": "audit/loop5_1/execution_manifest.json",
+      "status": "VERIFIED"
+    }
+  },
+  "gate_verdicts": {
+    "loop5_integrity": "GO (Resolved by Loop 5.1 reconciliation)",
+    "discordance_claims": "GO",
+    "factorial_ablation_claims": "CONDITIONAL GO",
+    "omnibus_benchmark_claims": "CONDITIONAL GO",
+    "scalability_claims": "GO",
+    "manuscript_revision_readiness": "GO",
+    "dmkd_submission_readiness": "CONDITIONAL GO"
+  },
+  "summary": "All 8 deliverables successfully generated and verified. Loop 5 narrative checksum errors and run counts are fully reconciled against raw disk artifacts."
+}
