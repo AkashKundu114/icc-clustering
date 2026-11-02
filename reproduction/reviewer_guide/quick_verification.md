@@ -2,6 +2,8 @@
 
 This workflow verifies calculations only after the reviewer has lawfully obtained the exact saved inputs. The repository does not provide those inputs, and this guide is not evidence that a public clean clone can reproduce the paper's results.
 
+**There is currently no configured public archive or controlled reviewer-access route for these inputs. A reviewer with only the public repository cannot reproduce the numerical results. The authors need to establish a lawful evidence-access route before claiming reviewer reproducibility.**
+
 ## Required inputs
 
 For the six-cohort check, obtain the six cohort NPZ caches, all 4,320 partition NPY files, all 4,320 per-fit Parquet files, and the historical aggregate CSV from the authors through a permitted route. Confirm that the provider terms allow access and processing. The verifier assumes each saved partition row index maps to the same row in its cohort cache; the cache has no stable upstream sample identifier that independently proves this mapping.

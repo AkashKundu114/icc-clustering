@@ -30,7 +30,15 @@ for that exact input and its derived outputs have been reviewed.
 
 The historical partition producer was not located. The available local files
 can be used to check arithmetic, but their producer, input row identity and
-historical execution cannot currently be authenticated. See
+historical execution cannot currently be authenticated.
+
+**Reviewer access status:** no public evidence archive or controlled reviewer
+access route is currently configured. A reviewer with only this repository
+cannot verify the six-cohort or 13-dataset numerical claims. Before submission,
+the authors must either clear and publish the required evidence, or arrange a
+rights-compliant access route through the journal or an appropriate repository.
+The repository does not promise that restricted data or derived sample-level
+outputs will be provided. See
 [reproducibility status](../docs/reproducibility.md),
 [dataset access notes](../docs/datasets.md), and
 [limitations](../docs/limitations.md).
