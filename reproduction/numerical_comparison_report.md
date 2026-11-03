@@ -14,6 +14,8 @@ A complete local run of this protocol was executed on 2026-11-02. The local outp
 
 The calculation distinguishes mean pairwise ARI over intersections of repeated sample subsets from external ARI against reference labels. The pairwise values reuse partitions and samples and are dependent. Cell-level summaries are nested within six cohorts and shared methods. Any future public numerical report must identify its exact input bundle, output hashes, weighting, missingness, selection rules, and cohort/method scope.
 
+Three previously flagged exact duplicate partition pairs were also reproduced byte-for-byte in a later local full run using cache files whose hashes match the recorded run inputs. This supports that the later implementation can produce the same collapsed/coarse assignments. It does not authenticate the historical producer or prove the cause of the historical duplicates; the inputs and partition files needed to inspect this comparison are not included in this repository.
+
 ## Separate 13-dataset external-ARI benchmark
 
 Historical saved score files were reaggregated locally with a script that checks file hashes, grid structure, seed-key duplicates, missing cells, and the Friedman calculation. The run did not fit the algorithms again and does not authenticate the saved fit events, copied/imported scores, implementation fidelity, parameter fairness, or ambiguous failure rows. The score inputs and numerical statistics are not included pending rights clearance. This experiment is not a 13-dataset stability analysis.

@@ -19,7 +19,7 @@ The supported `smoke` command runs a synthetic software example only. A full six
 Yes, the package APIs and benchmark wrappers are extensible. New comparisons should document implementation fidelity, parameters, budgets, preprocessing, failures, and seed schedules. Do not infer that a wrapper exactly matches a published baseline without validation.
 
 ### What are the current limitations?
-Six convenience cohorts, fixed model seed, label-informed sampling/K, dependent method cells, unauthenticated historical outputs, unresolved duplicate partitions, benchmark fairness limits, dataset-rights restrictions, and no public partition-level reproduction.
+Six convenience cohorts, fixed model seed, label-informed sampling/K, dependent method cells, unauthenticated historical outputs, duplicate assignments whose historical origin remains unresolved despite later rerun recurrence, benchmark fairness limits, dataset-rights restrictions, and no public partition-level reproduction.
 
 ### Where can I find the associated publication?
 The manuscript is not included or linked in this software repository. No publication DOI is asserted here. Software releases are source-only and do not contain the research evidence needed to reproduce the analyses. A version-specific DOI is listed only after its public archive is verified. No separate reproduction archive DOI is available; see [citation status](citation.md).
