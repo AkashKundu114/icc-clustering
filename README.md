@@ -30,7 +30,7 @@ See [the documentation index](docs/index.md) for the software and methodology gu
 
 The research has two separate experiments: a six-cohort biomedical stability analysis and a 13-dataset external-ARI benchmark. The first concerns resampling stability versus reference alignment; the second concerns saved external-ARI scores only. They must not be combined as one 13-dataset stability result.
 
-The repository provides a claim-status ledger and verification tools, but it does not distribute numerical result tables, run-level evidence, or dataset inputs. The local evidence review and a later fresh run remain unavailable to reviewers because the exact inputs and derived outputs have not been cleared for redistribution. The recovered protocol source does not authenticate historical execution. See [results and evidence status](docs/results.md) and [reproducibility](docs/reproducibility.md).
+The repository provides a claim-status ledger and verification tools, but it does not distribute numerical result tables, run-level evidence, or dataset inputs. The local evidence review and a later fresh run remain unavailable to reviewers because the exact inputs and derived outputs have not been cleared for redistribution. The producer of the historical saved partitions is unidentified; the later protocol implementation does not authenticate historical execution. See [results and evidence status](docs/results.md), [provenance](docs/provenance.md), and [reproducibility](docs/reproducibility.md).
 
 ## Repository layout
 
@@ -85,7 +85,7 @@ The saved-output stability analysis uses six convenience cohorts, reference-labe
 
 ## Citation and publication status
 
-For the software citation metadata, see [CITATION.cff](CITATION.cff). The repository license covers software files only, not third-party data. This software repository does not contain or link to a manuscript. Version 2.2.2 is the current software release and its software-only Zenodo archive is [10.5281/zenodo.23891237](https://doi.org/10.5281/zenodo.23891237). The archive contains source code only, not research-result evidence. See [citation and release notes](docs/citation.md) for the archive scope. A separate reproduction archive has not been published.
+For the software citation metadata, see [CITATION.cff](CITATION.cff). The repository license covers software files only, not third-party data. This software repository does not contain or link to a manuscript. This source snapshot declares software version 2.2.3. Cite an exact release tag and use a version-specific DOI only when its archive has been verified. The preceding v2.2.2 source-only archive has DOI [10.5281/zenodo.23891237](https://doi.org/10.5281/zenodo.23891237). This repository contains no research-result evidence; a separate reproduction archive has not been published. See [citation and release notes](docs/citation.md).
 
 ## License
 

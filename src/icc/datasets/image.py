@@ -7,6 +7,7 @@ Datasets:
 """
 
 import os
+import time
 from pathlib import Path
 from typing import Any, Dict, Optional, Tuple
 
@@ -17,21 +18,51 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 _DEFAULT_CACHE = _PROJECT_ROOT / "data" / "cache"
 _DEFAULT_RAW = _PROJECT_ROOT / "data" / "raw" / "yale_b"
+_YALE_B_SHAPE = (2414, 1024)
+
+
+def _validate_yale_b_mat(mat_path: str) -> None:
+    """Check the expected feature and label arrays before accepting a MAT file."""
+    mat = sio.loadmat(mat_path, variable_names=["fea", "gnd"])
+    if "fea" not in mat or "gnd" not in mat:
+        raise ValueError("MAT file must contain 'fea' and 'gnd' arrays")
+    fea = np.asarray(mat["fea"])
+    gnd = np.asarray(mat["gnd"])
+    if fea.shape != _YALE_B_SHAPE:
+        raise ValueError(f"Expected Yale B fea shape {_YALE_B_SHAPE}, got {fea.shape}")
+    if gnd.size != _YALE_B_SHAPE[0]:
+        raise ValueError(f"Expected {_YALE_B_SHAPE[0]} Yale B labels, got {gnd.size}")
 
 
 def _download_file(url: str, dest_path: str):
-    """Download a file with user-agent headers and SSL verification handling."""
-    import ssl
+    """Download a complete, structurally valid Yale B MAT file atomically."""
     import urllib.request
 
-    ctx = ssl._create_unverified_context()
     req = urllib.request.Request(
         url,
         headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"},
     )
-    with urllib.request.urlopen(req, timeout=45, context=ctx) as response, open(dest_path, "wb") as out_file:
-        while chunk := response.read(65536):
-            out_file.write(chunk)
+    temp_path = f"{dest_path}.part"
+    try:
+        with urllib.request.urlopen(req, timeout=45) as response:
+            content_length = response.headers.get("Content-Length")
+            expected_bytes = int(content_length) if content_length else None
+            received_bytes = 0
+            with open(temp_path, "wb") as out_file:
+                while chunk := response.read(65536):
+                    out_file.write(chunk)
+                    received_bytes += len(chunk)
+        if received_bytes == 0:
+            raise OSError("Yale B download returned an empty response")
+        if expected_bytes is not None and received_bytes != expected_bytes:
+            raise OSError(
+                f"Incomplete Yale B download: received {received_bytes} of {expected_bytes} bytes"
+            )
+        _validate_yale_b_mat(temp_path)
+        os.replace(temp_path, dest_path)
+    finally:
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
 
 
 def download_yale_b(
@@ -64,19 +95,29 @@ def download_yale_b(
     mat_path = os.path.join(target_dir, "YaleB_32x32.mat")
 
     if os.path.exists(mat_path) and not force:
-        return mat_path
+        try:
+            _validate_yale_b_mat(mat_path)
+            return mat_path
+        except Exception as e:
+            raise RuntimeError(
+                f"Existing Yale B file is incomplete or invalid: {mat_path}. "
+                "Remove the invalid file or call with force=True to download a validated copy."
+            ) from e
 
     mirrors = [
         "http://www.cad.zju.edu.cn/home/dengcai/Data/YaleB/YaleB_32x32.mat",
     ]
 
     for url in mirrors:
-        try:
-            print(f"[*] Downloading Extended Yale B from {url}...")
-            _download_file(url, mat_path)
-            return mat_path
-        except Exception as e:
-            print(f"[!] Mirror failed ({url}): {e}. Attempting fallback...")
+        for attempt in range(1, 4):
+            try:
+                print(f"[*] Downloading Extended Yale B from {url} (attempt {attempt}/3)...")
+                _download_file(url, mat_path)
+                return mat_path
+            except Exception as e:
+                print(f"[!] Download attempt {attempt} failed ({url}): {e}")
+                if attempt < 3:
+                    time.sleep(attempt)
 
     raise RuntimeError(
         "Failed to download YaleB_32x32.mat from all mirrors. "

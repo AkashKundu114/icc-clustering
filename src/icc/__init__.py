@@ -45,7 +45,7 @@ from .evaluation import (
     v_measure_score,
 )
 
-__version__ = "2.2.2"
+__version__ = "2.2.3"
 
 ICC = InvariantCoreConsensusV2
 ICCv2 = InvariantCoreConsensusV2
