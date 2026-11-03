@@ -85,7 +85,7 @@ The saved-output stability analysis uses six convenience cohorts, reference-labe
 
 ## Citation and publication status
 
-For the software citation metadata, see [CITATION.cff](CITATION.cff). The repository license covers software files only, not third-party data. This software repository does not contain or link to a manuscript. Version 2.2.3 is the current software release. The preceding v2.2.2 source-only archive has a verified DOI, [10.5281/zenodo.23891237](https://doi.org/10.5281/zenodo.23891237); a v2.2.3 archive DOI will be listed only after verification. No research-result evidence is included, and a separate reproduction archive has not been published. See [citation and release notes](docs/citation.md).
+For the software citation metadata, see [CITATION.cff](CITATION.cff). The repository license covers software files only, not third-party data. This software repository does not contain or link to a manuscript. This source snapshot declares software version 2.2.3. Cite an exact release tag and use a version-specific DOI only when its archive has been verified. The preceding v2.2.2 source-only archive has DOI [10.5281/zenodo.23891237](https://doi.org/10.5281/zenodo.23891237). This repository contains no research-result evidence; a separate reproduction archive has not been published. See [citation and release notes](docs/citation.md).
 
 ## License
 

@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.2.3] - 2026-11-03
 
 ### Fixed
-- **Yale B download integrity:** Download into a temporary file, check the response length and MATLAB structure, and atomically replace the destination only after validation. Existing corrupt files now fail clearly and retries are bounded. No certificate-verification bypass is used; the configured upstream endpoint currently uses HTTP.
+- **Yale B download validation:** Download into a temporary file, check the response length and MATLAB structure, and atomically replace the destination only after validation. Existing corrupt files now fail clearly and retries are bounded. The configured upstream endpoint currently uses HTTP; response-size and MAT-structure checks can detect incomplete or malformed files but do not cryptographically authenticate their origin.
 
 ### Changed
 - **Dataset-rights wording:** Clarified that OpenML visibility metadata alone does not establish upstream redistribution rights for third-party cohorts or derivatives.
