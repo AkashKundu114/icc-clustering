@@ -8,7 +8,7 @@ The machine-readable [`claim-to-evidence-matrix.csv`](claim-to-evidence-matrix.c
 
 ## Six-cohort stability experiment
 
-The recovered protocol source is available in public Git history at [commit `49f3882`](https://github.com/AkashKundu114/icc-clustering/commit/49f3882fe5385913a9af1a5b89138c6ae6d95579). This source describes six cohorts, 12 methods, 30 repeats, and real/null modes, with label-stratified sampling and a fixed model seed. The commit documents a protocol and producer implementation; it does not authenticate when or how the historical files were generated.
+An implementation describing the protocol and writing partition files is available in public Git history at [commit `49f3882`](https://github.com/AkashKundu114/icc-clustering/commit/49f3882fe5385913a9af1a5b89138c6ae6d95579). It describes six cohorts, 12 methods, 30 repeats, real/null modes, label-stratified sampling, and a fixed model seed. The relevant partition-writing scripts first appear in tracked history in this commit, after the observed local timestamps of the recovered partition and per-fit files. Those timestamps are unauthenticated, and ten searched local archives yielded no older producer. The actual producer of the historical files therefore remains unidentified; this commit does not authenticate when or how those files were generated.
 
 A complete local run of this protocol was executed on 2026-11-02. The local output files and numerical results are not included because the relevant input and derived-output rights have not been cleared. The run does not authenticate historical execution. Reviewers cannot reproduce either the saved-output calculations or this local run from a clean clone.
 

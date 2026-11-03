@@ -30,7 +30,7 @@ See [the documentation index](docs/index.md) for the software and methodology gu
 
 The research has two separate experiments: a six-cohort biomedical stability analysis and a 13-dataset external-ARI benchmark. The first concerns resampling stability versus reference alignment; the second concerns saved external-ARI scores only. They must not be combined as one 13-dataset stability result.
 
-The repository provides a claim-status ledger and verification tools, but it does not distribute numerical result tables, run-level evidence, or dataset inputs. The local evidence review and a later fresh run remain unavailable to reviewers because the exact inputs and derived outputs have not been cleared for redistribution. The recovered protocol source does not authenticate historical execution. See [results and evidence status](docs/results.md) and [reproducibility](docs/reproducibility.md).
+The repository provides a claim-status ledger and verification tools, but it does not distribute numerical result tables, run-level evidence, or dataset inputs. The local evidence review and a later fresh run remain unavailable to reviewers because the exact inputs and derived outputs have not been cleared for redistribution. The producer of the historical saved partitions is unidentified; the later protocol implementation does not authenticate historical execution. See [results and evidence status](docs/results.md), [provenance](docs/provenance.md), and [reproducibility](docs/reproducibility.md).
 
 ## Repository layout
 
