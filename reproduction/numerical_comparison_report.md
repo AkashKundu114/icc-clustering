@@ -1,36 +1,29 @@
-# Numerical comparison and evidence status
+# Numerical claim verification status
 
-## Scope
+## Distribution status
 
-This ledger summarizes historical claims checked against locally available saved outputs. It does not assert that every number appears in one identified final manuscript: multiple manuscript candidates exist, and a canonical submission candidate has not been authenticated. It also does not claim fresh execution of the clustering experiments.
+This public repository does not publish the numerical values or dataset-derived result tables from the stability experiment or the 13-dataset benchmark. The Loop 6.3 source-specific rights review did not clear the configured datasets, partitions, per-fit records, score tables, or aggregate derived outputs for redistribution. The MIT software license does not apply to those materials. Their values are therefore withheld here until rights are established.
 
-## Six-cohort saved-output reconstruction
+The machine-readable [`claim-to-evidence-matrix.csv`](claim-to-evidence-matrix.csv) identifies which claims were historically reported, which structural checks were performed locally, and what evidence is missing from a public clone. “Locally recalculated” does not mean publicly reproducible. No numerical claim is verified by this report merely because a prior report contains the same value.
 
-The local evidence contains 4,320 partition arrays and 4,320 fit records for six cohorts, 12 methods, 30 repeats, and real/null modes. Independent recalculation from those files produced:
+## Six-cohort stability experiment
 
-| Quantity | Historical claim | Recalculated from local saved outputs | Absolute difference |
-|---|---:|---:|---:|
-| Mean stability | 0.516586 | 0.5165860621 | < 1.2e-16 vs saved summary |
-| Mean external ARI | 0.052312 | 0.0523121822 | < 1.0e-16 vs saved summary |
-| Mean stability − ARI | 0.464274 | 0.4642738799 | derived from recalculated cell values |
-| Median cell gap | 0.448407 | 0.4484068169 | derived from recalculated cell values |
-| Mean null stability | 0.006620 | 0.0066196808 | < 1.0e-16 vs saved summary |
+The recovered protocol source is available in public Git history at [commit `49f3882`](https://github.com/AkashKundu114/icc-clustering/commit/49f3882fe5385913a9af1a5b89138c6ae6d95579). This source describes six cohorts, 12 methods, 30 repeats, and real/null modes, with label-stratified sampling and a fixed model seed. The commit documents a protocol and producer implementation; it does not authenticate when or how the historical files were generated.
 
-The gap is computed per cohort-method cell as that cell's stability summary minus its external ARI summary, then averaged or median-aggregated across the 72 cells. It is a descriptive contrast between two different measurements; it is not a universal metric of excess reproducibility over validity.
+A complete local run of this protocol was executed on 2026-11-02. The local output files and numerical results are not included because the relevant input and derived-output rights have not been cleared. The run does not authenticate historical execution. Reviewers cannot reproduce either the saved-output calculations or this local run from a clean clone.
 
-These comparisons verify arithmetic conditional on the local saved files and the assumption that array row indices match the corresponding cache rows. They do not authenticate the historical partition producer, cache lineage, sample identity, or whether the null transformation ran as intended. The local inputs and outputs are absent from the public clone, so a reviewer cannot independently reproduce these values from this repository alone.
+The calculation distinguishes mean pairwise ARI over intersections of repeated sample subsets from external ARI against reference labels. The pairwise values reuse partitions and samples and are dependent. Cell-level summaries are nested within six cohorts and shared methods. Any future public numerical report must identify its exact input bundle, output hashes, weighting, missingness, selection rules, and cohort/method scope.
 
-## Selected-cell summaries
+## Separate 13-dataset external-ARI benchmark
 
-The historical Rule (i), Rule (i-prime), and Rule (iii) subsets contain 20, 18, and 9 cells, respectively, when recalculated from the local cell table. Rule (iii) is post-hoc and exploratory. The nine-cell summary must not be described as independent confirmation. An 18-cell summary of FCAG, FCM, and FastMVC across all six cohorts is numerically 0.638304 stability and 0.045733 external ARI; those methods overlap the post-hoc selected set, so that summary is also selection-conditioned.
+Historical saved score files were reaggregated locally with a script that checks file hashes, grid structure, seed-key duplicates, missing cells, and the Friedman calculation. The run did not fit the algorithms again and does not authenticate the saved fit events, copied/imported scores, implementation fidelity, parameter fairness, or ambiguous failure rows. The score inputs and numerical statistics are not included pending rights clearance. This experiment is not a 13-dataset stability analysis.
 
-## Separate 13-dataset benchmark
+## Selection analyses
 
-From local saved score tables, 3,000 rows cover 13 datasets, 12 methods, and 156 dataset-method cells. Recalculation gives Friedman chi-square 11.5562130178, 11 degrees of freedom, p=0.3979076148, and ICC-v2 average rank 5.6153846154 (rank 4 of 12). This is a separate external-ARI score benchmark, not a 13-dataset stability experiment. Score arithmetic does not verify fair implementations, independent fit execution, equivalent tuning budgets, or unambiguous handling of zero-valued failures.
+Historical and fresh-run post-hoc selection analyses were recalculated locally from partition assignments. The selection criteria use observed cluster sizes, reference-label-derived K checks, and outcome thresholds. Their numeric summaries and membership tables are not published here because the underlying derived artifacts have not been cleared. No selected subset is independent confirmation; all such analyses must be labelled exploratory if later cleared for publication.
 
-## Recalculation tools and public limitations
+## Verification tools
 
-The public tools are `scripts/recompute_saved_stability.py` and `scripts/recompute_benchmark_scores.py` under this directory. They independently calculate from user-supplied evidence, dynamically hash inputs, validate structural expectations, and fail on expected-hash mismatch. They do not ship evidence inputs. Their local positive runs used files outside a clean clone; they are not public reproduction passes.
+The public tools `scripts/recompute_saved_stability.py` and `scripts/recompute_benchmark_scores.py` accept researcher-supplied evidence. They dynamically hash inputs, validate structural expectations, and fail on expected-hash mismatch. The clean-clone tests show that these tools cannot run the scientific calculations from this repository alone because the required evidence inputs are absent. They do not recreate model fits or establish a public reproduction pass.
 
-The machine-readable claim ledger is [`claim-to-evidence-matrix.csv`](claim-to-evidence-matrix.csv). Source artifacts remain local and are not bundled because exact-source and derived-artifact redistribution rights are unresolved for several variants. Historical execution provenance remains unverified. Public reproduction Tier 1 and Tier 2 are unavailable; Tier 3 has not been run.
-
+Until source-specific rights and stable input identity are resolved, use the repository to inspect software and protocol code only. Do not cite this package as a complete scientific evidence archive or as proof that the historical or fresh numerical results can be independently reproduced.

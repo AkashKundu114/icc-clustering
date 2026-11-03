@@ -2,7 +2,7 @@
 
 ## Software protocol versus recovered experiment
 
-The repository contains clustering implementations, a YAML dataset registry, benchmark utilities, and loaders. The current ICC implementation and its default feature-pool behavior are summarized in [software architecture](software-architecture.md); those implementation details must not be substituted for the historical experiment protocol below. The historical six-cohort assignment producer was not recovered. Consequently, details below describe the saved experiment metadata and the calculations applied to those files; they should not be read as a fully authenticated execution record.
+The repository contains clustering implementations, a YAML dataset registry, benchmark utilities, and loaders. The current ICC implementation and its default feature-pool behavior are summarized in [software architecture](software-architecture.md); those implementation details must not be substituted for the historical experiment protocol below. The six-cohort protocol producer source was recovered from Git history at [commit `49f3882`](https://github.com/AkashKundu114/icc-clustering/commit/49f3882fe5385913a9af1a5b89138c6ae6d95579). This is not a contemporaneous execution record: exact historical input identity, environment, and fit invocation remain unauthenticated. A later local fresh run used that source and the available cohort caches, but its results are not publicly bundled pending data-rights review. See [reproducibility](reproducibility.md).
 
 ## Six-cohort stability analysis
 
