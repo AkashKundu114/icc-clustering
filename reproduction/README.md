@@ -132,8 +132,11 @@ python reproduction/scripts/recompute_benchmark_scores.py `
   authorized result tables and their inputs are not included.
 - **Partition-level verification:** unavailable from a fresh clone because the
   partitions, per-fit records and exact input caches are not included.
-- **Full experimental reproduction:** not run; the historical producer and a
-  complete verified input/configuration chain are unavailable.
+- **Full experimental reproduction:** a full six-cohort run was executed locally
+  on 2026-11-02, but a fresh run from this public clone is unavailable because
+  the exact inputs and verified input/configuration chain are not included and
+  redistribution rights remain unresolved. This local run does not authenticate
+  the historical execution. No full 13-dataset rerun was completed.
 
 The software package itself has passed a fresh-clone installation and a
 synthetic API smoke test. That check is not reproduction of the scientific

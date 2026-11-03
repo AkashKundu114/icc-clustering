@@ -1,6 +1,6 @@
 # Citation and version identity
 
-The repository distributes software under the MIT License. Cite the exact software release described by [`CITATION.cff`](../CITATION.cff) and name the tag/commit used. Version 2.2.2 is the current software release; cite the exact tag and its [version DOI, 10.5281/zenodo.23891237](https://doi.org/10.5281/zenodo.23891237).
+The repository distributes software under the MIT License. Cite the exact software release described by [`CITATION.cff`](../CITATION.cff) and name the tag/commit used. Version 2.2.3 is the current software release; cite its tag and commit. Add a version-specific DOI only after verifying that the corresponding public Zenodo archive exists and matches the release. The preceding v2.2.2 software archive has a verified DOI: [10.5281/zenodo.23891237](https://doi.org/10.5281/zenodo.23891237).
 
 The GitHub source repository is [AkashKundu114/icc-clustering](https://github.com/AkashKundu114/icc-clustering). Citation metadata does not license third-party datasets. Dataset publications and upstream sources should be cited separately as described in [datasets](datasets.md).
 
