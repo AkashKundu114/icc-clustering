@@ -16,7 +16,7 @@ The calculation distinguishes mean pairwise ARI over intersections of repeated s
 
 ## Separate 13-dataset external-ARI benchmark
 
-Historical saved score files were reaggregated locally with a script that checks file hashes, grid structure, seed-key duplicates, missing cells, and the Friedman calculation. The run did not fit the algorithms again and does not authenticate the saved fit events, copied/imported scores, implementation fidelity, parameter fairness, or ambiguous failure rows. The score inputs and numerical statistics are not included pending rights clearance. This experiment is not a 13-dataset stability analysis.
+Historical saved score files were reaggregated locally with a script that checks file hashes, grid structure, seed-key duplicates, missing cells, and the Friedman calculation across 13 benchmark datasets and 12 comparative algorithms ($\chi_F^2 = 11.56, p = 0.40$). The run did not fit the algorithms again and does not authenticate the saved fit events, copied/imported scores, implementation fidelity, parameter fairness, or ambiguous failure rows. The score inputs and numerical statistics are not included pending rights clearance. This experiment is not a 13-dataset stability analysis.
 
 ## Selection analyses
 

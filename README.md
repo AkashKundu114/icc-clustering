@@ -19,7 +19,7 @@ ICC is an exploratory method in this research codebase. The repository does not 
 
 ## Software capabilities
 
-- Consensus-clustering implementations and baseline wrappers under `src/icc/`.
+- Consensus-clustering implementations, including Gated Anchor Consensus (GAC: Bimodality-Gated Subspace Selection + Bipartite Anchor Graph Consensus) and baseline wrappers under `src/icc/`.
 - Additional inductive and conformal components under `src/cicc/`.
 - Dataset registry/configuration and local acquisition/preprocessing helpers.
 - Evaluation metrics, benchmark runners, command-line scripts, examples, and tests.
@@ -85,7 +85,17 @@ The saved-output stability analysis uses six convenience cohorts, reference-labe
 
 ## Citation and publication status
 
-For the software citation metadata, see [CITATION.cff](CITATION.cff). The repository license covers software files only, not third-party data. This software repository does not contain or link to a manuscript. Version 2.2.2 is the current software release and its software-only Zenodo archive is [10.5281/zenodo.23891237](https://doi.org/10.5281/zenodo.23891237). The archive contains source code only, not research-result evidence. See [citation and release notes](docs/citation.md) for its scope. A separate reproduction archive has not been published.
+For the software citation metadata, see [CITATION.cff](CITATION.cff). Version 2.2.2 is the current software release and its software-only Zenodo archive is [10.5281/zenodo.23891237](https://doi.org/10.5281/zenodo.23891237). See [citation and release notes](docs/citation.md) for its scope.
+
+### Associated research manuscript
+
+- **Manuscript Title:** *Stability, Accuracy, and Feature-Gated Bipartite Consensus Under Noise*
+- **Running Header:** *Feature-Gated Bipartite Consensus Under Noise*
+- **Authors:** Kalyan Kumar Das, Akash Kundu, Anirban Mukhopadhyay
+- **Target Journal:** Springer Nature — *Data Mining and Knowledge Discovery* (DMKD)
+- **Empirical Scale:** 13 benchmark datasets and 12 comparative algorithms (evaluating 72 cells and 62,640 pairwise evaluations across 6 high-dimensional biomedical cohorts; omnibus Friedman rank analysis $\chi_F^2 = 11.56, p = 0.40$).
+- **Core Method:** Gated Anchor Consensus (GAC), coupling Bimodality-Gated Subspace Selection (BGSS) with Bipartite Anchor Graph Consensus.
+- **Bibliography:** 46 references.
 
 ## License
 

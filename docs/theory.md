@@ -5,6 +5,13 @@ This page does not state or claim general theorems for ICC, GAC, CICC, or the em
 In particular, no universal guarantee of cluster recovery, biomedical validity, clinical utility, feature-selection correctness, or superiority over other methods is established by this repository. Any formal property of a specific component must be evaluated against its source implementation and the assumptions stated in the relevant method reference.
 
 For the software's current modules, see [architecture](software-architecture.md) and the [API reference](api.md). For the limits of the available research evidence, see [limitations](limitations.md).
+## GAC framework (Bimodality-Gated Subspace Selection + Bipartite Anchor Graph Consensus)
+
+Gated Anchor Consensus (GAC) couples two principled mechanisms to address stability-accuracy discordance in high dimensions ($D \gg N$):
+
+1. **Bimodality-Gated Subspace Selection (BGSS):** Uses the sample Bimodality Coefficient (analytic null threshold $\text{BC} \le 5/9$) in $\mathcal{O}(ND)$ time to discard uninformative noise dimensions before distance concentration distorts cluster geometry.
+2. **Bipartite Anchor Graph Consensus:** Compresses sample-to-sample co-assignment graph construction from quadratic $\mathcal{O}(N^2)$ to linear $\mathcal{O}(NL)$ via $L \ll N$ anchors, efficiently solving the normalized bipartite graph Laplacian embedding.
+
 ## Selected prior literature
 
 These publications provide background for clustering stability, consensus clustering, modality testing, graph construction, single-cell consensus methods, and ensemble clustering. They do not establish theoretical guarantees for ICC or validate the repository's empirical claims.

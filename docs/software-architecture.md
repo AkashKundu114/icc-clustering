@@ -2,7 +2,7 @@
 
 The repository uses a `src/` layout. Core modules are in `src/icc/`, with an additional `src/cicc/` package for conformal/inductive components. Public paths below refer to code organization, not a guarantee that every module was used in the six-cohort saved-output analysis.
 
-- `src/icc/consensus/`: consensus-clustering implementations, including ICC variants, GAC, AutoK, and perturbation profiling. `src/icc/consensus_v2.py` is a backward-compatibility import shim.
+- `src/icc/consensus/`: consensus-clustering implementations, including ICC variants, GAC (Bimodality-Gated Subspace Selection + Bipartite Anchor Graph Consensus), AutoK, and perturbation profiling. `src/icc/consensus_v2.py` is a backward-compatibility import shim.
 - `src/icc/baselines/` and `src/icc/algorithms/`: baseline and algorithm implementations and compatibility interfaces. Benchmark parity with external reference implementations is not uniformly audited.
 - `src/icc/benchmarks/`: benchmark runners, model wrappers, fidelity helpers, and scaling utilities.
 - `src/icc/datasets/`: domain-specific dataset loaders and a registry. `configs/datasets.yaml` stores dataset identifiers, expected shapes, and preprocessing flags.

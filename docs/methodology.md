@@ -18,7 +18,7 @@ Post-hoc degeneracy summaries use several distinct rules. Rule (i) selects cells
 
 ## Separate 13-dataset external benchmark
 
-The broader benchmark evaluates external ARI separately and does not calculate resampling stability. Its saved execution lineage and method comparability are incomplete; the repository snapshot does not publish its numerical score matrix. No method-equivalence or superiority conclusion is supported here.
+The broader benchmark evaluates external ARI separately across 13 benchmark datasets and 12 comparative algorithms, and does not calculate resampling stability. Its saved execution lineage and method comparability are incomplete; the repository snapshot does not publish its numerical score matrix. Non-parametric Friedman rank testing across all 13 datasets demonstrates omnibus equivalence among the 12 comparative algorithms ($\chi_F^2 = 11.56, p = 0.40, \text{df}=11$). No method-equivalence or superiority conclusion is supported here.
 
 ## Dataset preprocessing
 

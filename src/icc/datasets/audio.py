@@ -6,6 +6,7 @@ Datasets:
 """
 
 import os
+import time
 from pathlib import Path
 from typing import Any, Dict, Optional, Tuple
 
@@ -69,8 +70,21 @@ def load_isolet(
             }
             return X, y, metadata
 
-    print("[*] Fetching Isolet from OpenML (name='isolet', version=1)...")
-    raw = fetch_openml("isolet", version=1, parser="auto")
+    raw = None
+    last_err: Optional[Exception] = None
+    for attempt in range(1, 4):
+        try:
+            print(f"[*] Fetching Isolet from OpenML (name='isolet', version=1) (attempt {attempt}/3)...")
+            raw = fetch_openml("isolet", version=1, parser="auto")
+            break
+        except Exception as e:
+            last_err = e
+            print(f"[!] Fetch attempt {attempt} failed: {e}")
+            if attempt < 3:
+                time.sleep(attempt)
+
+    if raw is None:
+        raise RuntimeError("Failed to fetch Isolet from OpenML after 3 attempts.") from last_err
 
     raw_X = np.asarray(raw.data, dtype=np.float64)
     raw_y = np.asarray(raw.target)
