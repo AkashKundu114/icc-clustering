@@ -32,7 +32,7 @@ def set_seed(seed: int = 42) -> None:
         torch.manual_seed(seed)
         if torch.cuda.is_available():
             torch.cuda.manual_seed_all(seed)
-    except ImportError:
+    except (ImportError, OSError):
         pass
 
 

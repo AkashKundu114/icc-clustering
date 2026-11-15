@@ -9,4 +9,4 @@
 - **Initialization robustness:** Reproducibility when model initialization changes. This differs from resampling stability.
 - **Resampling stability:** Agreement among clustering outputs generated after changing the sampled observations according to a specified protocol. It is conditional on that protocol and model settings.
 - **Sampling robustness:** Sensitivity to changes in which observations are included.
-- **Stability–accuracy discordance:** The empirical possibility that a partition is reproducible under a stated perturbation protocol while showing weak alignment with available external labels. The phrase does not imply a universal trade-off or law.
+- **Stability-accuracy discordance:** The empirical possibility that a partition is reproducible under a stated perturbation protocol while showing weak alignment with available external labels. The phrase does not imply a universal trade-off or law.

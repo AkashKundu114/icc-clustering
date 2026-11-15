@@ -3,7 +3,7 @@
 ### What does this repository implement?
 A Python research codebase for consensus clustering, ICC variants, baseline wrappers, benchmark utilities, data loading, and evaluation. See [Software architecture](software-architecture.md).
 
-### What is stability–accuracy discordance?
+### What is stability-accuracy discordance?
 It is the possibility that partitions agree with one another under a specified perturbation but align poorly with available external reference labels. Stability and external ARI are distinct properties; the term does not mean clustering has a universal trade-off.
 
 ### How are external labels used?

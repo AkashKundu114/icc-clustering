@@ -105,7 +105,7 @@ Thumbs.db
 *.exe
 !/tools/check_consistency.py
 
-# LaTeX auxiliary build files (source manuscripts are ignored by private directories above)
+# LaTeX auxiliary build files and standalone binaries/archives
 *.aux
 *.bbl
 *.blg
@@ -114,3 +114,7 @@ Thumbs.db
 *.synctex.gz
 *.fls
 *.fdb_latexmk
+*.pdf
+*.zip
+*.tar.gz
+*.whl

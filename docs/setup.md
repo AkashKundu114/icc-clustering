@@ -2,7 +2,7 @@
 
 ## Requirements
 
-The package metadata declares Python 3.10 or later. The GitHub Actions workflow on the latest inspected `main` commit (`8a97edcbe1b62269fdb36cd2070c94fad1e8eeef`) completed successfully for Ubuntu and Windows across Python 3.10–3.14 on 2026-11-02. A separate local editable-install check was run on Windows 11 with Python 3.14.6. These checks do not establish macOS support or a guarantee of bitwise-identical results across systems.
+The package metadata declares Python 3.10 or later. The GitHub Actions workflow on the latest inspected `main` commit completed successfully for Ubuntu and Windows across Python 3.10 to 3.14 on 2026-11-02. A separate local editable-install check was run on Windows 11 with Python 3.14.6. These checks do not establish macOS support or a guarantee of bitwise-identical results across systems.
 
 ## Install from source
 

@@ -92,7 +92,7 @@ For the software citation metadata, see [CITATION.cff](CITATION.cff). Version 2.
 - **Manuscript Title:** *Stability, Accuracy, and Feature-Gated Bipartite Consensus Under Noise*
 - **Running Header:** *Feature-Gated Bipartite Consensus Under Noise*
 - **Authors:** Kalyan Kumar Das, Akash Kundu, Anirban Mukhopadhyay
-- **Target Journal:** Springer Nature — *Data Mining and Knowledge Discovery* (DMKD)
+- **Target Journal:** Springer Nature, *Data Mining and Knowledge Discovery* (DMKD)
 - **Empirical Scale:** 13 benchmark datasets and 12 comparative algorithms (evaluating 72 cells and 62,640 pairwise evaluations across 6 high-dimensional biomedical cohorts; omnibus Friedman rank analysis $\chi_F^2 = 11.56, p = 0.40$).
 - **Core Method:** Gated Anchor Consensus (GAC), coupling Bimodality-Gated Subspace Selection (BGSS) with Bipartite Anchor Graph Consensus.
 - **Bibliography:** 46 references.

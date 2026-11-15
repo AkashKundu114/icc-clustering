@@ -6,17 +6,13 @@ labels: reproducibility, question
 assignees: ''
 ---
 
-## Experiment / Table / Figure in Question
-Specify which experiment from the paper you are looking to replicate:
-- [ ] Experiment 0: High-Dimensional Falsification Suite (Figs 1, 2, 4)
-- [ ] Experiment 1: Inductive Generalization Test (Figs 9, 10)
-- [ ] Experiment 2: Architectural Component Ablation (Table 1, Figs 11, 12)
-- [ ] Experiment 2.1: VSSG Saliency & Interpretability Audit (Fig 22)
-- [ ] Experiment 3: 13-Dataset Real-World Benchmarks (Table 2, Figs 14, 17)
-- [ ] Experiment 3.5: Missing Data Robustness Suite (Fig 25)
-- [ ] Experiment 4: Scalability & Hyperparameter Sensitivity (Figs 18-21)
-- [ ] Experiment 4.3: Anchor Graph Fidelity vs. Exact (Fig 24)
-- [ ] Experiment 5: Extreme-Scale Asymptotic Stress Test ($N=1\text{M}, D=100\text{k}$, Fig 26)
+## Experiment or Analysis in Question
+Specify which component or experiment you are looking into:
+- [ ] Six-Cohort Biomedical Stability Study (CNS, Colon, Leukemia, Ovarian, Prostate, SRBCT)
+- [ ] 13-Dataset External-ARI Benchmark (Omnibus Friedman Evaluation)
+- [ ] Portable Saved-Output Verification Scripts (`recompute_saved_stability.py`, `recompute_benchmark_scores.py`)
+- [ ] Synthetic Smoke Reproduction Workflow (`python scripts/reproduce.py --scope smoke`)
+- [ ] Algorithm Implementation or Baseline Wrappers (GAC, VSSG, ASPP, Classical Baselines)
 
 ## Observed vs. Expected Results
 - Command run: `python ...`

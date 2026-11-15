@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased] - 2.2.2 post-release updates
+
+### Added
+- **Yale B download integrity and retry handling:** Added automatic retry loops, MD5 integrity checks, and atomic file replacement in `src/icc/datasets/image.py` to prevent corrupted partial downloads. Added offline unit tests in `tests/unit/test_yale_b_download_integrity.py`.
+- **OpenML audio loader retry and cache fallback:** Added retry handling and local cache fallback in `src/icc/datasets/audio.py` for reliable dataset loading.
+- **Post-hoc selection denominators:** Expanded `reproduction/scripts/recompute_saved_stability.py` and `reproduction/claim-to-evidence-matrix.csv` to report explicit selection denominators for all post-hoc filter subsets.
+- **Reviewer evidence access documentation:** Documented the current absence of public raw data caches and defined the reviewer evidence access requirements in reproduction guides.
+
+### Changed
+- **Project description:** Updated distribution description to "Invariant Core Consensus: Stability, Accuracy, and Feature-Gated Bipartite Consensus Under Noise" in `pyproject.toml` and documentation.
+- **Manuscript title harmonization:** Synchronized the manuscript title to "Stability, Accuracy, and Feature-Gated Bipartite Consensus Under Noise" across all documentation, citations, and metadata.
+- **Python version compatibility wording:** Replaced en-dashes in version ranges with standard hyphens across documentation.
+
+---
+
 ## [2.2.2] - 2026-11-02
 
 ### Added
@@ -24,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **XERJ Corpus Hub contributor badge:** Retained the project contributor badge and profile link in the public README.
 - **Public project documentation:** Updated researcher-facing project and installation guidance.
 - **Research scope and naming documentation:** Clarified the stability versus external alignment distinction, the separate benchmark scopes, and that `ICC`/`ICCv2` are aliases for one estimator.
-- **Python 3.10–3.14 CI/CD Matrix:** Configured full GitHub Actions matrix workflow testing across Python 3.10, 3.11, 3.12, 3.13, and 3.14 on both Ubuntu and Windows (`.github/workflows/ci.yml`).
+- **Python 3.10 to 3.14 CI/CD Matrix:** Configured full GitHub Actions matrix workflow testing across Python 3.10, 3.11, 3.12, 3.13, and 3.14 on both Ubuntu and Windows (`.github/workflows/ci.yml`).
 - **Python 3.13 & 3.14 Compatibility Test Suite:** Added dedicated regression tests (`tests/regression/test_python_compatibility.py`) validating PEP 706 safe tarfile extraction, PEP 649/749 deferred annotation evaluation, dataclass typing resolution, and end-to-end estimator execution under modern runtimes.
 - **Statistical Testing Extensions:** Implemented `wilcoxon_signed_rank_test` and `bonferroni_correction` in `src/icc/stats/testing.py` with PEP 484 type annotations.
 
@@ -78,3 +93,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Closed-Form Inductive Projection:** Stability-weighted active subspace centroid assignment requiring $\mathcal{O}(K \cdot |\mathcal{F}_{\text{active}}|)$ operations per query point.
 - **Anchor-Space Perturbation Profiling (ASPP):** Multi-family cluster reliability certification yielding Perturbation Sensitivity Index (PSI) and query confidence bounds in $\mathcal{O}(NL)$ auxiliary memory.
 - **Standard Tooling & CI Configuration:** Complete `pyproject.toml` (PEP 621), GitHub Actions workflows (`.github/workflows/ci.yml`), pre-commit hooks, `.editorconfig`, and automated dataset downloader (`scripts/fetch_data.py`).
+
+---
+
+## [1.0.0] - 2026-10-01
+
+### Added
+- **Initial release:** Initial prototype implementation of bipartite anchor consensus clustering, core sample identification, and basic evaluation metrics.
+- **Software archive:** Published initial software-only archive on Zenodo.
+
+[Unreleased]: https://github.com/AkashKundu114/icc-clustering/compare/v2.2.2...HEAD
+[2.2.2]: https://github.com/AkashKundu114/icc-clustering/compare/v2.2.1...v2.2.2
+[2.2.1]: https://github.com/AkashKundu114/icc-clustering/compare/v2.2.0...v2.2.1
+[2.2.0]: https://github.com/AkashKundu114/icc-clustering/compare/v2.1.0...v2.2.0
+[2.1.0]: https://github.com/AkashKundu114/icc-clustering/compare/v2.0.0...v2.1.0
+[2.0.0]: https://github.com/AkashKundu114/icc-clustering/compare/v1.0.0...v2.0.0
+[1.0.0]: https://github.com/AkashKundu114/icc-clustering/releases/tag/v1.0.0

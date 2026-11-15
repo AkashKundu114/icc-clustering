@@ -1,6 +1,6 @@
 # ICC Python API Reference
 
-The icc and cicc packages provide an unsupervised, scikit-learn compatible clustering estimator, split-conformal prediction sets, target-decoy feature selection, and dynamic incremental memory routing for high-dimensional noise regimes ( \gg N$).
+The icc and cicc packages provide an unsupervised, scikit-learn compatible clustering estimator, split-conformal prediction sets, target-decoy feature selection, and dynamic incremental memory routing for high-dimensional noise regimes ($D \gg N$).
 
 ---
 

@@ -34,3 +34,18 @@ Validates local dataset caches and downloads benchmark datasets from public repo
 ```bash
 python scripts/fetch_data.py
 ```
+
+### 5. Synthetic Reproduction CLI (`scripts/reproduce.py`)
+Runs the synthetic smoke workflow or runs verification checks across available tooling.
+
+```bash
+python scripts/reproduce.py --scope smoke
+python scripts/reproduce.py --scope verify
+```
+
+### 6. Registry and Release Metadata Validator (`scripts/validate_registry_and_release_metadata.py`)
+Validates that package version, runtime, CFF, Zenodo, and documentation metadata remain synchronized across the repository.
+
+```bash
+python scripts/validate_registry_and_release_metadata.py
+```

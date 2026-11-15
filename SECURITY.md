@@ -6,10 +6,10 @@ The following table lists the security support status for versions of the **Indu
 
 | Version | Supported          | Security Status                                         |
 | ------- | ------------------ | ------------------------------------------------------- |
-| 2.1.x   | :white_check_mark: | Current active release (v2.2.0)                         |
-| 2.0.x   | :white_check_mark: | Previous release baseline                               |
-| 1.0.x   | :x:                | Deprecated (v1 anchor-only prototype)                   |
-| < 1.0   | :x:                | Unsupported                                             |
+| 2.2.x   | :white_check_mark: | Current active release line (v2.2.2)                    |
+| 2.1.x   | :white_check_mark: | Previous release line                                   |
+| 2.0.x   | :x:                | Deprecated                                              |
+| < 2.0   | :x:                | Unsupported                                             |
 
 ---
 
@@ -40,7 +40,7 @@ To help us investigate and triage the issue swiftly, please include:
 
 * **Acknowledgment**: We aim to acknowledge receipt of security reports within **48 hours**.
 * **Investigation & Assessment**: We will investigate, verify the issue, and provide an initial assessment within **5 business days**.
-* **Remediation**: Once verified, a patch will be prepared, tested, and released as a patch update (`v2.0.x`).
+* **Remediation**: Once verified, a patch will be prepared, tested, and released as a patch update (`v2.2.x`).
 * **Coordinated Disclosure**: We adhere to coordinated vulnerability disclosure. A public security advisory and changelog credit will be published after the fix has been tagged and deployed.
 
 ---

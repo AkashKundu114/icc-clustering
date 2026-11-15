@@ -2,7 +2,7 @@
 
 This directory contains the unit, integration, and regression test suites for **Invariant Core Consensus (ICC)**.
 
-All 118 tests pass with a 100% pass rate.
+All 140 tests pass with a 100% pass rate.
 
 ---
 
@@ -21,19 +21,23 @@ tests/
 │   ├── test_cicc.py            # Conformal clustering and target-decoy FDR
 │   ├── test_algorithms.py      # Baseline clustering algorithms dispatch
 │   ├── test_inductive.py       # Inductive out-of-sample projection
-│   └── test_edge_cases.py      # Numerical edge cases, zero-variance, missing data
+│   ├── test_edge_cases.py      # Numerical edge cases, zero-variance, missing data
+│   └── test_yale_b_download_integrity.py # Yale B atomic download and retry integrity
 ├── integration/                # Pipeline and system integration tests
 │   ├── test_datasets.py        # Dataset registry and cache integrity
 │   ├── test_cohort_discovery.py # GEO metadata parsing and validation
 │   ├── test_cohort_provenance.py# Cohort independence and sample integrity
 │   ├── test_pipeline.py        # End-to-end preprocessing, training, evaluation
 │   └── test_runner.py          # CLI runner and YAML config loading
-└── regression/                 # Regression and theoretical boundary tests
-    ├── test_anchor_fidelity.py # Anchor approximation fidelity bounds
-    ├── test_scaling_timing.py  # Wall-clock scaling and memory allocation
-    ├── test_theory_boundaries.py # Analytical separation bounds and surrogate disclosure
-    ├── test_algorithm_fidelity.py# Algorithm parity and fallback warnings
-    └── test_leakage.py         # Train/test leakage prevention checks
+├── regression/                 # Regression and theoretical boundary tests
+│   ├── test_anchor_fidelity.py # Anchor approximation fidelity bounds
+│   ├── test_scaling_timing.py  # Wall-clock scaling and memory allocation
+│   ├── test_theory_boundaries.py # Analytical separation bounds and surrogate disclosure
+│   ├── test_algorithm_fidelity.py# Algorithm parity and fallback warnings
+│   ├── test_architecture_compatibility.py # Architectural structure and re-export parity
+│   ├── test_python_compatibility.py # Python 3.10-3.14 compatibility and PEP 706 checks
+│   └── test_leakage.py         # Train/test leakage prevention checks
+└── test_reproduce_cli.py       # Reproduction CLI interface test
 ```
 
 ---

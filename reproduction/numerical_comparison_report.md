@@ -24,6 +24,6 @@ Historical and fresh-run post-hoc selection analyses were recalculated locally f
 
 ## Verification tools
 
-The public tools `scripts/recompute_saved_stability.py` and `scripts/recompute_benchmark_scores.py` accept researcher-supplied evidence. They dynamically hash inputs, validate structural expectations, and fail on expected-hash mismatch. The clean-clone tests show that these tools cannot run the scientific calculations from this repository alone because the required evidence inputs are absent. They do not recreate model fits or establish a public reproduction pass.
+The public tools `reproduction/scripts/recompute_saved_stability.py` and `reproduction/scripts/recompute_benchmark_scores.py` accept researcher-supplied evidence. They dynamically hash inputs, validate structural expectations, and fail on expected-hash mismatch. The clean-clone tests show that these tools cannot run the scientific calculations from this repository alone because the required evidence inputs are absent. They do not recreate model fits or establish a public reproduction pass.
 
 Until source-specific rights and stable input identity are resolved, use the repository to inspect software and protocol code only. Do not cite this package as a complete scientific evidence archive or as proof that the historical or fresh numerical results can be independently reproduced.

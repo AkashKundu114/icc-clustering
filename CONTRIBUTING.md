@@ -1,6 +1,6 @@
 # Contributing to Invariant Core Consensus (ICC)
 
-Thank you for your interest in contributing to **Invariant Core Consensus (ICC)**! This repository hosts the open-source reference implementation, test harness, and benchmarking suite for Invariant Core Consensus (ICC) and Conformal Inductive Consensus Clustering (CICC).
+Thank you for your interest in contributing to **Invariant Core Consensus (ICC)**! This repository hosts the open-source reference implementation, test suite, and benchmarking tools for Invariant Core Consensus (ICC) and Conformal Inductive Consensus Clustering (CICC).
 
 We welcome contributions ranging from bug fixes and documentation improvements to new baseline comparisons, additional benchmark datasets, and performance optimizations.
 
