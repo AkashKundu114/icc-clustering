@@ -4,12 +4,9 @@ Diagnostic utilities for partition tracking, entropy, and canonicalization.
 
 
 def partition_entropy(partitions):
-    """
-    Computes Shannon entropy (in bits) over the distinct partition distribution.
-    A score of 0.0 indicates 100% deterministic collapse to a single partition.
+    """Compute Shannon entropy in bits over distinct partition outcomes.
 
-    Raises:
-        ValueError: If no partition observations are supplied.
+    Raises ValueError when no observations are supplied.
     """
     import numpy as np
 
@@ -19,16 +16,13 @@ def partition_entropy(partitions):
     distinct = list(dict.fromkeys(partitions))
     counts = np.array([partitions.count(p) for p in distinct], dtype=float)
     probs = counts / counts.sum()
-    return -np.sum(probs * np.log2(probs + 1e-12))
+    return float(-np.sum(probs * np.log2(probs)))
 
 
 def dominant_partition_stats(partitions, aris=None):
-    """
-    Returns (dominant_share, dominant_partition, dominant_ari).
+    """Return dominant share, partition, and its first associated ARI.
 
-    Raises:
-        ValueError: If no partition observations are supplied or ARI scores do
-            not contain one value per partition observation.
+    Raises ValueError for empty observations or misaligned ARI scores.
     """
     if partitions is None or len(partitions) == 0:
         raise ValueError("partitions must contain at least one observation")
@@ -41,6 +35,5 @@ def dominant_partition_stats(partitions, aris=None):
     share = counts[dominant_p] / len(partitions)
     dominant_ari = None
     if aris is not None:
-        idx = partitions.index(dominant_p)
-        dominant_ari = aris[idx]
+        dominant_ari = aris[partitions.index(dominant_p)]
     return share, dominant_p, dominant_ari
