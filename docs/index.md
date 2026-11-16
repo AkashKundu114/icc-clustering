@@ -17,6 +17,7 @@ This guide describes the research software, its configured data loaders and benc
 - [Setup](setup.md): installation and actually tested environments.
 - [Citation](citation.md): software citation and DOI status.
 - [Release process](release-process.md): verification steps for future releases.
+- [Partition diagnostics](diagnostics.md): interpreting partition entropy and dominant-partition summaries.
 - [Glossary](glossary.md): terminology used in the documentation.
 - [FAQ](faq.md): common practical questions.
 
