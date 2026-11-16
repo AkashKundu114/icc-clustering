@@ -21,8 +21,12 @@ def test_dominant_partition_stats_rejects_misaligned_ari_values():
 def test_partition_entropy_and_dominant_share_for_two_partition_outcomes():
     partitions = ["a", "a", "b", "a"]
     assert partition_entropy(partitions) == pytest.approx(0.811278, abs=1e-5)
-
-    share, dominant, dominant_ari = dominant_partition_stats(partitions, aris=[0.9, 0.8, 0.5, 0.7])
+    # The global maximum is associated with non-dominant "b".
+    share, dominant, dominant_ari = dominant_partition_stats(partitions, aris=[0.6, 0.8, 0.99, 0.7])
     assert share == pytest.approx(0.75)
     assert dominant == "a"
-    assert dominant_ari == pytest.approx(0.9)
+    assert dominant_ari == pytest.approx(0.6)
+
+
+def test_partition_entropy_is_exactly_zero_for_identical_outcomes():
+    assert partition_entropy(["same", "same", "same"]) == 0.0
