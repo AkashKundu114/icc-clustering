@@ -9,9 +9,15 @@ The package exposes two lightweight summaries from `icc.diagnostics`:
 
 ```python
 from icc.diagnostics import dominant_partition_stats, partition_entropy
+from icc.utils import canonical
 
-# Each item represents one complete partition outcome, not one sample label.
-partitions = ["partition-A", "partition-A", "partition-B", "partition-A"]
+# Canonical keys make label-permuted versions of the same clustering equal.
+partitions = [
+    canonical([0, 0, 1, 1]),
+    canonical([1, 1, 0, 0]),
+    canonical([0, 1, 1, 0]),
+    canonical([1, 1, 0, 0]),
+]
 
 entropy = partition_entropy(partitions)
 share, dominant, _ = dominant_partition_stats(partitions)
@@ -22,10 +28,10 @@ print(f"Dominant partition: {dominant} ({share:.1%})")
 
 ## Interpretation
 
-For observed outcome probabilities `p_i`, entropy is `-sum(p_i * log2(p_i))`. It is zero when every run produced the same partition and increases as the observed outcomes become more diverse. The value describes diversity in the supplied run-level outcomes; it is not a measure of per-sample assignment uncertainty, external-label accuracy, or initialization robustness by itself.
+For observed outcome probabilities `p_i`, entropy is `-sum(p_i * log2(p_i))`. It is exactly zero when every run produced the same partition and increases as the observed outcomes become more diverse. The value describes diversity in the supplied run-level outcomes; it is not a measure of per-sample assignment uncertainty, external-label accuracy, or initialization robustness by itself.
 
 `dominant_partition_stats` selects the most frequent observed partition. If two outcomes tie, Python's insertion ordering means the first one encountered is selected. When `aris` is supplied, it must contain exactly one score per partition observation, in the same order. The returned dominant ARI is the score at the first occurrence of the selected dominant partition, not the mean ARI across all runs with that partition.
 
-Partition values must be hashable because the implementation groups distinct outcomes using their hash identity. Use a stable tuple or another immutable representation for a full label vector, for example `tuple(labels.tolist())`.
+Partition values must be hashable because the implementation groups distinct outcomes using their hash identity. For label vectors, use the package's `canonical(labels)` helper (or an equivalent label-permutation-invariant immutable representation). A plain `tuple(labels.tolist())` is hashable but treats label-permuted equivalent clusterings as different outcomes.
 
 Empty input and a length mismatch between `partitions` and `aris` raise `ValueError`. These diagnostics are descriptive summaries and do not replace paired statistical analysis or uncertainty intervals.
